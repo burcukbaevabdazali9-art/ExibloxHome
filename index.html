@@ -484,6 +484,64 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 .paint-canvas-wrap{flex:1;overflow:hidden;background:#fff;position:relative;}
 #paint-canvas{cursor:crosshair;display:block;}
 
+/* ─── EXIAN AI 3.0 IDE ───────────────────────── */
+.exian-wrap{display:flex;flex-direction:column;height:100%;}
+.exian-toolbar{
+  display:flex;align-items:center;gap:6px;padding:6px 10px;
+  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;flex-wrap:wrap;
+}
+.exian-btn{
+  padding:5px 12px;border-radius:6px;font-size:12px;color:var(--text2);
+  cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+}
+.exian-btn:hover{background:rgba(255,255,255,.12);color:#fff;}
+.exian-btn.github{background:rgba(33,33,33,.8);color:#fff;}
+.exian-btn.run{background:rgba(46,204,113,.25);color:#2ecc71;}
+.exian-btn.run:hover{background:rgba(46,204,113,.4);}
+.exian-main{display:flex;flex:1;overflow:hidden;}
+.exian-sidebar{
+  width:220px;border-right:1px solid rgba(255,255,255,.05);
+  padding:10px;overflow-y:auto;background:rgba(0,0,0,.2);flex-shrink:0;
+}
+.exian-file-tree{display:flex;flex-direction:column;gap:2px;}
+.exian-file-item{
+  padding:6px 10px;border-radius:6px;font-size:12px;color:var(--text2);
+  cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;
+}
+.exian-file-item:hover{background:var(--bg2);}
+.exian-file-item.active{background:rgba(0,120,212,.3);color:#fff;}
+.exian-editor{flex:1;display:flex;flex-direction:column;}
+.exian-tabs{
+  display:flex;gap:2px;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.05);
+  background:rgba(0,0,0,.15);flex-shrink:0;
+}
+.exian-tab{
+  padding:6px 14px;border-radius:6px 6px 0 0;font-size:12px;color:var(--text2);
+  cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:8px;
+}
+.exian-tab.active{background:rgba(8,10,18,.95);color:#fff;}
+.exian-tab:hover{background:rgba(255,255,255,.08);}
+.exian-code-area{
+  flex:1;background:rgba(8,10,18,.95);color:#d4d4d4;border:none;outline:none;
+  padding:16px;font-size:13px;font-family:'Consolas','Courier New','Monaco',monospace;
+  resize:none;line-height:1.6;user-select:text;
+}
+.exian-statusbar{
+  display:flex;gap:16px;padding:4px 14px;font-size:11px;color:var(--text2);
+  border-top:1px solid rgba(255,255,255,.05);flex-shrink:0;background:rgba(0,0,0,.2);
+}
+.exian-terminal{
+  height:140px;border-top:1px solid rgba(255,255,255,.05);
+  background:rgba(0,0,0,.4);padding:10px 14px;overflow-y:auto;
+  font-family:'Consolas','Courier New',monospace;font-size:12px;
+  color:#0f0;flex-shrink:0;
+}
+.exian-terminal-line{margin-bottom:4px;}
+.exian-terminal-prompt{color:#60cdff;}
+.exian-terminal-error{color:#ff6b6b;}
+.exian-terminal-success{color:#2ecc71;}
+
 /* ─── NOTIFICATIONS ───────────────────────────── */
 #notif-stack{position:fixed;bottom:60px;right:14px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .notif{
@@ -591,6 +649,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   <div class="desk-icon" style="top:114px;left:120px" ondblclick="openApp('taskman')" onclick="selectIcon(this)">
     <div class="dico">📊</div><span>Диспетчер задач</span>
   </div>
+  <div class="desk-icon" style="top:212px;left:120px" ondblclick="openApp('exianai')" onclick="selectIcon(this)">
+    <div class="dico">🤖</div><span>Exian.AI 3.0</span>
+  </div>
 </div>
 
 <!-- TASKBAR -->
@@ -615,6 +676,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
     <div class="tb-btn" id="tb-paint" title="Paint" ondblclick="openApp('paint')">🎨</div>
     <div class="tb-btn" id="tb-settings" title="Параметры" ondblclick="openApp('settings')">⚙️</div>
     <div class="tb-btn" id="tb-taskman" title="Диспетчер задач" ondblclick="openApp('taskman')">📊</div>
+    <div class="tb-btn" id="tb-exianai" title="Exian.AI 3.0" ondblclick="openApp('exianai')">🤖</div>
   </div>
   <div id="tb-right">
     <div class="tb-sys" onclick="toggleTray(event)" title="Системный лоток">
@@ -646,18 +708,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
       <div class="pin-app" ondblclick="openApp('calc');hideAll()"><div class="ico">🧮</div><div class="lbl">Калькулятор</div></div>
       <div class="pin-app" ondblclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="lbl">Paint</div></div>
       <div class="pin-app" ondblclick="openApp('taskman');hideAll()"><div class="ico">📊</div><div class="lbl">Диспетчер</div></div>
+      <div class="pin-app" ondblclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="lbl">Exian.AI 3.0</div></div>
       <div class="pin-app" onclick="showNotif('Магазин','Магазин открывается...','🛒')"><div class="ico">🛒</div><div class="lbl">Магазин</div></div>
       <div class="pin-app" onclick="showNotif('Почта','Нет новых писем','✉️')"><div class="ico">✉️</div><div class="lbl">Почта</div></div>
       <div class="pin-app" onclick="showNotif('Фото','Нет фотографий','🖼️')"><div class="ico">🖼️</div><div class="lbl">Фотографии</div></div>
       <div class="pin-app" onclick="showNotif('Xbox','Подключение...','🎮')"><div class="ico">🎮</div><div class="lbl">Xbox</div></div>
-      <div class="pin-app" onclick="showNotif('Камера','Камера не найдена','📸')"><div class="ico">📸</div><div class="lbl">Камера</div></div>
     </div>
   </div>
   <div class="sm-sec">Рекомендуемые</div>
   <div class="rec-list" id="sm-rec-list">
     <div class="rec-row" ondblclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="rec-info"><div class="n">Заметки</div><div class="t">Только что</div></div></div>
     <div class="rec-row" ondblclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="rec-info"><div class="n">Рисунок1.png</div><div class="t">Вчера</div></div></div>
-    <div class="rec-row"><div class="ico">📊</div><div class="rec-info"><div class="n">Отчёт_2026.xlsx</div><div class="t">3 дня назад</div></div></div>
+    <div class="rec-row" ondblclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="rec-info"><div class="n">main.cpp</div><div class="t">2 часа назад</div></div></div>
   </div>
   <div id="sm-footer">
     <div id="sm-user" onclick="openApp('settings');hideAll()">
@@ -807,12 +869,13 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 Это полная симуляция операционной системы на HTML.
 
 Особенности:
-• Аккаунт сохраняется между сессиями
-• Все окна перетаскиваются и масштабируются
-• Блокнот сохраняет текст автоматически
-• Paint для рисования
-• Диспетчер задач
-• Файловый менеджер
+- Аккаунт сохраняется между сессиями
+- Все окна перетаскиваются и масштабируются
+- Блокнот сохраняет текст автоматически
+- Paint для рисования
+- Диспетчер задач
+- Файловый менеджер
+- Exian.AI 3.0 IDE для C++
 
 Разработано с ❤️</textarea>
       <div class="np-statusbar">
@@ -1181,6 +1244,149 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   <div class="resize-handle" onmousedown="resizeWin(event,'win-taskman')"></div>
 </div>
 
+<!-- EXIAN AI 3.0 IDE -->
+<div class="window" id="win-exianai" style="width:900px;height:620px;top:40px;left:80px;display:none;" onclick="bringFront('win-exianai')">
+  <div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
+    <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0 - C++ IDE</span>
+    <div class="win-btns">
+      <div class="wb" onclick="minimizeWin('exianai')">─</div>
+      <div class="wb" onclick="toggleMax('win-exianai')">⬜</div>
+      <div class="wb cls" onclick="closeWin('exianai')">✕</div>
+    </div>
+  </div>
+  <div class="win-body">
+    <div class="exian-wrap">
+      <div class="exian-toolbar">
+        <div class="exian-btn" onclick="exianNewFile()">📄 Новый</div>
+        <div class="exian-btn" onclick="exianOpenFile()">📂 Открыть</div>
+        <div class="exian-btn" onclick="exianSaveFile()">💾 Сохранить</div>
+        <div style="width:1px;height:22px;background:rgba(255,255,255,.1);margin:0 6px;"></div>
+        <div class="exian-btn run" onclick="exianRun()">▶️ Запустить</div>
+        <div class="exian-btn" onclick="exianBuild()">🔨 Собрать</div>
+        <div style="flex:1"></div>
+        <div class="exian-btn github" onclick="exianGitClone()">⬇️ Clone</div>
+        <div class="exian-btn github" onclick="exianGitCommit()">💾 Commit</div>
+        <div class="exian-btn github" onclick="exianGitPush()">⬆️ Push</div>
+        <div class="exian-btn github" onclick="exianGitPull()">🔄 Pull</div>
+      </div>
+      <div class="exian-main">
+        <div class="exian-sidebar">
+          <div style="font-size:11px;color:var(--text2);margin-bottom:8px;padding:0 4px;">ПРОЕКТ</div>
+          <div class="exian-file-tree" id="exian-file-tree">
+            <div class="exian-file-item active" onclick="exianSelectFile(this,'main.cpp')">📄 main.cpp</div>
+            <div class="exian-file-item" onclick="exianSelectFile(this,'algorithm.h')">📄 algorithm.h</div>
+            <div class="exian-file-item" onclick="exianSelectFile(this,'neural.cpp')">📄 neural.cpp</div>
+            <div class="exian-file-item" onclick="exianSelectFile(this,'README.md')">📄 README.md</div>
+          </div>
+        </div>
+        <div class="exian-editor">
+          <div class="exian-tabs">
+            <div class="exian-tab active" id="exian-active-tab">
+              <span>📄</span>
+              <span id="exian-tab-name">main.cpp</span>
+            </div>
+          </div>
+          <textarea class="exian-code-area" id="exian-code" spellcheck="false" oninput="exianCodeChanged()">#include <iostream>
+#include <vector>
+#include <algorithm>
+#include "neural.h"
+
+using namespace std;
+
+// Exian.AI 3.0 - Advanced Neural Network Framework
+// GitHub: https://github.com/exian-ai/core
+
+class ExianAI {
+private:
+    vector<double> neurons;
+    vector<vector<double>> weights;
+    double learning_rate;
+
+public:
+    ExianAI(int input_size, double lr = 0.01) 
+        : learning_rate(lr) {
+        neurons.resize(input_size);
+        weights.resize(input_size, vector<double>(input_size, 0.5));
+        cout << "Exian.AI 3.0 initialized with " 
+             << input_size << " neurons" << endl;
+    }
+
+    void train(const vector<double>& input, 
+               const vector<double>& target) {
+        // Forward propagation
+        for (size_t i = 0; i < input.size(); i++) {
+            neurons[i] = input[i];
+        }
+        
+        // Backpropagation
+        for (size_t i = 0; i < weights.size(); i++) {
+            for (size_t j = 0; j < weights[i].size(); j++) {
+                weights[i][j] += learning_rate * 
+                    (target[j] - neurons[j]) * neurons[i];
+            }
+        }
+    }
+
+    vector<double> predict(const vector<double>& input) {
+        vector<double> output(input.size());
+        for (size_t i = 0; i < input.size(); i++) {
+            output[i] = 0;
+            for (size_t j = 0; j < input.size(); j++) {
+                output[i] += input[j] * weights[j][i];
+            }
+            output[i] = tanh(output[i]); // Activation
+        }
+        return output;
+    }
+};
+
+int main() {
+    cout << "=== Exian.AI 3.0 Demo ===" << endl;
+    
+    ExianAI ai(3, 0.05);
+    
+    // Training data
+    vector<double> input = {0.5, 0.3, 0.8};
+    vector<double> target = {0.7, 0.2, 0.9};
+    
+    // Train for 1000 epochs
+    for (int epoch = 0; epoch < 1000; epoch++) {
+        ai.train(input, target);
+        if (epoch % 100 == 0) {
+            cout << "Epoch " << epoch << " completed" << endl;
+        }
+    }
+    
+    // Prediction
+    auto prediction = ai.predict(input);
+    cout << "\\nPrediction: ";
+    for (auto val : prediction) {
+        cout << val << " ";
+    }
+    cout << endl;
+    
+    cout << "\\nTraining complete! 🚀" << endl;
+    return 0;
+}</textarea>
+          <div class="exian-statusbar">
+            <span id="exian-stat-ln">Стр 1, Стб 1</span>
+            <span>C++ 17</span>
+            <span>UTF-8</span>
+            <span id="exian-git-status">main ● 3↑</span>
+          </div>
+        </div>
+      </div>
+      <div class="exian-terminal" id="exian-terminal">
+        <div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> Добро пожаловать в Exian.AI 3.0 Terminal</div>
+        <div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Компилятор: g++ (GCC) 13.2.0</div>
+        <div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Git: версия 2.42.0</div>
+        <div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> Готов к работе...</div>
+      </div>
+    </div>
+  </div>
+  <div class="resize-handle" onmousedown="resizeWin(event,'win-exianai')"></div>
+</div>
+
 <!-- NOTIFICATIONS -->
 <div id="notif-stack"></div>
 
@@ -1323,11 +1529,13 @@ function showLockScreen() {
 function enterDesktop() {
   updateUserUI();
   loadNotepadContent();
+  loadExianCode();
   initFileSystem();
   initPaint();
   tmRender('processes');
   showNotif('Windows 12', 'Добро пожаловать, ' + currentUser.name + '!', '🪟');
-  setTimeout(() => showNotif('Windows Update', 'Система обновлена до версии 24H2', '✅'), 2000);
+  setTimeout(() => showNotif('Exian.AI 3.0', 'C++ IDE готов к работе', '🤖'), 2000);
+  setTimeout(() => showNotif('Windows Update', 'Система обновлена до версии 24H2', '✅'), 3500);
 }
 
 function updateUserUI() {
@@ -1432,7 +1640,16 @@ function ctxNewFile() { hideAll(); openApp('notepad'); npNew(); }
 // ════════════════════════════════════════════
 // WINDOW MANAGEMENT
 // ════════════════════════════════════════════
-const APP_MAP = { explorer:'win-explorer', notepad:'win-notepad', calc:'win-calc', settings:'win-settings', browser:'win-browser', paint:'win-paint', taskman:'win-taskman' };
+const APP_MAP = { 
+  explorer:'win-explorer', 
+  notepad:'win-notepad', 
+  calc:'win-calc', 
+  settings:'win-settings', 
+  browser:'win-browser', 
+  paint:'win-paint', 
+  taskman:'win-taskman',
+  exianai:'win-exianai'
+};
 
 function openApp(app) {
   const winId = APP_MAP[app];
@@ -1458,6 +1675,7 @@ function onWindowOpen(app) {
   if (app === 'settings') { updateUserUI(); el('about-res').textContent = window.innerWidth + ' × ' + window.innerHeight; }
   if (app === 'explorer') { expGoto('home'); }
   if (app === 'browser') { brHome(); }
+  if (app === 'exianai') { loadExianCode(); updateExianStatus(); }
 }
 
 function closeWin(app) {
@@ -1468,6 +1686,7 @@ function closeWin(app) {
   const tb = el('tb-' + app);
   if (tb) { tb.classList.remove('running', 'active-win'); }
   if (app === 'notepad') saveNotepadContent();
+  if (app === 'exianai') saveExianCode();
 }
 
 function minimizeWin(app) {
@@ -1538,9 +1757,9 @@ function doResize(e) {
 // START MENU SEARCH
 // ════════════════════════════════════════════
 function smSearch(q) {
-  const apps = ['Проводник','Блокнот','Калькулятор','Edge','Параметры','Paint','Диспетчер задач'];
-  const appKeys = ['explorer','notepad','calc','browser','settings','paint','taskman'];
-  const icons = ['📁','📝','🧮','🌐','⚙️','🎨','📊'];
+  const apps = ['Проводник','Блокнот','Калькулятор','Edge','Параметры','Paint','Диспетчер задач','Exian.AI 3.0'];
+  const appKeys = ['explorer','notepad','calc','browser','settings','paint','taskman','exianai'];
+  const icons = ['📁','📝','🧮','🌐','⚙️','🎨','📊','🤖'];
   const pinned = el('sm-pinned-sec');
   if (!q) { pinned.style.display = ''; return; }
   pinned.style.display = 'none';
@@ -1616,6 +1835,7 @@ function setPage(page, clickedEl) {
 function lockScreen() {
   hideAll();
   saveNotepadContent();
+  saveExianCode();
   el('lock-avatar').textContent = currentUser.avatar || '🧑';
   el('lock-username-disp').textContent = currentUser.name;
   const ls = el('lockscreen');
@@ -1631,12 +1851,14 @@ function lockScreen() {
 
 function reboot() {
   saveNotepadContent();
+  saveExianCode();
   showNotif('Windows 12','Перезагрузка...','🔄');
   setTimeout(() => location.reload(), 1500);
 }
 
 function shutdown() {
   saveNotepadContent();
+  saveExianCode();
   document.body.innerHTML = '<div style="background:#000;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;"><svg width="72" height="72" viewBox="0 0 88 88"><rect x="4" y="4" width="38" height="38" rx="5" fill="#F35325"/><rect x="46" y="4" width="38" height="38" rx="5" fill="#81BC06"/><rect x="4" y="46" width="38" height="38" rx="5" fill="#05A6F0"/><rect x="46" y="46" width="38" height="38" rx="5" fill="#FFBA08"/></svg><div style="color:rgba(255,255,255,.4);font-family:Segoe UI;font-size:16px;">Выключение...</div></div>';
   setTimeout(() => location.reload(), 2500);
 }
@@ -1915,7 +2137,7 @@ function cFn(fn) {
   else if(fn==='sign'){cVal=String(-parseFloat(cVal));}
   else if(fn==='mc'){cMem=0;showNotif('Калькулятор','Память очищена','🧮');}
   else if(fn==='mr'){cVal=String(cMem);cNew=true;}
-  else if(fn==='ms'){mMem=parseFloat(cVal);showNotif('Калькулятор','Сохранено в память: '+cVal,'🧮');}
+  else if(fn==='ms'){cMem=parseFloat(cVal);showNotif('Калькулятор','Сохранено в память: '+cVal,'🧮');}
   else if(fn==='m+'){cMem+=parseFloat(cVal);}
   cDisp();
 }
@@ -2128,6 +2350,182 @@ function tmRender(tab) {
 }
 
 // ════════════════════════════════════════════
+// EXIAN AI 3.0 IDE
+// ════════════════════════════════════════════
+let exianCurrentFile = 'main.cpp';
+let exianCodeChanged_ = false;
+
+function loadExianCode() {
+  const saved = localStorage.getItem('w12_exian_code');
+  if (saved && el('exian-code')) {
+    el('exian-code').value = saved;
+  }
+}
+
+function saveExianCode() {
+  if (el('exian-code')) {
+    localStorage.setItem('w12_exian_code', el('exian-code').value);
+  }
+}
+
+function exianCodeChanged() {
+  exianCodeChanged_ = true;
+  updateExianStatus();
+  const area = el('exian-code');
+  const text = area.value;
+  const lines = text.substr(0, area.selectionStart).split('\n');
+  el('exian-stat-ln').textContent = `Стр ${lines.length}, Стб ${lines[lines.length-1].length+1}`;
+  saveExianCode();
+}
+
+function updateExianStatus() {
+  const status = exianCodeChanged_ ? 'main ● 3↑ (несохранённые изменения)' : 'main ✓ 3↑';
+  if (el('exian-git-status')) {
+    el('exian-git-status').textContent = status;
+  }
+}
+
+function exianSelectFile(el_, filename) {
+  document.querySelectorAll('.exian-file-item').forEach(i=>i.classList.remove('active'));
+  el_.classList.add('active');
+  exianCurrentFile = filename;
+  el('exian-tab-name').textContent = filename;
+  
+  if (filename === 'main.cpp') {
+    loadExianCode();
+  } else {
+    showNotif('Exian.AI', 'Открытие файла: ' + filename, '📄');
+  }
+}
+
+function exianNewFile() {
+  const name = prompt('Имя нового файла:', 'new_file.cpp');
+  if (!name) return;
+  showNotif('Exian.AI', 'Создан файл: ' + name, '📄');
+}
+
+function exianOpenFile() {
+  showNotif('Exian.AI', 'Выберите файл из проекта', '📂');
+}
+
+function exianSaveFile() {
+  saveExianCode();
+  exianCodeChanged_ = false;
+  updateExianStatus();
+  showNotif('Exian.AI', 'Файл сохранён: ' + exianCurrentFile, '💾');
+}
+
+function exianRun() {
+  const term = el('exian-terminal');
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> g++ -std=c++17 main.cpp -o exian_ai</div>';
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Компиляция успешна</div>';
+    term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> ./exian_ai</div>';
+    setTimeout(() => {
+      term.innerHTML += '<div class="exian-terminal-line">=== Exian.AI 3.0 Demo ===</div>';
+      term.innerHTML += '<div class="exian-terminal-line">Exian.AI 3.0 initialized with 3 neurons</div>';
+      term.innerHTML += '<div class="exian-terminal-line">Epoch 0 completed</div>';
+      term.innerHTML += '<div class="exian-terminal-line">Epoch 100 completed</div>';
+      setTimeout(() => {
+        term.innerHTML += '<div class="exian-terminal-line">Epoch 200 completed</div>';
+        term.innerHTML += '<div class="exian-terminal-line">...</div>';
+        term.innerHTML += '<div class="exian-terminal-line">Epoch 900 completed</div>';
+        term.innerHTML += '<div class="exian-terminal-line"></div>';
+        term.innerHTML += '<div class="exian-terminal-line">Prediction: 0.698 0.201 0.897</div>';
+        term.innerHTML += '<div class="exian-terminal-line"></div>';
+        term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">Training complete! 🚀</span></div>';
+        term.scrollTop = term.scrollHeight;
+        showNotif('Exian.AI', 'Программа выполнена успешно!', '✅');
+      }, 1200);
+    }, 800);
+  }, 600);
+  term.scrollTop = term.scrollHeight;
+}
+
+function exianBuild() {
+  const term = el('exian-terminal');
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> g++ -std=c++17 -O3 main.cpp neural.cpp -o exian_ai</div>';
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Build successful</div>';
+    term.innerHTML += '<div class="exian-terminal-line">Executable: ./exian_ai</div>';
+    term.scrollTop = term.scrollHeight;
+    showNotif('Exian.AI', 'Сборка завершена', '🔨');
+  }, 800);
+}
+
+function exianGitClone() {
+  const term = el('exian-terminal');
+  const repo = prompt('URL репозитория:', 'https://github.com/exian-ai/core.git');
+  if (!repo) return;
+  term.innerHTML += `<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> git clone ${repo}</div>`;
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line">Cloning into \'core\'...</div>';
+    setTimeout(() => {
+      term.innerHTML += '<div class="exian-terminal-line">remote: Enumerating objects: 125, done.</div>';
+      term.innerHTML += '<div class="exian-terminal-line">remote: Counting objects: 100% (125/125), done.</div>';
+      term.innerHTML += '<div class="exian-terminal-line">Receiving objects: 100% (125/125), 2.34 MiB | 5.12 MiB/s, done.</div>';
+      term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Repository cloned successfully</div>';
+      term.scrollTop = term.scrollHeight;
+      showNotif('GitHub', 'Репозиторий склонирован', '⬇️');
+    }, 1000);
+  }, 400);
+}
+
+function exianGitCommit() {
+  const term = el('exian-terminal');
+  const msg = prompt('Сообщение коммита:', 'Updated neural network implementation');
+  if (!msg) return;
+  term.innerHTML += `<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> git add .</div>`;
+  term.innerHTML += `<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> git commit -m "${msg}"</div>`;
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line">[main 4a8bc2e] ' + msg + '</div>';
+    term.innerHTML += '<div class="exian-terminal-line"> 3 files changed, 127 insertions(+), 45 deletions(-)</div>';
+    term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Changes committed</div>';
+    term.scrollTop = term.scrollHeight;
+    showNotif('GitHub', 'Коммит создан', '💾');
+    exianCodeChanged_ = false;
+    updateExianStatus();
+  }, 600);
+}
+
+function exianGitPush() {
+  const term = el('exian-terminal');
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> git push origin main</div>';
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line">Enumerating objects: 8, done.</div>';
+    term.innerHTML += '<div class="exian-terminal-line">Counting objects: 100% (8/8), done.</div>';
+    setTimeout(() => {
+      term.innerHTML += '<div class="exian-terminal-line">Writing objects: 100% (5/5), 1.23 KiB | 1.23 MiB/s, done.</div>';
+      term.innerHTML += '<div class="exian-terminal-line">Total 5 (delta 2), reused 0 (delta 0)</div>';
+      term.innerHTML += '<div class="exian-terminal-line">To https://github.com/exian-ai/core.git</div>';
+      term.innerHTML += '<div class="exian-terminal-line">   3f7d891..4a8bc2e  main -> main</div>';
+      term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Changes pushed to GitHub</div>';
+      term.scrollTop = term.scrollHeight;
+      showNotif('GitHub', 'Изменения отправлены в репозиторий', '⬆️');
+      el('exian-git-status').textContent = 'main ✓';
+    }, 1200);
+  }, 500);
+}
+
+function exianGitPull() {
+  const term = el('exian-terminal');
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> git pull origin main</div>';
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line">From https://github.com/exian-ai/core</div>';
+    term.innerHTML += '<div class="exian-terminal-line"> * branch            main     -> FETCH_HEAD</div>';
+    setTimeout(() => {
+      term.innerHTML += '<div class="exian-terminal-line">Updating 4a8bc2e..7f2d3a1</div>';
+      term.innerHTML += '<div class="exian-terminal-line">Fast-forward</div>';
+      term.innerHTML += '<div class="exian-terminal-line"> algorithm.h | 23 ++++++++++++++++++++</div>';
+      term.innerHTML += '<div class="exian-terminal-line"> 1 file changed, 23 insertions(+)</div>';
+      term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Repository updated</div>';
+      term.scrollTop = term.scrollHeight;
+      showNotif('GitHub', 'Изменения получены из репозитория', '🔄');
+    }, 800);
+  }, 400);
+}
+
+// ════════════════════════════════════════════
 // TASKBAR BUTTONS CLICK (single click)
 // ════════════════════════════════════════════
 document.querySelectorAll('.tb-btn').forEach(btn => {
@@ -2163,6 +2561,7 @@ document.addEventListener('keydown', e => {
 // ════════════════════════════════════════════
 window.addEventListener('beforeunload', () => {
   saveNotepadContent();
+  saveExianCode();
   localStorage.setItem('w12_bright', el('bright-sl').value);
   localStorage.setItem('w12_vol', el('vol-sl').value);
 });
