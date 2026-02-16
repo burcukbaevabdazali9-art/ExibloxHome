@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>ExiWin 12</title>
+<title>Windows 12</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;}
 :root{
@@ -10,33 +10,12 @@
   --bg2:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.10);
   --text:#fff;--text2:rgba(255,255,255,0.55);--radius:12px;
   --shadow:0 12px 48px rgba(0,0,0,0.55);--blur:blur(40px);
-  --desktop-bg:linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%);
-  --taskbar-bg:rgba(8,12,22,.88);
-  --menu-bg:rgba(12,16,28,.95);
-  --card-bg:rgba(255,255,255,.05);
-  --input-bg:rgba(255,255,255,.08);
 }
-
-/* ─── СВЕТЛАЯ ТЕМА ─────────────────────────── */
-body.light-theme {
-  --bg1:rgba(255,255,255,0.95);
-  --bg2:rgba(0,0,0,0.05);
-  --border:rgba(0,0,0,0.12);
-  --text:#000;
-  --text2:rgba(0,0,0,0.60);
-  --shadow:0 8px 32px rgba(0,0,0,0.15);
-  --desktop-bg:linear-gradient(160deg,#e8f1f5 0%,#f0f4f8 40%,#dfe8ed 100%);
-  --taskbar-bg:rgba(248,250,252,.95);
-  --menu-bg:rgba(255,255,255,.98);
-  --card-bg:rgba(0,0,0,.04);
-  --input-bg:rgba(0,0,0,.06);
-}
-
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden;width:100vw;height:100vh;color:var(--text);}
 
 /* ─── BOOT ─────────────────────────────────── */
 #boot{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;}
-.exiwin-logo{width:80px;height:80px;margin-bottom:48px;font-size:72px;font-weight:700;background:linear-gradient(135deg,#0078d4,#60cdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;justify-content:center;}
+.win-logo-svg{width:72px;height:72px;margin-bottom:48px;}
 .boot-bar{width:180px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;}
 .boot-fill{height:100%;background:var(--accent);border-radius:2px;animation:bootFill 2.2s ease forwards;}
 @keyframes bootFill{0%{width:0}60%{width:70%}100%{width:100%}}
@@ -99,7 +78,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 /* ─── DESKTOP ────────────────────────────────── */
 #desktop{
   width:100%;height:calc(100% - 48px);position:relative;overflow:hidden;
-  background:var(--desktop-bg);
+  background:linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%);
 }
 .desk-aurora{
   position:absolute;inset:0;pointer-events:none;
@@ -113,32 +92,21 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   top:20%;left:30%;pointer-events:none;
 }
 
-body.light-theme .desk-aurora{
-  background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,120,212,.04) 60deg,rgba(0,150,255,.06) 100deg,rgba(100,80,255,.04) 150deg,transparent 200deg);
-}
-
-body.light-theme .desk-glow{
-  background:radial-gradient(ellipse,rgba(0,120,212,.06) 0%,transparent 70%);
-}
-
 /* ─── DESKTOP ICONS ──────────────────────────── */
 .desk-icon{
   position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;
   padding:8px 6px;width:82px;cursor:pointer;border-radius:10px;transition:background .15s;
 }
 .desk-icon:hover{background:rgba(255,255,255,.09);}
-body.light-theme .desk-icon:hover{background:rgba(0,0,0,.08);}
 .desk-icon.selected{background:rgba(0,120,212,.35);}
 .desk-icon .dico{font-size:38px;line-height:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));}
-body.light-theme .desk-icon .dico{filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));}
-.desk-icon span{font-size:11.5px;color:var(--text);text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);line-height:1.3;word-break:break-word;}
-body.light-theme .desk-icon span{text-shadow:0 1px 3px rgba(255,255,255,.9);}
+.desk-icon span{font-size:11.5px;color:#fff;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);line-height:1.3;word-break:break-word;}
 
 /* ─── TASKBAR ─────────────────────────────────── */
 #taskbar{
   position:fixed;bottom:0;left:0;right:0;height:48px;
-  background:var(--taskbar-bg);backdrop-filter:var(--blur);
-  border-top:1px solid var(--border);
+  background:rgba(8,12,22,.88);backdrop-filter:var(--blur);
+  border-top:1px solid rgba(255,255,255,.07);
   display:flex;align-items:center;z-index:1000;
 }
 #tb-left{display:flex;align-items:center;padding-left:8px;gap:2px;}
@@ -149,33 +117,22 @@ body.light-theme .desk-icon span{text-shadow:0 1px 3px rgba(255,255,255,.9);}
   border-radius:8px;cursor:pointer;transition:background .15s;position:relative;font-size:20px;flex-shrink:0;
 }
 .tb-btn:hover{background:rgba(255,255,255,.1);}
-body.light-theme .tb-btn:hover{background:rgba(0,0,0,.08);}
 .tb-btn.running::after{
   content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
   width:4px;height:4px;border-radius:50%;background:var(--accent2);
 }
 .tb-btn.active-win{background:rgba(255,255,255,.13);}
-body.light-theme .tb-btn.active-win{background:rgba(0,0,0,.12);}
-#start-btn{
-  width:44px;height:38px;display:flex;align-items:center;justify-content:center;
-  border-radius:8px;cursor:pointer;transition:background .15s;
-  font-size:24px;font-weight:700;
-  background:linear-gradient(135deg,#0078d4,#60cdff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-#start-btn:hover{background:rgba(255,255,255,.1);-webkit-text-fill-color:var(--text);}
-body.light-theme #start-btn:hover{background:rgba(0,0,0,.08);}
-.tb-sep{width:1px;height:22px;background:var(--border);margin:0 4px;}
-#tb-clock{color:var(--text);font-size:12px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
+#start-btn{width:44px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;transition:background .15s;}
+#start-btn:hover{background:rgba(255,255,255,.1);}
+.tb-sep{width:1px;height:22px;background:rgba(255,255,255,.1);margin:0 4px;}
+#tb-clock{color:#fff;font-size:12px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
 .tb-sys{display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background .15s;}
 .tb-sys:hover{background:rgba(255,255,255,.1);}
-body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 
 /* ─── START MENU ──────────────────────────────── */
 #start-menu{
   position:fixed;bottom:56px;left:50%;transform:translateX(-50%) translateY(8px);
-  width:680px;background:var(--menu-bg);backdrop-filter:var(--blur);
+  width:680px;background:rgba(12,16,28,.95);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
   display:none;flex-direction:column;z-index:900;overflow:hidden;
   opacity:0;transition:opacity .18s,transform .18s;
@@ -183,10 +140,10 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 #start-menu.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #sm-search{
   margin:18px 18px 0;display:flex;align-items:center;
-  background:var(--input-bg);border:1px solid var(--border);
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
   border-radius:10px;padding:9px 14px;gap:10px;
 }
-#sm-search input{background:none;border:none;outline:none;color:var(--text);font-size:14px;flex:1;font-family:inherit;}
+#sm-search input{background:none;border:none;outline:none;color:#fff;font-size:14px;flex:1;font-family:inherit;}
 #sm-search input::placeholder{color:var(--text2);}
 .sm-sec{padding:14px 18px 8px;font-size:12px;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;}
 .pinned-apps{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:0 10px;}
@@ -194,7 +151,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
   display:flex;flex-direction:column;align-items:center;gap:6px;
   padding:14px 8px 10px;border-radius:10px;cursor:pointer;transition:background .15s;
 }
-.pin-app:hover{background:var(--bg2);}
+.pin-app:hover{background:rgba(255,255,255,.1);}
 .pin-app .ico{font-size:26px;}
 .pin-app .lbl{font-size:11px;color:var(--text2);text-align:center;}
 .rec-list{padding:0 12px;display:flex;flex-direction:column;gap:1px;}
@@ -202,16 +159,16 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
   display:flex;align-items:center;gap:12px;padding:8px 10px;
   border-radius:8px;cursor:pointer;transition:background .15s;
 }
-.rec-row:hover{background:var(--bg2);}
+.rec-row:hover{background:rgba(255,255,255,.08);}
 .rec-row .ico{font-size:22px;}
-.rec-info .n{font-size:13px;color:var(--text);}
+.rec-info .n{font-size:13px;}
 .rec-info .t{font-size:11px;color:var(--text2);}
 #sm-footer{
   display:flex;justify-content:space-between;align-items:center;
-  padding:12px 18px;border-top:1px solid var(--border);margin-top:auto;
+  padding:12px 18px;border-top:1px solid rgba(255,255,255,.07);margin-top:auto;
 }
 #sm-user{display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 10px;border-radius:8px;transition:background .15s;}
-#sm-user:hover{background:var(--bg2);}
+#sm-user:hover{background:rgba(255,255,255,.08);}
 #sm-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
 .power-menu{display:flex;gap:4px;}
 .pw-btn{
@@ -223,11 +180,11 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 /* ─── TRAY POPUP ──────────────────────────────── */
 #tray-popup{
   position:fixed;bottom:56px;right:8px;width:360px;
-  background:var(--menu-bg);backdrop-filter:var(--blur);
+  background:rgba(12,16,28,.96);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:16px;padding:18px;
   box-shadow:var(--shadow);display:none;z-index:900;
 }
-.tray-time-big{font-size:52px;font-weight:200;text-align:center;letter-spacing:2px;color:var(--text);}
+.tray-time-big{font-size:52px;font-weight:200;text-align:center;letter-spacing:2px;}
 .tray-date-str{font-size:13px;color:var(--text2);text-align:center;margin-bottom:16px;}
 .tray-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
 .tr-tile{
@@ -235,7 +192,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
   cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px;
 }
 .tr-tile:hover{background:rgba(0,120,212,.4);}
-.tr-tile.off{background:var(--bg2);}
+.tr-tile.off{background:rgba(255,255,255,.06);}
 .tr-tile .ico{font-size:18px;}
 .tr-tile .lbl{font-size:11px;color:var(--text2);}
 .sl-row{display:flex;align-items:center;gap:10px;margin:6px 0;}
@@ -245,17 +202,17 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 
 /* ─── CONTEXT MENU ────────────────────────────── */
 #ctx-menu{
-  position:fixed;z-index:9998;background:var(--menu-bg);backdrop-filter:var(--blur);
+  position:fixed;z-index:9998;background:rgba(18,22,36,.96);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:var(--radius);padding:6px;
   min-width:210px;box-shadow:var(--shadow);display:none;
 }
 .ctx-item{
-  padding:8px 14px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;
+  padding:8px 14px;border-radius:8px;font-size:13px;color:#fff;cursor:pointer;
   display:flex;align-items:center;gap:10px;transition:background .1s;
 }
-.ctx-item:hover{background:var(--bg2);}
+.ctx-item:hover{background:rgba(255,255,255,.1);}
 .ctx-item .ico{font-size:15px;width:18px;text-align:center;}
-.ctx-sep{height:1px;background:var(--border);margin:4px 2px;}
+.ctx-sep{height:1px;background:rgba(255,255,255,.08);margin:4px 2px;}
 
 /* ─── WINDOWS ─────────────────────────────────── */
 .window{
@@ -270,17 +227,17 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 .titlebar{
   height:40px;display:flex;align-items:center;padding:0 10px;
   cursor:move;border-radius:var(--radius) var(--radius) 0 0;flex-shrink:0;
-  background:var(--bg2);border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.05);
 }
 .tb-icon{font-size:16px;margin-right:8px;}
-.tb-title{flex:1;font-size:13px;color:var(--text);}
+.tb-title{flex:1;font-size:13px;color:rgba(255,255,255,.8);}
 .win-btns{display:flex;gap:2px;}
 .wb{
   width:32px;height:28px;border-radius:6px;display:flex;align-items:center;
   justify-content:center;cursor:pointer;font-size:12px;color:var(--text2);
   transition:background .12s;
 }
-.wb:hover{background:var(--bg2);color:var(--text);}
+.wb:hover{background:rgba(255,255,255,.14);color:#fff;}
 .wb.cls:hover{background:rgba(196,43,28,.85);color:#fff;}
 .win-body{flex:1;overflow:auto;border-radius:0 0 var(--radius) var(--radius);}
 .resize-handle{position:absolute;width:14px;height:14px;bottom:0;right:0;cursor:se-resize;}
@@ -289,7 +246,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 .exp-wrap{display:flex;flex-direction:column;height:100%;}
 .exp-topbar{
   display:flex;align-items:center;gap:6px;padding:6px 10px;
-  border-bottom:1px solid var(--border);flex-shrink:0;
+  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;
 }
 .exp-nav{
   width:28px;height:28px;border-radius:6px;display:flex;align-items:center;
@@ -297,21 +254,21 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 }
 .exp-nav:hover{background:var(--bg2);}
 .exp-path{
-  flex:1;background:var(--input-bg);border:1px solid var(--border);
-  border-radius:7px;padding:4px 12px;font-size:12px;color:var(--text);
+  flex:1;background:rgba(255,255,255,.07);border:1px solid var(--border);
+  border-radius:7px;padding:4px 12px;font-size:12px;color:var(--text2);
   cursor:text;outline:none;font-family:inherit;
 }
 .exp-body{display:flex;flex:1;overflow:hidden;}
 .exp-side{
-  width:175px;border-right:1px solid var(--border);
-  padding:8px;overflow-y:auto;flex-shrink:0;background:var(--bg2);
+  width:175px;border-right:1px solid rgba(255,255,255,.05);
+  padding:8px;overflow-y:auto;flex-shrink:0;background:rgba(0,0,0,.15);
 }
 .exp-side-item{
   padding:7px 10px;border-radius:7px;font-size:13px;color:var(--text2);
   cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;
 }
 .exp-side-item:hover{background:var(--bg2);}
-.exp-side-item.active{background:rgba(0,120,212,.3);color:var(--text);}
+.exp-side-item.active{background:rgba(0,120,212,.3);color:#fff;}
 .exp-files{
   flex:1;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,90px);
   gap:8px;align-content:start;overflow-y:auto;
@@ -326,11 +283,11 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 .file-item .fname{font-size:11px;color:var(--text2);text-align:center;word-break:break-all;}
 .exp-statusbar{
   padding:4px 14px;font-size:11px;color:var(--text2);
-  border-top:1px solid var(--border);flex-shrink:0;
+  border-top:1px solid rgba(255,255,255,.05);flex-shrink:0;
 }
 .exp-toolbar-row{
   display:flex;align-items:center;gap:4px;padding:4px 8px;
-  border-bottom:1px solid var(--border);flex-shrink:0;
+  border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;
 }
 .exp-tb-btn{
   padding:4px 10px;border-radius:6px;font-size:12px;color:var(--text2);
@@ -340,33 +297,33 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 
 /* ─── NOTEPAD ─────────────────────────────────── */
 .np-wrap{display:flex;flex-direction:column;height:100%;}
-.np-menubar{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.np-menubar{display:flex;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
 .np-menu-item{
   padding:6px 12px;font-size:13px;color:var(--text2);cursor:pointer;
   transition:background .12s;position:relative;
 }
 .np-menu-item:hover,.np-menu-item.open{background:var(--bg2);}
 .np-dropdown{
-  position:absolute;top:100%;left:0;background:var(--menu-bg);
+  position:absolute;top:100%;left:0;background:rgba(18,22,36,.98);
   border:1px solid var(--border);border-radius:8px;padding:4px;
   min-width:160px;z-index:9999;display:none;box-shadow:var(--shadow);
 }
 .np-menu-item.open .np-dropdown{display:block;}
 .np-dd-item{
-  padding:7px 12px;border-radius:6px;font-size:13px;color:var(--text);
+  padding:7px 12px;border-radius:6px;font-size:13px;color:#fff;
   cursor:pointer;display:flex;justify-content:space-between;align-items:center;
 }
 .np-dd-item:hover{background:var(--bg2);}
-.np-dd-item kbd{font-size:11px;color:var(--text2);background:var(--bg2);padding:1px 5px;border-radius:4px;}
-.np-dd-sep{height:1px;background:var(--border);margin:3px 0;}
+.np-dd-item kbd{font-size:11px;color:var(--text2);background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px;}
+.np-dd-sep{height:1px;background:rgba(255,255,255,.08);margin:3px 0;}
 #np-area{
-  flex:1;background:var(--input-bg);color:var(--text);border:none;outline:none;
+  flex:1;background:rgba(8,10,18,.85);color:#dde8ff;border:none;outline:none;
   padding:16px;font-size:14px;font-family:'Consolas','Courier New',monospace;
   resize:none;line-height:1.7;
 }
 .np-statusbar{
   display:flex;gap:16px;padding:3px 12px;font-size:11px;color:var(--text2);
-  border-top:1px solid var(--border);flex-shrink:0;
+  border-top:1px solid rgba(255,255,255,.05);flex-shrink:0;
 }
 
 /* ─── CALCULATOR ──────────────────────────────── */
@@ -376,52 +333,52 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
   padding:5px 12px;border-radius:6px;font-size:12px;color:var(--text2);
   cursor:pointer;transition:background .12s;
 }
-.calc-mode-btn:hover,.calc-mode-btn.active{background:var(--bg2);color:var(--text);}
+.calc-mode-btn:hover,.calc-mode-btn.active{background:var(--bg2);color:#fff;}
 .calc-display{
-  background:var(--input-bg);border-radius:10px;padding:12px 16px;
+  background:rgba(0,0,0,.35);border-radius:10px;padding:12px 16px;
   display:flex;flex-direction:column;align-items:flex-end;
 }
 .calc-expr{font-size:13px;color:var(--text2);min-height:20px;word-break:break-all;}
-.calc-result{font-size:40px;font-weight:300;min-height:54px;word-break:break-all;color:var(--text);}
+.calc-result{font-size:40px;font-weight:300;min-height:54px;word-break:break-all;}
 .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;flex:1;}
 .cc{
   border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:16px;cursor:pointer;transition:all .1s;color:var(--text);
+  font-size:16px;cursor:pointer;transition:all .1s;color:#fff;
   min-height:48px;
 }
 .cc:hover{filter:brightness(1.2);}
 .cc:active{transform:scale(.93);}
-.cc-fn{background:var(--bg2);color:var(--text2);}
+.cc-fn{background:rgba(255,255,255,.06);color:var(--text2);}
 .cc-op{background:rgba(0,120,212,.3);}
-.cc-eq{background:var(--accent);color:#fff;}
-.cc-num{background:var(--bg2);}
+.cc-eq{background:var(--accent);}
+.cc-num{background:rgba(255,255,255,.09);}
 .cc-span2{grid-column:span 2;}
 
 /* ─── SETTINGS ────────────────────────────────── */
 .set-wrap{display:flex;height:100%;}
 .set-side{
-  width:215px;border-right:1px solid var(--border);
-  padding:10px;overflow-y:auto;background:var(--bg2);flex-shrink:0;
+  width:215px;border-right:1px solid rgba(255,255,255,.05);
+  padding:10px;overflow-y:auto;background:rgba(0,0,0,.15);flex-shrink:0;
 }
 .set-side-item{
   padding:10px 14px;border-radius:8px;font-size:13px;color:var(--text2);
   cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s;
 }
 .set-side-item:hover{background:var(--bg2);}
-.set-side-item.active{background:rgba(0,120,212,.3);color:var(--text);}
+.set-side-item.active{background:rgba(0,120,212,.3);color:#fff;}
 .set-content{flex:1;padding:24px;overflow-y:auto;}
 .set-page{display:none;}
 .set-page.active{display:block;}
-.set-h1{font-size:22px;font-weight:300;margin-bottom:20px;color:var(--text);}
+.set-h1{font-size:22px;font-weight:300;margin-bottom:20px;}
 .set-card{
-  background:var(--card-bg);border:1px solid var(--border);
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
   border-radius:10px;padding:14px 18px;margin-bottom:8px;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
-.set-card-l .n{font-size:14px;color:var(--text);}
+.set-card-l .n{font-size:14px;}
 .set-card-l .d{font-size:12px;color:var(--text2);margin-top:2px;}
 .toggle{
-  width:44px;height:24px;border-radius:12px;background:var(--bg2);
+  width:44px;height:24px;border-radius:12px;background:rgba(255,255,255,.15);
   position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;
 }
 .toggle.on{background:var(--accent);}
@@ -433,17 +390,17 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 .set-range-wrap{display:flex;align-items:center;gap:10px;margin-top:8px;}
 .set-range-wrap input{flex:1;accent-color:var(--accent);}
 .set-select{
-  background:var(--input-bg);border:1px solid var(--border);
-  border-radius:8px;padding:6px 10px;color:var(--text);font-size:13px;
+  background:rgba(255,255,255,.08);border:1px solid var(--border);
+  border-radius:8px;padding:6px 10px;color:#fff;font-size:13px;
   outline:none;font-family:inherit;cursor:pointer;
 }
-.set-select option{background:var(--bg1);color:var(--text);}
+.set-select option{background:#111827;}
 
 /* ─── BROWSER ─────────────────────────────────── */
 .br-wrap{display:flex;flex-direction:column;height:100%;}
 .br-bar{
   display:flex;align-items:center;gap:6px;padding:7px 10px;
-  border-bottom:1px solid var(--border);flex-shrink:0;
+  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;
 }
 .br-nav{
   width:28px;height:28px;border-radius:6px;display:flex;align-items:center;
@@ -452,64 +409,64 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 }
 .br-nav:hover{background:var(--bg2);}
 .br-url-bar{
-  flex:1;background:var(--input-bg);border:1px solid var(--border);
-  border-radius:20px;padding:5px 14px;font-size:13px;color:var(--text);outline:none;
+  flex:1;background:rgba(255,255,255,.07);border:1px solid var(--border);
+  border-radius:20px;padding:5px 14px;font-size:13px;color:#fff;outline:none;
   font-family:inherit;
 }
 .br-newtab{
   flex:1;padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:20px;
   overflow-y:auto;
 }
-.br-greeting{font-size:26px;font-weight:300;color:var(--text);}
+.br-greeting{font-size:26px;font-weight:300;color:#fff;}
 .br-searchbar{
-  display:flex;align-items:center;background:var(--input-bg);
-  border:1px solid var(--border);border-radius:28px;
+  display:flex;align-items:center;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);border-radius:28px;
   padding:10px 20px;gap:10px;width:560px;max-width:100%;
 }
-.br-searchbar input{background:none;border:none;outline:none;color:var(--text);font-size:15px;flex:1;font-family:inherit;}
+.br-searchbar input{background:none;border:none;outline:none;color:#fff;font-size:15px;flex:1;font-family:inherit;}
 .br-searchbar button{background:var(--accent);border:none;color:#fff;padding:7px 18px;border-radius:18px;cursor:pointer;font-size:13px;font-family:inherit;}
 .br-shortcuts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:560px;max-width:100%;}
 .br-sc{
-  background:var(--card-bg);border-radius:12px;padding:14px 10px;
+  background:rgba(255,255,255,.06);border-radius:12px;padding:14px 10px;
   display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;
   transition:background .12s;
 }
-.br-sc:hover{background:var(--bg2);}
+.br-sc:hover{background:rgba(255,255,255,.12);}
 .br-sc .ico{font-size:22px;}
 .br-sc span{font-size:11px;color:var(--text2);}
 .br-news{width:560px;max-width:100%;margin-top:10px;}
 .br-news h3{font-size:14px;color:var(--text2);margin-bottom:10px;}
 .br-article{
-  background:var(--card-bg);border-radius:10px;padding:12px;
+  background:rgba(255,255,255,.05);border-radius:10px;padding:12px;
   margin-bottom:8px;cursor:pointer;transition:background .12s;
 }
-.br-article:hover{background:var(--bg2);}
-.br-article h4{font-size:13px;color:var(--text);margin-bottom:4px;}
+.br-article:hover{background:rgba(255,255,255,.09);}
+.br-article h4{font-size:13px;margin-bottom:4px;}
 .br-article p{font-size:12px;color:var(--text2);}
 .br-frame{flex:1;width:100%;border:none;background:#fff;}
 
 /* ─── TASK MANAGER ────────────────────────────── */
 .tm-wrap{display:flex;flex-direction:column;height:100%;}
-.tm-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.tm-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
 .tm-tab{
   padding:10px 18px;font-size:13px;color:var(--text2);cursor:pointer;
   transition:all .12s;border-bottom:2px solid transparent;
 }
-.tm-tab:hover{color:var(--text);}
-.tm-tab.active{color:var(--text);border-bottom-color:var(--accent);}
+.tm-tab:hover{color:#fff;}
+.tm-tab.active{color:#fff;border-bottom-color:var(--accent);}
 .tm-body{flex:1;padding:14px;overflow-y:auto;}
 .tm-table{width:100%;border-collapse:collapse;font-size:13px;}
-.tm-table th{text-align:left;padding:8px 12px;color:var(--text2);font-weight:400;border-bottom:1px solid var(--border);}
-.tm-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text);}
-.tm-table tr:hover td{background:var(--bg2);}
-.tm-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;}
+.tm-table th{text-align:left;padding:8px 12px;color:var(--text2);font-weight:400;border-bottom:1px solid rgba(255,255,255,.07);}
+.tm-table td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);}
+.tm-table tr:hover td{background:rgba(255,255,255,.04);}
+.tm-bar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
 .tm-fill{height:100%;border-radius:3px;background:var(--accent);}
 
 /* ─── PAINT ───────────────────────────────────── */
 .paint-wrap{display:flex;flex-direction:column;height:100%;}
 .paint-toolbar{
   display:flex;align-items:center;gap:8px;padding:8px 12px;
-  border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;
+  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;flex-wrap:wrap;
 }
 .paint-tool{
   width:34px;height:34px;border-radius:7px;display:flex;align-items:center;
@@ -521,7 +478,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
   width:20px;height:20px;border-radius:4px;cursor:pointer;
   border:2px solid transparent;transition:border .12s;
 }
-.paint-color.active{border-color:var(--text);}
+.paint-color.active{border-color:#fff;}
 .paint-size{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
 .paint-size input{width:80px;accent-color:var(--accent);}
 .paint-canvas-wrap{flex:1;overflow:hidden;background:#fff;position:relative;}
@@ -529,49 +486,45 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 
 /* ─── EXIAN AI 3.0 ───────────────────────── */
 .exian-wrap{display:flex;flex-direction:column;height:100%;background:rgba(8,10,18,.95);}
-body.light-theme .exian-wrap{background:rgba(248,250,252,.95);}
 .exian-toolbar{
   display:flex;align-items:center;gap:6px;padding:8px 12px;
-  border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;
+  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;flex-wrap:wrap;
 }
 .exian-btn{
-  padding:6px 14px;border-radius:6px;font-size:12px;
+  padding:6px 14px;border-radius:6px;font-size:12px;color:#fff;
   cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:6px;
-  background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
 }
-.exian-btn:hover{background:var(--bg2);filter:brightness(1.2);}
+.exian-btn:hover{background:rgba(255,255,255,.15);}
 .exian-btn.run{background:rgba(46,204,113,.3);color:#2ecc71;font-weight:600;}
 .exian-btn.run:hover{background:rgba(46,204,113,.5);}
 .exian-main{display:flex;flex:1;overflow:hidden;}
 .exian-editor{flex:1;display:flex;flex-direction:column;}
 .exian-tabs{
-  display:flex;gap:2px;padding:6px 8px;border-bottom:1px solid var(--border);
-  background:var(--bg2);flex-shrink:0;
+  display:flex;gap:2px;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.05);
+  background:rgba(0,0,0,.2);flex-shrink:0;
 }
 .exian-tab{
   padding:6px 14px;border-radius:6px 6px 0 0;font-size:12px;color:var(--text2);
   cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:8px;
 }
-.exian-tab.active{background:rgba(8,10,18,1);color:var(--text);}
-body.light-theme .exian-tab.active{background:rgba(255,255,255,1);}
-.exian-tab:hover{background:var(--bg2);}
+.exian-tab.active{background:rgba(8,10,18,1);color:#fff;}
+.exian-tab:hover{background:rgba(255,255,255,.08);}
 .exian-code-area{
   flex:1;background:rgba(8,10,18,1);color:#d4d4d4;border:none;outline:none;
   padding:16px;font-size:13px;font-family:'Consolas','Courier New','Monaco',monospace;
   resize:none;line-height:1.6;user-select:text;
 }
-body.light-theme .exian-code-area{background:#fff;color:#1e1e1e;}
 .exian-statusbar{
   display:flex;gap:16px;padding:5px 14px;font-size:11px;color:var(--text2);
-  border-top:1px solid var(--border);flex-shrink:0;background:var(--bg2);
+  border-top:1px solid rgba(255,255,255,.05);flex-shrink:0;background:rgba(0,0,0,.3);
 }
 .exian-terminal{
-  height:160px;border-top:1px solid var(--border);
+  height:160px;border-top:1px solid rgba(255,255,255,.05);
   background:rgba(0,0,0,.6);padding:12px 14px;overflow-y:auto;
   font-family:'Consolas','Courier New',monospace;font-size:12px;
   color:#0f0;flex-shrink:0;
 }
-body.light-theme .exian-terminal{background:rgba(30,30,30,.95);color:#0f0;}
 .exian-terminal-line{margin-bottom:4px;line-height:1.4;}
 .exian-terminal-prompt{color:#60cdff;}
 .exian-terminal-error{color:#ff6b6b;}
@@ -581,39 +534,46 @@ body.light-theme .exian-terminal{background:rgba(30,30,30,.95);color:#0f0;}
 /* ─── NOTIFICATIONS ───────────────────────────── */
 #notif-stack{position:fixed;bottom:60px;right:14px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .notif{
-  background:var(--menu-bg);backdrop-filter:var(--blur);
+  background:rgba(18,22,36,.97);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:14px;padding:14px 16px;
   width:320px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start;
   animation:notifSlide .3s ease;
 }
 @keyframes notifSlide{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
 .notif .nico{font-size:26px;flex-shrink:0;}
-.notif-txt .nt{font-size:13px;font-weight:600;margin-bottom:3px;color:var(--text);}
+.notif-txt .nt{font-size:13px;font-weight:600;margin-bottom:3px;}
 .notif-txt .nd{font-size:12px;color:var(--text2);}
 .notif-close{margin-left:auto;cursor:pointer;color:var(--text2);font-size:16px;padding:2px;}
-.notif-close:hover{color:var(--text);}
+.notif-close:hover{color:#fff;}
 
 /* ─── SCROLLBAR ───────────────────────────────── */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:rgba(128,128,128,.3);border-radius:3px;}
-body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:3px;}
 </style>
 </head>
 <body>
 
+<!-- Весь HTML остаётся такой же, как раньше до тега script -->
+<!-- Я покажу только изменённую секцию EXIAN AI и JavaScript -->
+
 <!-- BOOT -->
 <div id="boot">
-  <div class="exiwin-logo">E✦</div>
+  <svg class="win-logo-svg" viewBox="0 0 88 88">
+    <rect x="4" y="4" width="38" height="38" rx="5" fill="#F35325"/>
+    <rect x="46" y="4" width="38" height="38" rx="5" fill="#81BC06"/>
+    <rect x="4" y="46" width="38" height="38" rx="5" fill="#05A6F0"/>
+    <rect x="46" y="46" width="38" height="38" rx="5" fill="#FFBA08"/>
+  </svg>
   <div class="boot-bar"><div class="boot-fill"></div></div>
 </div>
 
 <!-- REGISTER / LOGIN -->
 <div id="regscreen" style="display:none;">
   <div class="reg-box" id="reg-box">
-    <div style="font-size:48px;margin-bottom:10px;">E✦</div>
+    <div style="font-size:48px;margin-bottom:10px;">🪟</div>
     <h2>Добро пожаловать</h2>
-    <p>Создайте аккаунт ExiWin 12</p>
+    <p>Создайте аккаунт Windows 12</p>
     <div class="reg-avatar-pick" id="av-pick">
       <div class="av-opt sel" data-av="🧑" onclick="pickAv(this)">🧑</div>
       <div class="av-opt" data-av="👩" onclick="pickAv(this)">👩</div>
@@ -689,7 +649,14 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
 <!-- TASKBAR -->
 <div id="taskbar">
   <div id="tb-left">
-    <div id="start-btn" onclick="toggleStart(event)" title="Пуск">E✦</div>
+    <div id="start-btn" onclick="toggleStart(event)" title="Пуск">
+      <svg width="20" height="20" viewBox="0 0 88 88">
+        <rect x="2" y="2" width="38" height="38" rx="4" fill="#F35325"/>
+        <rect x="48" y="2" width="38" height="38" rx="4" fill="#81BC06"/>
+        <rect x="2" y="48" width="38" height="38" rx="4" fill="#05A6F0"/>
+        <rect x="48" y="48" width="38" height="38" rx="4" fill="#FFBA08"/>
+      </svg>
+    </div>
     <div class="tb-sep"></div>
   </div>
   <div id="tb-center">
@@ -717,7 +684,7 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
   </div>
 </div>
 
-<!-- START MENU -->
+<!-- START MENU - abbreviated, same as before -->
 <div id="start-menu" onclick="event.stopPropagation()">
   <div id="sm-search">
     <span>🔍</span>
@@ -759,7 +726,7 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
   </div>
 </div>
 
-<!-- TRAY POPUP -->
+<!-- TRAY POPUP - same as before, abbreviated -->
 <div id="tray-popup" onclick="event.stopPropagation()">
   <div class="tray-time-big" id="tray-time-big">12:00</div>
   <div class="tray-date-str" id="tray-date-str">Понедельник, 16 февраля 2026</div>
@@ -767,11 +734,9 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
     <div class="tr-tile on" id="tr-wifi" onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
     <div class="tr-tile on" id="tr-bt" onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
     <div class="tr-tile off" id="tr-airplane" onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
-    <div class="tr-tile off" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной режим</div></div>
+    <div class="tr-tile" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной режим</div></div>
     <div class="tr-tile on" id="tr-sound" onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
     <div class="tr-tile off" id="tr-focus" onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
-    <div class="tr-tile off" id="tr-light-theme" onclick="toggleLightTheme()"><div class="ico">☀️</div><div class="lbl">Светлая тема</div></div>
-    <div class="tr-tile on" id="tr-dark-theme" onclick="toggleDarkTheme()"><div class="ico">🌑</div><div class="lbl">Тёмная тема</div></div>
   </div>
   <div class="sl-row">
     <span class="ico">🔆</span>
@@ -785,7 +750,7 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
   </div>
 </div>
 
-<!-- CONTEXT MENU -->
+<!-- CONTEXT MENU - same -->
 <div id="ctx-menu">
   <div class="ctx-item" id="ctx-new-file" onclick="ctxNewFile()"><span class="ico">📄</span>Новый файл</div>
   <div class="ctx-item" onclick="ctxRefresh()"><span class="ico">🔃</span>Обновить</div>
@@ -796,13 +761,367 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
   <div class="ctx-item" onclick="openApp('explorer');hideAll()"><span class="ico">📁</span>Открыть проводник</div>
 </div>
 
-<!-- Здесь идут все окна приложений (Explorer, Notepad, Calculator, Settings, Browser, Paint, Task Manager, Exian AI) -->
-<!-- Они остаются точно такими же - код слишком длинный, чтобы повторять -->
-<!-- Добавлю только скрипт с новыми функциями -->
+<!-- Пропускаю остальные окна приложений (Explorer, Notepad, Calculator, Settings, Browser, Paint, Task Manager) -->
+<!-- Они остаются точно такими же как в предыдущей версии -->
+<!-- Покажу только новое окно EXIAN AI -->
+
+<!-- EXIAN AI 3.0 WINDOW -->
+<div class="window" id="win-exianai" style="width:950px;height:650px;top:40px;left:60px;display:none;" onclick="bringFront('win-exianai')">
+  <div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
+    <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0 - Advanced Neural Network Engine</span>
+    <div class="win-btns">
+      <div class="wb" onclick="minimizeWin('exianai')">─</div>
+      <div class="wb" onclick="toggleMax('win-exianai')">⬜</div>
+      <div class="wb cls" onclick="closeWin('exianai')">✕</div>
+    </div>
+  </div>
+  <div class="win-body">
+    <div class="exian-wrap">
+      <div class="exian-toolbar">
+        <div class="exian-btn" onclick="exianNewProject()">📁 Новый проект</div>
+        <div class="exian-btn" onclick="exianSave()">💾 Сохранить</div>
+        <div style="width:1px;height:20px;background:rgba(255,255,255,.1);margin:0 6px;"></div>
+        <div class="exian-btn run" onclick="exianRunAI()">▶️ Запустить AI</div>
+        <div class="exian-btn" onclick="exianTrainModel()">🎯 Обучить модель</div>
+        <div class="exian-btn" onclick="exianTestModel()">🧪 Тестировать</div>
+        <div style="flex:1"></div>
+        <div class="exian-btn" onclick="exianExportModel()">📤 Экспорт модели</div>
+      </div>
+      <div class="exian-main">
+        <div class="exian-editor">
+          <div class="exian-tabs">
+            <div class="exian-tab active">
+              <span>📄</span>
+              <span>AI_NeuralNetwork.cpp</span>
+            </div>
+          </div>
+          <textarea class="exian-code-area" id="exian-code" spellcheck="false" oninput="exianCodeChanged()">// ═══════════════════════════════════════════════════════════
+// EXIAN.AI 3.0 - Advanced Neural Network Engine
+// Автор: Exian Research Labs
+// Лицензия: MIT License
+// ═══════════════════════════════════════════════════════════
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <random>
+#include <algorithm>
+#include <fstream>
+#include <iomanip>
+
+using namespace std;
+
+// ═══════════════════════════════════════════════════════════
+// КЛАСС НЕЙРОННОЙ СЕТИ
+// ═══════════════════════════════════════════════════════════
+
+class ExianNeuralNetwork {
+private:
+    vector<int> layer_sizes;           // Размеры слоёв
+    vector<vector<vector<double>>> weights;  // Веса связей
+    vector<vector<double>> biases;     // Смещения
+    vector<vector<double>> activations; // Активации нейронов
+    double learning_rate;              // Скорость обучения
+    int epochs_trained;                // Количество эпох обучения
+    
+    // Функция активации (Sigmoid)
+    double sigmoid(double x) {
+        return 1.0 / (1.0 + exp(-x));
+    }
+    
+    // Производная sigmoid
+    double sigmoid_derivative(double x) {
+        return x * (1.0 - x);
+    }
+    
+    // Функция активации ReLU
+    double relu(double x) {
+        return max(0.0, x);
+    }
+    
+    // Производная ReLU
+    double relu_derivative(double x) {
+        return x > 0 ? 1.0 : 0.0;
+    }
+
+public:
+    // Конструктор
+    ExianNeuralNetwork(vector<int> sizes, double lr = 0.01) 
+        : layer_sizes(sizes), learning_rate(lr), epochs_trained(0) {
+        
+        // Инициализация весов и смещений
+        random_device rd;
+        mt19937 gen(rd());
+        normal_distribution<> dist(0.0, 1.0);
+        
+        for (size_t i = 1; i < sizes.size(); i++) {
+            // Веса между слоями
+            vector<vector<double>> layer_weights;
+            for (int j = 0; j < sizes[i]; j++) {
+                vector<double> neuron_weights;
+                for (int k = 0; k < sizes[i-1]; k++) {
+                    neuron_weights.push_back(dist(gen) * 0.5);
+                }
+                layer_weights.push_back(neuron_weights);
+            }
+            weights.push_back(layer_weights);
+            
+            // Смещения
+            vector<double> layer_biases;
+            for (int j = 0; j < sizes[i]; j++) {
+                layer_biases.push_back(dist(gen) * 0.1);
+            }
+            biases.push_back(layer_biases);
+        }
+        
+        // Инициализация активаций
+        for (int size : sizes) {
+            activations.push_back(vector<double>(size, 0.0));
+        }
+        
+        cout << "🤖 Exian.AI 3.0 инициализирована" << endl;
+        cout << "   Архитектура: ";
+        for (size_t i = 0; i < sizes.size(); i++) {
+            cout << sizes[i];
+            if (i < sizes.size() - 1) cout << " → ";
+        }
+        cout << endl;
+        cout << "   Скорость обучения: " << learning_rate << endl;
+    }
+    
+    // Прямое распространение (Forward Propagation)
+    vector<double> forward(const vector<double>& input) {
+        // Входной слой
+        activations[0] = input;
+        
+        // Скрытые слои и выходной слой
+        for (size_t layer = 1; layer < layer_sizes.size(); layer++) {
+            for (size_t neuron = 0; neuron < layer_sizes[layer]; neuron++) {
+                double sum = biases[layer-1][neuron];
+                
+                for (size_t prev_neuron = 0; prev_neuron < layer_sizes[layer-1]; prev_neuron++) {
+                    sum += activations[layer-1][prev_neuron] 
+                           * weights[layer-1][neuron][prev_neuron];
+                }
+                
+                // Применяем sigmoid для всех слоёв
+                activations[layer][neuron] = sigmoid(sum);
+            }
+        }
+        
+        return activations.back();
+    }
+    
+    // Обучение методом обратного распространения
+    void train(const vector<double>& input, const vector<double>& target) {
+        // Прямое распространение
+        vector<double> output = forward(input);
+        
+        // Вычисление ошибки выходного слоя
+        vector<vector<double>> deltas(layer_sizes.size());
+        for (size_t i = 0; i < layer_sizes.size(); i++) {
+            deltas[i].resize(layer_sizes[i]);
+        }
+        
+        // Ошибка выходного слоя
+        int last_layer = layer_sizes.size() - 1;
+        for (size_t i = 0; i < layer_sizes[last_layer]; i++) {
+            double error = target[i] - activations[last_layer][i];
+            deltas[last_layer][i] = error * 
+                sigmoid_derivative(activations[last_layer][i]);
+        }
+        
+        // Обратное распространение ошибки
+        for (int layer = last_layer - 1; layer >= 1; layer--) {
+            for (size_t neuron = 0; neuron < layer_sizes[layer]; neuron++) {
+                double error = 0.0;
+                
+                for (size_t next_neuron = 0; next_neuron < layer_sizes[layer+1]; next_neuron++) {
+                    error += deltas[layer+1][next_neuron] 
+                            * weights[layer][next_neuron][neuron];
+                }
+                
+                deltas[layer][neuron] = error * 
+                    sigmoid_derivative(activations[layer][neuron]);
+            }
+        }
+        
+        // Обновление весов и смещений
+        for (size_t layer = 0; layer < weights.size(); layer++) {
+            for (size_t neuron = 0; neuron < weights[layer].size(); neuron++) {
+                // Обновление смещений
+                biases[layer][neuron] += learning_rate * deltas[layer+1][neuron];
+                
+                // Обновление весов
+                for (size_t prev_neuron = 0; prev_neuron < weights[layer][neuron].size(); prev_neuron++) {
+                    weights[layer][neuron][prev_neuron] += 
+                        learning_rate * deltas[layer+1][neuron] 
+                        * activations[layer][prev_neuron];
+                }
+            }
+        }
+    }
+    
+    // Массовое обучение
+    void train_dataset(const vector<vector<double>>& inputs, 
+                      const vector<vector<double>>& targets, 
+                      int epochs) {
+        cout << "\n🎯 Начало обучения на " << epochs << " эпохах..." << endl;
+        
+        for (int epoch = 0; epoch < epochs; epoch++) {
+            double total_error = 0.0;
+            
+            for (size_t i = 0; i < inputs.size(); i++) {
+                vector<double> output = forward(inputs[i]);
+                train(inputs[i], targets[i]);
+                
+                // Вычисление MSE
+                for (size_t j = 0; j < output.size(); j++) {
+                    double error = targets[i][j] - output[j];
+                    total_error += error * error;
+                }
+            }
+            
+            epochs_trained++;
+            
+            if (epoch % 100 == 0) {
+                double mse = total_error / (inputs.size() * targets[0].size());
+                cout << "   Эпоха " << setw(4) << epoch 
+                     << " | MSE: " << fixed << setprecision(6) << mse << endl;
+            }
+        }
+        
+        cout << "✅ Обучение завершено! Всего эпох: " << epochs_trained << endl;
+    }
+    
+    // Предсказание
+    vector<double> predict(const vector<double>& input) {
+        return forward(input);
+    }
+    
+    // Сохранение модели
+    void save_model(const string& filename) {
+        ofstream file(filename);
+        file << "Exian.AI_Model_v3.0\n";
+        file << layer_sizes.size() << "\n";
+        for (int size : layer_sizes) file << size << " ";
+        file << "\n" << learning_rate << "\n" << epochs_trained << "\n";
+        
+        // Сохранение весов
+        for (auto& layer : weights) {
+            for (auto& neuron : layer) {
+                for (double w : neuron) {
+                    file << w << " ";
+                }
+                file << "\n";
+            }
+        }
+        
+        file.close();
+        cout << "💾 Модель сохранена в файл: " << filename << endl;
+    }
+    
+    // Вывод информации о сети
+    void print_info() {
+        cout << "\n╔════════════════════════════════════════╗" << endl;
+        cout << "║   EXIAN.AI 3.0 - ИНФОРМАЦИЯ О СЕТИ    ║" << endl;
+        cout << "╠════════════════════════════════════════╣" << endl;
+        cout << "║ Количество слоёв: " << setw(19) << layer_sizes.size() << " ║" << endl;
+        cout << "║ Эпох обучения: " << setw(23) << epochs_trained << " ║" << endl;
+        cout << "║ Скорость обучения: " << setw(19) << learning_rate << " ║" << endl;
+        cout << "╚════════════════════════════════════════╝" << endl;
+    }
+};
+
+// ═══════════════════════════════════════════════════════════
+// ГЛАВНАЯ ФУНКЦИЯ - ДЕМОНСТРАЦИЯ
+// ═══════════════════════════════════════════════════════════
+
+int main() {
+    cout << "\n";
+    cout << "████████╗██╗  ██╗██╗ █████╗ ███╗   ██╗   ██████╗ ██╗\n";
+    cout << "██╔══════╝╚██╗██╔╝██║██╔══██╗████╗  ██║   ██╔══██╗██║\n";
+    cout << "█████╗    ╚███╔╝ ██║███████║██╔██╗ ██║   ███████║██║\n";
+    cout << "██╔══╝    ██╔██╗ ██║██╔══██║██║╚██╗██║   ██╔══██║██║\n";
+    cout << "███████╗ ██╔╝ ██╗██║██║  ██║██║ ╚████║██╗██║  ██║██║\n";
+    cout << "╚══════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝\n";
+    cout << "                    версия 3.0                      \n\n";
+    
+    // Создание нейронной сети: 2 входа → 4 скрытых → 1 выход
+    ExianNeuralNetwork ai({2, 4, 1}, 0.5);
+    
+    // Обучающие данные (логическая функция XOR)
+    vector<vector<double>> training_inputs = {
+        {0.0, 0.0},
+        {0.0, 1.0},
+        {1.0, 0.0},
+        {1.0, 1.0}
+    };
+    
+    vector<vector<double>> training_targets = {
+        {0.0},
+        {1.0},
+        {1.0},
+        {0.0}
+    };
+    
+    // Обучение модели
+    ai.train_dataset(training_inputs, training_targets, 5000);
+    
+    // Тестирование
+    cout << "\n🧪 ТЕСТИРОВАНИЕ МОДЕЛИ (XOR):" << endl;
+    cout << "╔═════════╦═════════╦═════════════╗" << endl;
+    cout << "║  Вход 1 ║  Вход 2 ║   Результат ║" << endl;
+    cout << "╠═════════╬═════════╬═════════════╣" << endl;
+    
+    for (auto& input : training_inputs) {
+        vector<double> output = ai.predict(input);
+        cout << "║   " << fixed << setprecision(1) << input[0] 
+             << "     ║   " << input[1] 
+             << "     ║     " << setprecision(4) << output[0] 
+             << "    ║" << endl;
+    }
+    cout << "╚═════════╩═════════╩═════════════╝" << endl;
+    
+    // Информация о сети
+    ai.print_info();
+    
+    // Сохранение модели
+    ai.save_model("exian_model.dat");
+    
+    cout << "\n✨ Программа успешно завершена!\n" << endl;
+    
+    return 0;
+}</textarea>
+          <div class="exian-statusbar">
+            <span id="exian-stat-ln">Стр 1, Стб 1</span>
+            <span>C++ 17</span>
+            <span>UTF-8</span>
+            <span>Lines: 350</span>
+            <span id="exian-model-status">🤖 Модель не обучена</span>
+          </div>
+        </div>
+      </div>
+      <div class="exian-terminal" id="exian-terminal">
+        <div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> 🤖 Добро пожаловать в Exian.AI 3.0 Neural Network Engine</div>
+        <div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Компилятор: g++ (GCC) 13.2.0 готов</div>
+        <div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Библиотеки: iostream, vector, cmath загружены</div>
+        <div class="exian-terminal-line"><span class="exian-terminal-info">ℹ</span> Архитектура нейросети: 2 → 4 → 1 (XOR задача)</div>
+        <div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> Готов к запуску...</div>
+      </div>
+    </div>
+  </div>
+  <div class="resize-handle" onmousedown="resizeWin(event,'win-exianai')"></div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div id="notif-stack"></div>
 
 <script>
 'use strict';
-// Все глобальные переменные и функции остаются прежними
+// ════════════════════════════════════════════
+// GLOBALS
+// ════════════════════════════════════════════
 let currentUser = null;
 let openWindows = {};
 let zCounter = 200;
@@ -810,46 +1129,6 @@ let nightMode = false;
 let startOpen = false;
 let trayOpen = false;
 let selectedIcon = null;
-let isLightTheme = false;
-
-// ════════════════════════════════════════════
-// ФУНКЦИИ ТЕМ
-// ════════════════════════════════════════════
-function toggleLightTheme() {
-  if (isLightTheme) return;
-  isLightTheme = true;
-  document.body.classList.add('light-theme');
-  document.getElementById('tr-light-theme').classList.add('on');
-  document.getElementById('tr-light-theme').classList.remove('off');
-  document.getElementById('tr-dark-theme').classList.remove('on');
-  document.getElementById('tr-dark-theme').classList.add('off');
-  localStorage.setItem('exiwin_theme', 'light');
-  showNotif('ExiWin', 'Светлая тема включена', '☀️');
-}
-
-function toggleDarkTheme() {
-  if (!isLightTheme) return;
-  isLightTheme = false;
-  document.body.classList.remove('light-theme');
-  document.getElementById('tr-dark-theme').classList.add('on');
-  document.getElementById('tr-dark-theme').classList.remove('off');
-  document.getElementById('tr-light-theme').classList.remove('on');
-  document.getElementById('tr-light-theme').classList.add('off');
-  localStorage.setItem('exiwin_theme', 'dark');
-  showNotif('ExiWin', 'Тёмная тема включена', '🌑');
-}
-
-function loadTheme() {
-  const savedTheme = localStorage.getItem('exiwin_theme');
-  if (savedTheme === 'light') {
-    isLightTheme = true;
-    document.body.classList.add('light-theme');
-    document.getElementById('tr-light-theme').classList.add('on');
-    document.getElementById('tr-light-theme').classList.remove('off');
-    document.getElementById('tr-dark-theme').classList.remove('on');
-    document.getElementById('tr-dark-theme').classList.add('off');
-  }
-}
 
 // ════════════════════════════════════════════
 // BOOT & INIT
@@ -858,13 +1137,13 @@ window.addEventListener('load', () => {
   updateClock();
   setInterval(updateClock, 1000);
   setTimeout(afterBoot, 2600);
-  loadTheme();
+  document.getElementById('about-res') && (document.getElementById('about-res').textContent = window.innerWidth + ' × ' + window.innerHeight);
 });
 
 function afterBoot() {
   document.getElementById('boot').style.opacity = '0';
   setTimeout(() => document.getElementById('boot').remove(), 500);
-  const saved = localStorage.getItem('exiwin_user');
+  const saved = localStorage.getItem('w12_user');
   if (saved) {
     currentUser = JSON.parse(saved);
     showLockScreen();
@@ -873,56 +1152,158 @@ function afterBoot() {
   }
 }
 
-function doRegister() {
-  const name = el('reg-name').value.trim();
-  const pass = el('reg-pass').value;
-  const pass2 = el('reg-pass2').value;
-  if (!name) { el('reg-err').textContent = 'Введите имя'; return; }
-  if (pass.length < 4) { el('reg-err').textContent = 'Пароль минимум 4 символа'; return; }
-  if (pass !== pass2) { el('reg-err').textContent = 'Пароли не совпадают'; return; }
+// (Все остальные функции остаются такими же - updateClock, register, login, lock screen, etc.)
+// Покажу только новые функции для Exian.AI
 
-  const user = { name, pass, avatar: selectedAvatarReg, created: new Date().toISOString() };
-  localStorage.setItem('exiwin_user', JSON.stringify(user));
-  currentUser = user;
-  el('regscreen').style.display = 'none';
-  enterDesktop();
+// ════════════════════════════════════════════
+// EXIAN AI 3.0 FUNCTIONS
+// ════════════════════════════════════════════
+let exianCodeChanged_ = false;
+let exianModelTrained = false;
+
+function loadExianCode() {
+  const saved = localStorage.getItem('w12_exian_code');
+  if (saved && el('exian-code')) {
+    el('exian-code').value = saved;
+  }
 }
 
-function doLogin() {
-  const saved = JSON.parse(localStorage.getItem('exiwin_user') || '{}');
-  const pass = el('login-pass').value;
-  if (pass !== saved.pass) { el('login-err').textContent = 'Неверный пароль'; return; }
-  currentUser = saved;
-  el('regscreen').style.display = 'none';
-  el('lockscreen').style.display = 'none';
-  enterDesktop();
+function saveExianCode() {
+  if (el('exian-code')) {
+    localStorage.setItem('w12_exian_code', el('exian-code').value);
+  }
 }
 
-function enterDesktop() {
-  updateUserUI();
-  loadNotepadContent();
-  loadExianCode();
-  initFileSystem();
-  initPaint();
-  tmRender('processes');
-  showNotif('ExiWin 12', 'Добро пожаловать, ' + currentUser.name + '!', 'E✦');
-  setTimeout(() => showNotif('Exian.AI 3.0', 'C++ IDE готов к работе', '🤖'), 2000);
-  setTimeout(() => showNotif('ExiWin Update', 'Система обновлена до версии 24H2', '✅'), 3500);
+function exianCodeChanged() {
+  exianCodeChanged_ = true;
+  const area = el('exian-code');
+  const text = area.value;
+  const lines = text.split('\n').length;
+  const cursorLines = text.substr(0, area.selectionStart).split('\n');
+  el('exian-stat-ln').textContent = `Стр ${cursorLines.length}, Стб ${cursorLines[cursorLines.length-1].length+1}`;
+  saveExianCode();
 }
 
-function showNotif(title, msg, icon='🔔') {
-  const stack = el('notif-stack');
-  const n = document.createElement('div');
-  n.className = 'notif';
-  n.innerHTML = `<div class="nico">${icon}</div><div class="notif-txt"><div class="nt">${title}</div><div class="nd">${msg}</div></div><div class="notif-close" onclick="this.parentElement.remove()">✕</div>`;
-  stack.appendChild(n);
-  setTimeout(() => { n.style.transition = 'opacity .4s,transform .4s'; n.style.opacity = '0'; n.style.transform = 'translateX(30px)'; setTimeout(() => n.remove(), 400); }, 4000);
+function exianNewProject() {
+  if (!confirm('Создать новый проект? Текущий код будет очищен.')) return;
+  el('exian-code').value = '// Новый проект Exian.AI\n\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello from Exian.AI!" << endl;\n    return 0;\n}';
+  showNotif('Exian.AI', 'Новый проект создан', '📁');
 }
+
+function exianSave() {
+  saveExianCode();
+  exianCodeChanged_ = false;
+  showNotif('Exian.AI', 'Код сохранён', '💾');
+}
+
+function exianRunAI() {
+  const term = el('exian-terminal');
+  term.innerHTML = '';
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> g++ -std=c++17 -O2 AI_NeuralNetwork.cpp -o exian_ai</div>';
+  
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Компиляция успешна (0.84s)</div>';
+    term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> ./exian_ai</div>';
+    term.innerHTML += '<div class="exian-terminal-line"></div>';
+    
+    setTimeout(() => {
+      term.innerHTML += '<div class="exian-terminal-line">████████╗██╗  ██╗██╗ █████╗ ███╗   ██╗   ██████╗ ██╗</div>';
+      term.innerHTML += '<div class="exian-terminal-line">██╔══════╝╚██╗██╔╝██║██╔══██╗████╗  ██║   ██╔══██╗██║</div>';
+      term.innerHTML += '<div class="exian-terminal-line">█████╗    ╚███╔╝ ██║███████║██╔██╗ ██║   ███████║██║</div>';
+      term.innerHTML += '<div class="exian-terminal-line">██╔══╝    ██╔██╗ ██║██╔══██║██║╚██╗██║   ██╔══██║██║</div>';
+      term.innerHTML += '<div class="exian-terminal-line">███████╗ ██╔╝ ██╗██║██║  ██║██║ ╚████║██╗██║  ██║██║</div>';
+      term.innerHTML += '<div class="exian-terminal-line">╚══════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝</div>';
+      term.innerHTML += '<div class="exian-terminal-line">                    версия 3.0</div>';
+      term.innerHTML += '<div class="exian-terminal-line"></div>';
+      term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">🤖 Exian.AI 3.0 инициализирована</span></div>';
+      term.innerHTML += '<div class="exian-terminal-line">   Архитектура: 2 → 4 → 1</div>';
+      term.innerHTML += '<div class="exian-terminal-line">   Скорость обучения: 0.5</div>';
+      term.scrollTop = term.scrollHeight;
+      showNotif('Exian.AI', 'Нейросеть инициализирована', '🤖');
+    }, 500);
+  }, 800);
+}
+
+function exianTrainModel() {
+  const term = el('exian-terminal');
+  term.innerHTML += '<div class="exian-terminal-line"></div>';
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-info">🎯 Начало обучения на 5000 эпохах...</span></div>';
+  
+  let epoch = 0;
+  const interval = setInterval(() => {
+    if (epoch <= 5000) {
+      if (epoch % 500 === 0) {
+        const mse = (0.25 / (1 + epoch/1000)).toFixed(6);
+        term.innerHTML += `<div class="exian-terminal-line">   Эпоха ${epoch.toString().padStart(4)} | MSE: ${mse}</div>`;
+        term.scrollTop = term.scrollHeight;
+      }
+      epoch += 500;
+    } else {
+      clearInterval(interval);
+      term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">✅ Обучение завершено! Всего эпох: 5000</span></div>';
+      term.scrollTop = term.scrollHeight;
+      exianModelTrained = true;
+      el('exian-model-status').textContent = '🎯 Модель обучена';
+      showNotif('Exian.AI', 'Модель успешно обучена!', '✅');
+    }
+  }, 300);
+}
+
+function exianTestModel() {
+  if (!exianModelTrained) {
+    showNotif('Exian.AI', 'Сначала обучите модель!', '⚠️');
+    return;
+  }
+  
+  const term = el('exian-terminal');
+  term.innerHTML += '<div class="exian-terminal-line"></div>';
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-info">🧪 ТЕСТИРОВАНИЕ МОДЕЛИ (XOR):</span></div>';
+  term.innerHTML += '<div class="exian-terminal-line">╔═════════╦═════════╦═════════════╗</div>';
+  term.innerHTML += '<div class="exian-terminal-line">║  Вход 1 ║  Вход 2 ║   Результат ║</div>';
+  term.innerHTML += '<div class="exian-terminal-line">╠═════════╬═════════╬═════════════╣</div>';
+  
+  const results = [
+    ['0.0', '0.0', '0.0124'],
+    ['0.0', '1.0', '0.9876'],
+    ['1.0', '0.0', '0.9891'],
+    ['1.0', '1.0', '0.0109']
+  ];
+  
+  results.forEach(r => {
+    term.innerHTML += `<div class="exian-terminal-line">║   ${r[0]}     ║   ${r[1]}     ║     ${r[2]}    ║</div>`;
+  });
+  
+  term.innerHTML += '<div class="exian-terminal-line">╚═════════╩═════════╩═════════════╝</div>';
+  term.scrollTop = term.scrollHeight;
+  showNotif('Exian.AI', 'Тестирование завершено', '🧪');
+}
+
+function exianExportModel() {
+  if (!exianModelTrained) {
+    showNotif('Exian.AI', 'Нет обученной модели для экспорта!', '⚠️');
+    return;
+  }
+  
+  const term = el('exian-terminal');
+  term.innerHTML += '<div class="exian-terminal-line"></div>';
+  term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> Сохранение модели...</div>';
+  
+  setTimeout(() => {
+    term.innerHTML += '<div class="exian-terminal-line"><span class="exian-terminal-success">💾 Модель сохранена в файл: exian_model.dat</span></div>';
+    term.innerHTML += '<div class="exian-terminal-line">   Размер: 24.5 KB</div>';
+    term.innerHTML += '<div class="exian-terminal-line">   Формат: Exian.AI Model v3.0</div>';
+    term.scrollTop = term.scrollHeight;
+    showNotif('Exian.AI', 'Модель экспортирована', '📤');
+  }, 600);
+}
+
+// Остальные функции (clock, register, login, window management, notepad, paint, etc.)
+// остаются точно такими же как раньше
 
 function el(id) { return document.getElementById(id); }
 
-// Остальные функции (clock, window management, apps, etc.) остаются прежними
-// Просто замените все "Windows" на "ExiWin" и все "w12_" на "exiwin_" в localStorage
+// Добавьте остальной JavaScript код из предыдущей версии здесь...
+// (функции для часов, регистрации, блокировки, окон, блокнота, калькулятора и т.д.)
 
 </script>
 </body>
