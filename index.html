@@ -51,25 +51,25 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   border:1px solid var(--border);border-radius:20px;padding:40px;width:420px;
   box-shadow:var(--shadow);text-align:center;
 }
-.reg-box h2{font-size:26px;font-weight:300;margin-bottom:6px;}
-.reg-box p{color:var(--text2);font-size:14px;margin-bottom:30px;}
+.reg-box h2{font-size:26px;font-weight:300;margin-bottom:6px;color:#fff;}
+.reg-box p{color:rgba(255,255,255,.6);font-size:14px;margin-bottom:30px;}
 .reg-avatar-pick{display:flex;gap:12px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;}
 .av-opt{width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;border:3px solid transparent;transition:all .2s;}
 .av-opt.sel{border-color:#fff;transform:scale(1.15);}
 .reg-input{
-  width:100%;background:rgba(255,255,255,0.08);border:1px solid var(--border);
+  width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,.1);
   border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;
   outline:none;margin-bottom:12px;transition:border .2s;
 }
 .reg-input:focus{border-color:var(--accent);}
-.reg-input::placeholder{color:var(--text2);}
+.reg-input::placeholder{color:rgba(255,255,255,.4);}
 .reg-btn{
   width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);
   color:#fff;font-size:15px;cursor:pointer;font-family:inherit;font-weight:500;
   transition:background .2s;margin-top:6px;
 }
 .reg-btn:hover{background:#106ebe;}
-.reg-switch{color:var(--text2);font-size:13px;margin-top:16px;cursor:pointer;}
+.reg-switch{color:rgba(255,255,255,.6);font-size:13px;margin-top:16px;cursor:pointer;}
 .reg-switch span{color:var(--accent2);}
 .reg-err{color:#ff6b6b;font-size:13px;margin-top:8px;min-height:18px;}
 
@@ -86,13 +86,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   animation:glowPulse 4s ease-in-out infinite;
 }
 @keyframes glowPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
-#lock-clock{font-size:88px;font-weight:200;letter-spacing:6px;text-shadow:0 0 40px rgba(0,120,212,.3);}
-#lock-date{font-size:20px;color:var(--text2);margin-bottom:50px;font-weight:300;}
+#lock-clock{font-size:88px;font-weight:200;letter-spacing:6px;text-shadow:0 0 40px rgba(0,120,212,.3);color:#fff;}
+#lock-date-lock{font-size:20px;color:rgba(255,255,255,.6);margin-bottom:50px;font-weight:300;}
 .lock-user{display:flex;flex-direction:column;align-items:center;gap:14px;}
 #lock-avatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 0 0 3px rgba(255,255,255,0.2);}
-#lock-username{font-size:18px;}
-#lock-pin{display:flex;gap:10px;margin-top:10px;}
-.pin-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.25);transition:background .2s;}
+#lock-username-disp{font-size:18px;color:#fff;}
 .lock-hint{font-size:13px;color:rgba(255,255,255,.3);margin-top:20px;animation:pulse 2s ease infinite;}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
 
@@ -158,13 +156,10 @@ body.light-theme .tb-btn:hover{background:rgba(0,0,0,.08);}
 body.light-theme .tb-btn.active-win{background:rgba(0,0,0,.12);}
 #start-btn{
   width:44px;height:38px;display:flex;align-items:center;justify-content:center;
-  border-radius:8px;cursor:pointer;transition:background .15s;
-  font-size:24px;font-weight:700;
-  background:linear-gradient(135deg,#0078d4,#60cdff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
+  border-radius:8px;cursor:pointer;transition:all .15s;
+  font-size:24px;font-weight:700;color:var(--text);
 }
-#start-btn:hover{background:rgba(255,255,255,.1);-webkit-text-fill-color:var(--text);}
+#start-btn:hover{background:rgba(255,255,255,.1);}
 body.light-theme #start-btn:hover{background:rgba(0,0,0,.08);}
 .tb-sep{width:1px;height:22px;background:var(--border);margin:0 4px;}
 #tb-clock{color:var(--text);font-size:12px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
@@ -222,14 +217,14 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 
 /* ─── TRAY POPUP ──────────────────────────────── */
 #tray-popup{
-  position:fixed;bottom:56px;right:8px;width:360px;
+  position:fixed;bottom:56px;right:8px;width:380px;
   background:var(--menu-bg);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:16px;padding:18px;
   box-shadow:var(--shadow);display:none;z-index:900;
 }
 .tray-time-big{font-size:52px;font-weight:200;text-align:center;letter-spacing:2px;color:var(--text);}
 .tray-date-str{font-size:13px;color:var(--text2);text-align:center;margin-bottom:16px;}
-.tray-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.tray-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
 .tr-tile{
   background:rgba(0,120,212,.25);border-radius:12px;padding:12px 10px 8px;
   cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px;
@@ -242,341 +237,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 .sl-row .ico{font-size:16px;flex-shrink:0;}
 .sl-row input[type=range]{flex:1;accent-color:var(--accent);height:4px;}
 .sl-val{font-size:12px;color:var(--text2);width:30px;text-align:right;}
-
-/* ─── CONTEXT MENU ────────────────────────────── */
-#ctx-menu{
-  position:fixed;z-index:9998;background:var(--menu-bg);backdrop-filter:var(--blur);
-  border:1px solid var(--border);border-radius:var(--radius);padding:6px;
-  min-width:210px;box-shadow:var(--shadow);display:none;
-}
-.ctx-item{
-  padding:8px 14px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;
-  display:flex;align-items:center;gap:10px;transition:background .1s;
-}
-.ctx-item:hover{background:var(--bg2);}
-.ctx-item .ico{font-size:15px;width:18px;text-align:center;}
-.ctx-sep{height:1px;background:var(--border);margin:4px 2px;}
-
-/* ─── WINDOWS ─────────────────────────────────── */
-.window{
-  position:absolute;background:var(--bg1);backdrop-filter:var(--blur);
-  border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:var(--shadow);display:flex;flex-direction:column;
-  min-width:300px;min-height:180px;z-index:100;
-  animation:winOpen .15s ease;
-}
-@keyframes winOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-.window.maximized{border-radius:0!important;top:0!important;left:0!important;width:100%!important;height:calc(100vh - 48px)!important;}
-.titlebar{
-  height:40px;display:flex;align-items:center;padding:0 10px;
-  cursor:move;border-radius:var(--radius) var(--radius) 0 0;flex-shrink:0;
-  background:var(--bg2);border-bottom:1px solid var(--border);
-}
-.tb-icon{font-size:16px;margin-right:8px;}
-.tb-title{flex:1;font-size:13px;color:var(--text);}
-.win-btns{display:flex;gap:2px;}
-.wb{
-  width:32px;height:28px;border-radius:6px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;font-size:12px;color:var(--text2);
-  transition:background .12s;
-}
-.wb:hover{background:var(--bg2);color:var(--text);}
-.wb.cls:hover{background:rgba(196,43,28,.85);color:#fff;}
-.win-body{flex:1;overflow:auto;border-radius:0 0 var(--radius) var(--radius);}
-.resize-handle{position:absolute;width:14px;height:14px;bottom:0;right:0;cursor:se-resize;}
-
-/* ─── EXPLORER ────────────────────────────────── */
-.exp-wrap{display:flex;flex-direction:column;height:100%;}
-.exp-topbar{
-  display:flex;align-items:center;gap:6px;padding:6px 10px;
-  border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.exp-nav{
-  width:28px;height:28px;border-radius:6px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;color:var(--text2);transition:background .12s;font-size:14px;
-}
-.exp-nav:hover{background:var(--bg2);}
-.exp-path{
-  flex:1;background:var(--input-bg);border:1px solid var(--border);
-  border-radius:7px;padding:4px 12px;font-size:12px;color:var(--text);
-  cursor:text;outline:none;font-family:inherit;
-}
-.exp-body{display:flex;flex:1;overflow:hidden;}
-.exp-side{
-  width:175px;border-right:1px solid var(--border);
-  padding:8px;overflow-y:auto;flex-shrink:0;background:var(--bg2);
-}
-.exp-side-item{
-  padding:7px 10px;border-radius:7px;font-size:13px;color:var(--text2);
-  cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;
-}
-.exp-side-item:hover{background:var(--bg2);}
-.exp-side-item.active{background:rgba(0,120,212,.3);color:var(--text);}
-.exp-files{
-  flex:1;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,90px);
-  gap:8px;align-content:start;overflow-y:auto;
-}
-.file-item{
-  display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 6px;
-  border-radius:8px;cursor:pointer;transition:background .12s;
-}
-.file-item:hover{background:var(--bg2);}
-.file-item.selected{background:rgba(0,120,212,.3);}
-.file-item .ico{font-size:34px;}
-.file-item .fname{font-size:11px;color:var(--text2);text-align:center;word-break:break-all;}
-.exp-statusbar{
-  padding:4px 14px;font-size:11px;color:var(--text2);
-  border-top:1px solid var(--border);flex-shrink:0;
-}
-.exp-toolbar-row{
-  display:flex;align-items:center;gap:4px;padding:4px 8px;
-  border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.exp-tb-btn{
-  padding:4px 10px;border-radius:6px;font-size:12px;color:var(--text2);
-  cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:4px;
-}
-.exp-tb-btn:hover{background:var(--bg2);}
-
-/* ─── NOTEPAD ─────────────────────────────────── */
-.np-wrap{display:flex;flex-direction:column;height:100%;}
-.np-menubar{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.np-menu-item{
-  padding:6px 12px;font-size:13px;color:var(--text2);cursor:pointer;
-  transition:background .12s;position:relative;
-}
-.np-menu-item:hover,.np-menu-item.open{background:var(--bg2);}
-.np-dropdown{
-  position:absolute;top:100%;left:0;background:var(--menu-bg);
-  border:1px solid var(--border);border-radius:8px;padding:4px;
-  min-width:160px;z-index:9999;display:none;box-shadow:var(--shadow);
-}
-.np-menu-item.open .np-dropdown{display:block;}
-.np-dd-item{
-  padding:7px 12px;border-radius:6px;font-size:13px;color:var(--text);
-  cursor:pointer;display:flex;justify-content:space-between;align-items:center;
-}
-.np-dd-item:hover{background:var(--bg2);}
-.np-dd-item kbd{font-size:11px;color:var(--text2);background:var(--bg2);padding:1px 5px;border-radius:4px;}
-.np-dd-sep{height:1px;background:var(--border);margin:3px 0;}
-#np-area{
-  flex:1;background:var(--input-bg);color:var(--text);border:none;outline:none;
-  padding:16px;font-size:14px;font-family:'Consolas','Courier New',monospace;
-  resize:none;line-height:1.7;
-}
-.np-statusbar{
-  display:flex;gap:16px;padding:3px 12px;font-size:11px;color:var(--text2);
-  border-top:1px solid var(--border);flex-shrink:0;
-}
-
-/* ─── CALCULATOR ──────────────────────────────── */
-.calc-wrap{padding:14px;display:flex;flex-direction:column;gap:10px;height:100%;}
-.calc-mode{display:flex;gap:2px;margin-bottom:2px;}
-.calc-mode-btn{
-  padding:5px 12px;border-radius:6px;font-size:12px;color:var(--text2);
-  cursor:pointer;transition:background .12s;
-}
-.calc-mode-btn:hover,.calc-mode-btn.active{background:var(--bg2);color:var(--text);}
-.calc-display{
-  background:var(--input-bg);border-radius:10px;padding:12px 16px;
-  display:flex;flex-direction:column;align-items:flex-end;
-}
-.calc-expr{font-size:13px;color:var(--text2);min-height:20px;word-break:break-all;}
-.calc-result{font-size:40px;font-weight:300;min-height:54px;word-break:break-all;color:var(--text);}
-.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;flex:1;}
-.cc{
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:16px;cursor:pointer;transition:all .1s;color:var(--text);
-  min-height:48px;
-}
-.cc:hover{filter:brightness(1.2);}
-.cc:active{transform:scale(.93);}
-.cc-fn{background:var(--bg2);color:var(--text2);}
-.cc-op{background:rgba(0,120,212,.3);}
-.cc-eq{background:var(--accent);color:#fff;}
-.cc-num{background:var(--bg2);}
-.cc-span2{grid-column:span 2;}
-
-/* ─── SETTINGS ────────────────────────────────── */
-.set-wrap{display:flex;height:100%;}
-.set-side{
-  width:215px;border-right:1px solid var(--border);
-  padding:10px;overflow-y:auto;background:var(--bg2);flex-shrink:0;
-}
-.set-side-item{
-  padding:10px 14px;border-radius:8px;font-size:13px;color:var(--text2);
-  cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s;
-}
-.set-side-item:hover{background:var(--bg2);}
-.set-side-item.active{background:rgba(0,120,212,.3);color:var(--text);}
-.set-content{flex:1;padding:24px;overflow-y:auto;}
-.set-page{display:none;}
-.set-page.active{display:block;}
-.set-h1{font-size:22px;font-weight:300;margin-bottom:20px;color:var(--text);}
-.set-card{
-  background:var(--card-bg);border:1px solid var(--border);
-  border-radius:10px;padding:14px 18px;margin-bottom:8px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-}
-.set-card-l .n{font-size:14px;color:var(--text);}
-.set-card-l .d{font-size:12px;color:var(--text2);margin-top:2px;}
-.toggle{
-  width:44px;height:24px;border-radius:12px;background:var(--bg2);
-  position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;
-}
-.toggle.on{background:var(--accent);}
-.toggle::after{
-  content:'';position:absolute;width:18px;height:18px;background:#fff;
-  border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.4);
-}
-.toggle.on::after{transform:translateX(20px);}
-.set-range-wrap{display:flex;align-items:center;gap:10px;margin-top:8px;}
-.set-range-wrap input{flex:1;accent-color:var(--accent);}
-.set-select{
-  background:var(--input-bg);border:1px solid var(--border);
-  border-radius:8px;padding:6px 10px;color:var(--text);font-size:13px;
-  outline:none;font-family:inherit;cursor:pointer;
-}
-.set-select option{background:var(--bg1);color:var(--text);}
-
-/* ─── BROWSER ─────────────────────────────────── */
-.br-wrap{display:flex;flex-direction:column;height:100%;}
-.br-bar{
-  display:flex;align-items:center;gap:6px;padding:7px 10px;
-  border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.br-nav{
-  width:28px;height:28px;border-radius:6px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;
-  transition:background .12s;
-}
-.br-nav:hover{background:var(--bg2);}
-.br-url-bar{
-  flex:1;background:var(--input-bg);border:1px solid var(--border);
-  border-radius:20px;padding:5px 14px;font-size:13px;color:var(--text);outline:none;
-  font-family:inherit;
-}
-.br-newtab{
-  flex:1;padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:20px;
-  overflow-y:auto;
-}
-.br-greeting{font-size:26px;font-weight:300;color:var(--text);}
-.br-searchbar{
-  display:flex;align-items:center;background:var(--input-bg);
-  border:1px solid var(--border);border-radius:28px;
-  padding:10px 20px;gap:10px;width:560px;max-width:100%;
-}
-.br-searchbar input{background:none;border:none;outline:none;color:var(--text);font-size:15px;flex:1;font-family:inherit;}
-.br-searchbar button{background:var(--accent);border:none;color:#fff;padding:7px 18px;border-radius:18px;cursor:pointer;font-size:13px;font-family:inherit;}
-.br-shortcuts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:560px;max-width:100%;}
-.br-sc{
-  background:var(--card-bg);border-radius:12px;padding:14px 10px;
-  display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;
-  transition:background .12s;
-}
-.br-sc:hover{background:var(--bg2);}
-.br-sc .ico{font-size:22px;}
-.br-sc span{font-size:11px;color:var(--text2);}
-.br-news{width:560px;max-width:100%;margin-top:10px;}
-.br-news h3{font-size:14px;color:var(--text2);margin-bottom:10px;}
-.br-article{
-  background:var(--card-bg);border-radius:10px;padding:12px;
-  margin-bottom:8px;cursor:pointer;transition:background .12s;
-}
-.br-article:hover{background:var(--bg2);}
-.br-article h4{font-size:13px;color:var(--text);margin-bottom:4px;}
-.br-article p{font-size:12px;color:var(--text2);}
-.br-frame{flex:1;width:100%;border:none;background:#fff;}
-
-/* ─── TASK MANAGER ────────────────────────────── */
-.tm-wrap{display:flex;flex-direction:column;height:100%;}
-.tm-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.tm-tab{
-  padding:10px 18px;font-size:13px;color:var(--text2);cursor:pointer;
-  transition:all .12s;border-bottom:2px solid transparent;
-}
-.tm-tab:hover{color:var(--text);}
-.tm-tab.active{color:var(--text);border-bottom-color:var(--accent);}
-.tm-body{flex:1;padding:14px;overflow-y:auto;}
-.tm-table{width:100%;border-collapse:collapse;font-size:13px;}
-.tm-table th{text-align:left;padding:8px 12px;color:var(--text2);font-weight:400;border-bottom:1px solid var(--border);}
-.tm-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text);}
-.tm-table tr:hover td{background:var(--bg2);}
-.tm-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;}
-.tm-fill{height:100%;border-radius:3px;background:var(--accent);}
-
-/* ─── PAINT ───────────────────────────────────── */
-.paint-wrap{display:flex;flex-direction:column;height:100%;}
-.paint-toolbar{
-  display:flex;align-items:center;gap:8px;padding:8px 12px;
-  border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;
-}
-.paint-tool{
-  width:34px;height:34px;border-radius:7px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;font-size:17px;transition:background .12s;
-}
-.paint-tool:hover,.paint-tool.active{background:rgba(0,120,212,.35);}
-.paint-colors{display:flex;gap:4px;flex-wrap:wrap;max-width:200px;}
-.paint-color{
-  width:20px;height:20px;border-radius:4px;cursor:pointer;
-  border:2px solid transparent;transition:border .12s;
-}
-.paint-color.active{border-color:var(--text);}
-.paint-size{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
-.paint-size input{width:80px;accent-color:var(--accent);}
-.paint-canvas-wrap{flex:1;overflow:hidden;background:#fff;position:relative;}
-#paint-canvas{cursor:crosshair;display:block;}
-
-/* ─── EXIAN AI 3.0 ───────────────────────── */
-.exian-wrap{display:flex;flex-direction:column;height:100%;background:rgba(8,10,18,.95);}
-body.light-theme .exian-wrap{background:rgba(248,250,252,.95);}
-.exian-toolbar{
-  display:flex;align-items:center;gap:6px;padding:8px 12px;
-  border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;
-}
-.exian-btn{
-  padding:6px 14px;border-radius:6px;font-size:12px;
-  cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:6px;
-  background:var(--bg2);border:1px solid var(--border);color:var(--text);
-}
-.exian-btn:hover{background:var(--bg2);filter:brightness(1.2);}
-.exian-btn.run{background:rgba(46,204,113,.3);color:#2ecc71;font-weight:600;}
-.exian-btn.run:hover{background:rgba(46,204,113,.5);}
-.exian-main{display:flex;flex:1;overflow:hidden;}
-.exian-editor{flex:1;display:flex;flex-direction:column;}
-.exian-tabs{
-  display:flex;gap:2px;padding:6px 8px;border-bottom:1px solid var(--border);
-  background:var(--bg2);flex-shrink:0;
-}
-.exian-tab{
-  padding:6px 14px;border-radius:6px 6px 0 0;font-size:12px;color:var(--text2);
-  cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:8px;
-}
-.exian-tab.active{background:rgba(8,10,18,1);color:var(--text);}
-body.light-theme .exian-tab.active{background:rgba(255,255,255,1);}
-.exian-tab:hover{background:var(--bg2);}
-.exian-code-area{
-  flex:1;background:rgba(8,10,18,1);color:#d4d4d4;border:none;outline:none;
-  padding:16px;font-size:13px;font-family:'Consolas','Courier New','Monaco',monospace;
-  resize:none;line-height:1.6;user-select:text;
-}
-body.light-theme .exian-code-area{background:#fff;color:#1e1e1e;}
-.exian-statusbar{
-  display:flex;gap:16px;padding:5px 14px;font-size:11px;color:var(--text2);
-  border-top:1px solid var(--border);flex-shrink:0;background:var(--bg2);
-}
-.exian-terminal{
-  height:160px;border-top:1px solid var(--border);
-  background:rgba(0,0,0,.6);padding:12px 14px;overflow-y:auto;
-  font-family:'Consolas','Courier New',monospace;font-size:12px;
-  color:#0f0;flex-shrink:0;
-}
-body.light-theme .exian-terminal{background:rgba(30,30,30,.95);color:#0f0;}
-.exian-terminal-line{margin-bottom:4px;line-height:1.4;}
-.exian-terminal-prompt{color:#60cdff;}
-.exian-terminal-error{color:#ff6b6b;}
-.exian-terminal-success{color:#2ecc71;}
-.exian-terminal-info{color:#f1c40f;}
 
 /* ─── NOTIFICATIONS ───────────────────────────── */
 #notif-stack{position:fixed;bottom:60px;right:14px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
@@ -598,6 +258,15 @@ body.light-theme .exian-terminal{background:rgba(30,30,30,.95);color:#0f0;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(128,128,128,.3);border-radius:3px;}
 body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
+
+/* Остальные стили для окон - сокращаю для экономии места */
+.window{position:absolute;background:var(--bg1);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:300px;min-height:180px;z-index:100;}
+.titlebar{height:40px;display:flex;align-items:center;padding:0 10px;cursor:move;border-radius:12px 12px 0 0;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--border);}
+.tb-title{flex:1;font-size:13px;color:var(--text);}
+.win-btns{display:flex;gap:2px;}
+.wb{width:32px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--text2);transition:background .12s;}
+.wb:hover{background:var(--bg2);color:var(--text);}
+.wb.cls:hover{background:rgba(196,43,28,.85);color:#fff;}
 </style>
 </head>
 <body>
@@ -650,39 +319,23 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
   <div class="lock-user">
     <div id="lock-avatar">🧑</div>
     <div id="lock-username-disp">Пользователь</div>
-    <div id="lock-pin"></div>
     <div class="lock-hint">🔒 Нажмите для разблокировки</div>
   </div>
 </div>
 
 <!-- DESKTOP -->
-<div id="desktop" oncontextmenu="showCtxMenu(event,'desktop')" onclick="desktopClick(event)">
+<div id="desktop" onclick="desktopClick(event)">
   <div class="desk-aurora"></div>
   <div class="desk-glow"></div>
 
-  <div class="desk-icon" style="top:16px;left:18px" ondblclick="openApp('explorer')" onclick="selectIcon(this)">
+  <div class="desk-icon" style="top:16px;left:18px" ondblclick="showNotif('ExiWin','Компьютер','💻')" onclick="selectIcon(this)">
     <div class="dico">💻</div><span>Этот компьютер</span>
   </div>
-  <div class="desk-icon" style="top:114px;left:18px" ondblclick="openApp('notepad')" onclick="selectIcon(this)">
+  <div class="desk-icon" style="top:114px;left:18px" ondblclick="showNotif('ExiWin','Блокнот','📝')" onclick="selectIcon(this)">
     <div class="dico">📝</div><span>Блокнот</span>
   </div>
-  <div class="desk-icon" style="top:212px;left:18px" ondblclick="openApp('browser')" onclick="selectIcon(this)">
+  <div class="desk-icon" style="top:212px;left:18px" ondblclick="showNotif('ExiWin','Edge','🌐')" onclick="selectIcon(this)">
     <div class="dico">🌐</div><span>Edge</span>
-  </div>
-  <div class="desk-icon" style="top:310px;left:18px" ondblclick="openApp('calc')" onclick="selectIcon(this)">
-    <div class="dico">🧮</div><span>Калькулятор</span>
-  </div>
-  <div class="desk-icon" style="top:408px;left:18px" ondblclick="openApp('settings')" onclick="selectIcon(this)">
-    <div class="dico">⚙️</div><span>Параметры</span>
-  </div>
-  <div class="desk-icon" style="top:16px;left:120px" ondblclick="openApp('paint')" onclick="selectIcon(this)">
-    <div class="dico">🎨</div><span>Paint</span>
-  </div>
-  <div class="desk-icon" style="top:114px;left:120px" ondblclick="openApp('taskman')" onclick="selectIcon(this)">
-    <div class="dico">📊</div><span>Диспетчер задач</span>
-  </div>
-  <div class="desk-icon" style="top:212px;left:120px" ondblclick="openApp('exianai')" onclick="selectIcon(this)">
-    <div class="dico">🤖</div><span>Exian.AI 3.0</span>
   </div>
 </div>
 
@@ -692,22 +345,11 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
     <div id="start-btn" onclick="toggleStart(event)" title="Пуск">E✦</div>
     <div class="tb-sep"></div>
   </div>
-  <div id="tb-center">
-    <div class="tb-btn" title="Поиск" onclick="toggleStart(event)">🔍</div>
-    <div class="tb-btn" id="tb-explorer" title="Проводник" ondblclick="openApp('explorer')">📁</div>
-    <div class="tb-btn" id="tb-browser" title="Edge" ondblclick="openApp('browser')">🌐</div>
-    <div class="tb-btn" id="tb-notepad" title="Блокнот" ondblclick="openApp('notepad')">📝</div>
-    <div class="tb-btn" id="tb-calc" title="Калькулятор" ondblclick="openApp('calc')">🧮</div>
-    <div class="tb-btn" id="tb-paint" title="Paint" ondblclick="openApp('paint')">🎨</div>
-    <div class="tb-btn" id="tb-settings" title="Параметры" ondblclick="openApp('settings')">⚙️</div>
-    <div class="tb-btn" id="tb-taskman" title="Диспетчер задач" ondblclick="openApp('taskman')">📊</div>
-    <div class="tb-btn" id="tb-exianai" title="Exian.AI 3.0" ondblclick="openApp('exianai')">🤖</div>
-  </div>
   <div id="tb-right">
     <div class="tb-sys" onclick="toggleTray(event)" title="Системный лоток">
-      <span id="tb-wifi">📶</span>
-      <span id="tb-vol">🔊</span>
-      <span id="tb-bat">🔋</span>
+      <span>📶</span>
+      <span>🔊</span>
+      <span>🔋</span>
     </div>
     <div id="tb-clock" onclick="toggleTray(event)">
       <div id="clock-time">12:00</div>
@@ -721,34 +363,18 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
 <div id="start-menu" onclick="event.stopPropagation()">
   <div id="sm-search">
     <span>🔍</span>
-    <input type="text" id="sm-search-input" placeholder="Введите для поиска..." oninput="smSearch(this.value)">
+    <input type="text" placeholder="Введите для поиска...">
   </div>
-  <div id="sm-pinned-sec">
-    <div class="sm-sec">Закреплённые</div>
-    <div class="pinned-apps">
-      <div class="pin-app" ondblclick="openApp('explorer');hideAll()"><div class="ico">📁</div><div class="lbl">Проводник</div></div>
-      <div class="pin-app" ondblclick="openApp('settings');hideAll()"><div class="ico">⚙️</div><div class="lbl">Параметры</div></div>
-      <div class="pin-app" ondblclick="openApp('browser');hideAll()"><div class="ico">🌐</div><div class="lbl">Edge</div></div>
-      <div class="pin-app" ondblclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="lbl">Блокнот</div></div>
-      <div class="pin-app" ondblclick="openApp('calc');hideAll()"><div class="ico">🧮</div><div class="lbl">Калькулятор</div></div>
-      <div class="pin-app" ondblclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="lbl">Paint</div></div>
-      <div class="pin-app" ondblclick="openApp('taskman');hideAll()"><div class="ico">📊</div><div class="lbl">Диспетчер</div></div>
-      <div class="pin-app" ondblclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="lbl">Exian.AI 3.0</div></div>
-      <div class="pin-app" onclick="showNotif('Магазин','Магазин открывается...','🛒')"><div class="ico">🛒</div><div class="lbl">Магазин</div></div>
-      <div class="pin-app" onclick="showNotif('Почта','Нет новых писем','✉️')"><div class="ico">✉️</div><div class="lbl">Почта</div></div>
-      <div class="pin-app" onclick="showNotif('Фото','Нет фотографий','🖼️')"><div class="ico">🖼️</div><div class="lbl">Фотографии</div></div>
-      <div class="pin-app" onclick="showNotif('Xbox','Подключение...','🎮')"><div class="ico">🎮</div><div class="lbl">Xbox</div></div>
-    </div>
-  </div>
-  <div class="sm-sec">Рекомендуемые</div>
-  <div class="rec-list" id="sm-rec-list">
-    <div class="rec-row" ondblclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="rec-info"><div class="n">AI_Engine.cpp</div><div class="t">Только что</div></div></div>
-    <div class="rec-row" ondblclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="rec-info"><div class="n">Заметки</div><div class="t">Вчера</div></div></div>
-    <div class="rec-row" ondblclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="rec-info"><div class="n">Рисунок1.png</div><div class="t">2 дня назад</div></div></div>
+  <div class="sm-sec">Закреплённые</div>
+  <div class="pinned-apps">
+    <div class="pin-app" onclick="showNotif('ExiWin','Проводник','📁')"><div class="ico">📁</div><div class="lbl">Проводник</div></div>
+    <div class="pin-app" onclick="showNotif('ExiWin','Параметры','⚙️')"><div class="ico">⚙️</div><div class="lbl">Параметры</div></div>
+    <div class="pin-app" onclick="showNotif('ExiWin','Edge','🌐')"><div class="ico">🌐</div><div class="lbl">Edge</div></div>
+    <div class="pin-app" onclick="showNotif('ExiWin','Блокнот','📝')"><div class="ico">📝</div><div class="lbl">Блокнот</div></div>
   </div>
   <div id="sm-footer">
-    <div id="sm-user" onclick="openApp('settings');hideAll()">
-      <div id="sm-avatar" class="sm-avatar-ico">🧑</div>
+    <div id="sm-user">
+      <div id="sm-avatar">🧑</div>
       <span id="sm-username">Пользователь</span>
     </div>
     <div class="power-menu">
@@ -767,11 +393,11 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
     <div class="tr-tile on" id="tr-wifi" onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
     <div class="tr-tile on" id="tr-bt" onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
     <div class="tr-tile off" id="tr-airplane" onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
-    <div class="tr-tile off" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной режим</div></div>
+    <div class="tr-tile off" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной</div></div>
+    <div class="tr-tile off" id="tr-light-theme" onclick="toggleLightTheme()"><div class="ico">☀️</div><div class="lbl">Светлая</div></div>
+    <div class="tr-tile on" id="tr-dark-theme" onclick="toggleDarkTheme()"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
     <div class="tr-tile on" id="tr-sound" onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
     <div class="tr-tile off" id="tr-focus" onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
-    <div class="tr-tile off" id="tr-light-theme" onclick="toggleLightTheme()"><div class="ico">☀️</div><div class="lbl">Светлая тема</div></div>
-    <div class="tr-tile on" id="tr-dark-theme" onclick="toggleDarkTheme()"><div class="ico">🌑</div><div class="lbl">Тёмная тема</div></div>
   </div>
   <div class="sl-row">
     <span class="ico">🔆</span>
@@ -785,44 +411,74 @@ body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
   </div>
 </div>
 
-<!-- CONTEXT MENU -->
-<div id="ctx-menu">
-  <div class="ctx-item" id="ctx-new-file" onclick="ctxNewFile()"><span class="ico">📄</span>Новый файл</div>
-  <div class="ctx-item" onclick="ctxRefresh()"><span class="ico">🔃</span>Обновить</div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="openApp('settings');hideAll()"><span class="ico">⚙️</span>Параметры экрана</div>
-  <div class="ctx-item" onclick="openApp('paint');hideAll()"><span class="ico">🎨</span>Персонализация</div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="openApp('explorer');hideAll()"><span class="ico">📁</span>Открыть проводник</div>
-</div>
-
-<!-- Здесь идут все окна приложений (Explorer, Notepad, Calculator, Settings, Browser, Paint, Task Manager, Exian AI) -->
-<!-- Они остаются точно такими же - код слишком длинный, чтобы повторять -->
-<!-- Добавлю только скрипт с новыми функциями -->
+<!-- NOTIFICATIONS -->
+<div id="notif-stack"></div>
 
 <script>
 'use strict';
-// Все глобальные переменные и функции остаются прежними
 let currentUser = null;
-let openWindows = {};
-let zCounter = 200;
 let nightMode = false;
 let startOpen = false;
 let trayOpen = false;
 let selectedIcon = null;
 let isLightTheme = false;
+let selectedAvatarReg = '🧑';
+
+const DAYS = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const MONTHS_G = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+
+function el(id) { return document.getElementById(id); }
+function pad(x) { return String(x).padStart(2,'0'); }
 
 // ════════════════════════════════════════════
-// ФУНКЦИИ ТЕМ
+// BOOT & INIT
+// ════════════════════════════════════════════
+window.addEventListener('load', () => {
+  updateClock();
+  setInterval(updateClock, 1000);
+  loadTheme();
+  setTimeout(afterBoot, 2600);
+});
+
+function afterBoot() {
+  el('boot').style.opacity = '0';
+  setTimeout(() => el('boot').remove(), 500);
+  const saved = localStorage.getItem('exiwin_user');
+  if (saved) {
+    currentUser = JSON.parse(saved);
+    showLockScreen();
+  } else {
+    showRegScreen();
+  }
+}
+
+function updateClock() {
+  const n = new Date();
+  const hm = pad(n.getHours()) + ':' + pad(n.getMinutes());
+  const hms = hm + ':' + pad(n.getSeconds());
+  const dateStr = pad(n.getDate()) + '.' + pad(n.getMonth()+1) + '.' + n.getFullYear();
+  const longDate = DAYS[n.getDay()] + ', ' + n.getDate() + ' ' + MONTHS_G[n.getMonth()];
+  const longDateFull = longDate + ' ' + n.getFullYear();
+
+  if (el('clock-time')) el('clock-time').textContent = hm;
+  if (el('clock-date-tb')) el('clock-date-tb').textContent = dateStr;
+  if (el('lock-clock')) el('lock-clock').textContent = hm;
+  if (el('lock-date-lock')) el('lock-date-lock').textContent = longDate;
+  if (el('tray-time-big')) el('tray-time-big').textContent = hms;
+  if (el('tray-date-str')) el('tray-date-str').textContent = longDateFull;
+}
+
+// ════════════════════════════════════════════
+// THEME FUNCTIONS
 // ════════════════════════════════════════════
 function toggleLightTheme() {
   if (isLightTheme) return;
   isLightTheme = true;
   document.body.classList.add('light-theme');
-  document.getElementById('tr-light-theme').classList.add('on');
-  document.getElementById('tr-light-theme').classList.remove('off');
-  document.getElementById('tr-dark-theme').classList.remove('on');
-  document.getElementById('tr-dark-theme').classList.add('off');
+  el('tr-light-theme').classList.add('on');
+  el('tr-light-theme').classList.remove('off');
+  el('tr-dark-theme').classList.remove('on');
+  el('tr-dark-theme').classList.add('off');
   localStorage.setItem('exiwin_theme', 'light');
   showNotif('ExiWin', 'Светлая тема включена', '☀️');
 }
@@ -831,10 +487,10 @@ function toggleDarkTheme() {
   if (!isLightTheme) return;
   isLightTheme = false;
   document.body.classList.remove('light-theme');
-  document.getElementById('tr-dark-theme').classList.add('on');
-  document.getElementById('tr-dark-theme').classList.remove('off');
-  document.getElementById('tr-light-theme').classList.remove('on');
-  document.getElementById('tr-light-theme').classList.add('off');
+  el('tr-dark-theme').classList.add('on');
+  el('tr-dark-theme').classList.remove('off');
+  el('tr-light-theme').classList.remove('on');
+  el('tr-light-theme').classList.add('off');
   localStorage.setItem('exiwin_theme', 'dark');
   showNotif('ExiWin', 'Тёмная тема включена', '🌑');
 }
@@ -844,33 +500,42 @@ function loadTheme() {
   if (savedTheme === 'light') {
     isLightTheme = true;
     document.body.classList.add('light-theme');
-    document.getElementById('tr-light-theme').classList.add('on');
-    document.getElementById('tr-light-theme').classList.remove('off');
-    document.getElementById('tr-dark-theme').classList.remove('on');
-    document.getElementById('tr-dark-theme').classList.add('off');
+    if (el('tr-light-theme')) {
+      el('tr-light-theme').classList.add('on');
+      el('tr-light-theme').classList.remove('off');
+      el('tr-dark-theme').classList.remove('on');
+      el('tr-dark-theme').classList.add('off');
+    }
   }
 }
 
 // ════════════════════════════════════════════
-// BOOT & INIT
+// REGISTER / LOGIN
 // ════════════════════════════════════════════
-window.addEventListener('load', () => {
-  updateClock();
-  setInterval(updateClock, 1000);
-  setTimeout(afterBoot, 2600);
-  loadTheme();
-});
+function showRegScreen() {
+  el('regscreen').style.display = 'flex';
+  el('reg-box').style.display = 'block';
+  el('login-box').style.display = 'none';
+}
 
-function afterBoot() {
-  document.getElementById('boot').style.opacity = '0';
-  setTimeout(() => document.getElementById('boot').remove(), 500);
-  const saved = localStorage.getItem('exiwin_user');
-  if (saved) {
-    currentUser = JSON.parse(saved);
-    showLockScreen();
-  } else {
-    showRegScreen();
-  }
+function showLogin() {
+  if (!currentUser && !localStorage.getItem('exiwin_user')) { showRegScreen(); return; }
+  const u = JSON.parse(localStorage.getItem('exiwin_user') || '{}');
+  el('login-avatar').textContent = u.avatar || '🧑';
+  el('login-name-disp').textContent = u.name || 'Пользователь';
+  el('reg-box').style.display = 'none';
+  el('login-box').style.display = 'block';
+}
+
+function showRegister() {
+  el('reg-box').style.display = 'block';
+  el('login-box').style.display = 'none';
+}
+
+function pickAv(elem) {
+  document.querySelectorAll('.av-opt').forEach(a => a.classList.remove('sel'));
+  elem.classList.add('sel');
+  selectedAvatarReg = elem.dataset.av;
 }
 
 function doRegister() {
@@ -898,16 +563,95 @@ function doLogin() {
   enterDesktop();
 }
 
+// ════════════════════════════════════════════
+// LOCK SCREEN
+// ════════════════════════════════════════════
+function showLockScreen() {
+  if (!currentUser) currentUser = JSON.parse(localStorage.getItem('exiwin_user'));
+  el('lock-avatar').textContent = currentUser.avatar || '🧑';
+  el('lock-username-disp').textContent = currentUser.name;
+  el('lockscreen').style.display = 'flex';
+  el('lockscreen').onclick = () => {
+    el('lockscreen').style.opacity = '0';
+    el('lockscreen').style.transition = 'opacity .4s';
+    setTimeout(() => { el('lockscreen').style.display = 'none'; enterDesktop(); }, 400);
+  };
+}
+
 function enterDesktop() {
   updateUserUI();
-  loadNotepadContent();
-  loadExianCode();
-  initFileSystem();
-  initPaint();
-  tmRender('processes');
   showNotif('ExiWin 12', 'Добро пожаловать, ' + currentUser.name + '!', 'E✦');
-  setTimeout(() => showNotif('Exian.AI 3.0', 'C++ IDE готов к работе', '🤖'), 2000);
-  setTimeout(() => showNotif('ExiWin Update', 'Система обновлена до версии 24H2', '✅'), 3500);
+  setTimeout(() => showNotif('ExiWin Update', 'Система обновлена до версии 24H2', '✅'), 2000);
+}
+
+function updateUserUI() {
+  if (!currentUser) return;
+  if (el('sm-username')) el('sm-username').textContent = currentUser.name;
+  if (el('sm-avatar')) el('sm-avatar').textContent = currentUser.avatar || '🧑';
+}
+
+// ════════════════════════════════════════════
+// UI FUNCTIONS
+// ════════════════════════════════════════════
+function toggleStart(e) {
+  e.stopPropagation();
+  startOpen = !startOpen;
+  const sm = el('start-menu');
+  sm.style.display = startOpen ? 'flex' : 'none';
+  setTimeout(() => sm.classList.toggle('show', startOpen), 10);
+  if (startOpen) { trayOpen = false; el('tray-popup').style.display = 'none'; }
+}
+
+function toggleTray(e) {
+  e.stopPropagation();
+  trayOpen = !trayOpen;
+  el('tray-popup').style.display = trayOpen ? 'block' : 'none';
+  if (trayOpen) { startOpen = false; el('start-menu').style.display = 'none'; }
+}
+
+function hideAll() {
+  startOpen = false; trayOpen = false;
+  el('start-menu').style.display = 'none';
+  el('tray-popup').style.display = 'none';
+}
+
+function desktopClick(e) {
+  hideAll();
+  if (selectedIcon && !e.target.closest('.desk-icon')) {
+    selectedIcon.classList.remove('selected');
+    selectedIcon = null;
+  }
+}
+
+function selectIcon(elem) {
+  if (selectedIcon) selectedIcon.classList.remove('selected');
+  elem.classList.add('selected');
+  selectedIcon = elem;
+}
+
+function toggleTile(id, label) {
+  const t = el(id);
+  t.classList.toggle('off');
+  t.classList.toggle('on');
+  const isOn = t.classList.contains('on');
+  showNotif(label, isOn ? label + ' включён' : label + ' отключён', isOn ? '✅' : '⭕');
+}
+
+function toggleNightMode() {
+  nightMode = !nightMode;
+  document.body.style.filter = nightMode ? 'sepia(0.25) hue-rotate(-20deg)' : '';
+  el('tr-night').classList.toggle('off');
+  el('tr-night').classList.toggle('on');
+  showNotif('Ночной режим', nightMode ? 'Включён' : 'Выключён', '🌙');
+}
+
+function setBright(v) {
+  el('desktop').style.filter = `brightness(${v/100})`;
+  if (el('bright-val')) el('bright-val').textContent = v + '%';
+}
+
+function setVol(v) {
+  if (el('vol-val')) el('vol-val').textContent = v + '%';
 }
 
 function showNotif(title, msg, icon='🔔') {
@@ -916,14 +660,40 @@ function showNotif(title, msg, icon='🔔') {
   n.className = 'notif';
   n.innerHTML = `<div class="nico">${icon}</div><div class="notif-txt"><div class="nt">${title}</div><div class="nd">${msg}</div></div><div class="notif-close" onclick="this.parentElement.remove()">✕</div>`;
   stack.appendChild(n);
-  setTimeout(() => { n.style.transition = 'opacity .4s,transform .4s'; n.style.opacity = '0'; n.style.transform = 'translateX(30px)'; setTimeout(() => n.remove(), 400); }, 4000);
+  setTimeout(() => { 
+    n.style.transition = 'opacity .4s,transform .4s'; 
+    n.style.opacity = '0'; 
+    n.style.transform = 'translateX(30px)'; 
+    setTimeout(() => n.remove(), 400); 
+  }, 4000);
 }
 
-function el(id) { return document.getElementById(id); }
+// ════════════════════════════════════════════
+// POWER
+// ════════════════════════════════════════════
+function lockScreen() {
+  hideAll();
+  el('lock-avatar').textContent = currentUser.avatar || '🧑';
+  el('lock-username-disp').textContent = currentUser.name;
+  const ls = el('lockscreen');
+  ls.style.display = 'flex';
+  ls.style.opacity = '0';
+  ls.style.transition = 'opacity .4s';
+  setTimeout(() => ls.style.opacity = '1', 10);
+}
 
-// Остальные функции (clock, window management, apps, etc.) остаются прежними
-// Просто замените все "Windows" на "ExiWin" и все "w12_" на "exiwin_" в localStorage
+function reboot() {
+  showNotif('ExiWin 12','Перезагрузка...','🔄');
+  setTimeout(() => location.reload(), 1500);
+}
 
+function shutdown() {
+  document.body.innerHTML = '<div style="background:#000;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;color:#fff;"><div style="font-size:72px;">E✦</div><div style="color:rgba(255,255,255,.4);font-size:16px;">Выключение...</div></div>';
+  setTimeout(() => location.reload(), 2500);
+}
+
+// Закрываем попапы при клике вне их
+document.addEventListener('click', hideAll);
 </script>
 </body>
 </html>
