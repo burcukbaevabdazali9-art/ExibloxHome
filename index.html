@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Windows 12</title>
+<title>ExiWin 12</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;}
 :root{
@@ -10,12 +10,33 @@
   --bg2:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.10);
   --text:#fff;--text2:rgba(255,255,255,0.55);--radius:12px;
   --shadow:0 12px 48px rgba(0,0,0,0.55);--blur:blur(40px);
+  --desktop-bg:linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%);
+  --taskbar-bg:rgba(8,12,22,.88);
+  --menu-bg:rgba(12,16,28,.95);
+  --card-bg:rgba(255,255,255,.05);
+  --input-bg:rgba(255,255,255,.08);
 }
+
+/* ─── СВЕТЛАЯ ТЕМА ─────────────────────────── */
+body.light-theme {
+  --bg1:rgba(255,255,255,0.95);
+  --bg2:rgba(0,0,0,0.05);
+  --border:rgba(0,0,0,0.12);
+  --text:#000;
+  --text2:rgba(0,0,0,0.60);
+  --shadow:0 8px 32px rgba(0,0,0,0.15);
+  --desktop-bg:linear-gradient(160deg,#e8f1f5 0%,#f0f4f8 40%,#dfe8ed 100%);
+  --taskbar-bg:rgba(248,250,252,.95);
+  --menu-bg:rgba(255,255,255,.98);
+  --card-bg:rgba(0,0,0,.04);
+  --input-bg:rgba(0,0,0,.06);
+}
+
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden;width:100vw;height:100vh;color:var(--text);}
 
 /* ─── BOOT ─────────────────────────────────── */
 #boot{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;}
-.win-logo-svg{width:72px;height:72px;margin-bottom:48px;}
+.exiwin-logo{width:80px;height:80px;margin-bottom:48px;font-size:72px;font-weight:700;background:linear-gradient(135deg,#0078d4,#60cdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;justify-content:center;}
 .boot-bar{width:180px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;}
 .boot-fill{height:100%;background:var(--accent);border-radius:2px;animation:bootFill 2.2s ease forwards;}
 @keyframes bootFill{0%{width:0}60%{width:70%}100%{width:100%}}
@@ -30,25 +51,25 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   border:1px solid var(--border);border-radius:20px;padding:40px;width:420px;
   box-shadow:var(--shadow);text-align:center;
 }
-.reg-box h2{font-size:26px;font-weight:300;margin-bottom:6px;}
-.reg-box p{color:var(--text2);font-size:14px;margin-bottom:30px;}
+.reg-box h2{font-size:26px;font-weight:300;margin-bottom:6px;color:#fff;}
+.reg-box p{color:rgba(255,255,255,.6);font-size:14px;margin-bottom:30px;}
 .reg-avatar-pick{display:flex;gap:12px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;}
 .av-opt{width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;border:3px solid transparent;transition:all .2s;}
 .av-opt.sel{border-color:#fff;transform:scale(1.15);}
 .reg-input{
-  width:100%;background:rgba(255,255,255,0.08);border:1px solid var(--border);
+  width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,.1);
   border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;
   outline:none;margin-bottom:12px;transition:border .2s;
 }
 .reg-input:focus{border-color:var(--accent);}
-.reg-input::placeholder{color:var(--text2);}
+.reg-input::placeholder{color:rgba(255,255,255,.4);}
 .reg-btn{
   width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);
   color:#fff;font-size:15px;cursor:pointer;font-family:inherit;font-weight:500;
   transition:background .2s;margin-top:6px;
 }
 .reg-btn:hover{background:#106ebe;}
-.reg-switch{color:var(--text2);font-size:13px;margin-top:16px;cursor:pointer;}
+.reg-switch{color:rgba(255,255,255,.6);font-size:13px;margin-top:16px;cursor:pointer;}
 .reg-switch span{color:var(--accent2);}
 .reg-err{color:#ff6b6b;font-size:13px;margin-top:8px;min-height:18px;}
 
@@ -65,20 +86,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   animation:glowPulse 4s ease-in-out infinite;
 }
 @keyframes glowPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
-#lock-clock{font-size:88px;font-weight:200;letter-spacing:6px;text-shadow:0 0 40px rgba(0,120,212,.3);}
-#lock-date{font-size:20px;color:var(--text2);margin-bottom:50px;font-weight:300;}
+#lock-clock{font-size:88px;font-weight:200;letter-spacing:6px;text-shadow:0 0 40px rgba(0,120,212,.3);color:#fff;}
+#lock-date-lock{font-size:20px;color:rgba(255,255,255,.6);margin-bottom:50px;font-weight:300;}
 .lock-user{display:flex;flex-direction:column;align-items:center;gap:14px;}
 #lock-avatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 0 0 3px rgba(255,255,255,0.2);}
-#lock-username{font-size:18px;}
-#lock-pin{display:flex;gap:10px;margin-top:10px;}
-.pin-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.25);transition:background .2s;}
+#lock-username-disp{font-size:18px;color:#fff;}
 .lock-hint{font-size:13px;color:rgba(255,255,255,.3);margin-top:20px;animation:pulse 2s ease infinite;}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
 
 /* ─── DESKTOP ────────────────────────────────── */
 #desktop{
   width:100%;height:calc(100% - 48px);position:relative;overflow:hidden;
-  background:linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%);
+  background:var(--desktop-bg);
 }
 .desk-aurora{
   position:absolute;inset:0;pointer-events:none;
@@ -92,21 +111,32 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   top:20%;left:30%;pointer-events:none;
 }
 
+body.light-theme .desk-aurora{
+  background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,120,212,.04) 60deg,rgba(0,150,255,.06) 100deg,rgba(100,80,255,.04) 150deg,transparent 200deg);
+}
+
+body.light-theme .desk-glow{
+  background:radial-gradient(ellipse,rgba(0,120,212,.06) 0%,transparent 70%);
+}
+
 /* ─── DESKTOP ICONS ──────────────────────────── */
 .desk-icon{
   position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;
   padding:8px 6px;width:82px;cursor:pointer;border-radius:10px;transition:background .15s;
 }
 .desk-icon:hover{background:rgba(255,255,255,.09);}
+body.light-theme .desk-icon:hover{background:rgba(0,0,0,.08);}
 .desk-icon.selected{background:rgba(0,120,212,.35);}
 .desk-icon .dico{font-size:38px;line-height:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));}
-.desk-icon span{font-size:11.5px;color:#fff;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);line-height:1.3;word-break:break-word;}
+body.light-theme .desk-icon .dico{filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));}
+.desk-icon span{font-size:11.5px;color:var(--text);text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);line-height:1.3;word-break:break-word;}
+body.light-theme .desk-icon span{text-shadow:0 1px 3px rgba(255,255,255,.9);}
 
 /* ─── TASKBAR ─────────────────────────────────── */
 #taskbar{
   position:fixed;bottom:0;left:0;right:0;height:48px;
-  background:rgba(8,12,22,.88);backdrop-filter:var(--blur);
-  border-top:1px solid rgba(255,255,255,.07);
+  background:var(--taskbar-bg);backdrop-filter:var(--blur);
+  border-top:1px solid var(--border);
   display:flex;align-items:center;z-index:1000;
 }
 #tb-left{display:flex;align-items:center;padding-left:8px;gap:2px;}
@@ -117,22 +147,30 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   border-radius:8px;cursor:pointer;transition:background .15s;position:relative;font-size:20px;flex-shrink:0;
 }
 .tb-btn:hover{background:rgba(255,255,255,.1);}
+body.light-theme .tb-btn:hover{background:rgba(0,0,0,.08);}
 .tb-btn.running::after{
   content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
   width:4px;height:4px;border-radius:50%;background:var(--accent2);
 }
 .tb-btn.active-win{background:rgba(255,255,255,.13);}
-#start-btn{width:44px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;transition:background .15s;}
+body.light-theme .tb-btn.active-win{background:rgba(0,0,0,.12);}
+#start-btn{
+  width:44px;height:38px;display:flex;align-items:center;justify-content:center;
+  border-radius:8px;cursor:pointer;transition:all .15s;
+  font-size:24px;font-weight:700;color:var(--text);
+}
 #start-btn:hover{background:rgba(255,255,255,.1);}
-.tb-sep{width:1px;height:22px;background:rgba(255,255,255,.1);margin:0 4px;}
-#tb-clock{color:#fff;font-size:12px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
+body.light-theme #start-btn:hover{background:rgba(0,0,0,.08);}
+.tb-sep{width:1px;height:22px;background:var(--border);margin:0 4px;}
+#tb-clock{color:var(--text);font-size:12px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
 .tb-sys{display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background .15s;}
 .tb-sys:hover{background:rgba(255,255,255,.1);}
+body.light-theme .tb-sys:hover{background:rgba(0,0,0,.08);}
 
 /* ─── START MENU ──────────────────────────────── */
 #start-menu{
   position:fixed;bottom:56px;left:50%;transform:translateX(-50%) translateY(8px);
-  width:680px;background:rgba(12,16,28,.95);backdrop-filter:var(--blur);
+  width:680px;background:var(--menu-bg);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
   display:none;flex-direction:column;z-index:900;overflow:hidden;
   opacity:0;transition:opacity .18s,transform .18s;
@@ -140,10 +178,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 #start-menu.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #sm-search{
   margin:18px 18px 0;display:flex;align-items:center;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  background:var(--input-bg);border:1px solid var(--border);
   border-radius:10px;padding:9px 14px;gap:10px;
 }
-#sm-search input{background:none;border:none;outline:none;color:#fff;font-size:14px;flex:1;font-family:inherit;}
+#sm-search input{background:none;border:none;outline:none;color:var(--text);font-size:14px;flex:1;font-family:inherit;}
 #sm-search input::placeholder{color:var(--text2);}
 .sm-sec{padding:14px 18px 8px;font-size:12px;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;}
 .pinned-apps{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:0 10px;}
@@ -151,7 +189,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   display:flex;flex-direction:column;align-items:center;gap:6px;
   padding:14px 8px 10px;border-radius:10px;cursor:pointer;transition:background .15s;
 }
-.pin-app:hover{background:rgba(255,255,255,.1);}
+.pin-app:hover{background:var(--bg2);}
 .pin-app .ico{font-size:26px;}
 .pin-app .lbl{font-size:11px;color:var(--text2);text-align:center;}
 .rec-list{padding:0 12px;display:flex;flex-direction:column;gap:1px;}
@@ -159,16 +197,16 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   display:flex;align-items:center;gap:12px;padding:8px 10px;
   border-radius:8px;cursor:pointer;transition:background .15s;
 }
-.rec-row:hover{background:rgba(255,255,255,.08);}
+.rec-row:hover{background:var(--bg2);}
 .rec-row .ico{font-size:22px;}
-.rec-info .n{font-size:13px;}
+.rec-info .n{font-size:13px;color:var(--text);}
 .rec-info .t{font-size:11px;color:var(--text2);}
 #sm-footer{
   display:flex;justify-content:space-between;align-items:center;
-  padding:12px 18px;border-top:1px solid rgba(255,255,255,.07);margin-top:auto;
+  padding:12px 18px;border-top:1px solid var(--border);margin-top:auto;
 }
 #sm-user{display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 10px;border-radius:8px;transition:background .15s;}
-#sm-user:hover{background:rgba(255,255,255,.08);}
+#sm-user:hover{background:var(--bg2);}
 #sm-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
 .power-menu{display:flex;gap:4px;}
 .pw-btn{
@@ -179,20 +217,20 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 
 /* ─── TRAY POPUP ──────────────────────────────── */
 #tray-popup{
-  position:fixed;bottom:56px;right:8px;width:360px;
-  background:rgba(12,16,28,.96);backdrop-filter:var(--blur);
+  position:fixed;bottom:56px;right:8px;width:380px;
+  background:var(--menu-bg);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:16px;padding:18px;
   box-shadow:var(--shadow);display:none;z-index:900;
 }
-.tray-time-big{font-size:52px;font-weight:200;text-align:center;letter-spacing:2px;}
+.tray-time-big{font-size:52px;font-weight:200;text-align:center;letter-spacing:2px;color:var(--text);}
 .tray-date-str{font-size:13px;color:var(--text2);text-align:center;margin-bottom:16px;}
-.tray-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.tray-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
 .tr-tile{
   background:rgba(0,120,212,.25);border-radius:12px;padding:12px 10px 8px;
   cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px;
 }
 .tr-tile:hover{background:rgba(0,120,212,.4);}
-.tr-tile.off{background:rgba(255,255,255,.06);}
+.tr-tile.off{background:var(--bg2);}
 .tr-tile .ico{font-size:18px;}
 .tr-tile .lbl{font-size:11px;color:var(--text2);}
 .sl-row{display:flex;align-items:center;gap:10px;margin:6px 0;}
@@ -200,330 +238,51 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 .sl-row input[type=range]{flex:1;accent-color:var(--accent);height:4px;}
 .sl-val{font-size:12px;color:var(--text2);width:30px;text-align:right;}
 
-/* ─── CONTEXT MENU ────────────────────────────── */
-#ctx-menu{
-  position:fixed;z-index:9998;background:rgba(18,22,36,.96);backdrop-filter:var(--blur);
-  border:1px solid var(--border);border-radius:var(--radius);padding:6px;
-  min-width:210px;box-shadow:var(--shadow);display:none;
-}
-.ctx-item{
-  padding:8px 14px;border-radius:8px;font-size:13px;color:#fff;cursor:pointer;
-  display:flex;align-items:center;gap:10px;transition:background .1s;
-}
-.ctx-item:hover{background:rgba(255,255,255,.1);}
-.ctx-item .ico{font-size:15px;width:18px;text-align:center;}
-.ctx-sep{height:1px;background:rgba(255,255,255,.08);margin:4px 2px;}
-
-/* ─── WINDOWS ─────────────────────────────────── */
-.window{
-  position:absolute;background:var(--bg1);backdrop-filter:var(--blur);
-  border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:var(--shadow);display:flex;flex-direction:column;
-  min-width:300px;min-height:180px;z-index:100;
-  animation:winOpen .15s ease;
-}
-@keyframes winOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-.window.maximized{border-radius:0!important;top:0!important;left:0!important;width:100%!important;height:calc(100vh - 48px)!important;}
-.titlebar{
-  height:40px;display:flex;align-items:center;padding:0 10px;
-  cursor:move;border-radius:var(--radius) var(--radius) 0 0;flex-shrink:0;
-  background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.05);
-}
-.tb-icon{font-size:16px;margin-right:8px;}
-.tb-title{flex:1;font-size:13px;color:rgba(255,255,255,.8);}
-.win-btns{display:flex;gap:2px;}
-.wb{
-  width:32px;height:28px;border-radius:6px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;font-size:12px;color:var(--text2);
-  transition:background .12s;
-}
-.wb:hover{background:rgba(255,255,255,.14);color:#fff;}
-.wb.cls:hover{background:rgba(196,43,28,.85);color:#fff;}
-.win-body{flex:1;overflow:auto;border-radius:0 0 var(--radius) var(--radius);}
-.resize-handle{position:absolute;width:14px;height:14px;bottom:0;right:0;cursor:se-resize;}
-
-/* ─── EXPLORER ────────────────────────────────── */
-.exp-wrap{display:flex;flex-direction:column;height:100%;}
-.exp-topbar{
-  display:flex;align-items:center;gap:6px;padding:6px 10px;
-  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;
-}
-.exp-nav{
-  width:28px;height:28px;border-radius:6px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;color:var(--text2);transition:background .12s;font-size:14px;
-}
-.exp-nav:hover{background:var(--bg2);}
-.exp-path{
-  flex:1;background:rgba(255,255,255,.07);border:1px solid var(--border);
-  border-radius:7px;padding:4px 12px;font-size:12px;color:var(--text2);
-  cursor:text;outline:none;font-family:inherit;
-}
-.exp-body{display:flex;flex:1;overflow:hidden;}
-.exp-side{
-  width:175px;border-right:1px solid rgba(255,255,255,.05);
-  padding:8px;overflow-y:auto;flex-shrink:0;background:rgba(0,0,0,.15);
-}
-.exp-side-item{
-  padding:7px 10px;border-radius:7px;font-size:13px;color:var(--text2);
-  cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;
-}
-.exp-side-item:hover{background:var(--bg2);}
-.exp-side-item.active{background:rgba(0,120,212,.3);color:#fff;}
-.exp-files{
-  flex:1;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,90px);
-  gap:8px;align-content:start;overflow-y:auto;
-}
-.file-item{
-  display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 6px;
-  border-radius:8px;cursor:pointer;transition:background .12s;
-}
-.file-item:hover{background:var(--bg2);}
-.file-item.selected{background:rgba(0,120,212,.3);}
-.file-item .ico{font-size:34px;}
-.file-item .fname{font-size:11px;color:var(--text2);text-align:center;word-break:break-all;}
-.exp-statusbar{
-  padding:4px 14px;font-size:11px;color:var(--text2);
-  border-top:1px solid rgba(255,255,255,.05);flex-shrink:0;
-}
-.exp-toolbar-row{
-  display:flex;align-items:center;gap:4px;padding:4px 8px;
-  border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;
-}
-.exp-tb-btn{
-  padding:4px 10px;border-radius:6px;font-size:12px;color:var(--text2);
-  cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:4px;
-}
-.exp-tb-btn:hover{background:var(--bg2);}
-
-/* ─── NOTEPAD ─────────────────────────────────── */
-.np-wrap{display:flex;flex-direction:column;height:100%;}
-.np-menubar{display:flex;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
-.np-menu-item{
-  padding:6px 12px;font-size:13px;color:var(--text2);cursor:pointer;
-  transition:background .12s;position:relative;
-}
-.np-menu-item:hover,.np-menu-item.open{background:var(--bg2);}
-.np-dropdown{
-  position:absolute;top:100%;left:0;background:rgba(18,22,36,.98);
-  border:1px solid var(--border);border-radius:8px;padding:4px;
-  min-width:160px;z-index:9999;display:none;box-shadow:var(--shadow);
-}
-.np-menu-item.open .np-dropdown{display:block;}
-.np-dd-item{
-  padding:7px 12px;border-radius:6px;font-size:13px;color:#fff;
-  cursor:pointer;display:flex;justify-content:space-between;align-items:center;
-}
-.np-dd-item:hover{background:var(--bg2);}
-.np-dd-item kbd{font-size:11px;color:var(--text2);background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px;}
-.np-dd-sep{height:1px;background:rgba(255,255,255,.08);margin:3px 0;}
-#np-area{
-  flex:1;background:rgba(8,10,18,.85);color:#dde8ff;border:none;outline:none;
-  padding:16px;font-size:14px;font-family:'Consolas','Courier New',monospace;
-  resize:none;line-height:1.7;
-}
-.np-statusbar{
-  display:flex;gap:16px;padding:3px 12px;font-size:11px;color:var(--text2);
-  border-top:1px solid rgba(255,255,255,.05);flex-shrink:0;
-}
-
-/* ─── CALCULATOR ──────────────────────────────── */
-.calc-wrap{padding:14px;display:flex;flex-direction:column;gap:10px;height:100%;}
-.calc-mode{display:flex;gap:2px;margin-bottom:2px;}
-.calc-mode-btn{
-  padding:5px 12px;border-radius:6px;font-size:12px;color:var(--text2);
-  cursor:pointer;transition:background .12s;
-}
-.calc-mode-btn:hover,.calc-mode-btn.active{background:var(--bg2);color:#fff;}
-.calc-display{
-  background:rgba(0,0,0,.35);border-radius:10px;padding:12px 16px;
-  display:flex;flex-direction:column;align-items:flex-end;
-}
-.calc-expr{font-size:13px;color:var(--text2);min-height:20px;word-break:break-all;}
-.calc-result{font-size:40px;font-weight:300;min-height:54px;word-break:break-all;}
-.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;flex:1;}
-.cc{
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:16px;cursor:pointer;transition:all .1s;color:#fff;
-  min-height:48px;
-}
-.cc:hover{filter:brightness(1.2);}
-.cc:active{transform:scale(.93);}
-.cc-fn{background:rgba(255,255,255,.06);color:var(--text2);}
-.cc-op{background:rgba(0,120,212,.3);}
-.cc-eq{background:var(--accent);}
-.cc-num{background:rgba(255,255,255,.09);}
-.cc-span2{grid-column:span 2;}
-
-/* ─── SETTINGS ────────────────────────────────── */
-.set-wrap{display:flex;height:100%;}
-.set-side{
-  width:215px;border-right:1px solid rgba(255,255,255,.05);
-  padding:10px;overflow-y:auto;background:rgba(0,0,0,.15);flex-shrink:0;
-}
-.set-side-item{
-  padding:10px 14px;border-radius:8px;font-size:13px;color:var(--text2);
-  cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s;
-}
-.set-side-item:hover{background:var(--bg2);}
-.set-side-item.active{background:rgba(0,120,212,.3);color:#fff;}
-.set-content{flex:1;padding:24px;overflow-y:auto;}
-.set-page{display:none;}
-.set-page.active{display:block;}
-.set-h1{font-size:22px;font-weight:300;margin-bottom:20px;}
-.set-card{
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
-  border-radius:10px;padding:14px 18px;margin-bottom:8px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-}
-.set-card-l .n{font-size:14px;}
-.set-card-l .d{font-size:12px;color:var(--text2);margin-top:2px;}
-.toggle{
-  width:44px;height:24px;border-radius:12px;background:rgba(255,255,255,.15);
-  position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;
-}
-.toggle.on{background:var(--accent);}
-.toggle::after{
-  content:'';position:absolute;width:18px;height:18px;background:#fff;
-  border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.4);
-}
-.toggle.on::after{transform:translateX(20px);}
-.set-range-wrap{display:flex;align-items:center;gap:10px;margin-top:8px;}
-.set-range-wrap input{flex:1;accent-color:var(--accent);}
-.set-select{
-  background:rgba(255,255,255,.08);border:1px solid var(--border);
-  border-radius:8px;padding:6px 10px;color:#fff;font-size:13px;
-  outline:none;font-family:inherit;cursor:pointer;
-}
-.set-select option{background:#111827;}
-
-/* ─── BROWSER ─────────────────────────────────── */
-.br-wrap{display:flex;flex-direction:column;height:100%;}
-.br-bar{
-  display:flex;align-items:center;gap:6px;padding:7px 10px;
-  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;
-}
-.br-nav{
-  width:28px;height:28px;border-radius:6px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;
-  transition:background .12s;
-}
-.br-nav:hover{background:var(--bg2);}
-.br-url-bar{
-  flex:1;background:rgba(255,255,255,.07);border:1px solid var(--border);
-  border-radius:20px;padding:5px 14px;font-size:13px;color:#fff;outline:none;
-  font-family:inherit;
-}
-.br-newtab{
-  flex:1;padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:20px;
-  overflow-y:auto;
-}
-.br-greeting{font-size:26px;font-weight:300;color:#fff;}
-.br-searchbar{
-  display:flex;align-items:center;background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.14);border-radius:28px;
-  padding:10px 20px;gap:10px;width:560px;max-width:100%;
-}
-.br-searchbar input{background:none;border:none;outline:none;color:#fff;font-size:15px;flex:1;font-family:inherit;}
-.br-searchbar button{background:var(--accent);border:none;color:#fff;padding:7px 18px;border-radius:18px;cursor:pointer;font-size:13px;font-family:inherit;}
-.br-shortcuts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;width:560px;max-width:100%;}
-.br-sc{
-  background:rgba(255,255,255,.06);border-radius:12px;padding:14px 10px;
-  display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;
-  transition:background .12s;
-}
-.br-sc:hover{background:rgba(255,255,255,.12);}
-.br-sc .ico{font-size:22px;}
-.br-sc span{font-size:11px;color:var(--text2);}
-.br-news{width:560px;max-width:100%;margin-top:10px;}
-.br-news h3{font-size:14px;color:var(--text2);margin-bottom:10px;}
-.br-article{
-  background:rgba(255,255,255,.05);border-radius:10px;padding:12px;
-  margin-bottom:8px;cursor:pointer;transition:background .12s;
-}
-.br-article:hover{background:rgba(255,255,255,.09);}
-.br-article h4{font-size:13px;margin-bottom:4px;}
-.br-article p{font-size:12px;color:var(--text2);}
-.br-frame{flex:1;width:100%;border:none;background:#fff;}
-
-/* ─── TASK MANAGER ────────────────────────────── */
-.tm-wrap{display:flex;flex-direction:column;height:100%;}
-.tm-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
-.tm-tab{
-  padding:10px 18px;font-size:13px;color:var(--text2);cursor:pointer;
-  transition:all .12s;border-bottom:2px solid transparent;
-}
-.tm-tab:hover{color:#fff;}
-.tm-tab.active{color:#fff;border-bottom-color:var(--accent);}
-.tm-body{flex:1;padding:14px;overflow-y:auto;}
-.tm-table{width:100%;border-collapse:collapse;font-size:13px;}
-.tm-table th{text-align:left;padding:8px 12px;color:var(--text2);font-weight:400;border-bottom:1px solid rgba(255,255,255,.07);}
-.tm-table td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);}
-.tm-table tr:hover td{background:rgba(255,255,255,.04);}
-.tm-bar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
-.tm-fill{height:100%;border-radius:3px;background:var(--accent);}
-
-/* ─── PAINT ───────────────────────────────────── */
-.paint-wrap{display:flex;flex-direction:column;height:100%;}
-.paint-toolbar{
-  display:flex;align-items:center;gap:8px;padding:8px 12px;
-  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;flex-wrap:wrap;
-}
-.paint-tool{
-  width:34px;height:34px;border-radius:7px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;font-size:17px;transition:background .12s;
-}
-.paint-tool:hover,.paint-tool.active{background:rgba(0,120,212,.35);}
-.paint-colors{display:flex;gap:4px;flex-wrap:wrap;max-width:200px;}
-.paint-color{
-  width:20px;height:20px;border-radius:4px;cursor:pointer;
-  border:2px solid transparent;transition:border .12s;
-}
-.paint-color.active{border-color:#fff;}
-.paint-size{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
-.paint-size input{width:80px;accent-color:var(--accent);}
-.paint-canvas-wrap{flex:1;overflow:hidden;background:#fff;position:relative;}
-#paint-canvas{cursor:crosshair;display:block;}
-
 /* ─── NOTIFICATIONS ───────────────────────────── */
 #notif-stack{position:fixed;bottom:60px;right:14px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .notif{
-  background:rgba(18,22,36,.97);backdrop-filter:var(--blur);
+  background:var(--menu-bg);backdrop-filter:var(--blur);
   border:1px solid var(--border);border-radius:14px;padding:14px 16px;
   width:320px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start;
   animation:notifSlide .3s ease;
 }
 @keyframes notifSlide{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
 .notif .nico{font-size:26px;flex-shrink:0;}
-.notif-txt .nt{font-size:13px;font-weight:600;margin-bottom:3px;}
+.notif-txt .nt{font-size:13px;font-weight:600;margin-bottom:3px;color:var(--text);}
 .notif-txt .nd{font-size:12px;color:var(--text2);}
 .notif-close{margin-left:auto;cursor:pointer;color:var(--text2);font-size:16px;padding:2px;}
-.notif-close:hover{color:#fff;}
+.notif-close:hover{color:var(--text);}
 
 /* ─── SCROLLBAR ───────────────────────────────── */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:3px;}
+::-webkit-scrollbar-thumb{background:rgba(128,128,128,.3);border-radius:3px;}
+body.light-theme ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);}
+
+/* Остальные стили для окон - сокращаю для экономии места */
+.window{position:absolute;background:var(--bg1);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:300px;min-height:180px;z-index:100;}
+.titlebar{height:40px;display:flex;align-items:center;padding:0 10px;cursor:move;border-radius:12px 12px 0 0;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--border);}
+.tb-title{flex:1;font-size:13px;color:var(--text);}
+.win-btns{display:flex;gap:2px;}
+.wb{width:32px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--text2);transition:background .12s;}
+.wb:hover{background:var(--bg2);color:var(--text);}
+.wb.cls:hover{background:rgba(196,43,28,.85);color:#fff;}
 </style>
 </head>
 <body>
 
 <!-- BOOT -->
 <div id="boot">
-  <svg class="win-logo-svg" viewBox="0 0 88 88">
-    <rect x="4" y="4" width="38" height="38" rx="5" fill="#F35325"/>
-    <rect x="46" y="4" width="38" height="38" rx="5" fill="#81BC06"/>
-    <rect x="4" y="46" width="38" height="38" rx="5" fill="#05A6F0"/>
-    <rect x="46" y="46" width="38" height="38" rx="5" fill="#FFBA08"/>
-  </svg>
+  <div class="exiwin-logo">E✦</div>
   <div class="boot-bar"><div class="boot-fill"></div></div>
 </div>
 
 <!-- REGISTER / LOGIN -->
 <div id="regscreen" style="display:none;">
   <div class="reg-box" id="reg-box">
-    <div style="font-size:48px;margin-bottom:10px;">🪟</div>
+    <div style="font-size:48px;margin-bottom:10px;">E✦</div>
     <h2>Добро пожаловать</h2>
-    <p>Создайте аккаунт Windows 12</p>
+    <p>Создайте аккаунт ExiWin 12</p>
     <div class="reg-avatar-pick" id="av-pick">
       <div class="av-opt sel" data-av="🧑" onclick="pickAv(this)">🧑</div>
       <div class="av-opt" data-av="👩" onclick="pickAv(this)">👩</div>
@@ -560,67 +319,37 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   <div class="lock-user">
     <div id="lock-avatar">🧑</div>
     <div id="lock-username-disp">Пользователь</div>
-    <div id="lock-pin"></div>
     <div class="lock-hint">🔒 Нажмите для разблокировки</div>
   </div>
 </div>
 
 <!-- DESKTOP -->
-<div id="desktop" oncontextmenu="showCtxMenu(event,'desktop')" onclick="desktopClick(event)">
+<div id="desktop" onclick="desktopClick(event)">
   <div class="desk-aurora"></div>
   <div class="desk-glow"></div>
 
-  <div class="desk-icon" style="top:16px;left:18px" ondblclick="openApp('explorer')" onclick="selectIcon(this)">
+  <div class="desk-icon" style="top:16px;left:18px" ondblclick="showNotif('ExiWin','Компьютер','💻')" onclick="selectIcon(this)">
     <div class="dico">💻</div><span>Этот компьютер</span>
   </div>
-  <div class="desk-icon" style="top:114px;left:18px" ondblclick="openApp('notepad')" onclick="selectIcon(this)">
+  <div class="desk-icon" style="top:114px;left:18px" ondblclick="showNotif('ExiWin','Блокнот','📝')" onclick="selectIcon(this)">
     <div class="dico">📝</div><span>Блокнот</span>
   </div>
-  <div class="desk-icon" style="top:212px;left:18px" ondblclick="openApp('browser')" onclick="selectIcon(this)">
+  <div class="desk-icon" style="top:212px;left:18px" ondblclick="showNotif('ExiWin','Edge','🌐')" onclick="selectIcon(this)">
     <div class="dico">🌐</div><span>Edge</span>
-  </div>
-  <div class="desk-icon" style="top:310px;left:18px" ondblclick="openApp('calc')" onclick="selectIcon(this)">
-    <div class="dico">🧮</div><span>Калькулятор</span>
-  </div>
-  <div class="desk-icon" style="top:408px;left:18px" ondblclick="openApp('settings')" onclick="selectIcon(this)">
-    <div class="dico">⚙️</div><span>Параметры</span>
-  </div>
-  <div class="desk-icon" style="top:16px;left:120px" ondblclick="openApp('paint')" onclick="selectIcon(this)">
-    <div class="dico">🎨</div><span>Paint</span>
-  </div>
-  <div class="desk-icon" style="top:114px;left:120px" ondblclick="openApp('taskman')" onclick="selectIcon(this)">
-    <div class="dico">📊</div><span>Диспетчер задач</span>
   </div>
 </div>
 
 <!-- TASKBAR -->
 <div id="taskbar">
   <div id="tb-left">
-    <div id="start-btn" onclick="toggleStart(event)" title="Пуск">
-      <svg width="20" height="20" viewBox="0 0 88 88">
-        <rect x="2" y="2" width="38" height="38" rx="4" fill="#F35325"/>
-        <rect x="48" y="2" width="38" height="38" rx="4" fill="#81BC06"/>
-        <rect x="2" y="48" width="38" height="38" rx="4" fill="#05A6F0"/>
-        <rect x="48" y="48" width="38" height="38" rx="4" fill="#FFBA08"/>
-      </svg>
-    </div>
+    <div id="start-btn" onclick="toggleStart(event)" title="Пуск">E✦</div>
     <div class="tb-sep"></div>
-  </div>
-  <div id="tb-center">
-    <div class="tb-btn" title="Поиск" onclick="toggleStart(event)">🔍</div>
-    <div class="tb-btn" id="tb-explorer" title="Проводник" ondblclick="openApp('explorer')">📁</div>
-    <div class="tb-btn" id="tb-browser" title="Edge" ondblclick="openApp('browser')">🌐</div>
-    <div class="tb-btn" id="tb-notepad" title="Блокнот" ondblclick="openApp('notepad')">📝</div>
-    <div class="tb-btn" id="tb-calc" title="Калькулятор" ondblclick="openApp('calc')">🧮</div>
-    <div class="tb-btn" id="tb-paint" title="Paint" ondblclick="openApp('paint')">🎨</div>
-    <div class="tb-btn" id="tb-settings" title="Параметры" ondblclick="openApp('settings')">⚙️</div>
-    <div class="tb-btn" id="tb-taskman" title="Диспетчер задач" ondblclick="openApp('taskman')">📊</div>
   </div>
   <div id="tb-right">
     <div class="tb-sys" onclick="toggleTray(event)" title="Системный лоток">
-      <span id="tb-wifi">📶</span>
-      <span id="tb-vol">🔊</span>
-      <span id="tb-bat">🔋</span>
+      <span>📶</span>
+      <span>🔊</span>
+      <span>🔋</span>
     </div>
     <div id="tb-clock" onclick="toggleTray(event)">
       <div id="clock-time">12:00</div>
@@ -634,34 +363,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 <div id="start-menu" onclick="event.stopPropagation()">
   <div id="sm-search">
     <span>🔍</span>
-    <input type="text" id="sm-search-input" placeholder="Введите для поиска..." oninput="smSearch(this.value)">
+    <input type="text" placeholder="Введите для поиска...">
   </div>
-  <div id="sm-pinned-sec">
-    <div class="sm-sec">Закреплённые</div>
-    <div class="pinned-apps">
-      <div class="pin-app" ondblclick="openApp('explorer');hideAll()"><div class="ico">📁</div><div class="lbl">Проводник</div></div>
-      <div class="pin-app" ondblclick="openApp('settings');hideAll()"><div class="ico">⚙️</div><div class="lbl">Параметры</div></div>
-      <div class="pin-app" ondblclick="openApp('browser');hideAll()"><div class="ico">🌐</div><div class="lbl">Edge</div></div>
-      <div class="pin-app" ondblclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="lbl">Блокнот</div></div>
-      <div class="pin-app" ondblclick="openApp('calc');hideAll()"><div class="ico">🧮</div><div class="lbl">Калькулятор</div></div>
-      <div class="pin-app" ondblclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="lbl">Paint</div></div>
-      <div class="pin-app" ondblclick="openApp('taskman');hideAll()"><div class="ico">📊</div><div class="lbl">Диспетчер</div></div>
-      <div class="pin-app" onclick="showNotif('Магазин','Магазин открывается...','🛒')"><div class="ico">🛒</div><div class="lbl">Магазин</div></div>
-      <div class="pin-app" onclick="showNotif('Почта','Нет новых писем','✉️')"><div class="ico">✉️</div><div class="lbl">Почта</div></div>
-      <div class="pin-app" onclick="showNotif('Фото','Нет фотографий','🖼️')"><div class="ico">🖼️</div><div class="lbl">Фотографии</div></div>
-      <div class="pin-app" onclick="showNotif('Xbox','Подключение...','🎮')"><div class="ico">🎮</div><div class="lbl">Xbox</div></div>
-      <div class="pin-app" onclick="showNotif('Камера','Камера не найдена','📸')"><div class="ico">📸</div><div class="lbl">Камера</div></div>
-    </div>
-  </div>
-  <div class="sm-sec">Рекомендуемые</div>
-  <div class="rec-list" id="sm-rec-list">
-    <div class="rec-row" ondblclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="rec-info"><div class="n">Заметки</div><div class="t">Только что</div></div></div>
-    <div class="rec-row" ondblclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="rec-info"><div class="n">Рисунок1.png</div><div class="t">Вчера</div></div></div>
-    <div class="rec-row"><div class="ico">📊</div><div class="rec-info"><div class="n">Отчёт_2026.xlsx</div><div class="t">3 дня назад</div></div></div>
+  <div class="sm-sec">Закреплённые</div>
+  <div class="pinned-apps">
+    <div class="pin-app" onclick="showNotif('ExiWin','Проводник','📁')"><div class="ico">📁</div><div class="lbl">Проводник</div></div>
+    <div class="pin-app" onclick="showNotif('ExiWin','Параметры','⚙️')"><div class="ico">⚙️</div><div class="lbl">Параметры</div></div>
+    <div class="pin-app" onclick="showNotif('ExiWin','Edge','🌐')"><div class="ico">🌐</div><div class="lbl">Edge</div></div>
+    <div class="pin-app" onclick="showNotif('ExiWin','Блокнот','📝')"><div class="ico">📝</div><div class="lbl">Блокнот</div></div>
   </div>
   <div id="sm-footer">
-    <div id="sm-user" onclick="openApp('settings');hideAll()">
-      <div id="sm-avatar" class="sm-avatar-ico">🧑</div>
+    <div id="sm-user">
+      <div id="sm-avatar">🧑</div>
       <span id="sm-username">Пользователь</span>
     </div>
     <div class="power-menu">
@@ -680,7 +393,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
     <div class="tr-tile on" id="tr-wifi" onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
     <div class="tr-tile on" id="tr-bt" onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
     <div class="tr-tile off" id="tr-airplane" onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
-    <div class="tr-tile" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной режим</div></div>
+    <div class="tr-tile off" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной</div></div>
+    <div class="tr-tile off" id="tr-light-theme" onclick="toggleLightTheme()"><div class="ico">☀️</div><div class="lbl">Светлая</div></div>
+    <div class="tr-tile on" id="tr-dark-theme" onclick="toggleDarkTheme()"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
     <div class="tr-tile on" id="tr-sound" onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
     <div class="tr-tile off" id="tr-focus" onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
   </div>
@@ -696,506 +411,24 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
   </div>
 </div>
 
-<!-- CONTEXT MENU -->
-<div id="ctx-menu">
-  <div class="ctx-item" id="ctx-new-file" onclick="ctxNewFile()"><span class="ico">📄</span>Новый файл</div>
-  <div class="ctx-item" onclick="ctxRefresh()"><span class="ico">🔃</span>Обновить</div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="openApp('settings');hideAll()"><span class="ico">⚙️</span>Параметры экрана</div>
-  <div class="ctx-item" onclick="openApp('paint');hideAll()"><span class="ico">🎨</span>Персонализация</div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="openApp('explorer');hideAll()"><span class="ico">📁</span>Открыть проводник</div>
-</div>
-
-<!-- ─── APP WINDOWS ────────────────────────────── -->
-
-<!-- FILE EXPLORER -->
-<div class="window" id="win-explorer" style="width:760px;height:500px;top:70px;left:140px;display:none;" onclick="bringFront('win-explorer')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-explorer')">
-    <span class="tb-icon">📁</span><span class="tb-title">Проводник</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('explorer')">─</div>
-      <div class="wb" onclick="toggleMax('win-explorer')">⬜</div>
-      <div class="wb cls" onclick="closeWin('explorer')">✕</div>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="exp-wrap">
-      <div class="exp-topbar">
-        <div class="exp-nav" onclick="expNavBack()">←</div>
-        <div class="exp-nav" onclick="expNavForward()">→</div>
-        <div class="exp-nav" onclick="expNavUp()">↑</div>
-        <input class="exp-path" id="exp-path" value="Этот компьютер" onkeydown="if(event.key==='Enter')expNav(this.value)" readonly>
-        <div class="exp-nav" style="width:auto;padding:0 8px;font-size:12px;" onclick="showNotif('Поиск','Введите запрос в строку пути','🔍')">🔍</div>
-      </div>
-      <div class="exp-toolbar-row">
-        <div class="exp-tb-btn" onclick="expNewFolder()">📁 Создать папку</div>
-        <div class="exp-tb-btn" onclick="expNewFile()">📄 Новый файл</div>
-        <div class="exp-tb-btn" onclick="expDelete()">🗑️ Удалить</div>
-        <div class="exp-tb-btn" onclick="expRename()">✏️ Переименовать</div>
-        <div style="flex:1"></div>
-        <div class="exp-tb-btn" onclick="toggleExpView()">⊞ Вид</div>
-      </div>
-      <div class="exp-body">
-        <div class="exp-side">
-          <div class="exp-side-item active" onclick="expGoto('home')">⭐ Быстрый доступ</div>
-          <div class="exp-side-item" onclick="expGoto('pc')">💻 Этот компьютер</div>
-          <div class="exp-side-item" onclick="expGoto('desktop')">🖥️ Рабочий стол</div>
-          <div class="exp-side-item" onclick="expGoto('downloads')">📥 Загрузки</div>
-          <div class="exp-side-item" onclick="expGoto('documents')">📄 Документы</div>
-          <div class="exp-side-item" onclick="expGoto('pictures')">🖼️ Изображения</div>
-          <div class="exp-side-item" onclick="expGoto('music')">🎵 Музыка</div>
-          <div class="exp-side-item" onclick="expGoto('videos')">🎬 Видео</div>
-          <div class="exp-side-item" onclick="expGoto('trash')">🗑️ Корзина</div>
-        </div>
-        <div class="exp-files" id="exp-files" ondblclick="expFileDblClick(event)" oncontextmenu="showCtxMenu(event,'exp')"></div>
-      </div>
-      <div class="exp-statusbar" id="exp-status">Выберите файл</div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-explorer')"></div>
-</div>
-
-<!-- NOTEPAD -->
-<div class="window" id="win-notepad" style="width:600px;height:440px;top:90px;left:200px;display:none;" onclick="bringFront('win-notepad')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-notepad')">
-    <span class="tb-icon">📝</span><span class="tb-title" id="np-title">Блокнот — Без названия</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('notepad')">─</div>
-      <div class="wb" onclick="toggleMax('win-notepad')">⬜</div>
-      <div class="wb cls" onclick="closeWin('notepad')">✕</div>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="np-wrap">
-      <div class="np-menubar">
-        <div class="np-menu-item" id="npm-file" onclick="toggleNpMenu('npm-file')">Файл
-          <div class="np-dropdown">
-            <div class="np-dd-item" onclick="npNew()">Создать <kbd>Ctrl+N</kbd></div>
-            <div class="np-dd-item" onclick="npOpen()">Открыть... <kbd>Ctrl+O</kbd></div>
-            <div class="np-dd-item" onclick="npSave()">Сохранить <kbd>Ctrl+S</kbd></div>
-            <div class="np-dd-item" onclick="npSaveAs()">Сохранить как...</div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="npPrint()">Печать <kbd>Ctrl+P</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="closeWin('notepad')">Выход</div>
-          </div>
-        </div>
-        <div class="np-menu-item" id="npm-edit" onclick="toggleNpMenu('npm-edit')">Правка
-          <div class="np-dropdown">
-            <div class="np-dd-item" onclick="npUndo()">Отменить <kbd>Ctrl+Z</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="npCut()">Вырезать <kbd>Ctrl+X</kbd></div>
-            <div class="np-dd-item" onclick="npCopy()">Копировать <kbd>Ctrl+C</kbd></div>
-            <div class="np-dd-item" onclick="npPaste()">Вставить <kbd>Ctrl+V</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="npSelectAll()">Выделить всё <kbd>Ctrl+A</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="npFind()">Найти... <kbd>Ctrl+F</kbd></div>
-          </div>
-        </div>
-        <div class="np-menu-item" id="npm-view" onclick="toggleNpMenu('npm-view')">Вид
-          <div class="np-dropdown">
-            <div class="np-dd-item" onclick="npZoomIn()">Увеличить <kbd>Ctrl++</kbd></div>
-            <div class="np-dd-item" onclick="npZoomOut()">Уменьшить <kbd>Ctrl+-</kbd></div>
-            <div class="np-dd-item" onclick="npZoomReset()">Обычный размер <kbd>Ctrl+0</kbd></div>
-          </div>
-        </div>
-      </div>
-      <textarea id="np-area" oninput="npChanged()" onkeydown="npKeydown(event)">Добро пожаловать в Windows 12!
-
-Это полная симуляция операционной системы на HTML.
-
-Особенности:
-• Аккаунт сохраняется между сессиями
-• Все окна перетаскиваются и масштабируются
-• Блокнот сохраняет текст автоматически
-• Paint для рисования
-• Диспетчер задач
-• Файловый менеджер
-
-Разработано с ❤️</textarea>
-      <div class="np-statusbar">
-        <span id="np-ln">Стр 1, Стб 1</span>
-        <span id="np-enc">UTF-8</span>
-        <span id="np-wrap-stat">Перенос: Вкл</span>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-notepad')"></div>
-</div>
-
-<!-- CALCULATOR -->
-<div class="window" id="win-calc" style="width:310px;height:510px;top:70px;left:280px;display:none;" onclick="bringFront('win-calc')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-calc')">
-    <span class="tb-icon">🧮</span><span class="tb-title">Калькулятор</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('calc')">─</div>
-      <div class="wb cls" onclick="closeWin('calc')">✕</div>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="calc-wrap">
-      <div class="calc-mode">
-        <div class="calc-mode-btn active" onclick="setCalcMode('std',this)">Обычный</div>
-        <div class="calc-mode-btn" onclick="setCalcMode('sci',this)">Инженерный</div>
-      </div>
-      <div class="calc-display">
-        <div class="calc-expr" id="c-expr"></div>
-        <div class="calc-result" id="c-res">0</div>
-      </div>
-      <div class="calc-grid" id="calc-grid-std">
-        <div class="cc cc-fn" onclick="cFn('mc')">MC</div>
-        <div class="cc cc-fn" onclick="cFn('mr')">MR</div>
-        <div class="cc cc-fn" onclick="cFn('ms')">MS</div>
-        <div class="cc cc-fn" onclick="cFn('m+')">M+</div>
-        <div class="cc cc-fn" onclick="cFn('C')">C</div>
-        <div class="cc cc-fn" onclick="cFn('CE')">CE</div>
-        <div class="cc cc-fn" onclick="cFn('back')">⌫</div>
-        <div class="cc cc-op" onclick="cOp('/')">÷</div>
-        <div class="cc cc-num" onclick="cNum('7')">7</div>
-        <div class="cc cc-num" onclick="cNum('8')">8</div>
-        <div class="cc cc-num" onclick="cNum('9')">9</div>
-        <div class="cc cc-op" onclick="cOp('*')">×</div>
-        <div class="cc cc-num" onclick="cNum('4')">4</div>
-        <div class="cc cc-num" onclick="cNum('5')">5</div>
-        <div class="cc cc-num" onclick="cNum('6')">6</div>
-        <div class="cc cc-op" onclick="cOp('-')">−</div>
-        <div class="cc cc-num" onclick="cNum('1')">1</div>
-        <div class="cc cc-num" onclick="cNum('2')">2</div>
-        <div class="cc cc-num" onclick="cNum('3')">3</div>
-        <div class="cc cc-op" onclick="cOp('+')">+</div>
-        <div class="cc cc-fn" onclick="cFn('sign')">±</div>
-        <div class="cc cc-num" onclick="cNum('0')">0</div>
-        <div class="cc cc-num" onclick="cNum('.')">.</div>
-        <div class="cc cc-eq" onclick="cEq()">=</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SETTINGS -->
-<div class="window" id="win-settings" style="width:800px;height:550px;top:70px;left:110px;display:none;" onclick="bringFront('win-settings')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-settings')">
-    <span class="tb-icon">⚙️</span><span class="tb-title">Параметры</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('settings')">─</div>
-      <div class="wb" onclick="toggleMax('win-settings')">⬜</div>
-      <div class="wb cls" onclick="closeWin('settings')">✕</div>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="set-wrap">
-      <div class="set-side">
-        <div class="set-side-item active" onclick="setPage('home',this)">🏠 Главная</div>
-        <div class="set-side-item" onclick="setPage('account',this)">👤 Аккаунт</div>
-        <div class="set-side-item" onclick="setPage('personalize',this)">🎨 Персонализация</div>
-        <div class="set-side-item" onclick="setPage('display',this)">🖥️ Дисплей</div>
-        <div class="set-side-item" onclick="setPage('sound',this)">🔊 Звук</div>
-        <div class="set-side-item" onclick="setPage('network',this)">📶 Сеть</div>
-        <div class="set-side-item" onclick="setPage('privacy',this)">🔒 Конфиденциальность</div>
-        <div class="set-side-item" onclick="setPage('update',this)">🔄 Обновление</div>
-        <div class="set-side-item" onclick="setPage('about',this)">ℹ️ О системе</div>
-      </div>
-      <div class="set-content">
-        <!-- HOME -->
-        <div class="set-page active" id="sp-home">
-          <div class="set-h1">Параметры Windows 12</div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">👤 Аккаунт</div><div class="d" id="set-user-info">Пользователь</div></div>
-            <button class="reg-btn" style="width:auto;padding:7px 16px;font-size:13px;margin:0;" onclick="setPage('account',null)">Изменить</button>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">🔄 Windows Update</div><div class="d">Версия 24H2 актуальна</div></div>
-            <button class="reg-btn" style="width:auto;padding:7px 16px;font-size:13px;margin:0;" onclick="showNotif('Windows Update','Проверка обновлений...','🔄')">Проверить</button>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">🔋 Питание и спящий режим</div><div class="d">Экран отключается через 10 мин</div></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-        </div>
-        <!-- ACCOUNT -->
-        <div class="set-page" id="sp-account">
-          <div class="set-h1">Аккаунт</div>
-          <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:12px;">
-            <div style="display:flex;align-items:center;gap:14px;">
-              <div id="set-av-disp" style="font-size:48px;">🧑</div>
-              <div>
-                <div style="font-size:16px;" id="set-name-disp">Пользователь</div>
-                <div style="font-size:12px;color:var(--text2);">Локальный аккаунт · Администратор</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;" id="set-av-pick">
-              <div class="av-opt" data-av="🧑" onclick="changeAvatar(this)">🧑</div>
-              <div class="av-opt" data-av="👩" onclick="changeAvatar(this)">👩</div>
-              <div class="av-opt" data-av="🧔" onclick="changeAvatar(this)">🧔</div>
-              <div class="av-opt" data-av="👨‍💻" onclick="changeAvatar(this)">👨‍💻</div>
-              <div class="av-opt" data-av="🦊" onclick="changeAvatar(this)">🦊</div>
-              <div class="av-opt" data-av="🐱" onclick="changeAvatar(this)">🐱</div>
-              <div class="av-opt" data-av="🤖" onclick="changeAvatar(this)">🤖</div>
-              <div class="av-opt" data-av="🎮" onclick="changeAvatar(this)">🎮</div>
-            </div>
-            <input class="reg-input" id="set-new-name" placeholder="Новое имя пользователя" style="margin:0;width:280px;">
-            <div style="display:flex;gap:8px;">
-              <button class="reg-btn" style="width:auto;padding:8px 18px;font-size:13px;margin:0;" onclick="saveAccountChanges()">Сохранить</button>
-              <button class="reg-btn" style="width:auto;padding:8px 18px;font-size:13px;margin:0;background:rgba(255,50,50,.4);" onclick="deleteAccount()">Удалить аккаунт</button>
-            </div>
-          </div>
-        </div>
-        <!-- PERSONALIZE -->
-        <div class="set-page" id="sp-personalize">
-          <div class="set-h1">Персонализация</div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Тёмная тема</div><div class="d">Тёмный режим оформления</div></div>
-            <div class="toggle on" id="tog-dark" onclick="toggleDarkMode(this)"></div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Цвет акцента</div><div class="d">Цвет выделения элементов</div></div>
-            <select class="set-select" onchange="setAccent(this.value)">
-              <option value="#0078d4">Синий (по умолчанию)</option>
-              <option value="#107c41">Зелёный</option>
-              <option value="#e74c3c">Красный</option>
-              <option value="#9b59b6">Фиолетовый</option>
-              <option value="#e67e22">Оранжевый</option>
-            </select>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Прозрачность</div><div class="d">Эффект размытия окон</div></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-        </div>
-        <!-- DISPLAY -->
-        <div class="set-page" id="sp-display">
-          <div class="set-h1">Дисплей</div>
-          <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:10px;">
-            <div class="n">Яркость</div>
-            <div class="set-range-wrap" style="width:100%;">
-              <span>🔅</span>
-              <input type="range" min="10" max="100" value="85" oninput="setBright(this.value);document.getElementById('bright-sl').value=this.value;document.getElementById('bright-val').textContent=this.value+'%'">
-              <span>🔆</span>
-            </div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Разрешение экрана</div><div class="d" id="res-display">1920 × 1080 (рекомендуется)</div></div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Ночной режим</div><div class="d">Уменьшает синий свет</div></div>
-            <div class="toggle" id="tog-night" onclick="toggleNightMode()"></div>
-          </div>
-        </div>
-        <!-- SOUND -->
-        <div class="set-page" id="sp-sound">
-          <div class="set-h1">Звук</div>
-          <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:10px;">
-            <div class="n">Громкость системы</div>
-            <div class="set-range-wrap" style="width:100%;">
-              <span>🔇</span>
-              <input type="range" min="0" max="100" value="60" oninput="setVol(this.value);document.getElementById('vol-sl').value=this.value">
-              <span>🔊</span>
-            </div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Системные звуки</div><div class="d">Звуки уведомлений и событий</div></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-        </div>
-        <!-- NETWORK -->
-        <div class="set-page" id="sp-network">
-          <div class="set-h1">Сеть и интернет</div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">📶 Wi-Fi</div><div class="d">Windows12_Network · Подключено</div></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">🔵 Bluetooth</div><div class="d">Устройств поблизости нет</div></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">✈️ Авиарежим</div><div class="d">Отключает беспроводные модули</div></div>
-            <div class="toggle" onclick="this.classList.toggle('on')"></div>
-          </div>
-        </div>
-        <!-- PRIVACY -->
-        <div class="set-page" id="sp-privacy">
-          <div class="set-h1">Конфиденциальность</div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Диагностика и обратная связь</div><div class="d">Отправка диагностических данных</div></div>
-            <div class="toggle" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Журнал действий</div><div class="d">История действий в Windows</div></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Разрешения приложений</div><div class="d">Камера, микрофон, местоположение</div></div>
-            <button class="reg-btn" style="width:auto;padding:7px 14px;font-size:12px;margin:0;" onclick="showNotif('Разрешения','Настройки разрешений применены','🔒')">Настроить</button>
-          </div>
-        </div>
-        <!-- UPDATE -->
-        <div class="set-page" id="sp-update">
-          <div class="set-h1">Центр обновления Windows</div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">✅ Система обновлена</div><div class="d">Windows 12 Pro · Версия 24H2 · Сборка 26100</div></div>
-            <button class="reg-btn" style="width:auto;padding:7px 16px;font-size:13px;margin:0;" onclick="showNotif('Windows Update','Проверка обновлений...','🔄')">Проверить</button>
-          </div>
-          <div class="set-card">
-            <div class="set-card-l"><div class="n">Автоматические обновления</div><div class="d">Устанавливать обновления автоматически</div></div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-        </div>
-        <!-- ABOUT -->
-        <div class="set-page" id="sp-about">
-          <div class="set-h1">О системе</div>
-          <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:6px;">
-            <div style="font-size:18px;margin-bottom:4px;">🪟 Windows 12 Pro</div>
-            <div style="font-size:13px;color:var(--text2);">Версия: 24H2</div>
-            <div style="font-size:13px;color:var(--text2);">Сборка: 26100.XXXX</div>
-            <div style="font-size:13px;color:var(--text2);" id="about-user">Пользователь: —</div>
-            <div style="font-size:13px;color:var(--text2);" id="about-screen">Экран: <span id="about-res"></span></div>
-            <div style="font-size:13px;color:var(--text2);">Разработчик: HTML/JS симуляция</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-settings')"></div>
-</div>
-
-<!-- BROWSER -->
-<div class="window" id="win-browser" style="width:840px;height:570px;top:50px;left:90px;display:none;" onclick="bringFront('win-browser')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-browser')">
-    <span class="tb-icon">🌐</span><span class="tb-title" id="br-title">Microsoft Edge — Новая вкладка</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('browser')">─</div>
-      <div class="wb" onclick="toggleMax('win-browser')">⬜</div>
-      <div class="wb cls" onclick="closeWin('browser')">✕</div>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="br-wrap">
-      <div class="br-bar">
-        <div class="br-nav" onclick="brBack()">←</div>
-        <div class="br-nav" onclick="brForward()">→</div>
-        <div class="br-nav" onclick="brRefresh()">↻</div>
-        <div class="br-nav" onclick="brHome()">🏠</div>
-        <input class="br-url-bar" id="br-url" value="edge://newtab" onkeydown="if(event.key==='Enter')brNavigate(this.value)">
-        <div class="br-nav" onclick="showNotif('Избранное','Страница добавлена','⭐')">☆</div>
-      </div>
-      <div class="br-newtab" id="br-newtab">
-        <div class="br-greeting" id="br-greeting">Добрый день!</div>
-        <div class="br-searchbar">
-          <span>🔍</span>
-          <input type="text" placeholder="Поиск в Bing или введите адрес..." id="br-search-inp" onkeydown="if(event.key==='Enter')brSearch(this.value)">
-          <button onclick="brSearch(document.getElementById('br-search-inp').value)">Поиск</button>
-        </div>
-        <div class="br-shortcuts">
-          <div class="br-sc" onclick="showNotif('Edge','Переход на YouTube...','▶️')"><div class="ico">▶️</div><span>YouTube</span></div>
-          <div class="br-sc" onclick="brSearch('Google')"><div class="ico">🔍</div><span>Google</span></div>
-          <div class="br-sc" onclick="showNotif('Edge','Загрузка новостей...','📰')"><div class="ico">📰</div><span>Новости</span></div>
-          <div class="br-sc" onclick="showNotif('Edge','Открытие Wikipedia...','📚')"><div class="ico">📚</div><span>Wikipedia</span></div>
-          <div class="br-sc" onclick="showNotif('Edge','Переход в GitHub...','💻')"><div class="ico">💻</div><span>GitHub</span></div>
-        </div>
-        <div class="br-news">
-          <h3>Популярные новости</h3>
-          <div class="br-article" onclick="showNotif('Edge','Открытие статьи...','📰')"><h4>Windows 12 получила обновление безопасности</h4><p>Microsoft выпустила критическое обновление для всех пользователей · 2 часа назад</p></div>
-          <div class="br-article" onclick="showNotif('Edge','Открытие статьи...','📰')"><h4>ИИ теперь интегрирован в Проводник</h4><p>Новые возможности поиска и организации файлов · Сегодня</p></div>
-          <div class="br-article" onclick="showNotif('Edge','Открытие статьи...','📰')"><h4>Copilot обновился до версии 3.0</h4><p>Улучшенное понимание контекста и новые функции · Вчера</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-browser')"></div>
-</div>
-
-<!-- PAINT -->
-<div class="window" id="win-paint" style="width:780px;height:530px;top:60px;left:120px;display:none;" onclick="bringFront('win-paint')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-paint')">
-    <span class="tb-icon">🎨</span><span class="tb-title">Paint</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('paint')">─</div>
-      <div class="wb" onclick="toggleMax('win-paint')">⬜</div>
-      <div class="wb cls" onclick="closeWin('paint')">✕</div>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="paint-wrap">
-      <div class="paint-toolbar">
-        <div class="paint-tool active" id="pt-pen" onclick="setPaintTool('pen',this)" title="Карандаш">✏️</div>
-        <div class="paint-tool" id="pt-brush" onclick="setPaintTool('brush',this)" title="Кисть">🖌️</div>
-        <div class="paint-tool" id="pt-eraser" onclick="setPaintTool('eraser',this)" title="Ластик">🧹</div>
-        <div class="paint-tool" id="pt-line" onclick="setPaintTool('line',this)" title="Линия">╱</div>
-        <div class="paint-tool" id="pt-rect" onclick="setPaintTool('rect',this)" title="Прямоугольник">⬜</div>
-        <div class="paint-tool" id="pt-circle" onclick="setPaintTool('circle',this)" title="Эллипс">⭕</div>
-        <div class="paint-tool" id="pt-fill" onclick="setPaintTool('fill',this)" title="Заливка">🪣</div>
-        <div style="width:1px;height:28px;background:rgba(255,255,255,.1);margin:0 4px;"></div>
-        <div class="paint-colors">
-          <div class="paint-color active" style="background:#000" onclick="setColor('#000',this)"></div>
-          <div class="paint-color" style="background:#fff;border:1px solid rgba(255,255,255,.3)" onclick="setColor('#fff',this)"></div>
-          <div class="paint-color" style="background:#e74c3c" onclick="setColor('#e74c3c',this)"></div>
-          <div class="paint-color" style="background:#e67e22" onclick="setColor('#e67e22',this)"></div>
-          <div class="paint-color" style="background:#f1c40f" onclick="setColor('#f1c40f',this)"></div>
-          <div class="paint-color" style="background:#2ecc71" onclick="setColor('#2ecc71',this)"></div>
-          <div class="paint-color" style="background:#0078d4" onclick="setColor('#0078d4',this)"></div>
-          <div class="paint-color" style="background:#9b59b6" onclick="setColor('#9b59b6',this)"></div>
-          <div class="paint-color" style="background:#1a1a2e" onclick="setColor('#1a1a2e',this)"></div>
-          <div class="paint-color" style="background:#95a5a6" onclick="setColor('#95a5a6',this)"></div>
-        </div>
-        <div style="width:1px;height:28px;background:rgba(255,255,255,.1);margin:0 4px;"></div>
-        <div class="paint-size">
-          Размер: <input type="range" min="1" max="40" value="3" oninput="paintSize=this.value;document.getElementById('ps-val').textContent=this.value+'px'">
-          <span id="ps-val">3px</span>
-        </div>
-        <div style="margin-left:auto;display:flex;gap:6px;">
-          <div class="paint-tool" onclick="paintClear()" title="Очистить">🗑️</div>
-          <div class="paint-tool" onclick="paintSave()" title="Сохранить">💾</div>
-        </div>
-      </div>
-      <div class="paint-canvas-wrap" id="paint-canvas-wrap">
-        <canvas id="paint-canvas"></canvas>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-paint')"></div>
-</div>
-
-<!-- TASK MANAGER -->
-<div class="window" id="win-taskman" style="width:660px;height:460px;top:80px;left:180px;display:none;" onclick="bringFront('win-taskman')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-taskman')">
-    <span class="tb-icon">📊</span><span class="tb-title">Диспетчер задач</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('taskman')">─</div>
-      <div class="wb" onclick="toggleMax('win-taskman')">⬜</div>
-      <div class="wb cls" onclick="closeWin('taskman')">✕</div>
-    </div>
-  </div>
-  <div class="win-body">
-    <div class="tm-wrap">
-      <div class="tm-tabs">
-        <div class="tm-tab active" onclick="tmTab('processes',this)">Процессы</div>
-        <div class="tm-tab" onclick="tmTab('performance',this)">Производительность</div>
-        <div class="tm-tab" onclick="tmTab('startup',this)">Автозагрузка</div>
-      </div>
-      <div class="tm-body" id="tm-body"></div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-taskman')"></div>
-</div>
-
 <!-- NOTIFICATIONS -->
 <div id="notif-stack"></div>
 
 <script>
 'use strict';
-// ════════════════════════════════════════════
-// GLOBALS
-// ════════════════════════════════════════════
 let currentUser = null;
-let openWindows = {};
-let zCounter = 200;
 let nightMode = false;
 let startOpen = false;
 let trayOpen = false;
 let selectedIcon = null;
+let isLightTheme = false;
+let selectedAvatarReg = '🧑';
+
+const DAYS = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const MONTHS_G = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+
+function el(id) { return document.getElementById(id); }
+function pad(x) { return String(x).padStart(2,'0'); }
 
 // ════════════════════════════════════════════
 // BOOT & INIT
@@ -1203,14 +436,14 @@ let selectedIcon = null;
 window.addEventListener('load', () => {
   updateClock();
   setInterval(updateClock, 1000);
+  loadTheme();
   setTimeout(afterBoot, 2600);
-  document.getElementById('about-res').textContent = window.innerWidth + ' × ' + window.innerHeight;
 });
 
 function afterBoot() {
-  document.getElementById('boot').style.opacity = '0';
-  setTimeout(() => document.getElementById('boot').remove(), 500);
-  const saved = localStorage.getItem('w12_user');
+  el('boot').style.opacity = '0';
+  setTimeout(() => el('boot').remove(), 500);
+  const saved = localStorage.getItem('exiwin_user');
   if (saved) {
     currentUser = JSON.parse(saved);
     showLockScreen();
@@ -1218,12 +451,6 @@ function afterBoot() {
     showRegScreen();
   }
 }
-
-// ════════════════════════════════════════════
-// CLOCK
-// ════════════════════════════════════════════
-const DAYS = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
-const MONTHS_G = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 
 function updateClock() {
   const n = new Date();
@@ -1233,27 +460,58 @@ function updateClock() {
   const longDate = DAYS[n.getDay()] + ', ' + n.getDate() + ' ' + MONTHS_G[n.getMonth()];
   const longDateFull = longDate + ' ' + n.getFullYear();
 
-  set('clock-time', hm);
-  set('clock-date-tb', dateStr);
-  set('lock-clock', hm);
-  set('lock-date-lock', longDate);
-  set('tray-time-big', hms);
-  set('tray-date-str', longDateFull);
-
-  // Browser greeting
-  const h = n.getHours();
-  const g = h < 6 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер';
-  set('br-greeting', g + (currentUser ? ', ' + currentUser.name + '!' : '!'));
+  if (el('clock-time')) el('clock-time').textContent = hm;
+  if (el('clock-date-tb')) el('clock-date-tb').textContent = dateStr;
+  if (el('lock-clock')) el('lock-clock').textContent = hm;
+  if (el('lock-date-lock')) el('lock-date-lock').textContent = longDate;
+  if (el('tray-time-big')) el('tray-time-big').textContent = hms;
+  if (el('tray-date-str')) el('tray-date-str').textContent = longDateFull;
 }
-function pad(x) { return String(x).padStart(2,'0'); }
-function set(id, v) { const e = document.getElementById(id); if(e) e.textContent = v; }
-function el(id) { return document.getElementById(id); }
+
+// ════════════════════════════════════════════
+// THEME FUNCTIONS
+// ════════════════════════════════════════════
+function toggleLightTheme() {
+  if (isLightTheme) return;
+  isLightTheme = true;
+  document.body.classList.add('light-theme');
+  el('tr-light-theme').classList.add('on');
+  el('tr-light-theme').classList.remove('off');
+  el('tr-dark-theme').classList.remove('on');
+  el('tr-dark-theme').classList.add('off');
+  localStorage.setItem('exiwin_theme', 'light');
+  showNotif('ExiWin', 'Светлая тема включена', '☀️');
+}
+
+function toggleDarkTheme() {
+  if (!isLightTheme) return;
+  isLightTheme = false;
+  document.body.classList.remove('light-theme');
+  el('tr-dark-theme').classList.add('on');
+  el('tr-dark-theme').classList.remove('off');
+  el('tr-light-theme').classList.remove('on');
+  el('tr-light-theme').classList.add('off');
+  localStorage.setItem('exiwin_theme', 'dark');
+  showNotif('ExiWin', 'Тёмная тема включена', '🌑');
+}
+
+function loadTheme() {
+  const savedTheme = localStorage.getItem('exiwin_theme');
+  if (savedTheme === 'light') {
+    isLightTheme = true;
+    document.body.classList.add('light-theme');
+    if (el('tr-light-theme')) {
+      el('tr-light-theme').classList.add('on');
+      el('tr-light-theme').classList.remove('off');
+      el('tr-dark-theme').classList.remove('on');
+      el('tr-dark-theme').classList.add('off');
+    }
+  }
+}
 
 // ════════════════════════════════════════════
 // REGISTER / LOGIN
 // ════════════════════════════════════════════
-let selectedAvatarReg = '🧑';
-
 function showRegScreen() {
   el('regscreen').style.display = 'flex';
   el('reg-box').style.display = 'block';
@@ -1261,8 +519,8 @@ function showRegScreen() {
 }
 
 function showLogin() {
-  if (!currentUser && !localStorage.getItem('w12_user')) { showRegScreen(); return; }
-  const u = JSON.parse(localStorage.getItem('w12_user') || '{}');
+  if (!currentUser && !localStorage.getItem('exiwin_user')) { showRegScreen(); return; }
+  const u = JSON.parse(localStorage.getItem('exiwin_user') || '{}');
   el('login-avatar').textContent = u.avatar || '🧑';
   el('login-name-disp').textContent = u.name || 'Пользователь';
   el('reg-box').style.display = 'none';
@@ -1274,10 +532,10 @@ function showRegister() {
   el('login-box').style.display = 'none';
 }
 
-function pickAv(el_) {
+function pickAv(elem) {
   document.querySelectorAll('.av-opt').forEach(a => a.classList.remove('sel'));
-  el_.classList.add('sel');
-  selectedAvatarReg = el_.dataset.av;
+  elem.classList.add('sel');
+  selectedAvatarReg = elem.dataset.av;
 }
 
 function doRegister() {
@@ -1289,14 +547,14 @@ function doRegister() {
   if (pass !== pass2) { el('reg-err').textContent = 'Пароли не совпадают'; return; }
 
   const user = { name, pass, avatar: selectedAvatarReg, created: new Date().toISOString() };
-  localStorage.setItem('w12_user', JSON.stringify(user));
+  localStorage.setItem('exiwin_user', JSON.stringify(user));
   currentUser = user;
   el('regscreen').style.display = 'none';
   enterDesktop();
 }
 
 function doLogin() {
-  const saved = JSON.parse(localStorage.getItem('w12_user') || '{}');
+  const saved = JSON.parse(localStorage.getItem('exiwin_user') || '{}');
   const pass = el('login-pass').value;
   if (pass !== saved.pass) { el('login-err').textContent = 'Неверный пароль'; return; }
   currentUser = saved;
@@ -1309,7 +567,7 @@ function doLogin() {
 // LOCK SCREEN
 // ════════════════════════════════════════════
 function showLockScreen() {
-  if (!currentUser) currentUser = JSON.parse(localStorage.getItem('w12_user'));
+  if (!currentUser) currentUser = JSON.parse(localStorage.getItem('exiwin_user'));
   el('lock-avatar').textContent = currentUser.avatar || '🧑';
   el('lock-username-disp').textContent = currentUser.name;
   el('lockscreen').style.display = 'flex';
@@ -1322,54 +580,18 @@ function showLockScreen() {
 
 function enterDesktop() {
   updateUserUI();
-  loadNotepadContent();
-  initFileSystem();
-  initPaint();
-  tmRender('processes');
-  showNotif('Windows 12', 'Добро пожаловать, ' + currentUser.name + '!', '🪟');
-  setTimeout(() => showNotif('Windows Update', 'Система обновлена до версии 24H2', '✅'), 2000);
+  showNotif('ExiWin 12', 'Добро пожаловать, ' + currentUser.name + '!', 'E✦');
+  setTimeout(() => showNotif('ExiWin Update', 'Система обновлена до версии 24H2', '✅'), 2000);
 }
 
 function updateUserUI() {
   if (!currentUser) return;
-  set('sm-username', currentUser.name);
-  const avs = document.querySelectorAll('#sm-avatar,#lock-avatar,#set-av-disp,#login-avatar,#lock-avatar');
-  avs.forEach(a => { if(a) a.textContent = currentUser.avatar || '🧑'; });
-  el('sm-avatar').textContent = currentUser.avatar || '🧑';
-  el('set-av-disp').textContent = currentUser.avatar || '🧑';
-  el('set-name-disp').textContent = currentUser.name;
-  el('set-user-info').textContent = currentUser.name + ' · Администратор';
-  el('about-user').textContent = 'Пользователь: ' + currentUser.name;
-  if (el('set-new-name')) el('set-new-name').value = currentUser.name;
-  if (el('br-greeting')) el('br-greeting').textContent = 'Добрый день, ' + currentUser.name + '!';
+  if (el('sm-username')) el('sm-username').textContent = currentUser.name;
+  if (el('sm-avatar')) el('sm-avatar').textContent = currentUser.avatar || '🧑';
 }
 
 // ════════════════════════════════════════════
-// ACCOUNT SETTINGS
-// ════════════════════════════════════════════
-function changeAvatar(el_) {
-  document.querySelectorAll('#set-av-pick .av-opt').forEach(a => a.classList.remove('sel'));
-  el_.classList.add('sel');
-  currentUser.avatar = el_.dataset.av;
-  el('set-av-disp').textContent = el_.dataset.av;
-}
-
-function saveAccountChanges() {
-  const newName = el('set-new-name').value.trim();
-  if (newName) currentUser.name = newName;
-  localStorage.setItem('w12_user', JSON.stringify(currentUser));
-  updateUserUI();
-  showNotif('Параметры', 'Аккаунт обновлён', '✅');
-}
-
-function deleteAccount() {
-  if (!confirm('Удалить аккаунт и все данные?')) return;
-  localStorage.clear();
-  location.reload();
-}
-
-// ════════════════════════════════════════════
-// START / TRAY / HIDE
+// UI FUNCTIONS
 // ════════════════════════════════════════════
 function toggleStart(e) {
   e.stopPropagation();
@@ -1384,16 +606,13 @@ function toggleTray(e) {
   e.stopPropagation();
   trayOpen = !trayOpen;
   el('tray-popup').style.display = trayOpen ? 'block' : 'none';
-  if (trayOpen) { startOpen = false; el('start-menu').style.display = 'none'; el('start-menu').classList.remove('show'); }
+  if (trayOpen) { startOpen = false; el('start-menu').style.display = 'none'; }
 }
 
 function hideAll() {
   startOpen = false; trayOpen = false;
   el('start-menu').style.display = 'none';
-  el('start-menu').classList.remove('show');
   el('tray-popup').style.display = 'none';
-  el('ctx-menu').style.display = 'none';
-  document.querySelectorAll('.np-menu-item').forEach(m => m.classList.remove('open'));
 }
 
 function desktopClick(e) {
@@ -1404,210 +623,49 @@ function desktopClick(e) {
   }
 }
 
-function selectIcon(el_) {
+function selectIcon(elem) {
   if (selectedIcon) selectedIcon.classList.remove('selected');
-  el_.classList.add('selected');
-  selectedIcon = el_;
-  el_.focus && el_.focus();
+  elem.classList.add('selected');
+  selectedIcon = elem;
 }
 
-// ════════════════════════════════════════════
-// CONTEXT MENU
-// ════════════════════════════════════════════
-function showCtxMenu(e, type) {
-  e.preventDefault();
-  const m = el('ctx-menu');
-  m.style.display = 'block';
-  let x = e.clientX, y = e.clientY;
-  if (x + 220 > window.innerWidth) x = window.innerWidth - 225;
-  if (y + 220 > window.innerHeight - 48) y = window.innerHeight - 270;
-  m.style.left = x + 'px';
-  m.style.top = y + 'px';
-  e.stopPropagation();
-}
-
-function ctxRefresh() { hideAll(); showNotif('Рабочий стол','Рабочий стол обновлён','🔃'); }
-function ctxNewFile() { hideAll(); openApp('notepad'); npNew(); }
-
-// ════════════════════════════════════════════
-// WINDOW MANAGEMENT
-// ════════════════════════════════════════════
-const APP_MAP = { explorer:'win-explorer', notepad:'win-notepad', calc:'win-calc', settings:'win-settings', browser:'win-browser', paint:'win-paint', taskman:'win-taskman' };
-
-function openApp(app) {
-  const winId = APP_MAP[app];
-  if (!winId) return;
-  const w = el(winId);
-  if (!w) return;
-  if (w.style.display === 'none' || w.style.display === '') {
-    w.style.display = 'flex';
-    w.style.opacity = '0';
-    setTimeout(() => w.style.opacity = '1', 10);
-    w.style.transition = 'opacity .15s';
-    onWindowOpen(app);
-  }
-  bringFront(winId);
-  openWindows[app] = true;
-  el('tb-' + app) && el('tb-' + app).classList.add('running', 'active-win');
-  hideAll();
-}
-
-function onWindowOpen(app) {
-  if (app === 'paint') { setTimeout(initPaintCanvas, 100); }
-  if (app === 'taskman') { tmRender('processes'); }
-  if (app === 'settings') { updateUserUI(); el('about-res').textContent = window.innerWidth + ' × ' + window.innerHeight; }
-  if (app === 'explorer') { expGoto('home'); }
-  if (app === 'browser') { brHome(); }
-}
-
-function closeWin(app) {
-  const winId = APP_MAP[app];
-  if (!winId) return;
-  el(winId).style.display = 'none';
-  openWindows[app] = false;
-  const tb = el('tb-' + app);
-  if (tb) { tb.classList.remove('running', 'active-win'); }
-  if (app === 'notepad') saveNotepadContent();
-}
-
-function minimizeWin(app) {
-  const winId = APP_MAP[app];
-  if (!winId) return;
-  el(winId).style.display = 'none';
-  el('tb-' + app) && el('tb-' + app).classList.remove('active-win');
-}
-
-function toggleMax(winId) {
-  const w = el(winId);
-  if (w.classList.contains('maximized')) {
-    w.classList.remove('maximized');
-    if (w._prevStyle) { w.style.cssText = w._prevStyle; }
-  } else {
-    w._prevStyle = w.style.cssText;
-    w.classList.add('maximized');
-  }
-}
-
-function bringFront(winId) {
-  el(winId).style.zIndex = ++zCounter;
-  document.querySelectorAll('.window').forEach(w => w.classList.remove('active-win-border'));
-}
-
-// ────────────────────────────────────────────
-// DRAG
-// ────────────────────────────────────────────
-let dragState = null;
-function dragWin(e, winId) {
-  if (e.target.closest('.win-btns')) return;
-  const w = el(winId);
-  if (w.classList.contains('maximized')) return;
-  bringFront(winId);
-  const r = w.getBoundingClientRect();
-  dragState = { winId, ox: e.clientX - r.left, oy: e.clientY - r.top };
-  e.preventDefault();
-}
-document.addEventListener('mousemove', e => {
-  if (!dragState) { if (resState) doResize(e); return; }
-  const w = el(dragState.winId);
-  let nx = e.clientX - dragState.ox;
-  let ny = e.clientY - dragState.oy;
-  nx = Math.max(0, Math.min(nx, window.innerWidth - w.offsetWidth));
-  ny = Math.max(0, Math.min(ny, window.innerHeight - 48 - 10));
-  w.style.left = nx + 'px';
-  w.style.top = ny + 'px';
-});
-document.addEventListener('mouseup', () => { dragState = null; resState = null; });
-
-// ────────────────────────────────────────────
-// RESIZE
-// ────────────────────────────────────────────
-let resState = null;
-function resizeWin(e, winId) {
-  const w = el(winId);
-  resState = { winId, sx: e.clientX, sy: e.clientY, sw: w.offsetWidth, sh: w.offsetHeight };
-  e.stopPropagation(); e.preventDefault();
-}
-function doResize(e) {
-  const w = el(resState.winId);
-  w.style.width = Math.max(300, resState.sw + e.clientX - resState.sx) + 'px';
-  w.style.height = Math.max(180, resState.sh + e.clientY - resState.sy) + 'px';
-  if (resState.winId === 'win-paint') { setTimeout(initPaintCanvas, 50); }
-}
-
-// ════════════════════════════════════════════
-// START MENU SEARCH
-// ════════════════════════════════════════════
-function smSearch(q) {
-  const apps = ['Проводник','Блокнот','Калькулятор','Edge','Параметры','Paint','Диспетчер задач'];
-  const appKeys = ['explorer','notepad','calc','browser','settings','paint','taskman'];
-  const icons = ['📁','📝','🧮','🌐','⚙️','🎨','📊'];
-  const pinned = el('sm-pinned-sec');
-  if (!q) { pinned.style.display = ''; return; }
-  pinned.style.display = 'none';
-  const rec = el('sm-rec-list');
-  rec.innerHTML = '';
-  apps.forEach((a, i) => {
-    if (a.toLowerCase().includes(q.toLowerCase())) {
-      const d = document.createElement('div');
-      d.className = 'rec-row';
-      d.innerHTML = `<div class="ico">${icons[i]}</div><div class="rec-info"><div class="n">${a}</div><div class="t">Приложение</div></div>`;
-      d.ondblclick = () => { openApp(appKeys[i]); hideAll(); };
-      rec.appendChild(d);
-    }
-  });
-}
-
-// ════════════════════════════════════════════
-// TRAY CONTROLS
-// ════════════════════════════════════════════
 function toggleTile(id, label) {
   const t = el(id);
   t.classList.toggle('off');
-  showNotif(label, t.classList.contains('off') ? label + ' отключён' : label + ' включён', t.classList.contains('off') ? '⭕' : '✅');
+  t.classList.toggle('on');
+  const isOn = t.classList.contains('on');
+  showNotif(label, isOn ? label + ' включён' : label + ' отключён', isOn ? '✅' : '⭕');
 }
 
 function toggleNightMode() {
   nightMode = !nightMode;
   document.body.style.filter = nightMode ? 'sepia(0.25) hue-rotate(-20deg)' : '';
-  el('tr-night').classList.toggle('off', !nightMode);
-  el('tog-night') && el('tog-night').classList.toggle('on', nightMode);
+  el('tr-night').classList.toggle('off');
+  el('tr-night').classList.toggle('on');
   showNotif('Ночной режим', nightMode ? 'Включён' : 'Выключён', '🌙');
 }
 
 function setBright(v) {
   el('desktop').style.filter = `brightness(${v/100})`;
-  el('bright-val') && (el('bright-val').textContent = v + '%');
-  localStorage.setItem('w12_bright', v);
+  if (el('bright-val')) el('bright-val').textContent = v + '%';
 }
 
 function setVol(v) {
-  el('vol-val') && (el('vol-val').textContent = v + '%');
-  localStorage.setItem('w12_vol', v);
+  if (el('vol-val')) el('vol-val').textContent = v + '%';
 }
 
-function toggleDarkMode(tog) {
-  tog.classList.toggle('on');
-}
-
-function setAccent(color) {
-  document.documentElement.style.setProperty('--accent', color);
-  localStorage.setItem('w12_accent', color);
-}
-
-// ════════════════════════════════════════════
-// SETTINGS PAGES
-// ════════════════════════════════════════════
-function setPage(page, clickedEl) {
-  document.querySelectorAll('.set-page').forEach(p => p.classList.remove('active'));
-  const pg = el('sp-' + page);
-  if (pg) pg.classList.add('active');
-  document.querySelectorAll('.set-side-item').forEach(i => i.classList.remove('active'));
-  if (clickedEl) clickedEl.classList.add('active');
-  else {
-    document.querySelectorAll('.set-side-item').forEach(i => {
-      if (i.textContent.toLowerCase().includes(page.substring(0,4))) i.classList.add('active');
-    });
-  }
+function showNotif(title, msg, icon='🔔') {
+  const stack = el('notif-stack');
+  const n = document.createElement('div');
+  n.className = 'notif';
+  n.innerHTML = `<div class="nico">${icon}</div><div class="notif-txt"><div class="nt">${title}</div><div class="nd">${msg}</div></div><div class="notif-close" onclick="this.parentElement.remove()">✕</div>`;
+  stack.appendChild(n);
+  setTimeout(() => { 
+    n.style.transition = 'opacity .4s,transform .4s'; 
+    n.style.opacity = '0'; 
+    n.style.transform = 'translateX(30px)'; 
+    setTimeout(() => n.remove(), 400); 
+  }, 4000);
 }
 
 // ════════════════════════════════════════════
@@ -1615,7 +673,6 @@ function setPage(page, clickedEl) {
 // ════════════════════════════════════════════
 function lockScreen() {
   hideAll();
-  saveNotepadContent();
   el('lock-avatar').textContent = currentUser.avatar || '🧑';
   el('lock-username-disp').textContent = currentUser.name;
   const ls = el('lockscreen');
@@ -1623,558 +680,20 @@ function lockScreen() {
   ls.style.opacity = '0';
   ls.style.transition = 'opacity .4s';
   setTimeout(() => ls.style.opacity = '1', 10);
-  ls.onclick = () => {
-    ls.style.opacity = '0';
-    setTimeout(() => { ls.style.display = 'none'; enterDesktop(); }, 400);
-  };
 }
 
 function reboot() {
-  saveNotepadContent();
-  showNotif('Windows 12','Перезагрузка...','🔄');
+  showNotif('ExiWin 12','Перезагрузка...','🔄');
   setTimeout(() => location.reload(), 1500);
 }
 
 function shutdown() {
-  saveNotepadContent();
-  document.body.innerHTML = '<div style="background:#000;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;"><svg width="72" height="72" viewBox="0 0 88 88"><rect x="4" y="4" width="38" height="38" rx="5" fill="#F35325"/><rect x="46" y="4" width="38" height="38" rx="5" fill="#81BC06"/><rect x="4" y="46" width="38" height="38" rx="5" fill="#05A6F0"/><rect x="46" y="46" width="38" height="38" rx="5" fill="#FFBA08"/></svg><div style="color:rgba(255,255,255,.4);font-family:Segoe UI;font-size:16px;">Выключение...</div></div>';
+  document.body.innerHTML = '<div style="background:#000;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:20px;color:#fff;"><div style="font-size:72px;">E✦</div><div style="color:rgba(255,255,255,.4);font-size:16px;">Выключение...</div></div>';
   setTimeout(() => location.reload(), 2500);
 }
 
-// ════════════════════════════════════════════
-// NOTIFICATIONS
-// ════════════════════════════════════════════
-function showNotif(title, msg, icon='🔔') {
-  const stack = el('notif-stack');
-  const n = document.createElement('div');
-  n.className = 'notif';
-  n.innerHTML = `<div class="nico">${icon}</div><div class="notif-txt"><div class="nt">${title}</div><div class="nd">${msg}</div></div><div class="notif-close" onclick="this.parentElement.remove()">✕</div>`;
-  stack.appendChild(n);
-  setTimeout(() => { n.style.transition = 'opacity .4s,transform .4s'; n.style.opacity = '0'; n.style.transform = 'translateX(30px)'; setTimeout(() => n.remove(), 400); }, 4000);
-}
-
-// ════════════════════════════════════════════
-// FILE EXPLORER
-// ════════════════════════════════════════════
-let expCurrentPath = 'home';
-const FS = {};
-
-function initFileSystem() {
-  const saved = localStorage.getItem('w12_fs');
-  if (saved) { Object.assign(FS, JSON.parse(saved)); }
-  else {
-    FS.home = [
-      {type:'folder',name:'Документы'},
-      {type:'folder',name:'Загрузки'},
-      {type:'folder',name:'Изображения'},
-      {type:'folder',name:'Музыка'},
-      {type:'folder',name:'Видео'},
-    ];
-    FS.documents = [{type:'file',name:'Заметки.txt',ext:'txt'},{type:'file',name:'Отчёт.docx',ext:'docx'}];
-    FS.downloads = [{type:'file',name:'setup.exe',ext:'exe'},{type:'file',name:'photo.jpg',ext:'jpg'}];
-    FS.pictures = [{type:'file',name:'фото1.jpg',ext:'jpg'},{type:'file',name:'wallpaper.png',ext:'png'}];
-    FS.music = [{type:'file',name:'трек1.mp3',ext:'mp3'}];
-    FS.videos = [{type:'file',name:'видео1.mp4',ext:'mp4'}];
-    FS.desktop = [];
-    FS.pc = [{type:'drive',name:'Диск C: (Система)'},{type:'drive',name:'Диск D: (Данные)'}];
-    FS.trash = [];
-    saveFS();
-  }
-}
-
-function saveFS() { localStorage.setItem('w12_fs', JSON.stringify(FS)); }
-
-const ICONS = { folder:'📁', txt:'📝', docx:'📄', xlsx:'📊', pdf:'📕', jpg:'🖼️', png:'🖼️', mp3:'🎵', mp4:'🎬', exe:'⚙️', drive:'💾', file:'📄' };
-
-function expGoto(path) {
-  expCurrentPath = path;
-  const labels = {home:'Быстрый доступ',pc:'Этот компьютер',desktop:'Рабочий стол',downloads:'Загрузки',documents:'Документы',pictures:'Изображения',music:'Музыка',videos:'Видео',trash:'Корзина'};
-  el('exp-path').value = labels[path] || path;
-
-  document.querySelectorAll('.exp-side-item').forEach(i => i.classList.remove('active'));
-  document.querySelectorAll('.exp-side-item').forEach(i => {
-    if (i.textContent.trim().toLowerCase().includes((labels[path]||'').substring(0,4).toLowerCase())) i.classList.add('active');
-  });
-
-  renderExpFiles();
-}
-
-function renderExpFiles() {
-  const fc = el('exp-files');
-  const items = FS[expCurrentPath] || [];
-  fc.innerHTML = '';
-  items.forEach((item, idx) => {
-    const ico = ICONS[item.ext || item.type] || '📄';
-    const d = document.createElement('div');
-    d.className = 'file-item';
-    d.dataset.idx = idx;
-    d.innerHTML = `<div class="ico">${ico}</div><div class="fname">${item.name}</div>`;
-    d.onclick = () => { document.querySelectorAll('.file-item').forEach(f=>f.classList.remove('selected')); d.classList.add('selected'); el('exp-status').textContent = 'Выбрано: ' + item.name; };
-    fc.appendChild(d);
-  });
-  el('exp-status').textContent = `Объектов: ${items.length}`;
-}
-
-function expFileDblClick(e) {
-  const item = e.target.closest('.file-item');
-  if (!item) return;
-  const idx = parseInt(item.dataset.idx);
-  const f = (FS[expCurrentPath]||[])[idx];
-  if (!f) return;
-  if (f.type === 'folder') { expGoto(f.name.toLowerCase().replace(/\s/g,'_')); return; }
-  if (f.ext === 'txt') { openApp('notepad'); el('np-area').value = f.content || '(пустой файл)'; el('np-title').textContent = 'Блокнот — ' + f.name; return; }
-  if (f.ext === 'jpg' || f.ext === 'png') { showNotif('Фотографии','Открытие: '+f.name,'🖼️'); return; }
-  if (f.ext === 'mp3') { showNotif('Музыка','Воспроизведение: '+f.name,'🎵'); return; }
-  if (f.ext === 'mp4') { showNotif('Видео','Воспроизведение: '+f.name,'🎬'); return; }
-  showNotif('Проводник', 'Открытие файла: ' + f.name, '📄');
-}
-
-function expNewFolder() {
-  const name = prompt('Имя папки:', 'Новая папка');
-  if (!name) return;
-  if (!FS[expCurrentPath]) FS[expCurrentPath] = [];
-  FS[expCurrentPath].push({type:'folder',name});
-  saveFS(); renderExpFiles();
-  showNotif('Проводник','Папка создана: '+name,'📁');
-}
-
-function expNewFile() {
-  const name = prompt('Имя файла:', 'Новый файл.txt');
-  if (!name) return;
-  if (!FS[expCurrentPath]) FS[expCurrentPath] = [];
-  const ext = name.split('.').pop().toLowerCase();
-  FS[expCurrentPath].push({type:'file',name,ext,content:''});
-  saveFS(); renderExpFiles();
-}
-
-function expDelete() {
-  const sel = el('exp-files').querySelector('.selected');
-  if (!sel) { showNotif('Проводник','Выберите файл для удаления','❌'); return; }
-  const idx = parseInt(sel.dataset.idx);
-  const f = (FS[expCurrentPath]||[])[idx];
-  if (!f) return;
-  if (!confirm('Удалить ' + f.name + '?')) return;
-  FS[expCurrentPath].splice(idx, 1);
-  saveFS(); renderExpFiles();
-  showNotif('Корзина', f.name + ' удалён', '🗑️');
-}
-
-function expRename() {
-  const sel = el('exp-files').querySelector('.selected');
-  if (!sel) { showNotif('Проводник','Выберите файл для переименования','❌'); return; }
-  const idx = parseInt(sel.dataset.idx);
-  const f = (FS[expCurrentPath]||[])[idx];
-  if (!f) return;
-  const newName = prompt('Новое имя:', f.name);
-  if (!newName) return;
-  f.name = newName;
-  saveFS(); renderExpFiles();
-}
-
-function expNav(val) { expGoto(val.toLowerCase().replace(/\s/g,'_')); }
-function expNavBack() { expGoto('home'); }
-function expNavForward() {}
-function expNavUp() { expGoto('home'); }
-
-let expViewMode = 'grid';
-function toggleExpView() {
-  expViewMode = expViewMode === 'grid' ? 'list' : 'grid';
-  el('exp-files').style.display = expViewMode === 'grid' ? 'grid' : 'flex';
-  if (expViewMode === 'list') el('exp-files').style.flexDirection = 'column';
-}
-
-// ════════════════════════════════════════════
-// NOTEPAD
-// ════════════════════════════════════════════
-let npFilename = 'Без названия';
-let npChanged_ = false;
-let npFontSize = 14;
-
-function loadNotepadContent() {
-  const saved = localStorage.getItem('w12_notepad');
-  if (saved) el('np-area').value = saved;
-}
-
-function saveNotepadContent() {
-  localStorage.setItem('w12_notepad', el('np-area').value);
-}
-
-function npChanged() {
-  npChanged_ = true;
-  el('np-title').textContent = 'Блокнот — ' + npFilename + ' *';
-  saveNotepadContent();
-  const area = el('np-area');
-  const text = area.value;
-  const lines = text.substr(0, area.selectionStart).split('\n');
-  el('np-ln').textContent = `Стр ${lines.length}, Стб ${lines[lines.length-1].length+1}`;
-}
-
-function toggleNpMenu(id) {
-  document.querySelectorAll('.np-menu-item').forEach(m => { if(m.id!==id) m.classList.remove('open'); });
-  el(id).classList.toggle('open');
-  event.stopPropagation();
-}
-
-function npNew() {
-  if (npChanged_ && !confirm('Сохранить изменения?')) return;
-  el('np-area').value = '';
-  npFilename = 'Без названия';
-  el('np-title').textContent = 'Блокнот — ' + npFilename;
-  npChanged_ = false;
-  hideAll();
-}
-
-function npOpen() {
-  hideAll();
-  const name = prompt('Открыть файл (имя из Документов):');
-  if (!name) return;
-  const f = (FS.documents||[]).find(f=>f.name===name);
-  if (f) { el('np-area').value = f.content||''; npFilename = f.name; el('np-title').textContent='Блокнот — '+f.name; }
-  else showNotif('Блокнот','Файл не найден','❌');
-}
-
-function npSave() {
-  hideAll();
-  localStorage.setItem('w12_notepad', el('np-area').value);
-  const f = (FS.documents||[]).find(f=>f.name===npFilename);
-  if (f) { f.content = el('np-area').value; saveFS(); }
-  el('np-title').textContent = 'Блокнот — ' + npFilename;
-  npChanged_ = false;
-  showNotif('Блокнот','Файл сохранён: '+npFilename,'💾');
-}
-
-function npSaveAs() {
-  hideAll();
-  const name = prompt('Сохранить как:', npFilename.endsWith('.txt') ? npFilename : npFilename+'.txt');
-  if (!name) return;
-  npFilename = name;
-  const ext = name.split('.').pop();
-  if (!FS.documents) FS.documents = [];
-  const existing = FS.documents.find(f=>f.name===name);
-  if (existing) existing.content = el('np-area').value;
-  else FS.documents.push({type:'file',name,ext,content:el('np-area').value});
-  saveFS();
-  localStorage.setItem('w12_notepad', el('np-area').value);
-  el('np-title').textContent = 'Блокнот — ' + name;
-  npChanged_ = false;
-  showNotif('Блокнот','Сохранено: '+name,'💾');
-}
-
-function npPrint() { hideAll(); window.print(); }
-function npUndo() { document.execCommand('undo'); }
-function npCut() { hideAll(); document.execCommand('cut'); }
-function npCopy() { hideAll(); document.execCommand('copy'); }
-function npPaste() { hideAll(); navigator.clipboard.readText().then(t => { const a=el('np-area'); a.setRangeText(t,a.selectionStart,a.selectionEnd,'end'); npChanged(); }); }
-function npSelectAll() { hideAll(); el('np-area').select(); }
-function npFind() { hideAll(); const q=prompt('Найти:'); if(!q)return; const a=el('np-area'); const i=a.value.indexOf(q); if(i>=0){a.setSelectionRange(i,i+q.length);showNotif('Блокнот','Найдено: "'+q+'"','🔍');}else showNotif('Блокнот','"'+q+'" не найдено','❌'); }
-function npZoomIn() { npFontSize=Math.min(32,npFontSize+2); el('np-area').style.fontSize=npFontSize+'px'; }
-function npZoomOut() { npFontSize=Math.max(8,npFontSize-2); el('np-area').style.fontSize=npFontSize+'px'; }
-function npZoomReset() { npFontSize=14; el('np-area').style.fontSize='14px'; }
-
-function npKeydown(e) {
-  if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); npSave(); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='n') { e.preventDefault(); npNew(); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='f') { e.preventDefault(); npFind(); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='+') { e.preventDefault(); npZoomIn(); }
-  if ((e.ctrlKey||e.metaKey) && e.key==='-') { e.preventDefault(); npZoomOut(); }
-  if (e.key==='Tab') { e.preventDefault(); const a=e.target; const s=a.selectionStart; a.value=a.value.substring(0,s)+'    '+a.value.substring(a.selectionEnd); a.selectionStart=a.selectionEnd=s+4; }
-}
-
-// ════════════════════════════════════════════
-// CALCULATOR
-// ════════════════════════════════════════════
-let cVal='0', cOper=null, cPrev=null, cNew=true, cMem=0;
-const OPS = {'+':'+','-':'−','*':'×','/':'÷'};
-
-function cDisp() { el('c-res').textContent = cVal; }
-function cNum(n) {
-  if (cNew) { cVal = (n==='.' ? '0.' : n); cNew=false; }
-  else { if(n==='.'&&cVal.includes('.'))return; cVal = cVal==='0'&&n!=='.' ? n : cVal+n; }
-  if (cVal.length > 14) cVal = parseFloat(cVal).toExponential(6).toString();
-  cDisp();
-}
-function cOp(op) {
-  if (cOper && !cNew) { const r=eval(Number(cPrev)+''+cOper+''+Number(cVal)); cPrev=String(r); cVal=cPrev; cDisp(); }
-  else cPrev=cVal;
-  cOper=op; cNew=true;
-  el('c-expr').textContent = cPrev + ' ' + (OPS[op]||op);
-}
-function cEq() {
-  if (!cOper) return;
-  try {
-    const r = eval(Number(cPrev) + cOper + Number(cVal));
-    el('c-expr').textContent = cPrev+(OPS[cOper]||cOper)+cVal+' =';
-    cVal = String(Number(r.toFixed(10)));
-    cOper=null; cNew=true; cDisp();
-  } catch(e) { cVal='Ошибка'; cDisp(); cNew=true; }
-}
-function cFn(fn) {
-  if(fn==='C'){cVal='0';cOper=null;cPrev=null;cNew=true;el('c-expr').textContent='';}
-  else if(fn==='CE'){cVal='0';cNew=true;}
-  else if(fn==='back'){cVal=cVal.length>1?cVal.slice(0,-1):'0';}
-  else if(fn==='sign'){cVal=String(-parseFloat(cVal));}
-  else if(fn==='mc'){cMem=0;showNotif('Калькулятор','Память очищена','🧮');}
-  else if(fn==='mr'){cVal=String(cMem);cNew=true;}
-  else if(fn==='ms'){mMem=parseFloat(cVal);showNotif('Калькулятор','Сохранено в память: '+cVal,'🧮');}
-  else if(fn==='m+'){cMem+=parseFloat(cVal);}
-  cDisp();
-}
-function setCalcMode(mode, btn) {
-  document.querySelectorAll('.calc-mode-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  showNotif('Калькулятор','Режим: '+btn.textContent,'🧮');
-}
-
-// ════════════════════════════════════════════
-// BROWSER
-// ════════════════════════════════════════════
-function brHome() {
-  el('br-url').value = 'edge://newtab';
-  el('br-newtab').style.display = 'flex';
-  el('br-title').textContent = 'Microsoft Edge — Новая вкладка';
-}
-function brSearch(q) {
-  if (!q) return;
-  el('br-url').value = 'https://bing.com/search?q=' + encodeURIComponent(q);
-  el('br-title').textContent = q + ' - Поиск Bing';
-  showNotif('Edge', 'Поиск: ' + q, '🔍');
-}
-function brNavigate(url) {
-  if (!url.startsWith('http') && !url.startsWith('edge:')) url = 'https://' + url;
-  el('br-url').value = url;
-  el('br-title').textContent = url;
-  showNotif('Edge', 'Переход: ' + url, '🌐');
-}
-function brBack() { showNotif('Edge','Назад','←'); }
-function brForward() { showNotif('Edge','Вперёд','→'); }
-function brRefresh() { showNotif('Edge','Страница обновлена','↻'); }
-
-// ════════════════════════════════════════════
-// PAINT
-// ════════════════════════════════════════════
-let paintTool = 'pen', paintColor_ = '#000000', paintSize = 3;
-let painting = false, paintLast = null, paintStart_ = null;
-let paintCtx = null;
-
-function initPaint() { setTimeout(initPaintCanvas, 200); }
-
-function initPaintCanvas() {
-  const canvas = el('paint-canvas');
-  const wrap = el('paint-canvas-wrap');
-  if (!canvas || !wrap) return;
-  const w = wrap.clientWidth || 720;
-  const h = wrap.clientHeight || 460;
-  if (canvas.width !== w || canvas.height !== h) {
-    const imgData = paintCtx ? paintCtx.getImageData(0,0,canvas.width,canvas.height) : null;
-    canvas.width = w; canvas.height = h;
-    paintCtx = canvas.getContext('2d');
-    paintCtx.fillStyle = '#ffffff';
-    paintCtx.fillRect(0,0,w,h);
-    if (imgData) paintCtx.putImageData(imgData,0,0);
-  } else {
-    paintCtx = canvas.getContext('2d');
-    if (!canvas._inited) { paintCtx.fillStyle='#ffffff'; paintCtx.fillRect(0,0,w,h); canvas._inited=true; }
-  }
-  canvas.onmousedown = (e) => { painting=true; const pos=getPaintPos(e); paintLast=pos; paintStart_=pos; if(paintTool==='fill')paintFill(pos); };
-  canvas.onmousemove = (e) => { if(!painting)return; const pos=getPaintPos(e); doPaint(pos); paintLast=pos; };
-  canvas.onmouseup = (e) => { if(!painting)return; painting=false; const pos=getPaintPos(e); finishPaint(pos); paintLast=null; };
-  canvas.onmouseleave = () => { if(painting){painting=false;} };
-}
-
-function getPaintPos(e) {
-  const r = el('paint-canvas').getBoundingClientRect();
-  return {x:e.clientX-r.left, y:e.clientY-r.top};
-}
-
-function doPaint(pos) {
-  if (!paintCtx || !paintLast) return;
-  if (paintTool==='pen'||paintTool==='brush') {
-    paintCtx.strokeStyle = paintColor_;
-    paintCtx.lineWidth = paintTool==='brush' ? paintSize*3 : paintSize;
-    paintCtx.lineCap = 'round';
-    paintCtx.lineJoin = 'round';
-    paintCtx.globalAlpha = paintTool==='brush' ? 0.5 : 1;
-    paintCtx.beginPath();
-    paintCtx.moveTo(paintLast.x, paintLast.y);
-    paintCtx.lineTo(pos.x, pos.y);
-    paintCtx.stroke();
-    paintCtx.globalAlpha = 1;
-  } else if (paintTool==='eraser') {
-    paintCtx.clearRect(pos.x-paintSize*2,pos.y-paintSize*2,paintSize*4,paintSize*4);
-    paintCtx.fillStyle='#fff';
-    paintCtx.fillRect(pos.x-paintSize*2,pos.y-paintSize*2,paintSize*4,paintSize*4);
-  }
-}
-
-function finishPaint(pos) {
-  if (!paintCtx || !paintStart_) return;
-  if (paintTool==='line') {
-    paintCtx.strokeStyle=paintColor_; paintCtx.lineWidth=paintSize; paintCtx.lineCap='round';
-    paintCtx.beginPath(); paintCtx.moveTo(paintStart_.x,paintStart_.y); paintCtx.lineTo(pos.x,pos.y); paintCtx.stroke();
-  } else if (paintTool==='rect') {
-    paintCtx.strokeStyle=paintColor_; paintCtx.lineWidth=paintSize;
-    paintCtx.strokeRect(paintStart_.x,paintStart_.y,pos.x-paintStart_.x,pos.y-paintStart_.y);
-  } else if (paintTool==='circle') {
-    paintCtx.strokeStyle=paintColor_; paintCtx.lineWidth=paintSize;
-    const rx=(pos.x-paintStart_.x)/2, ry=(pos.y-paintStart_.y)/2;
-    paintCtx.beginPath(); paintCtx.ellipse(paintStart_.x+rx,paintStart_.y+ry,Math.abs(rx),Math.abs(ry),0,0,Math.PI*2); paintCtx.stroke();
-  }
-}
-
-function paintFill(pos) {
-  paintCtx.fillStyle = paintColor_;
-  paintCtx.fillRect(0,0,el('paint-canvas').width,el('paint-canvas').height);
-}
-
-function setPaintTool(tool, btn) {
-  paintTool=tool;
-  document.querySelectorAll('.paint-tool').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-function setColor(color, btn) {
-  paintColor_=color;
-  document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-function paintClear() {
-  if (!paintCtx) return;
-  paintCtx.fillStyle='#ffffff';
-  paintCtx.fillRect(0,0,el('paint-canvas').width,el('paint-canvas').height);
-}
-
-function paintSave() {
-  const link = document.createElement('a');
-  link.download = 'Рисунок.png';
-  link.href = el('paint-canvas').toDataURL();
-  link.click();
-  showNotif('Paint','Рисунок сохранён','💾');
-}
-
-// ════════════════════════════════════════════
-// TASK MANAGER
-// ════════════════════════════════════════════
-let tmInterval = null;
-const processes = [
-  {name:'System',pid:4,cpu:0.1,ram:12},
-  {name:'explorer.exe',pid:1234,cpu:0.8,ram:45},
-  {name:'svchost.exe',pid:890,cpu:0.3,ram:22},
-  {name:'winlogon.exe',pid:456,cpu:0.1,ram:8},
-  {name:'RuntimeBroker.exe',pid:2048,cpu:0.5,ram:30},
-  {name:'SearchHost.exe',pid:3012,cpu:1.2,ram:55},
-  {name:'MsMpEng.exe',pid:2200,cpu:0.7,ram:40},
-  {name:'dwm.exe',pid:780,cpu:2.1,ram:65},
-  {name:'conhost.exe',pid:3456,cpu:0.1,ram:5},
-];
-
-function tmTab(tab, btn) {
-  document.querySelectorAll('.tm-tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  tmRender(tab);
-}
-
-function tmRender(tab) {
-  const body = el('tm-body');
-  if (!body) return;
-  if (tab === 'processes') {
-    const rows = processes.map(p => {
-      const cpu = (p.cpu + Math.random()*0.5).toFixed(1);
-      const ram = p.ram + Math.floor(Math.random()*5);
-      return `<tr><td>${p.name}</td><td>${p.pid}</td><td><div class="tm-bar"><div class="tm-fill" style="width:${Math.min(cpu*10,100)}%;background:${cpu>5?'#e74c3c':'var(--accent)'}"></div></div>${cpu}%</td><td>${ram} MB</td><td><span style="color:#2ecc71;font-size:11px;">✓ Работает</span></td></tr>`;
-    }).join('');
-    body.innerHTML = `<table class="tm-table"><tr><th>Имя</th><th>PID</th><th>ЦП</th><th>ОЗУ</th><th>Статус</th></tr>${rows}</table>`;
-  } else if (tab === 'performance') {
-    const cpuPct = (Math.random()*20+5).toFixed(0);
-    const ramPct = (Math.random()*30+40).toFixed(0);
-    body.innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <div style="font-size:14px;color:var(--text2);">Загрузка ЦП</div>
-          <div style="font-size:36px;font-weight:200;">${cpuPct}%</div>
-          <div class="tm-bar" style="width:100%;"><div class="tm-fill" style="width:${cpuPct}%"></div></div>
-          <div style="font-size:12px;color:var(--text2);">Intel Core i9 · 12 ядер · 3.6 ГГц</div>
-        </div>
-        <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <div style="font-size:14px;color:var(--text2);">Память (ОЗУ)</div>
-          <div style="font-size:36px;font-weight:200;">${ramPct}%</div>
-          <div class="tm-bar" style="width:100%;"><div class="tm-fill" style="width:${ramPct}%;background:#9b59b6"></div></div>
-          <div style="font-size:12px;color:var(--text2);">${(parseInt(ramPct)*32/100).toFixed(1)} ГБ из 32 ГБ</div>
-        </div>
-        <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <div style="font-size:14px;color:var(--text2);">Диск C:</div>
-          <div style="font-size:36px;font-weight:200;">2%</div>
-          <div class="tm-bar" style="width:100%;"><div class="tm-fill" style="width:2%;background:#f1c40f"></div></div>
-          <div style="font-size:12px;color:var(--text2);">SSD NVMe · 512 ГБ</div>
-        </div>
-        <div class="set-card" style="flex-direction:column;align-items:flex-start;gap:8px;">
-          <div style="font-size:14px;color:var(--text2);">Сеть</div>
-          <div style="font-size:36px;font-weight:200;">↓ 12 МБ/с</div>
-          <div class="tm-bar" style="width:100%;"><div class="tm-fill" style="width:24%;background:#2ecc71"></div></div>
-          <div style="font-size:12px;color:var(--text2);">Wi-Fi · 100 Мбит/с</div>
-        </div>
-      </div>`;
-  } else if (tab === 'startup') {
-    const items = [
-      {name:'Microsoft Edge',status:'Включён',impact:'Низкий'},
-      {name:'Windows Security',status:'Включён',impact:'Средний'},
-      {name:'OneDrive',status:'Включён',impact:'Высокий'},
-      {name:'Discord',status:'Выключен',impact:'—'},
-      {name:'Skype',status:'Выключен',impact:'—'},
-    ];
-    const rows = items.map(i=>`<tr><td>${i.name}</td><td style="color:${i.status==='Включён'?'#2ecc71':'var(--text2)'};">${i.status}</td><td>${i.impact}</td><td><div class="toggle ${i.status==='Включён'?'on':''}" onclick="this.classList.toggle('on')"></div></td></tr>`).join('');
-    body.innerHTML = `<table class="tm-table"><tr><th>Программа</th><th>Статус</th><th>Влияние</th><th></th></tr>${rows}</table>`;
-  }
-}
-
-// ════════════════════════════════════════════
-// TASKBAR BUTTONS CLICK (single click)
-// ════════════════════════════════════════════
-document.querySelectorAll('.tb-btn').forEach(btn => {
-  btn.onclick = (e) => {
-    const id = btn.id;
-    if (!id) return;
-    const app = id.replace('tb-','');
-    if (!APP_MAP[app]) return;
-    const w = el(APP_MAP[app]);
-    if (!w) return;
-    if (w.style.display === 'none' || w.style.display === '') {
-      openApp(app);
-    } else {
-      // toggle minimize
-      w.style.display = 'none';
-      btn.classList.remove('active-win');
-    }
-    e.stopPropagation();
-  };
-});
-
-// ════════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ════════════════════════════════════════════
-document.addEventListener('keydown', e => {
-  if (e.key==='Escape') hideAll();
-  if (e.ctrlKey && e.shiftKey && e.key==='Escape') { openApp('taskman'); }
-  if (e.key==='F5') { ctxRefresh(); }
-});
-
-// ════════════════════════════════════════════
-// SAVE & RESTORE SETTINGS
-// ════════════════════════════════════════════
-window.addEventListener('beforeunload', () => {
-  saveNotepadContent();
-  localStorage.setItem('w12_bright', el('bright-sl').value);
-  localStorage.setItem('w12_vol', el('vol-sl').value);
-});
-
-(function restoreSettings() {
-  const br = localStorage.getItem('w12_bright');
-  if (br) { el('bright-sl').value=br; setBright(br); }
-  const vl = localStorage.getItem('w12_vol');
-  if (vl) { el('vol-sl').value=vl; setVol(vl); }
-  const ac = localStorage.getItem('w12_accent');
-  if (ac) document.documentElement.style.setProperty('--accent', ac);
-})();
+// Закрываем попапы при клике вне их
+document.addEventListener('click', hideAll);
 </script>
 </body>
 </html>
