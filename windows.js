@@ -15,6 +15,7 @@ const APP_MAP = {
   paint:    'win-paint',
   taskman:  'win-taskman',
   exianai:  'win-exianai',
+  exiblox:  'win-exiblox',   // ← ДОБАВЛЕНО
 };
 
 function openApp(key){
@@ -37,10 +38,10 @@ function openApp(key){
 
   openWindows[key] = true;
 
-  // Callback при открытии
   if(key==='taskman') tmRender('processes');
   if(key==='exianai') loadExianCode();
   if(key==='paint') initPaint();
+  if(key==='exiblox') initExiblox();  // ← ДОБАВЛЕНО
 }
 
 function closeWin(key){
@@ -85,7 +86,6 @@ function bringFront(winId){
   zCounter++;
   el(winId).style.zIndex = zCounter;
   document.querySelectorAll('.tb-btn').forEach(b=>b.classList.remove('active-win'));
-  // Найти ключ по winId
   for(let k in APP_MAP){
     if(APP_MAP[k]===winId){
       const tb=el('tb-'+k);
@@ -148,7 +148,7 @@ function resizeWin(e, winId){
 }
 
 // ════════════════════════════════════════════
-// TASKBAR CLICK (показать/скрыть окно)
+// TASKBAR CLICK
 // ════════════════════════════════════════════
 function tbClick(key){
   const winId=APP_MAP[key];
@@ -160,4 +160,11 @@ function tbClick(key){
   } else {
     openApp(key);
   }
+}
+
+// ════════════════════════════════════════════
+// EXIBLOX LAUNCHER — заменяет старый launchExiblox()
+// ════════════════════════════════════════════
+function launchExiblox(){
+  openApp('exiblox');
 }
