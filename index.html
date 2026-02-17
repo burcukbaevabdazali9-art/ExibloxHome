@@ -24,6 +24,12 @@ body.light-theme{
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden;width:100vw;height:100vh;color:var(--text);}
 
+/* RAINBOW CURSOR CANVAS */
+#rainbow-cursor-canvas{
+  position:fixed;top:0;left:0;width:100vw;height:100vh;
+  pointer-events:none;z-index:999999;
+}
+
 /* BOOT */
 #boot{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .5s;}
 .boot-logo{font-size:76px;font-weight:800;margin-bottom:48px;background:linear-gradient(135deg,#0078d4,#60cdff,#0078d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logoPulse 2s ease-in-out infinite;}
@@ -143,10 +149,17 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .sl-val{font-size:11px;color:var(--text2);width:32px;text-align:right;}
 
 /* CONTEXT MENU */
-#ctx-menu{position:fixed;z-index:9998;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:200px;box-shadow:var(--shadow);display:none;}
-.ctx-item{padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;}
+#ctx-menu{position:fixed;z-index:9998;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:210px;box-shadow:var(--shadow);display:none;}
+.ctx-item{padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;position:relative;}
 .ctx-item:hover{background:var(--bg2);}
 .ctx-sep{height:1px;background:var(--border);margin:3px 2px;}
+/* Create submenu */
+#ctx-create-sub{position:fixed;z-index:9999;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:200px;box-shadow:var(--shadow);display:none;}
+
+/* Explorer view mode buttons */
+.exp-view-btn{width:26px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:var(--text2);transition:background .12s;}
+.exp-view-btn:hover{background:var(--bg2);}
+.exp-view-btn.active-view{background:rgba(0,120,212,.35);color:var(--text);}
 
 /* WINDOW BASE */
 .window{position:absolute;background:var(--bg1);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:none;flex-direction:column;min-width:320px;min-height:200px;z-index:100;animation:winOpen .14s ease;}
@@ -179,7 +192,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .file-item:hover{background:var(--bg2);}
 .file-item .ico{font-size:32px;}
 .file-item .fname{font-size:10.5px;color:var(--text2);text-align:center;word-break:break-all;}
-.exp-statusbar{padding:3px 14px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;}
+.exp-statusbar{padding:3px 14px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
 
 /* NOTEPAD */
 .np-wrap{display:flex;flex-direction:column;height:100%;}
@@ -286,38 +299,16 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .tm-perf-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-bottom:6px;}
 .tm-perf-info{font-size:11px;color:var(--text2);}
 
-/* ═══════════════════════════════════════════════
-   EXIAN AI — ЧАТ ИНТЕРФЕЙС
-═══════════════════════════════════════════════ */
+/* EXIAN AI */
 .echat-wrap{display:flex;height:100%;overflow:hidden;background:rgba(8,10,20,.97);}
 body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
-
-/* Сайдбар с историей */
-.echat-sidebar{
-  width:230px;flex-shrink:0;
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  background:rgba(0,0,0,.2);
-}
+.echat-sidebar{width:230px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:rgba(0,0,0,.2);}
 body.light-theme .echat-sidebar{background:rgba(0,0,0,.04);}
-.echat-sidebar-header{
-  padding:12px 10px 8px;
-  font-size:12px;font-weight:600;color:var(--text2);
-  letter-spacing:.5px;text-transform:uppercase;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.echat-new-btn{
-  background:var(--accent);color:#fff;border:none;
-  border-radius:6px;padding:4px 10px;font-size:11px;
-  cursor:pointer;font-family:inherit;transition:background .15s;
-}
+.echat-sidebar-header{padding:12px 10px 8px;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.echat-new-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15s;}
 .echat-new-btn:hover{background:#106ebe;}
 #exian-sessions-list{flex:1;overflow-y:auto;padding:6px;}
-.echat-session{
-  padding:8px 10px;border-radius:8px;cursor:pointer;
-  transition:background .12s;position:relative;margin-bottom:2px;
-}
+.echat-session{padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .12s;position:relative;margin-bottom:2px;}
 .echat-session:hover{background:var(--bg2);}
 .echat-session.active{background:rgba(0,120,212,.3);}
 .echat-session-t{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
@@ -328,66 +319,27 @@ body.light-theme .echat-sidebar{background:rgba(0,0,0,.04);}
 .echat-sidebar-footer{padding:8px 10px;border-top:1px solid var(--border);}
 .echat-clear-btn{font-size:11px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;transition:background .12s;width:100%;}
 .echat-clear-btn:hover{background:rgba(231,76,60,.2);color:#e74c3c;}
-
-/* Главная область чата */
 .echat-main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-
-/* Шапка чата */
-.echat-header{
-  padding:12px 16px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:12px;flex-shrink:0;
-  background:rgba(0,0,0,.15);
-}
+.echat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:rgba(0,0,0,.15);}
 body.light-theme .echat-header{background:rgba(0,0,0,.04);}
 .echat-header-ico{font-size:28px;}
 .echat-header-info .echat-header-name{font-size:15px;font-weight:600;color:var(--text);}
 .echat-header-info .echat-header-status{font-size:11px;color:#2ecc71;display:flex;align-items:center;gap:4px;}
 .echat-header-info .echat-header-status::before{content:'';width:6px;height:6px;background:#2ecc71;border-radius:50%;display:inline-block;}
-
-/* Быстрые вопросы */
-.echat-quick{
-  display:flex;gap:8px;padding:10px 16px;
-  border-bottom:1px solid var(--border);flex-shrink:0;
-  flex-wrap:wrap;background:rgba(0,0,0,.08);
-}
+.echat-quick{display:flex;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;background:rgba(0,0,0,.08);}
 body.light-theme .echat-quick{background:rgba(0,0,0,.03);}
-.echat-quick-btn{
-  padding:5px 12px;border-radius:20px;font-size:11px;
-  background:var(--bg2);border:1px solid var(--border);
-  color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;
-}
+.echat-quick-btn{padding:5px 12px;border-radius:20px;font-size:11px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .echat-quick-btn:hover{background:rgba(0,120,212,.3);color:var(--text);border-color:var(--accent);}
-
-/* Сообщения */
-#exian-chat-messages{
-  flex:1;overflow-y:auto;padding:16px;
-  display:flex;flex-direction:column;gap:14px;
-}
+#exian-chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;}
 .echat-msg{display:flex;gap:10px;align-items:flex-start;}
 .echat-user{flex-direction:row-reverse;}
 .echat-bot{flex-direction:row;}
-.echat-avatar-bot{
-  width:32px;height:32px;border-radius:50%;
-  background:linear-gradient(135deg,#0078d4,#60cdff);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-}
+.echat-avatar-bot{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#0078d4,#60cdff);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .echat-bot-wrap{display:flex;flex-direction:column;gap:4px;max-width:75%;}
 .echat-bot-name{font-size:11px;color:var(--text2);margin-left:2px;}
-.echat-bubble{
-  padding:10px 14px;border-radius:14px;
-  font-size:13px;line-height:1.6;
-  word-break:break-word;user-select:text;
-}
-.echat-bubble-user{
-  background:linear-gradient(135deg,#0078d4,#006cbf);
-  color:#fff;border-radius:14px 14px 4px 14px;
-  max-width:65%;align-self:flex-end;
-}
-.echat-bubble-bot{
-  background:var(--bg2);border:1px solid var(--border);
-  color:var(--text);border-radius:4px 14px 14px 14px;
-}
+.echat-bubble{padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.6;word-break:break-word;user-select:text;}
+.echat-bubble-user{background:linear-gradient(135deg,#0078d4,#006cbf);color:#fff;border-radius:14px 14px 4px 14px;max-width:65%;align-self:flex-end;}
+.echat-bubble-bot{background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:4px 14px 14px 14px;}
 body.light-theme .echat-bubble-bot{background:rgba(0,0,0,.05);}
 .echat-bubble pre{background:rgba(0,0,0,.3);border-radius:6px;padding:8px;font-size:11px;overflow-x:auto;margin:6px 0;}
 body.light-theme .echat-bubble pre{background:rgba(0,0,0,.08);}
@@ -400,40 +352,18 @@ body.light-theme .echat-bubble code{background:rgba(0,0,0,.1);}
 .echat-action:hover{filter:brightness(1.3);}
 @keyframes echatIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .echat-animate{animation:echatIn .25s ease;}
-
-/* Typing indicator */
 .echat-typing{display:flex;align-items:center;gap:4px;padding:12px 14px;}
 .edot{width:7px;height:7px;border-radius:50%;background:var(--text2);display:inline-block;animation:dotBounce 1.2s ease infinite;}
 .edot:nth-child(2){animation-delay:.2s;}
 .edot:nth-child(3){animation-delay:.4s;}
 @keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-
-/* Инпут */
-.echat-input-area{
-  padding:12px 16px;border-top:1px solid var(--border);
-  background:rgba(0,0,0,.15);flex-shrink:0;
-}
+.echat-input-area{padding:12px 16px;border-top:1px solid var(--border);background:rgba(0,0,0,.15);flex-shrink:0;}
 body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
-.echat-input-row{
-  display:flex;align-items:flex-end;gap:8px;
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:14px;padding:8px 8px 8px 14px;
-  transition:border .2s;
-}
+.echat-input-row{display:flex;align-items:flex-end;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:8px 8px 8px 14px;transition:border .2s;}
 .echat-input-row:focus-within{border-color:var(--accent);}
-#exian-chat-input{
-  flex:1;background:none;border:none;outline:none;
-  color:var(--text);font-size:13px;font-family:inherit;
-  resize:none;line-height:1.5;max-height:120px;
-  min-height:20px;overflow-y:auto;user-select:text;
-}
+#exian-chat-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:inherit;resize:none;line-height:1.5;max-height:120px;min-height:20px;overflow-y:auto;user-select:text;}
 #exian-chat-input::placeholder{color:var(--text2);}
-#exian-send-btn{
-  width:34px;height:34px;border-radius:10px;
-  background:var(--accent);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;transition:all .15s;flex-shrink:0;
-}
+#exian-send-btn{width:34px;height:34px;border-radius:10px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;flex-shrink:0;}
 #exian-send-btn:hover{background:#106ebe;transform:scale(1.05);}
 .echat-hint{font-size:10px;color:var(--text2);text-align:center;margin-top:6px;}
 
@@ -453,6 +383,9 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </style>
 </head>
 <body>
+
+<!-- RAINBOW CURSOR CANVAS -->
+<canvas id="rainbow-cursor-canvas"></canvas>
 
 <!-- BOOT -->
 <div id="boot">
@@ -519,6 +452,8 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="desk-icon" style="top:16px;left:118px" ondblclick="openApp('paint')" onclick="selectIcon(this)"><div class="dico">🎨</div><span>Paint</span></div>
   <div class="desk-icon" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)"><div class="dico">📊</div><span>Диспетчер задач</span></div>
   <div class="desk-icon" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)"><div class="dico">🤖</div><span>Exian.AI 3.0</span></div>
+  <!-- EXIBLOX / PYTHON LAUNCHER -->
+  <div class="desk-icon" style="top:304px;left:118px" ondblclick="launchExiblox()" onclick="selectIcon(this)"><div class="dico">🐍</div><span>Exiblox v3</span></div>
 </div>
 
 <!-- TASKBAR -->
@@ -559,10 +494,10 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
       <div class="pin-app" onclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="lbl">Paint</div></div>
       <div class="pin-app" onclick="openApp('taskman');hideAll()"><div class="ico">📊</div><div class="lbl">Диспетчер</div></div>
       <div class="pin-app" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="lbl">Exian.AI</div></div>
+      <div class="pin-app" onclick="launchExiblox();hideAll()"><div class="ico">🐍</div><div class="lbl">Exiblox v3</div></div>
       <div class="pin-app" onclick="showNotif('Магазин','Скоро!','🛒')"><div class="ico">🛒</div><div class="lbl">Магазин</div></div>
       <div class="pin-app" onclick="showNotif('Почта','Нет писем','✉️')"><div class="ico">✉️</div><div class="lbl">Почта</div></div>
       <div class="pin-app" onclick="showNotif('Фото','Нет фото','🖼️')"><div class="ico">🖼️</div><div class="lbl">Фотографии</div></div>
-      <div class="pin-app" onclick="showNotif('Xbox','Подключение...','🎮')"><div class="ico">🎮</div><div class="lbl">Xbox</div></div>
     </div>
   </div>
   <div class="sm-sec">Рекомендуемые</div>
@@ -600,15 +535,37 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="sl-row"><span class="ico">🔊</span><input type="range" min="0" max="100" value="60" id="vol-sl" oninput="setVol(this.value)"><span class="sl-val" id="vol-val">60%</span></div>
 </div>
 
-<!-- CONTEXT MENU -->
+<!-- CONTEXT MENU (Desktop / Explorer) -->
 <div id="ctx-menu">
+  <!-- File-specific items -->
+  <div class="ctx-item" id="ctx-open-item" onclick="ctxOpenFile()" style="display:none"><span>📂</span>Открыть</div>
+  <div class="ctx-item" id="ctx-move-item" onclick="ctxMoveFile()" style="display:none"><span>📦</span>Переместить в...</div>
+  <div class="ctx-item" id="ctx-delete-item" onclick="ctxDeleteFile()" style="display:none"><span>🗑️</span>Удалить</div>
+  <div class="ctx-sep" id="ctx-file-sep" style="display:none"></div>
+
+  <!-- Explorer new file button (legacy) -->
   <div class="ctx-item" id="ctx-new-file" onclick="ctxNewFile()" style="display:none"><span>📄</span>Новый файл</div>
+
+  <!-- Windows-style Create submenu -->
+  <div class="ctx-item" id="ctx-create-item" onmouseenter="showCreateSub(event)" onclick="showCreateSub(event)" style="display:none">
+    <span>✨</span>Создать <span style="margin-left:auto;opacity:.6">▶</span>
+  </div>
+
+  <div class="ctx-sep"></div>
   <div class="ctx-item" onclick="ctxRefresh()"><span>🔃</span>Обновить</div>
   <div class="ctx-sep"></div>
   <div class="ctx-item" onclick="toggleLightTheme();hideAll()"><span>☀️</span>Светлая тема</div>
   <div class="ctx-item" onclick="toggleDarkTheme();hideAll()"><span>🌑</span>Тёмная тема</div>
   <div class="ctx-sep"></div>
   <div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры</div>
+</div>
+
+<!-- CREATE SUBMENU (Windows-style) -->
+<div id="ctx-create-sub" onclick="event.stopPropagation()">
+  <div class="ctx-item" onclick="ctxCreateFolder()"><span>📁</span>Папку</div>
+  <div class="ctx-item" onclick="ctxCreateTextDoc()"><span>📝</span>Текстовый документ</div>
+  <div class="ctx-item" onclick="ctxCreateFile()"><span>📄</span>Новый файл</div>
+  <div class="ctx-item" onclick="ctxCreateShortcut()"><span>🔗</span>Ярлык</div>
 </div>
 
 <!-- ════ WINDOWS ════ -->
@@ -636,9 +593,17 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
           <div class="exp-side-item" data-folder="Музыка" onclick="expNav('Музыка')">🎵 Музыка</div>
           <div class="exp-side-item" data-folder="ExiWin" onclick="expNav('ExiWin')">💻 ExiWin (C:)</div>
         </div>
-        <div class="exp-files" id="exp-files-content"></div>
+        <div class="exp-files" id="exp-files-content" oncontextmenu="showCtxMenu(event,'explorer')"></div>
       </div>
-      <div class="exp-statusbar" id="exp-status">Объектов: 0</div>
+      <!-- STATUS BAR with view mode buttons -->
+      <div class="exp-statusbar">
+        <span id="exp-status">Объектов: 0</span>
+        <div style="display:flex;align-items:center;gap:3px;">
+          <div class="exp-view-btn active-view" id="exp-view-large" onclick="setExpView('large')" title="Крупные значки">⊞</div>
+          <div class="exp-view-btn" id="exp-view-normal" onclick="setExpView('normal')" title="Обычные">⊟</div>
+          <div class="exp-view-btn" id="exp-view-small" onclick="setExpView('small')" title="Мелкие">☰</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="resize-handle" onmousedown="resizeWin(event,'win-explorer')"></div>
@@ -808,7 +773,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="resize-handle" onmousedown="resizeWin(event,'win-taskman')"></div>
 </div>
 
-<!-- ═══ EXIAN.AI 3.0 — УМНЫЙ ЧАТ ═══ -->
+<!-- EXIAN.AI 3.0 -->
 <div class="window" id="win-exianai" style="width:900px;height:620px;top:30px;left:50px;" onclick="bringFront('win-exianai')">
   <div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
     <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0 — Умный ассистент</span>
@@ -820,8 +785,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   </div>
   <div class="win-body" style="overflow:hidden">
     <div class="echat-wrap">
-
-      <!-- САЙДБАР: история чатов -->
       <div class="echat-sidebar">
         <div class="echat-sidebar-header">
           <span>💬 Чаты</span>
@@ -832,11 +795,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
           <div class="echat-clear-btn" onclick="clearAllChats()">🗑️ Очистить все чаты</div>
         </div>
       </div>
-
-      <!-- ГЛАВНАЯ ОБЛАСТЬ -->
       <div class="echat-main">
-
-        <!-- Шапка -->
         <div class="echat-header">
           <div class="echat-header-ico">🤖</div>
           <div class="echat-header-info">
@@ -844,8 +803,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
             <div class="echat-header-status">Онлайн · ExiWin 12</div>
           </div>
         </div>
-
-        <!-- Быстрые вопросы -->
         <div class="echat-quick">
           <div class="echat-quick-btn" onclick="exianQuickPrompt('Что ты умеешь?')">🤔 Что ты умеешь?</div>
           <div class="echat-quick-btn" onclick="exianQuickPrompt('Напиши код на Python')">💻 Код на Python</div>
@@ -853,11 +810,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
           <div class="echat-quick-btn" onclick="exianQuickPrompt('Придумай интересную идею для проекта')">💡 Идея для проекта</div>
           <div class="echat-quick-btn" onclick="exianQuickPrompt('Расскажи анекдот')">😄 Расскажи анекдот</div>
         </div>
-
-        <!-- Сообщения -->
         <div id="exian-chat-messages"></div>
-
-        <!-- Поле ввода -->
         <div class="echat-input-area">
           <div class="echat-input-row">
             <textarea id="exian-chat-input" placeholder="Напиши что-нибудь... (Enter — отправить)" rows="1"></textarea>
@@ -865,7 +818,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
           </div>
           <div class="echat-hint">Enter — отправить · Shift+Enter — новая строка · Exian.AI 3.0 powered by ExiWin 12</div>
         </div>
-
       </div>
     </div>
   </div>
@@ -896,6 +848,11 @@ tmRender = function(tab) {
 window.addEventListener('DOMContentLoaded',()=>{
   const h=new Date().getHours(), g=el('br-hello');
   if(g) g.textContent=h<6?'Доброй ночи!':h<12?'Доброе утро!':h<18?'Добрый день!':'Добрый вечер!';
+});
+// Показывать ctx-file-sep только когда нужен
+document.addEventListener('DOMContentLoaded',()=>{
+  // Init view mode buttons state
+  setExpView('large');
 });
 </script>
 </body>
