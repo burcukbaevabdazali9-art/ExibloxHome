@@ -2,6 +2,7 @@
 
 // ════════════════════════════════════════════
 // EXIBLOX v3 — Браузерная версия
+// Облачное хранилище игр через window.storage
 // ════════════════════════════════════════════
 
 const EXB = {
@@ -21,17 +22,20 @@ const EXB = {
   studioPanStart: null,
   aiHistory: [],
   TILE: 40,
-  CANVAS_W: 3200,   // бесконечный холст
+  CANVAS_W: 3200,
   CANVAS_H: 1200,
   _publishing: false,
+  _studioEditing: false,
+  _aiTyping: false,
+  _cloudReady: false,
 };
 
 // ── Скины стикменов ──
 const EXB_SKINS = [
-  { id:'red',    name:'Красный',              bodyColor:'#e74c3c', headColor:'#e74c3c', capColor:null,     limbColor:'#c0392b' },
+  { id:'red',    name:'Красный',               bodyColor:'#e74c3c', headColor:'#e74c3c', capColor:null,     limbColor:'#c0392b' },
   { id:'white',  name:'Белый с красной кепкой', bodyColor:'#ecf0f1', headColor:'#ecf0f1', capColor:'#e74c3c', limbColor:'#bdc3c7' },
-  { id:'blue',   name:'Голубой',              bodyColor:'#3498db', headColor:'#3498db', capColor:null,     limbColor:'#2980b9' },
-  { id:'orange', name:'Оранжевый',            bodyColor:'#e67e22', headColor:'#e67e22', capColor:null,     limbColor:'#d35400' },
+  { id:'blue',   name:'Голубой',               bodyColor:'#3498db', headColor:'#3498db', capColor:null,     limbColor:'#2980b9' },
+  { id:'orange', name:'Оранжевый',             bodyColor:'#e67e22', headColor:'#e67e22', capColor:null,     limbColor:'#d35400' },
 ];
 
 const EXB_BASEPLATE = [
@@ -48,7 +52,6 @@ const EXB_BASEPLATE = [
 const EXB_ICONS  = ['🎮','🎯','🏆','⚡','🌟','🔥','💎','🎲','🚀','🦊'];
 const EXB_COLORS = ['#7c3aed','#1a6fa8','#b8860b','#ba5a00','#8b0000','#2d5a1b'];
 
-// ── Инструменты студии ──
 const EXB_TOOLS = [
   {id:'select',   label:'🖱 Выбор'},
   {id:'block',    label:'🧱 Блок'},
@@ -71,18 +74,76 @@ const EXB_BLOCK_COLORS = {
   deco:'#2ecc71',
 };
 
+// ── Временное хранилище иконки при публикации ──
+let _exbPublishIconData = null;
+
+// ════════════════════════════════════════════
+// CLOUD STORAGE — обёртки над window.storage
+// ════════════════════════════════════════════
+
+// Проверяем наличие window.storage (только в Claude.ai)
+function exbHasCloud() {
+  return typeof window !== 'undefined' && typeof window.storage !== 'undefined';
+}
+
+async function exbCloudLoadGames() {
+  if (!exbHasCloud()) {
+    // Fallback: localStorage
+    return JSON.parse(localStorage.getItem('exiblox_games') || '[]');
+  }
+  try {
+    const result = await window.storage.get('exiblox_games_v3', true);
+    return result ? JSON.parse(result.value) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+async function exbCloudSaveGames() {
+  if (!exbHasCloud()) {
+    localStorage.setItem('exiblox_games', JSON.stringify(EXB.games));
+    return;
+  }
+  try {
+    await window.storage.set('exiblox_games_v3', JSON.stringify(EXB.games), true);
+  } catch (e) {
+    console.error('Exiblox cloud save error:', e);
+    // Fallback
+    localStorage.setItem('exiblox_games', JSON.stringify(EXB.games));
+  }
+}
+
 // ── INIT ─────────────────────────────────────
-function initExiblox() {
+async function initExiblox() {
   EXB.users = JSON.parse(localStorage.getItem('exiblox_users') || '{}');
-  EXB.games = JSON.parse(localStorage.getItem('exiblox_games') || '[]');
   EXB.user  = JSON.parse(localStorage.getItem('exiblox_curuser') || 'null');
   EXB.skin  = localStorage.getItem('exiblox_skin') || 'red';
+
+  // Показываем загрузку
+  const root = el('exiblox-root');
+  if (root) {
+    root.innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0a0c14;gap:16px;">
+        <div style="font-size:42px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ Exiblox v3</div>
+        <div style="color:rgba(255,255,255,.4);font-size:12px;">Загружаем игры из облака...</div>
+        <div style="width:180px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;">
+          <div style="height:100%;background:linear-gradient(90deg,#00b2ff,#7c3aed);border-radius:2px;animation:exbLoad .8s ease infinite alternate;width:60%;"></div>
+        </div>
+      </div>
+      <style>@keyframes exbLoad{from{transform:translateX(-20%)}to{transform:translateX(120%)}}</style>`;
+  }
+
+  // Загружаем игры из облака
+  EXB.games = await exbCloudLoadGames();
+  EXB._cloudReady = true;
+
   exbRender();
 }
 
-function exbSaveUsers() { localStorage.setItem('exiblox_users', JSON.stringify(EXB.users)); }
-function exbSaveGames()  { localStorage.setItem('exiblox_games', JSON.stringify(EXB.games)); }
-function exbSaveCurUser(){ localStorage.setItem('exiblox_curuser', JSON.stringify(EXB.user)); }
+function exbSaveUsers()   { localStorage.setItem('exiblox_users', JSON.stringify(EXB.users)); }
+function exbSaveCurUser() { localStorage.setItem('exiblox_curuser', JSON.stringify(EXB.user)); }
+// exbSaveGames теперь async!
+async function exbSaveGames() { await exbCloudSaveGames(); }
 
 // ── ROOT RENDER ──────────────────────────────
 function exbRender() {
@@ -103,7 +164,7 @@ function exbRenderAuth(root) {
   <div style="display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(160deg,#0a0c14,#0f1824);">
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:40px 50px;width:420px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);">
       <div style="font-size:52px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;">✦ Exiblox</div>
-      <div style="color:rgba(255,255,255,.4);font-size:13px;margin-bottom:28px;">v3 — Game Platform</div>
+      <div style="color:rgba(255,255,255,.4);font-size:13px;margin-bottom:28px;">v3 — Game Platform · ${EXB.games.length} игр в облаке</div>
       <div id="exb-auth-tabs" style="display:flex;background:rgba(255,255,255,.06);border-radius:10px;padding:4px;margin-bottom:24px;">
         <div class="exb-auth-tab active" onclick="exbAuthTab('login')" style="flex:1;padding:8px;border-radius:8px;cursor:pointer;font-size:13px;transition:.2s;">Войти</div>
         <div class="exb-auth-tab" onclick="exbAuthTab('register')" style="flex:1;padding:8px;border-radius:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.5);transition:.2s;">Регистрация</div>
@@ -188,7 +249,7 @@ function exbRegister() {
   if (pw !== pw2)      { exbAuthErr('Пароли не совпадают!'); return; }
   if (EXB.users[name]) { exbAuthErr('Ник уже занят!'); return; }
   const code = Math.random().toString(36).slice(2,10).toUpperCase();
-  EXB.users[name] = { pw: exbHashPw(pw), email, code, robux: 0, friends:[], requests:[], projects:[], pubGames:[], isGuest:false };
+  EXB.users[name] = { pw: exbHashPw(pw), email, code, ecoins:0, friends:[], requests:[], projects:[], pubGames:[], isGuest:false };
   exbSaveUsers();
   EXB.user = name;
   exbSaveCurUser();
@@ -197,7 +258,7 @@ function exbRegister() {
 
 function exbGuestLogin() {
   if (!EXB.users['Guest']) {
-    EXB.users['Guest'] = { pw:'', email:'guest@exiblox.com', code:'GUEST000', robux:0, friends:[], requests:[], projects:[], pubGames:[], isGuest:true };
+    EXB.users['Guest'] = { pw:'', email:'guest@exiblox.com', code:'GUEST000', ecoins:0, friends:[], requests:[], projects:[], pubGames:[], isGuest:true };
     exbSaveUsers();
   }
   EXB.user = 'Guest';
@@ -216,6 +277,10 @@ function exbLogout() {
 // ════════════════════════════════════════════
 function exbRenderMain(root) {
   const me = EXB.users[EXB.user] || {};
+  const cloudBadge = exbHasCloud()
+    ? `<span style="background:rgba(0,178,255,.2);border:1px solid rgba(0,178,255,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#00b2ff;">☁️ Облако</span>`
+    : `<span style="background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#ffd700;">💾 Локально</span>`;
+
   root.innerHTML = `
   <style>
     #exiblox-root{font-family:'Segoe UI',system-ui,sans-serif;color:#fff;}
@@ -225,7 +290,7 @@ function exbRenderMain(root) {
     .exb-search{flex:1;max-width:360px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:7px 14px;display:flex;align-items:center;gap:8px;}
     .exb-search input{background:none;border:none;outline:none;color:#fff;font-size:12px;width:100%;font-family:inherit;}
     .exb-search input::placeholder{color:rgba(255,255,255,.3);}
-    .exb-user-info{margin-left:auto;display:flex;align-items:center;gap:12px;}
+    .exb-user-info{margin-left:auto;display:flex;align-items:center;gap:10px;}
     .exb-robux{font-size:13px;font-weight:700;color:#FFD700;}
     .exb-sidebar{width:100px;background:#0a0c11;border-right:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;padding-top:8px;flex-shrink:0;}
     .exb-nav-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 8px;cursor:pointer;border-radius:8px;margin:2px 6px;transition:.15s;font-size:10px;color:rgba(255,255,255,.5);}
@@ -235,12 +300,13 @@ function exbRenderMain(root) {
     .exb-content{flex:1;overflow-y:auto;padding:0;}
     .exb-content::-webkit-scrollbar{width:4px;}
     .exb-content::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
-    .exb-section{padding:22px 28px 0;}
+    .exb-section{padding:22px 28px 28px;}
     .exb-sec-title{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
     .exb-cards-row{display:flex;gap:12px;flex-wrap:wrap;}
     .exb-game-card{width:192px;background:rgba(255,255,255,.05);border-radius:14px;overflow:hidden;cursor:pointer;transition:.15s;border:1px solid rgba(255,255,255,.07);flex-shrink:0;}
     .exb-game-card:hover{transform:translateY(-3px);border-color:rgba(0,178,255,.4);box-shadow:0 8px 24px rgba(0,178,255,.15);}
-    .exb-card-thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:52px;}
+    .exb-card-thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:52px;overflow:hidden;}
+    .exb-card-thumb img{width:100%;height:100%;object-fit:cover;}
     .exb-card-body{padding:10px 12px 12px;}
     .exb-card-name{font-size:12px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     .exb-card-meta{font-size:10px;color:rgba(255,255,255,.4);display:flex;justify-content:space-between;}
@@ -269,24 +335,32 @@ function exbRenderMain(root) {
     .exb-ai-input:focus{border-color:#00b2ff;}
     .exb-ai-input::placeholder{color:rgba(255,255,255,.3);}
     .exb-profile-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+    /* Иконка-загрузчик */
+    .exb-icon-drop{width:90px;height:90px;border-radius:16px;background:#1a2040;border:2px dashed rgba(255,255,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.2s;overflow:hidden;flex-shrink:0;}
+    .exb-icon-drop:hover{border-color:#00b2ff;background:rgba(0,178,255,.08);}
+    .exb-icon-drop img{width:100%;height:100%;object-fit:cover;}
+    .exb-pub-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;display:flex;align-items:center;justify-content:center;}
+    .exb-pub-modal{background:#1a1e2a;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:32px 36px;width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.7);}
+    .exb-pub-modal::-webkit-scrollbar{width:4px;}
+    .exb-pub-modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
+    .exb-pub-label{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px;display:block;}
   </style>
   <div style="display:flex;flex-direction:column;height:100%;overflow:hidden;">
-    <!-- TOPBAR -->
     <div class="exb-topbar">
       <div class="exb-logo">✦ Exiblox v3</div>
+      ${cloudBadge}
       <div class="exb-search">
         <span style="font-size:12px;opacity:.4">🔍</span>
         <input id="exb-search" placeholder="Поиск игр..." onkeydown="if(event.key==='Enter')exbDoSearch(this.value)">
       </div>
       <div class="exb-user-info">
         <span class="exb-robux">🪙 ${me.ecoins||0} E$</span>
-        <span style="font-size:12px;color:rgba(255,255,255,.6);">${me.isGuest?'👤 Гость':('👤 '+EXB.user)}</span>
-        <div class="exb-btn2 exb-btn2-gray" onclick="exbLogout()" style="padding:5px 12px;font-size:11px;">Выйти</div>
+        <span style="font-size:12px;color:rgba(255,255,255,.6);">${me.isGuest?'👤 Гость':'👤 '+EXB.user}</span>
+        <button class="exb-btn2 exb-btn2-gray" onclick="exbRefreshGames()" style="padding:5px 12px;font-size:11px;" title="Обновить игры из облака">🔄</button>
+        <button class="exb-btn2 exb-btn2-gray" onclick="exbLogout()" style="padding:5px 12px;font-size:11px;">Выйти</button>
       </div>
     </div>
-    <!-- MAIN -->
     <div class="exb-main" style="flex:1;overflow:hidden;">
-      <!-- SIDEBAR -->
       <div class="exb-sidebar">
         ${[
           ['home','🏠','Главная'],
@@ -303,18 +377,25 @@ function exbRenderMain(root) {
             <span>${lbl}</span>
           </div>`).join('')}
       </div>
-      <!-- CONTENT -->
       <div class="exb-content" id="exb-content"></div>
     </div>
   </div>`;
   exbTabContent(EXB.tab);
 }
 
+async function exbRefreshGames() {
+  showNotif('Exiblox', 'Обновляем игры из облака...', '☁️');
+  EXB.games = await exbCloudLoadGames();
+  const c = el('exb-content');
+  if (c) exbTabContent(EXB.tab);
+  showNotif('Exiblox', `Загружено ${EXB.games.length} игр!`, '✅');
+}
+
 function exbTab(tab) {
   EXB.tab = tab;
   document.querySelectorAll('.exb-nav-btn').forEach(b => {
-    const t = b.getAttribute('onclick').match(/'(\w+)'/)[1];
-    b.classList.toggle('exb-active', t === tab);
+    const m = b.getAttribute('onclick').match(/'(\w+)'/);
+    if (m) b.classList.toggle('exb-active', m[1] === tab);
   });
   exbTabContent(tab);
 }
@@ -334,7 +415,7 @@ function exbHome(c) {
   const frs = me.friends || [];
   const allGames = EXB.games;
   c.innerHTML = `
-  <div class="exb-section" style="padding-top:26px;">
+  <div class="exb-section">
     <div class="exb-sec-title">👥 Соединения (${frs.length})
       <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('friends')" style="margin-left:auto;font-size:11px;">+ Добавить</button>
     </div>
@@ -348,25 +429,33 @@ function exbHome(c) {
     </div>
 
     ${allGames.length ? `
-    <div class="exb-sec-title">🎮 Играть сейчас</div>
+    <div class="exb-sec-title">🎮 Играть сейчас
+      <span style="font-size:11px;color:rgba(255,255,255,.3);font-weight:400;">${allGames.length} игр в облаке</span>
+    </div>
     <div class="exb-cards-row" style="margin-bottom:28px;">${exbGameCards(allGames.slice(0,4))}</div>
-    ${allGames.length>4?`<div class="exb-sec-title">⭐ Популярные</div>
-    <div class="exb-cards-row" style="margin-bottom:28px;">${exbGameCards(allGames.slice(4,8))}</div>`:''}
+    ${allGames.length>4?`
+    <div class="exb-sec-title">⭐ Все игры</div>
+    <div class="exb-cards-row" style="margin-bottom:28px;">${exbGameCards(allGames.slice(4))}</div>`:''}
     ` : `
     <div style="text-align:center;padding:50px 0;color:rgba(255,255,255,.25);font-size:14px;">
-      🎮 Пока нет опубликованных игр<br><br>
-      <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('studio')">Создать первую игру в Studio →</button>
+      🎮 Пока нет игр в облаке<br><br>
+      <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('studio')">Создать первую игру →</button>
     </div>`}
   </div>`;
 }
 
+// ── Карточки игр (поддержка кастомной иконки) ──
 function exbGameCards(games) {
   return games.map(g=>`
     <div class="exb-game-card" onclick="exbPlayGame('${g.id}')">
-      <div class="exb-card-thumb" style="background:${g.color||'#1a2040'}">${g.icon||'🎮'}</div>
+      <div class="exb-card-thumb" style="background:${g.color||'#1a2040'}">
+        ${g.iconImage
+          ? `<img src="${escHtmlExb(g.iconImage)}" alt="icon">`
+          : `<span style="font-size:52px;">${g.icon||'🎮'}</span>`}
+      </div>
       <div class="exb-card-body">
         <div class="exb-card-name">${escHtmlExb(g.name)}</div>
-        <div class="exb-card-meta"><span>by ${escHtmlExb(g.author)}</span><span>👍 ${g.rating}</span></div>
+        <div class="exb-card-meta"><span>by ${escHtmlExb(g.author)}</span><span>👍 ${g.rating||'100%'}</span></div>
       </div>
     </div>`).join('');
 }
@@ -376,12 +465,13 @@ function exbGameCards(games) {
 // ════════════════════════════════════════════
 function exbStore(c) {
   c.innerHTML = `
-  <div class="exb-section" style="padding-top:26px;">
-    <div class="exb-sec-title">🛒 Магазин Exiblox</div>
-    ${EXB.games.length ? `
-    <div class="exb-sec-title" style="font-size:13px;color:rgba(255,255,255,.5);">Все игры (${EXB.games.length})</div>
-    <div class="exb-cards-row">${exbGameCards(EXB.games)}</div>
-    ` : '<div style="color:rgba(255,255,255,.3);font-size:13px;padding:40px 0;text-align:center;">Магазин пуст. Публикуйте игры в Studio!</div>'}
+  <div class="exb-section">
+    <div style="display:flex;align-items:center;margin-bottom:18px;">
+      <div class="exb-sec-title" style="margin-bottom:0;">🛒 Магазин Exiblox</div>
+      <span style="margin-left:10px;font-size:11px;color:rgba(255,255,255,.4);">${EXB.games.length} игр · ${exbHasCloud()?'☁️ облако':'💾 локально'}</span>
+      <button class="exb-btn2 exb-btn2-gray" onclick="exbRefreshGames()" style="margin-left:auto;font-size:11px;padding:5px 12px;">🔄 Обновить</button>
+    </div>
+    ${EXB.games.length ? `<div class="exb-cards-row">${exbGameCards(EXB.games)}</div>` : '<div style="color:rgba(255,255,255,.3);font-size:13px;padding:40px 0;text-align:center;">Магазин пуст. Публикуйте игры в Studio!</div>'}
   </div>`;
 }
 
@@ -392,7 +482,6 @@ function exbStudio(c) {
   const me = EXB.users[EXB.user] || {};
   const projects = me.projects || [];
 
-  // Показываем список проектов если он не пуст и мы ещё не в режиме редактирования
   if (projects.length > 0 && !EXB._studioEditing) {
     exbStudioProjectList(c, projects);
     return;
@@ -401,20 +490,17 @@ function exbStudio(c) {
 
   c.innerHTML = `
   <div style="display:flex;flex-direction:column;height:100%;overflow:hidden;">
-    <!-- Studio Toolbar -->
     <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:#0c0e14;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;flex-wrap:wrap;">
       <button class="exb-btn2 exb-btn2-blue" onclick="exbStudioSave()" style="font-size:11px;">💾 Сохранить</button>
-      <button class="exb-btn2 exb-btn2-gray" onclick="EXB._studioEditing=false;exbTab('studio')" style="font-size:11px;">📋 Мои проекты</button>
+      <button class="exb-btn2 exb-btn2-gray" onclick="EXB._studioEditing=false;exbTab('studio')" style="font-size:11px;">📋 Проекты</button>
       <button class="exb-btn2 exb-btn2-gray" onclick="exbStudioBaseplate()" style="font-size:11px;">🏗 Baseplate</button>
       <button class="exb-btn2" style="background:#2ecc71;color:#fff;font-size:11px;" onclick="exbStudioTest()">▶ Тест</button>
       ${me.isGuest ? '' : `<button class="exb-btn2" style="background:#7c3aed;color:#fff;font-size:11px;" onclick="exbPublishDialog()">📤 Publish</button>`}
       <button class="exb-btn2 exb-btn2-red" onclick="exbStudioClear()" style="font-size:11px;">🗑 Очистить</button>
       <input id="exb-proj-name" class="exb-inp2" value="${escHtmlExb(EXB.studioProjectName)}" style="width:160px;font-size:12px;" oninput="EXB.studioProjectName=this.value">
-      <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.3);">Объектов: <span id="exb-obj-count">${EXB.studioObjects.length}</span> &nbsp;|&nbsp; Scroll: ПКМ+drag или ⬛</span>
+      <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.3);">Объектов: <span id="exb-obj-count">${EXB.studioObjects.length}</span></span>
     </div>
-    <!-- Studio Body -->
     <div class="exb-studio-wrap" style="flex:1;overflow:hidden;">
-      <!-- Tools -->
       <div class="exb-studio-side" style="width:105px;overflow-y:auto;">
         <div style="font-size:9px;color:rgba(255,255,255,.4);padding:4px 5px 6px;letter-spacing:.5px;text-transform:uppercase;">Инструменты</div>
         ${EXB_TOOLS.map(t=>`<div class="exb-tool-btn ${EXB.studioTool===t.id?'exb-tool-active':''}" onclick="exbSetTool('${t.id}',this)" style="font-size:10px;padding:6px 4px;">${t.label}</div>`).join('')}
@@ -423,14 +509,11 @@ function exbStudio(c) {
         <div id="exb-color-prev" style="width:32px;height:22px;border-radius:6px;background:${EXB.studioColor};border:2px solid rgba(255,255,255,.2);cursor:pointer;margin:0 auto 6px;" onclick="exbPickColor()"></div>
         <input type="color" id="exb-color-pick" value="${EXB.studioColor}" oninput="EXB.studioColor=this.value;el('exb-color-prev').style.background=this.value" style="position:absolute;opacity:0;pointer-events:none;">
         <div style="height:1px;background:rgba(255,255,255,.07);margin:4px 0;"></div>
-        <div style="font-size:9px;color:rgba(255,255,255,.4);padding:2px 5px 4px;letter-spacing:.5px;text-transform:uppercase;">Камера</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);padding:2px 5px 4px;text-transform:uppercase;">Камера</div>
         <div onclick="EXB.studioScrollX=0;EXB.studioScrollY=0;exbStudioRedraw()" style="font-size:9px;color:rgba(255,255,255,.5);text-align:center;cursor:pointer;padding:4px;border-radius:5px;background:rgba(255,255,255,.05);">🏠 Сброс</div>
-        <div style="font-size:9px;color:rgba(255,255,255,.3);text-align:center;margin-top:4px;">Холст: 3200×1200</div>
       </div>
-      <!-- Canvas -->
       <div class="exb-canvas-wrap" id="exb-studio-wrap" style="overflow:hidden;position:relative;">
         <canvas id="exb-studio-canvas" style="display:block;cursor:crosshair;"></canvas>
-        <!-- Mini-scroll indicators -->
         <div style="position:absolute;bottom:6px;right:6px;font-size:10px;color:rgba(255,255,255,.25);pointer-events:none;" id="exb-scroll-info">0, 0</div>
       </div>
     </div>
@@ -438,22 +521,21 @@ function exbStudio(c) {
   requestAnimationFrame(exbStudioInitCanvas);
 }
 
-// Список проектов при открытии Studio
 function exbStudioProjectList(c, projects) {
   c.innerHTML = `
-  <div class="exb-section" style="padding-top:24px;">
+  <div class="exb-section">
     <div style="display:flex;align-items:center;margin-bottom:20px;">
       <div class="exb-sec-title" style="margin-bottom:0;">🛠 Мои проекты</div>
       <button class="exb-btn2 exb-btn2-blue" style="margin-left:auto;font-size:11px;" onclick="EXB.studioObjects=[];EXB.studioProjectName='Новый проект';EXB._studioEditing=true;exbTab('studio')">+ Новый проект</button>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
       ${projects.map((p,i)=>`
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;" 
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;transition:.15s;"
              onmouseover="this.style.borderColor='rgba(0,178,255,.5)';this.style.background='rgba(0,178,255,.08)'"
              onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.background='rgba(255,255,255,.05)'">
           <div style="font-size:28px;margin-bottom:8px;">🛠</div>
           <div style="font-size:13px;font-weight:700;margin-bottom:4px;">${escHtmlExb(p.name)}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.4);">Объектов: ${(p.objects||[]).length} &nbsp;·&nbsp; ${p.updated||'—'}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);">Объектов: ${(p.objects||[]).length} · ${p.updated||'—'}</div>
           <div style="display:flex;gap:6px;margin-top:12px;">
             <button class="exb-btn2 exb-btn2-blue" style="font-size:10px;padding:5px 10px;" onclick="exbStudioOpenProject(${i})">✏️ Открыть</button>
             <button class="exb-btn2 exb-btn2-red" style="font-size:10px;padding:5px 10px;" onclick="exbStudioDeleteProject(${i})">🗑</button>
@@ -517,7 +599,6 @@ function exbStudioMouseUp() {
 
 function exbStudioMouseDown(e) {
   e.preventDefault();
-  // ПКМ зажат через средствию — пан
   if (e.button === 1 || (e.button === 2 && EXB.studioTool === 'select')) {
     EXB.studioPanning = true;
     EXB.studioPanStart = {x: e.clientX + EXB.studioScrollX, y: e.clientY + EXB.studioScrollY};
@@ -548,7 +629,6 @@ function exbStudioMouseDown(e) {
   const defColor = EXB_BLOCK_COLORS[tool] || '#888';
   const useColor = EXB.studioColor || defColor;
 
-  // Размеры разных блоков
   let bw = TILE, bh = TILE;
   if (tool === 'block')    { bw = TILE*3; bh = TILE; }
   if (tool === 'platform') { bw = TILE*4; bh = TILE/2; }
@@ -602,21 +682,18 @@ function exbStudioRedraw() {
   const TILE = EXB.TILE;
   const sx = EXB.studioScrollX, sy = EXB.studioScrollY;
 
-  // BG gradient (scrollable sky)
   for (let i=0; i<H; i++) {
     const s = Math.floor(20 + i*0.03);
     cv.fillStyle = `rgb(${s},${s+8},58)`;
     cv.fillRect(0, i, W, 1);
   }
 
-  // Grid
   cv.strokeStyle = 'rgba(255,255,255,.04)';
   cv.lineWidth = 1;
   const gox = sx % TILE, goy = sy % TILE;
   for (let x = -gox; x < W; x += TILE) { cv.beginPath(); cv.moveTo(x,0); cv.lineTo(x,H); cv.stroke(); }
   for (let y = -goy; y < H; y += TILE) { cv.beginPath(); cv.moveTo(0,y); cv.lineTo(W,y); cv.stroke(); }
 
-  // Ruler marks every 200px
   cv.fillStyle = 'rgba(255,255,255,.15)';
   cv.font = '9px monospace';
   for (let x=0; x<3200; x+=200) {
@@ -624,10 +701,9 @@ function exbStudioRedraw() {
     if (rx >= 0 && rx <= W) { cv.fillText(x, rx+2, 10); }
   }
 
-  // Objects
   EXB.studioObjects.forEach(o => {
     const ox = o.x - sx, oy = o.y - sy;
-    if (ox + o.w < 0 || ox > W || oy + o.h < 0 || oy > H) return; // culling
+    if (ox + o.w < 0 || ox > W || oy + o.h < 0 || oy > H) return;
     const sel = o === EXB.studioSelObj;
     const col = o.color || EXB_BLOCK_COLORS[o.type] || '#888';
 
@@ -648,7 +724,6 @@ function exbStudioRedraw() {
       case 'lava':
         cv.fillStyle = col;
         cv.fillRect(ox, oy, o.w, o.h);
-        // лава волны
         cv.fillStyle = '#ff6e00';
         for(let lx=0;lx<o.w;lx+=8){
           const lh = 4 + 3*Math.sin((lx+Date.now()/80)/6);
@@ -667,7 +742,6 @@ function exbStudioRedraw() {
       case 'spring':
         cv.fillStyle = '#555';
         cv.fillRect(ox, oy+o.h-10, o.w, 10);
-        // пружина рисовка
         cv.strokeStyle = col;
         cv.lineWidth = 3;
         for(let si=0;si<4;si++){
@@ -730,7 +804,6 @@ function exbStudioRedraw() {
     }
   });
 
-  // Scroll position shadow on edges
   if (sx > 10) {
     const g = cv.createLinearGradient(0,0,20,0);
     g.addColorStop(0,'rgba(0,0,0,.4)'); g.addColorStop(1,'transparent');
@@ -789,54 +862,139 @@ function exbStudioClear() {
 function exbStudioTest() {
   const game = {
     name: 'Тест: ' + EXB.studioProjectName,
-    icon: '🛠', color: '#1a2040',
+    icon: '🛠', color: '#1a2040', iconImage: null,
     objects: EXB.studioObjects.map(o=>({...o})),
   };
   exbOpenGame(game);
 }
 
 // ════════════════════════════════════════════
-// PUBLISH DIALOG
+// PUBLISH DIALOG — С КАСТОМНОЙ ИКОНКОЙ
 // ════════════════════════════════════════════
 function exbPublishDialog() {
   const me = EXB.users[EXB.user] || {};
   if(me.isGuest) { showNotif('Exiblox','Гости не могут публиковать!','📤'); return; }
 
+  _exbPublishIconData = null; // сбросить иконку
+
   const overlay = document.createElement('div');
-  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99999;display:flex;align-items:center;justify-content:center;';
-  overlay.innerHTML=`
-    <div style="background:#1a1e2a;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:36px;width:400px;box-shadow:0 24px 60px rgba(0,0,0,.7);">
-      <div style="font-size:20px;font-weight:700;margin-bottom:20px;">📤 Опубликовать игру</div>
-      <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px;">Название</div>
-      <input id="exb-pub-name" class="exb-inp2" value="Untitled Game" style="width:100%;margin-bottom:14px;box-sizing:border-box;">
-      <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px;">Описание</div>
-      <textarea id="exb-pub-desc" class="exb-inp2" style="width:100%;height:80px;resize:none;box-sizing:border-box;">Описание вашей игры...</textarea>
-      <div style="display:flex;gap:10px;margin-top:20px;">
-        <button class="exb-btn2 exb-btn2-blue" style="flex:1;" onclick="exbDoPublish()">🚀 Опубликовать</button>
-        <button class="exb-btn2 exb-btn2-gray" onclick="this.closest('[style*=fixed]').remove()">Отмена</button>
+  overlay.className = 'exb-pub-overlay';
+  overlay.innerHTML = `
+    <div class="exb-pub-modal" onclick="event.stopPropagation()">
+      <div style="font-size:20px;font-weight:700;margin-bottom:22px;display:flex;align-items:center;gap:10px;">📤 Опубликовать игру</div>
+
+      <!-- Название -->
+      <label class="exb-pub-label">Название игры</label>
+      <input id="exb-pub-name" class="exb-inp2" value="${escHtmlExb(EXB.studioProjectName)||'Untitled Game'}" style="width:100%;box-sizing:border-box;margin-bottom:14px;">
+
+      <!-- Описание -->
+      <label class="exb-pub-label">Описание</label>
+      <textarea id="exb-pub-desc" class="exb-inp2" rows="3" style="width:100%;resize:none;box-sizing:border-box;margin-bottom:18px;" placeholder="Расскажи о своей игре..."></textarea>
+
+      <!-- Иконка -->
+      <label class="exb-pub-label">Иконка игры</label>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+        <!-- Превью / дропзона -->
+        <div class="exb-icon-drop" id="exb-icon-drop" onclick="el('exb-icon-file').click()"
+             ondragover="event.preventDefault();this.style.borderColor='#00b2ff'" 
+             ondragleave="this.style.borderColor='rgba(255,255,255,.2)'"
+             ondrop="exbIconDropHandler(event)">
+          <span id="exb-icon-placeholder" style="font-size:28px;opacity:.35">🎮</span>
+        </div>
+        <div>
+          <button class="exb-btn2 exb-btn2-blue" onclick="el('exb-icon-file').click()" style="font-size:11px;display:block;margin-bottom:6px;">📁 Загрузить картинку</button>
+          <button class="exb-btn2 exb-btn2-gray" onclick="exbIconClear()" style="font-size:11px;display:block;margin-bottom:8px;">✕ Убрать иконку</button>
+          <div style="font-size:10px;color:rgba(255,255,255,.3);line-height:1.5;">PNG, JPG, GIF, WebP<br>Рекомендуется 256×256 px<br>Перетащи сюда или кликни</div>
+        </div>
       </div>
+      <!-- Скрытый file input -->
+      <input type="file" id="exb-icon-file" accept="image/*" style="display:none;" onchange="exbIconFileChange(this)">
+
+      <!-- Кнопки -->
+      <div style="display:flex;gap:10px;margin-top:6px;">
+        <button class="exb-btn2 exb-btn2-blue" id="exb-pub-submit" style="flex:1;font-size:13px;padding:11px;" onclick="exbDoPublish()">🚀 Опубликовать</button>
+        <button class="exb-btn2 exb-btn2-gray" onclick="this.closest('.exb-pub-overlay').remove()">Отмена</button>
+      </div>
+      <div style="font-size:10px;color:rgba(255,255,255,.25);text-align:center;margin-top:10px;">Игра будет доступна всем пользователям в облаке ☁️</div>
     </div>`;
   document.body.appendChild(overlay);
+  // Клик по фону закрывает
+  overlay.addEventListener('click', () => overlay.remove());
 }
 
-function exbDoPublish() {
-  if (EXB._publishing) return; // защита от двойного нажатия
+function exbIconFileChange(input) {
+  const file = input.files[0];
+  if (!file) return;
+  // Ограничение размера: 1MB
+  if (file.size > 1024 * 1024) {
+    showNotif('Exiblox', 'Картинка слишком большая (макс. 1 МБ)!', '⚠️');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    _exbPublishIconData = e.target.result;
+    exbIconUpdatePreview(_exbPublishIconData);
+  };
+  reader.readAsDataURL(file);
+}
+
+function exbIconDropHandler(e) {
+  e.preventDefault();
+  const file = e.dataTransfer?.files?.[0];
+  if (!file || !file.type.startsWith('image/')) return;
+  if (file.size > 1024 * 1024) { showNotif('Exiblox','Слишком большой файл (макс 1МБ)','⚠️'); return; }
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    _exbPublishIconData = ev.target.result;
+    exbIconUpdatePreview(_exbPublishIconData);
+  };
+  reader.readAsDataURL(file);
+  const drop = el('exb-icon-drop');
+  if (drop) drop.style.borderColor = 'rgba(255,255,255,.2)';
+}
+
+function exbIconUpdatePreview(src) {
+  const drop = el('exb-icon-drop');
+  const ph = el('exb-icon-placeholder');
+  if (!drop) return;
+  if (ph) ph.style.display = 'none';
+  // Убираем старое изображение если было
+  const old = drop.querySelector('img');
+  if (old) old.remove();
+  const img = document.createElement('img');
+  img.src = src;
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:14px;';
+  drop.appendChild(img);
+}
+
+function exbIconClear() {
+  _exbPublishIconData = null;
+  const drop = el('exb-icon-drop');
+  const ph = el('exb-icon-placeholder');
+  if (!drop) return;
+  const img = drop.querySelector('img');
+  if (img) img.remove();
+  if (ph) ph.style.display = '';
+}
+
+async function exbDoPublish() {
+  if (EXB._publishing) return;
   EXB._publishing = true;
 
-  const btn = document.querySelector('[onclick="exbDoPublish()"]');
-  if (btn) { btn.disabled = true; btn.textContent = '⏳ Публикация...'; }
+  const btn = el('exb-pub-submit');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Публикуем в облаке...'; }
 
   const name = (el('exb-pub-name')?.value||'').trim() || 'Untitled Game';
   const desc = (el('exb-pub-desc')?.value||'').trim() || 'Без описания';
 
-  // Проверка на дубликат (тот же автор + то же название)
+  // Проверка дубликата (тот же автор + название)
   const duplicate = EXB.games.find(g => g.author === EXB.user && g.name === name);
   if (duplicate) {
-    // Обновляем существующую игру
-    duplicate.objects = EXB.studioObjects;
-    duplicate.updated = new Date().toLocaleDateString('ru');
-    exbSaveGames();
-    document.querySelector('[style*="position:fixed"]')?.remove();
+    duplicate.objects   = EXB.studioObjects.map(o=>({...o}));
+    duplicate.iconImage = _exbPublishIconData || duplicate.iconImage || null;
+    duplicate.updated   = new Date().toLocaleDateString('ru');
+    await exbSaveGames();
+    document.querySelector('.exb-pub-overlay')?.remove();
     showNotif('Exiblox', `Игра "${name}" обновлена! ✏️`, '📤');
     EXB._publishing = false;
     return;
@@ -844,30 +1002,33 @@ function exbDoPublish() {
 
   const id = Math.random().toString(36).slice(2,10).toUpperCase();
   const game = {
-    id, name, desc, author: EXB.user,
+    id, name, desc,
+    author:  EXB.user,
     objects: EXB.studioObjects.map(o=>({...o})),
     icon:    EXB_ICONS[Math.floor(Math.random()*EXB_ICONS.length)],
+    iconImage: _exbPublishIconData || null,   // ← кастомная иконка
     color:   EXB_COLORS[Math.floor(Math.random()*EXB_COLORS.length)],
-    rating: '100%', players: '0',
+    rating:  '100%', players: '0',
     created: new Date().toLocaleDateString('ru'),
   };
 
   EXB.games.unshift(game);
-  exbSaveGames();
+
+  // Сохраняем в облако
+  await exbSaveGames();
 
   const me = EXB.users[EXB.user];
   if (me) {
     me.pubGames  = me.pubGames  || [];
     me.pubGames.push(id);
-    me.ecoins    = (me.ecoins || 0) + 5;   // 🎁 +5 E$
+    me.ecoins    = (me.ecoins || 0) + 5;
     exbSaveUsers();
-    // Обновить отображение E$ в топбаре
     const robuxEl = document.querySelector('.exb-robux');
     if (robuxEl) robuxEl.textContent = `🪙 ${me.ecoins} E$`;
   }
 
-  document.querySelector('[style*="position:fixed"]')?.remove();
-  showNotif('Exiblox', `Игра "${name}" опубликована! +5 E$ 🎉`, '📤');
+  document.querySelector('.exb-pub-overlay')?.remove();
+  showNotif('Exiblox', `"${name}" в облаке! +5 E$ 🎉`, '☁️');
   EXB._publishing = false;
 }
 
@@ -879,7 +1040,7 @@ function exbFriends(c) {
   const frs = me.friends || [];
   const reqs = me.requests || [];
   c.innerHTML = `
-  <div class="exb-section" style="padding-top:26px;">
+  <div class="exb-section">
     <div style="display:flex;align-items:center;margin-bottom:20px;">
       <div class="exb-sec-title" style="margin-bottom:0;">👥 Друзья</div>
       ${me.isGuest ? '' : `<button class="exb-btn2 exb-btn2-blue" style="margin-left:auto;font-size:11px;" onclick="exbAddFriendDlg()">+ Добавить</button>`}
@@ -941,11 +1102,16 @@ function exbPublish(c) {
   if(me.isGuest){c.innerHTML=`<div style="text-align:center;padding:80px;color:rgba(255,255,255,.3);">📤 Гости не могут публиковать игры.<br><br><button class="exb-btn2 exb-btn2-blue" onclick="exbLogout()">Создать аккаунт</button></div>`;return;}
   const myGames = EXB.games.filter(g=>g.author===EXB.user);
   c.innerHTML = `
-  <div class="exb-section" style="padding-top:26px;">
-    <div class="exb-sec-title">📤 Мои игры (${myGames.length})
+  <div class="exb-section">
+    <div style="display:flex;align-items:center;margin-bottom:18px;">
+      <div class="exb-sec-title" style="margin-bottom:0;">📤 Мои игры (${myGames.length})</div>
       <button class="exb-btn2 exb-btn2-blue" style="margin-left:auto;font-size:11px;" onclick="exbTab('studio')">🛠 Открыть Studio</button>
     </div>
     ${myGames.length ? `<div class="exb-cards-row">${exbGameCards(myGames)}</div>` : '<div style="color:rgba(255,255,255,.3);font-size:13px;padding:30px 0;">У вас ещё нет опубликованных игр</div>'}
+    <div style="margin-top:24px;padding:14px 18px;background:rgba(0,178,255,.07);border:1px solid rgba(0,178,255,.2);border-radius:12px;font-size:12px;color:rgba(255,255,255,.5);">
+      ☁️ Игры хранятся в облаке — ${exbHasCloud()?'активно':'недоступно (используется localStorage)'}.<br>
+      Все пользователи могут видеть и играть в ваши игры.
+    </div>
   </div>`;
 }
 
@@ -955,7 +1121,7 @@ function exbPublish(c) {
 function exbAvatar(c) {
   const skinId = EXB.skin || 'red';
   c.innerHTML = `
-  <div class="exb-section" style="padding-top:24px;">
+  <div class="exb-section">
     <div class="exb-sec-title">🎭 Выбери скин персонажа</div>
     <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px;">Стикмен применится в игре автоматически</div>
     <div style="display:flex;gap:18px;flex-wrap:wrap;">
@@ -972,30 +1138,27 @@ function exbAvatar(c) {
         </div>`).join('')}
     </div>
   </div>`;
-  // Рисуем превью стикменов
   EXB_SKINS.forEach(sk => {
     const cv = document.getElementById(`av-preview-${sk.id}`)?.getContext('2d');
     if (!cv) return;
-    exbDrawStickman(cv, 40, 85, sk, 10, false, false, 0); // стоит
+    exbDrawStickman(cv, 40, 85, sk, 10, false, false, 0);
   });
 }
 
 function exbSelectSkin(id) {
   EXB.skin = id;
   localStorage.setItem('exiblox_skin', id);
-  exbAvatar(el('exb-content')); // перерисовать
+  exbAvatar(el('exb-content'));
   showNotif('Exiblox', 'Скин изменён!', '🎭');
 }
 
-// ── Рисование стикмена ──────────────────────
-// cx, cy = центр бёдер; sk = скин; scale = масштаб
-// walkStep = шаг анимации; jumping = в прыжке; facing = 1 right -1 left
+// ── Рисование стикмена ──
 function exbDrawStickman(cv, cx, cy, sk, scale, jumping, facing, walkStep) {
   const s  = scale || 1;
-  const HL = 18 * s;  // длина ноги
-  const AL = 15 * s;  // длина руки
-  const HS = 10 * s;  // размер головы (радиус)
-  const BL = 20 * s;  // тело
+  const HL = 18 * s;
+  const AL = 15 * s;
+  const HS = 10 * s;
+  const BL = 20 * s;
 
   const bodyColor = sk.bodyColor;
   const headColor = sk.headColor;
@@ -1005,23 +1168,19 @@ function exbDrawStickman(cv, cx, cy, sk, scale, jumping, facing, walkStep) {
   cv.lineCap     = 'round';
   cv.strokeStyle = limbColor;
 
-  // --- НОГИ ---
   const legSwing = jumping ? 0 : Math.sin(walkStep * 0.28) * 22 * s;
   const legBend  = jumping ? -20 * s : 0;
 
-  // Левая нога
   cv.beginPath();
   cv.moveTo(cx, cy);
   cv.lineTo(cx - 6*s + legSwing, cy + HL + legBend);
   cv.stroke();
 
-  // Правая нога
   cv.beginPath();
   cv.moveTo(cx, cy);
   cv.lineTo(cx + 6*s - legSwing, cy + HL + legBend);
   cv.stroke();
 
-  // --- ТЕЛО ---
   cv.strokeStyle = bodyColor;
   cv.lineWidth   = 3 * s;
   cv.beginPath();
@@ -1029,25 +1188,21 @@ function exbDrawStickman(cv, cx, cy, sk, scale, jumping, facing, walkStep) {
   cv.lineTo(cx, cy - BL);
   cv.stroke();
 
-  // --- РУКИ ---
   cv.strokeStyle = limbColor;
   cv.lineWidth   = 2.5 * s;
   const armSwing = jumping ? -30*s : Math.sin(walkStep * 0.28 + Math.PI) * 20 * s;
   const shoulderY = cy - BL + 4*s;
 
-  // Левая рука
   cv.beginPath();
   cv.moveTo(cx, shoulderY);
   cv.lineTo(cx - AL + armSwing, shoulderY + 10*s + (jumping ? -10*s : 0));
   cv.stroke();
 
-  // Правая рука
   cv.beginPath();
   cv.moveTo(cx, shoulderY);
   cv.lineTo(cx + AL - armSwing, shoulderY + 10*s + (jumping ? -10*s : 0));
   cv.stroke();
 
-  // --- ГОЛОВА ---
   cv.fillStyle   = headColor;
   cv.strokeStyle = limbColor;
   cv.lineWidth   = 2 * s;
@@ -1056,18 +1211,14 @@ function exbDrawStickman(cv, cx, cy, sk, scale, jumping, facing, walkStep) {
   cv.fill();
   cv.stroke();
 
-  // --- КЕПКА (если есть) ---
   if (sk.capColor) {
     cv.fillStyle = sk.capColor;
     cv.beginPath();
-    // Поля кепки
     cv.ellipse(cx, cy - BL - HS * 2 + 4*s, HS + 5*s, 4*s, 0, 0, Math.PI * 2);
     cv.fill();
-    // Тулья
     cv.fillRect(cx - HS, cy - BL - HS * 2 - 10*s, HS * 2, 14*s);
   }
 
-  // --- ГЛАЗА ---
   cv.fillStyle = '#1a1a1a';
   const ex = (facing < 0 ? -4 : 3) * s;
   cv.beginPath();
@@ -1082,7 +1233,7 @@ function exbProfile(c) {
   const me = EXB.users[EXB.user] || {};
   const curSkin = EXB_SKINS.find(s=>s.id===(EXB.skin||'red')) || EXB_SKINS[0];
   c.innerHTML = `
-  <div class="exb-section" style="padding-top:26px;max-width:520px;">
+  <div class="exb-section" style="max-width:520px;">
     <div class="exb-sec-title">👤 Профиль</div>
     <div class="exb-profile-card" style="flex-direction:column;align-items:flex-start;gap:10px;">
       <div style="display:flex;align-items:center;gap:14px;">
@@ -1098,6 +1249,7 @@ function exbProfile(c) {
       <div style="font-size:12px;color:rgba(255,255,255,.4);">👥 Друзей: ${(me.friends||[]).length}</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);">🛠 Проектов: ${(me.projects||[]).length}</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);">📤 Опубликовано: ${(me.pubGames||[]).length}</div>
+      <div style="font-size:12px;color:${exbHasCloud()?'#2ecc71':'#f39c12'};">${exbHasCloud()?'☁️ Облако активно':'💾 Работает локально'}</div>
     </div>
     <div style="display:flex;gap:10px;margin-top:16px;">
       <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('avatar')" style="font-size:11px;">🎭 Сменить скин</button>
@@ -1106,7 +1258,6 @@ function exbProfile(c) {
     </div>
   </div>`;
 
-  // Рисуем скин в профиле
   const pc = document.getElementById('profile-skin-prev')?.getContext('2d');
   if (pc) exbDrawStickman(pc, 25, 60, curSkin, 1, false, 1, 0);
 }
@@ -1124,14 +1275,14 @@ function exbAI(c) {
     <div class="exb-ai-msgs" id="exb-ai-msgs"></div>
     <div style="padding:8px 16px;border-top:1px solid rgba(255,255,255,.06);background:#0c0e14;flex-shrink:0;display:flex;gap:8px;flex-wrap:wrap;">
       ${['Как создать игру?','Что такое Baseplate?','Как опубликовать?','Как добавить друга?','Советы по Studio','Что ты умеешь?'].map(q=>`
-        <div onclick="exbAIQuick('${q}')" style="padding:5px 12px;border-radius:16px;background:rgba(255,255,255,.07);font-size:11px;color:rgba(255,255,255,.6);cursor:pointer;border:1px solid rgba(255,255,255,.08);transition:.15s;" onmouseover="this.style.background='rgba(0,178,255,.25)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.6)">${q}</div>`).join('')}
+        <div onclick="exbAIQuick('${q}')" style="padding:5px 12px;border-radius:16px;background:rgba(255,255,255,.07);font-size:11px;color:rgba(255,255,255,.6);cursor:pointer;border:1px solid rgba(255,255,255,.08);transition:.15s;" onmouseover="this.style.background='rgba(0,178,255,.25)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.6)'">${q}</div>`).join('')}
     </div>
     <div class="exb-ai-input-row" style="flex-shrink:0;">
       <input class="exb-ai-input" id="exb-ai-inp" placeholder="Задай вопрос Exiblox AI..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();exbAISend();}">
       <button class="exb-btn2 exb-btn2-blue" onclick="exbAISend()" style="padding:10px 18px;">➤ Отправить</button>
     </div>
   </div>`;
-  exbAIMsg('bot','Привет! Я **Exiblox AI** 🤖\n\nЗнаю всё о платформе: Studio, публикация, друзья, игры.\nСпроси что-нибудь или нажми быстрый вопрос ниже 👇');
+  exbAIMsg('bot','Привет! Я **Exiblox AI** 🤖\n\nЗнаю всё о платформе: Studio, публикация, друзья, игры, облачное хранилище.\nСпроси что-нибудь или нажми быстрый вопрос ниже 👇');
   EXB.aiHistory = [];
 }
 
@@ -1150,155 +1301,52 @@ function exbAIMsg(who, text) {
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-// ═══════════════════════════════════════════════
-// EXIBLOX AI — Smart Local Engine
-// Работает без интернета и API ключей
-// ═══════════════════════════════════════════════
-
 const EXB_AI_KB = [
-  // ── Приветствия ──
   { k:['привет','здравствуй','хай','hi','hello','прив','салют','ку'],
-    a:'Привет! 👋 Я **Exiblox AI** — твой умный помощник на платформе.\nМогу помочь с созданием игр в Studio, публикацией, друзьями и многим другим. Спрашивай!' },
-  { k:['как дела','как ты','что нового','чем занимаешься'],
+    a:'Привет! 👋 Я **Exiblox AI** — твой умный помощник на платформе.\nМогу помочь с созданием игр в Studio, публикацией в облако, друзьями и многим другим. Спрашивай!' },
+  { k:['как дела','как ты','что нового'],
     a:'Отлично! 🚀 Помогаю пользователям создавать крутые игры в **ExiStudio**.\nА ты уже попробовал создать свою первую игру?' },
-
-  // ── ExiStudio ──
-  { k:['студия','studio','как создать игру','создание игры','existudio'],
-    a:'🛠 **Как создать игру в ExiStudio:**\n\n1. Перейди во вкладку **Studio** (🛠 на боковой панели)\n2. Нажми **🏗 Baseplate** — загрузится стартовый шаблон с платформой\n3. Выбери инструмент: **🧱 Блок**, **📍 Спавн**, **🪙 Монета**\n4. Кликай по canvas чтобы размещать объекты\n5. Нажми **▶ Тест** чтобы поиграть\n6. Когда готово — **📤 Publish** для публикации!' },
-
-  { k:['baseplate','базплейт','шаблон','начать'],
-    a:'🏗 **Baseplate** — стартовый шаблон для новых игр.\n\nСодержит:\n• **Зелёную платформу** (пол) 2000×40px\n• **Точку спавна** 🔵 — откуда появляется игрок\n\nНажми кнопку **🏗 Baseplate** в Studio чтобы загрузить шаблон и начать строить!' },
-
-  { k:['инструменты','инструмент','блок','спавн','монета','враг','ластик'],
-    a:'🛠 **Инструменты Studio:**\n\n• **🖱 Выбор** — выбрать и перетащить объект\n• **🧱 Блок** — платформа, на которой ходит игрок\n• **📍 Спавн** — точка появления игрока (синий)\n• **🪙 Монета** — монетка для сбора (жёлтая)\n• **💥 Враг** — красный опасный объект\n• **🧹 Ластик** — удалить объект\n\nПравый клик по объекту тоже удаляет его!' },
-
-  { k:['цвет','покрасить','цвет блока','изменить цвет'],
-    a:'🎨 **Смена цвета блоков:**\n\nВ боковой панели Studio есть **цветной квадрат** — кликни на него.\nОткроется палитра — выбери любой цвет.\nТеперь все новые блоки будут этого цвета!\n\n*Совет:* Разные цвета для разных платформ делают уровень красивее.' },
-
-  { k:['сохранить','сохранение','сохранить проект'],
-    a:'💾 **Сохранение проекта:**\n\nНажми кнопку **💾 Сохранить** в верхней панели Studio.\nВведи название проекта в поле справа.\n\nДля загрузки — кнопка **📂 Загрузить**, выбери проект из списка.\n\n*Проекты хранятся в браузере — не теряются при закрытии!*' },
-
-  { k:['тест','протестировать','поиграть','запустить','проверить'],
-    a:'▶ **Тест игры:**\n\nНажми кнопку **▶ Тест** в Studio — откроется окно с твоей игрой!\n\n**Управление:**\n• ← → или кнопки ◀ ▶ — движение\n• Пробел или ▲ — прыжок\n• Собирай монеты 🪙\n\nЗакрой окно теста и продолжай редактировать.' },
-
-  // ── Публикация ──
-  { k:['опубликовать','публикация','publish','выложить','загрузить игру'],
-    a:'📤 **Публикация игры:**\n\n1. Создай игру в **Studio**\n2. Нажми **📤 Publish** (фиолетовая кнопка)\n3. Введи **название** и **описание**\n4. Нажми **🚀 Опубликовать**\n\nИгра появится в разделе **Магазин** и на **Главной** для всех пользователей!\n\n*Гостям публикация недоступна — нужен аккаунт.*' },
-
-  { k:['мои игры','опубликованные игры','список игр'],
-    a:'📋 **Мои опубликованные игры:**\n\nПерейди во вкладку **📤 Publish** — там список всех твоих игр.\n\nТакже можешь нажать **👤 Профиль** чтобы увидеть статистику:\n• Сколько игр опубликовано\n• Сколько проектов в Studio' },
-
-  // ── Аккаунт ──
-  { k:['регистрация','зарегистрироваться','создать аккаунт','аккаунт'],
-    a:'👤 **Создание аккаунта:**\n\n1. На экране входа нажми **Регистрация**\n2. Введи **никнейм** (мин. 3 символа)\n3. Укажи **email**\n4. Придумай **пароль** (мин. 6 символов)\n5. Нажми **Создать аккаунт**\n\nПолучишь уникальный **код приглашения** для добавления друзей!\n\n*Без аккаунта можно войти как гость 👤*' },
-
-  { k:['войти','вход','логин','пароль','забыл пароль'],
-    a:'🔐 **Вход в аккаунт:**\n\nВведи свой **никнейм** и **пароль** на экране входа.\n\n*Если забыл пароль — сбросить его нельзя (данные хранятся локально).*\nВ этом случае создай новый аккаунт.\n\nИли войди как **гость 👤** — без пароля!' },
-
+  { k:['студия','studio','как создать игру','создание игры'],
+    a:'🛠 **Как создать игру в ExiStudio:**\n\n1. Перейди во вкладку **Studio** (🛠)\n2. Нажми **🏗 Baseplate** — загрузится стартовый шаблон\n3. Выбери инструмент: **🧱 Блок**, **📍 Спавн**, **🪙 Монета**\n4. Кликай по canvas чтобы размещать объекты\n5. Нажми **▶ Тест** чтобы поиграть\n6. Нажми **📤 Publish** — добавь иконку и опубликуй в облако!' },
+  { k:['baseplate','базплейт','шаблон'],
+    a:'🏗 **Baseplate** — стартовый шаблон.\n\nСодержит зелёную платформу (пол) и точку спавна 🔵.\nНажми кнопку **🏗 Baseplate** в Studio чтобы загрузить шаблон.' },
+  { k:['иконка','картинка','изображение игры','логотип'],
+    a:'🖼 **Кастомная иконка игры:**\n\n1. В Studio нажми **📤 Publish**\n2. В диалоге публикации есть блок **"Иконка игры"**\n3. Кликни на квадрат или кнопку **📁 Загрузить картинку**\n4. Выбери PNG, JPG или GIF (макс. 1 МБ)\n5. Можно перетащить файл прямо на квадрат!\n\nИконка отображается на карточке игры в Магазине для всех пользователей.' },
+  { k:['облако','cloud','совместное','хранилище','общие игры'],
+    a:'☁️ **Облачное хранилище Exiblox:**\n\nИгры хранятся в **общем облаке** — все зарегистрированные пользователи видят игры друг друга!\n\nЭто как **Roblox**: опубликовал → сразу появляется у всех в Магазине.\n\nКнопка **🔄 Обновить** в шапке подгружает свежие игры из облака.' },
+  { k:['опубликовать','публикация','publish','выложить'],
+    a:'📤 **Публикация в облако:**\n\n1. Создай игру в **Studio**\n2. Нажми **📤 Publish**\n3. Введи **название** и **описание**\n4. Добавь **иконку** из файла (необязательно)\n5. Нажми **🚀 Опубликовать**\n\nИгра появится у **всех пользователей** в Магазине! ☁️\n\n*Гостям публикация недоступна.*' },
+  { k:['добавить друга','друг','друзья','код'],
+    a:'👥 **Как добавить друга:**\n\n1. Перейди во вкладку **Friends** 👥\n2. Нажми **+ Добавить**\n3. Введи **никнейм** или **код приглашения** друга\n4. Друг увидит запрос и примет его\n\n**Свой код** виден в разделе Друзья — поделись им!' },
+  { k:['войти','вход','пароль','логин'],
+    a:'🔐 Введи **никнейм** и **пароль** на экране входа.\n\nЕсли забыл пароль — создай новый аккаунт.\nИли войди как **гость 👤** без пароля.' },
   { k:['гость','гостевой'],
-    a:'👤 **Гостевой вход:**\n\nНажми **"Продолжить как гость"** на экране входа.\n\n✅ Можно: смотреть игры, играть, Studio (тест)\n❌ Нельзя: публиковать игры, добавлять друзей, сохранять проекты с аккаунтом\n\nДля полного доступа — **создай аккаунт**!' },
-
-  // ── Друзья ──
-  { k:['добавить друга','друг','друзья','код приглашения','код'],
-    a:'👥 **Как добавить друга:**\n\n1. Перейди во вкладку **Friends** 👥\n2. Нажми **+ Добавить**\n3. Введи **никнейм** или **код приглашения** друга\n4. Друг увидит запрос и примет его\n\n**Свой код** виден в разделе Друзья — поделись им!\n*Формат кода: 8 символов, например ABCD1234*' },
-
-  { k:['запрос в друзья','принять запрос','заявка'],
-    a:'📩 **Принять запрос в друзья:**\n\n1. Перейди во вкладку **Friends** 👥\n2. Вверху увидишь раздел **"Запросы"**\n3. Нажми **Принять ✓** рядом с именем\n\nДруг появится в списке **"Мои друзья"**!' },
-
-  // ── Магазин / Игры ──
-  { k:['магазин','store','игры','найти игру','поиск'],
-    a:'🛒 **Магазин Exiblox:**\n\nПерейди во вкладку **Магазин** 🛒 — здесь все опубликованные игры.\n\nДля **поиска** — используй строку поиска 🔍 вверху.\nНапиши название игры и нажми Enter.\n\n**Кликни на карточку игры** чтобы запустить её!' },
-
-  { k:['играть','запустить игру','как играть','управление'],
-    a:'🎮 **Как играть:**\n\nКликни на карточку игры → откроется игровое окно.\n\n**Управление:**\n• **← →** или кнопки ◀ ▶ на экране — движение\n• **Пробел** / **↑** / кнопка ▲ — прыжок\n• Собирай монеты 🪙\n• Не падай в пустоту!\n\nЧтобы выйти — кнопка **✕ Выйти**.' },
-
-  // ── Robux ──
-  { k:['robux','робукс','деньги','валюта','купить'],
-    a:'💰 **Robux в Exiblox:**\n\nRobux — внутренняя валюта платформы.\nПока что Robux только отображается в профиле.\n\nВ будущих версиях планируются:\n• Покупка скинов для аватара\n• Премиум-функции Studio\n• Платные игры\n\n*Следи за обновлениями!* 🚀' },
-
-  // ── Советы ──
-  { k:['совет','советы','помощь','помоги','подскажи','лайфхак'],
-    a:'💡 **Топ советов Exiblox:**\n\n**Studio:**\n• Начинай с **Baseplate** — не с пустого canvas\n• Правый клик = удалить объект\n• Сначала строй платформы, потом добавляй монеты\n• Тестируй часто — нажимай **▶ Тест**\n\n**Игры:**\n• Монеты размещай над платформами\n• Добавляй платформы разной высоты\n• Не делай слишком большие пробелы\n\n**Аккаунт:**\n• Запомни свой код — он нужен для друзей!' },
-
-  { k:['лучшая игра','топ игр','популярная'],
-    a:'🏆 **Топ игр** доступен во вкладке **📊 Магазин**!\n\nИгры сортируются по количеству игроков и рейтингу.\n\nСоздай свою игру в Studio — может именно твоя станет #1! 🚀' },
-
-  // ── Технические вопросы ──
-  { k:['сбросить','очистить','удалить данные'],
-    a:'🗑️ **Сброс данных:**\n\nВ **Профиле** нажми **"Выйти"** — ты вернёшься на экран входа.\n\nДля полного сброса (удаление аккаунта):\n1. Открой DevTools (F12)\n2. Console → `localStorage.clear()`\n3. Перезагрузи страницу\n\n⚠️ *Это удалит ВСЕ данные включая игры и проекты!*' },
-
-  { k:['ошибка','не работает','баг','глюк','сломалось'],
-    a:'🐛 **Решение проблем:**\n\n1. **Перезагрузи** окно Exiblox\n2. **Обновить** ExiWin (кнопка 🔃 на таскбаре)\n3. Проверь что **аккаунт создан** (некоторые функции только для зарегистрированных)\n\nЕсли Studio не отображается — попробуй:\n• Закрыть и снова открыть вкладку Studio\n• Нажать 🏗 Baseplate чтобы сбросить canvas' },
-
-  { k:['размер','разрешение','canvas','экран'],
-    a:'📐 **Размер canvas в Studio:**\n\nРабочая область Studio: **2000×800** пикселей\nСетка: **40×40** пикселей (snap grid)\n\nОбъекты автоматически "примагничиваются" к сетке.\nИспользуй скроллбар для навигации по большому уровню.' },
-
-  // ── Python / оригинальная версия ──
-  { k:['python','питон','оригинал','старая версия','tkinter'],
-    a:'🐍 **Exiblox v3 — Python версия:**\n\nОригинальная версия написана на **Python + Tkinter**.\nБраузерная версия (которую ты сейчас видишь) — полная реализация в JavaScript.\n\n**Функции сохранены:**\n✅ Studio с canvas-редактором\n✅ Публикация игр\n✅ Система друзей\n✅ Физика и геймплей\n✅ AI помощник (привет! 👋)' },
-
-  // ── ExiWin ──
-  { k:['exiwin','операционная','система','ос'],
-    a:'💻 **ExiWin 12:**\n\nExiblox работает внутри **ExiWin 12** — браузерной ОС.\n\nДругие приложения ExiWin:\n• 📝 Блокнот — текстовый редактор\n• 🌐 Edge — браузер\n• 🧮 Калькулятор\n• 🎨 Paint\n• 🤖 Exian.AI — умный чат-ассистент\n• 📊 Диспетчер задач' },
-
-  // ── Общие вопросы ──
-  { k:['кто ты','что ты','что умеешь','твои возможности'],
-    a:'🤖 **Я — Exiblox AI!**\n\nВот что я умею:\n\n🎮 **Игры:** объяснить управление, найти игры\n🛠 **Studio:** помочь создать уровень, объяснить инструменты\n📤 **Публикация:** шаги для публикации игры\n👥 **Друзья:** как добавить, принять запрос\n👤 **Аккаунт:** регистрация, вход, профиль\n💡 **Советы:** лайфхаки по игре и созданию контента\n\nПросто спрашивай — я всегда здесь! 🚀' },
-
-  { k:['спасибо','благодарю','thanks','пожалуйста','пасиб'],
-    a:'Пожалуйста! 😊 Рад помочь!\nЕсли появятся ещё вопросы — всегда спрашивай. Удачи в создании игр! 🎮🚀' },
-
-  { k:['хорошо','ок','понял','ясно','отлично','супер','круто','класс'],
-    a:'Отлично! 🎉 Если понадоблюсь — я здесь.\nУдачи в **Exiblox**! 🚀' },
-
-  { k:['анекдот','шутка','смешное','рассмеши'],
-    a:'😄 **Программистский анекдот:**\n\nПрограммист заходит в магазин. Жена просит:\n*"Купи буханку хлеба, и если будут яйца — возьми десяток."*\n\nОн вернулся с десятью буханками хлеба.\n*"Яйца были!"* 🥚😂' },
-
-  { k:['что такое','объясни','расскажи о'],
-    a:'🤔 Уточни, пожалуйста, о чём именно хочешь узнать?\n\nНапример:\n• **"Что такое Baseplate?"**\n• **"Что такое спавн?"**\n• **"Расскажи о Studio"**\n• **"Объясни как работают друзья"**' },
-
-  { k:['время','дата','сколько','числа','число'],
-    a:`🕒 Сейчас: **${new Date().toLocaleString('ru', {dateStyle:'full', timeStyle:'short'})}**\n\nА я тут готов помогать тебе с Exiblox в любое время! 😄` },
-
-  { k:['версия','версию','update','обновление'],
-    a:'📦 **Exiblox v3.0** — текущая версия\n\n**Что нового в v3:**\n✅ Браузерная версия (не нужен Python!)\n✅ Публикация игр другим пользователям\n✅ AI помощник (это я! 🤖)\n✅ Улучшенный Studio с canvas\n✅ Система друзей с кодами\n✅ Магазин игр\n✅ Радужный игровой персонаж 🌈' },
+    a:'👤 **Гостевой вход:**\n\n✅ Можно: смотреть и играть в игры, Studio (тест)\n❌ Нельзя: публиковать, добавлять друзей\n\nДля полного доступа — **создай аккаунт**!' },
+  { k:['совет','советы','помощь','лайфхак'],
+    a:'💡 **Топ советов:**\n\n• Начинай с **🏗 Baseplate** — не с пустого canvas\n• Правый клик = удалить объект\n• Тестируй часто — **▶ Тест**\n• Добавь **красивую иконку** — игры с иконкой привлекают больше игроков\n• Нажми **🔄 Обновить** чтобы увидеть новые игры от других' },
+  { k:['кто ты','что ты','что умеешь'],
+    a:'🤖 **Я — Exiblox AI!**\n\n🎮 Игры · 🛠 Studio · 📤 Публикация · 🖼 Иконки · ☁️ Облако · 👥 Друзья · 👤 Аккаунт\n\nПросто спрашивай!' },
+  { k:['спасибо','благодарю','thanks','пасиб'],
+    a:'Пожалуйста! 😊 Рад помочь! Удачи в создании игр! 🎮🚀' },
+  { k:['анекдот','шутка'],
+    a:'😄 Программист заходит в магазин. Жена:\n*"Купи хлеб, и если будут яйца — возьми десяток."*\n\nОн вернулся с десятью буханками. *"Яйца были!"* 🥚😂' },
+  { k:['версия','обновление'],
+    a:'📦 **Exiblox v3.0**\n\n✅ Браузерная версия\n✅ **Облачные игры** — видят все пользователи\n✅ **Кастомные иконки** из файла\n✅ AI помощник\n✅ Studio с canvas\n✅ Система друзей' },
 ];
 
-// ── Движок AI ─────────────────────────────────
 function exbAIGetResponse(input) {
   const q = input.toLowerCase().trim();
-
-  let bestMatch = null;
-  let bestScore = 0;
-
+  let bestMatch = null, bestScore = 0;
   for (const entry of EXB_AI_KB) {
     let score = 0;
-    for (const kw of entry.k) {
-      if (q.includes(kw)) {
-        score += kw.length;
-      }
-    }
-    if (score > bestScore) {
-      bestScore = score;
-      bestMatch = entry;
-    }
+    for (const kw of entry.k) { if (q.includes(kw)) score += kw.length; }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
   }
-
   if (bestMatch && bestScore > 0) return bestMatch.a;
-
-  if (/\?|как|что|где|когда|зачем|почему|можно/.test(q)) {
-    const topics = [
-      'как создать игру в Studio',
-      'как опубликовать игру',
-      'как добавить друга',
-      'как зарегистрироваться',
-      'советы по Studio',
-      'что такое Baseplate',
-    ];
-    return `🤔 Не совсем понял вопрос, но могу помочь с:\n\n${topics.map(t=>`• **"${t}"**`).join('\n')}\n\nСпроси об одном из этих — отвечу подробно! 😊`;
+  if (/\?|как|что|где|зачем|почему/.test(q)) {
+    return '🤔 Уточни вопрос! Попробуй:\n• **"Как создать игру?"**\n• **"Как добавить иконку?"**\n• **"Как опубликовать в облако?"**\n• **"Как добавить друга?"**';
   }
-
-  return `Хм, я пока не знаю ответа на это 😅\n\nПопробуй спросить:\n• **"Как создать игру?"**\n• **"Что такое Studio?"**\n• **"Как добавить друга?"**\n\nИли напиши **"что умеешь"** — покажу все темы!`;
+  return 'Хм, не знаю ответа 😅\nНапиши **"что умеешь"** — покажу все темы!';
 }
 
 function exbAISend() {
@@ -1307,10 +1355,9 @@ function exbAISend() {
   const text = inp.value.trim();
   if (!text) return;
   inp.value = '';
-  EXB.aiHistory.push({role:'user', content:text});
   exbAIMsg('user', text);
-
   EXB._aiTyping = true;
+
   const msgs = el('exb-ai-msgs');
   const typing = document.createElement('div');
   typing.id = 'exb-typing';
@@ -1322,14 +1369,11 @@ function exbAISend() {
     </div>`;
   if (msgs) { msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight; }
 
-  const delay = 600 + Math.random() * 600;
   setTimeout(() => {
     typing.remove();
     EXB._aiTyping = false;
-    const reply = exbAIGetResponse(text);
-    EXB.aiHistory.push({role:'assistant', content:reply});
-    exbAIMsg('bot', reply);
-  }, delay);
+    exbAIMsg('bot', exbAIGetResponse(text));
+  }, 500 + Math.random() * 700);
 }
 
 function exbAIQuick(q) {
@@ -1346,29 +1390,28 @@ function exbPlayGame(id) {
   exbOpenGame(game);
 }
 
-// ════════════════════════════════════════════
-// ИСПРАВЛЕНО: exbOpenGame — адаптивный размер холста
-// ════════════════════════════════════════════
 function exbOpenGame(game) {
   const overlay = document.createElement('div');
   overlay.id='exb-game-overlay';
   overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:99999;display:flex;flex-direction:column;';
-  // Адаптивный размер — подстраивается под окно браузера
   const W = Math.min(window.innerWidth - 20, 900);
   const H = Math.min(window.innerHeight - 120, 520);
   overlay.innerHTML=`
   <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:#111;border-bottom:1px solid #222;">
-    <span style="font-size:18px;">${game.icon||'🎮'}</span>
+    ${game.iconImage
+      ? `<img src="${escHtmlExb(game.iconImage)}" style="width:28px;height:28px;border-radius:6px;object-fit:cover;">`
+      : `<span style="font-size:18px;">${game.icon||'🎮'}</span>`}
     <span style="font-size:14px;font-weight:700;">${escHtmlExb(game.name)}</span>
+    <span style="font-size:11px;color:rgba(255,255,255,.4);">by ${escHtmlExb(game.author||'Unknown')}</span>
     <span style="font-size:11px;color:rgba(255,255,255,.4);margin-left:8px;">← → движение · Пробел прыжок</span>
     <button onclick="document.getElementById('exb-game-overlay').remove()" style="margin-left:auto;background:#e74c3c;border:none;color:#fff;padding:6px 14px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;">✕ Выйти</button>
   </div>
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#1a2040;">
     <canvas id="exb-game-canvas" width="${W}" height="${H}" style="border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8);"></canvas>
     <div style="display:flex;gap:16px;margin-top:12px;align-items:center;">
-      <button id="exb-g-left" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">◀</button>
-      <span id="exb-g-score" style="color:#FFD700;font-size:16px;font-weight:700;min-width:140px;text-align:center;">🪙 0</span>
-      <button id="exb-g-jump" style="background:#c0392b;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">▲</button>
+      <button id="exb-g-left"  style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">◀</button>
+      <span id="exb-g-score"   style="color:#FFD700;font-size:16px;font-weight:700;min-width:140px;text-align:center;">🪙 0</span>
+      <button id="exb-g-jump"  style="background:#c0392b;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">▲</button>
       <button id="exb-g-right" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">▶</button>
     </div>
   </div>`;
@@ -1376,27 +1419,21 @@ function exbOpenGame(game) {
   exbRunGame(game, W, H);
 }
 
-// ════════════════════════════════════════════
-// ИСПРАВЛЕНО: exbRunGame — камера следит за игроком,
-// граница экрана убрана, игрок может ходить по всей карте
-// ════════════════════════════════════════════
 function exbRunGame(game, W, H) {
   const canvas = el('exb-game-canvas');
   if (!canvas) return;
   const cv = canvas.getContext('2d');
-  const GRAVITY  = 0.55, JUMP_FORCE = -13, SPEED = 5;
+  const GRAVITY = 0.55, JUMP_FORCE = -13, SPEED = 5;
 
-  // Скин
   const skinId = EXB.skin || 'red';
   const skin   = EXB_SKINS.find(s=>s.id===skinId) || EXB_SKINS[0];
 
-  const objs     = game.objects || [];
-  const platforms = objs.filter(o=>['block','platform','ice'].includes(o.type))
-                        .map(o=>({x:o.x, y:o.y, w:o.w, h:o.h, color:o.color||'#4a9a30', type:o.type}));
-  const coins   = objs.filter(o=>o.type==='coin').map(o=>({x:o.x+o.w/2, y:o.y+o.h/2}));
-  const spikes  = objs.filter(o=>o.type==='spike');
-  const springs = objs.filter(o=>o.type==='spring');
-  const lava    = objs.filter(o=>o.type==='lava');
+  const objs      = game.objects || [];
+  const platforms = objs.filter(o=>['block','platform','ice'].includes(o.type)).map(o=>({...o}));
+  const coins     = objs.filter(o=>o.type==='coin').map(o=>({x:o.x+o.w/2, y:o.y+o.h/2}));
+  const spikes    = objs.filter(o=>o.type==='spike');
+  const springs   = objs.filter(o=>o.type==='spring');
+  const lava      = objs.filter(o=>o.type==='lava');
 
   if (!platforms.length) {
     platforms.push(
@@ -1408,17 +1445,14 @@ function exbRunGame(game, W, H) {
   }
   if (!coins.length) [{x:250,y:590},{x:470,y:490},{x:700,y:390}].forEach(c=>coins.push(c));
 
-  // Стартовая позиция — по спавну или над первой платформой
   const spawnObj = objs.find(o=>o.type==='spawn');
-  let px = spawnObj ? spawnObj.x + 20 : (platforms.length ? platforms[0].x + 80 : 100);
-  let py = spawnObj ? spawnObj.y - 65 : (platforms.length ? platforms[0].y - 65 : 500);
+  let px = spawnObj ? spawnObj.x + 20 : (platforms[0]?.x + 80 || 100);
+  let py = spawnObj ? spawnObj.y - 65 : (platforms[0]?.y - 65 || 500);
   const startX = px, startY = py;
 
   let vx=0, vy=0, onGround=false, step=0, facing=1;
-
-  // ── КАМЕРА: инициализируем сразу на игроке ──
   let camX = px + 12 - W / 2;
-  let camY = py - 60  - H * 0.38;
+  let camY = py - 60 - H * 0.38;
   if (camX < 0) camX = 0;
   if (camY < -200) camY = -200;
 
@@ -1451,7 +1485,7 @@ function exbRunGame(game, W, H) {
 
   function respawn() {
     px=startX; py=startY; vx=0; vy=0;
-    showNotif('Exiblox','Ой! Начни сначала 😵','💥');
+    showNotif('Exiblox','Начни сначала 😵','💥');
   }
 
   function update() {
@@ -1462,11 +1496,7 @@ function exbRunGame(game, W, H) {
     vy += GRAVITY;
     px += vx;
     py += vy;
-
-    // ✅ ГРАНИЦА УБРАНА: только не уходим левее 0
     if (px < 0) { px = 0; vx = 0; }
-
-    // Падение в пропасть — респавн
     if (py > 2400) respawn();
 
     onGround = false;
@@ -1476,18 +1506,15 @@ function exbRunGame(game, W, H) {
         if (p.type==='ice') vx *= 0.98;
       }
     }
-    // Пружина — суперпрыжок
     for (const sp of springs) {
       if (px+22>sp.x && px<sp.x+sp.w && py+60>sp.y && py+60<=sp.y+sp.h && vy>=0) {
         vy = JUMP_FORCE * 1.8; onGround=false;
       }
     }
-    // Шипы и лава — респавн
     for (const sk of [...spikes, ...lava]) {
       if (px+20>sk.x && px<sk.x+sk.w && py+55>sk.y && py<sk.y+sk.h) respawn();
     }
 
-    // Монеты
     coins.forEach((co,i) => {
       if (!collected.has(i) && Math.abs(px+12-co.x)<22 && Math.abs(py+30-co.y)<22) {
         collected.add(i); scored++;
@@ -1496,10 +1523,9 @@ function exbRunGame(game, W, H) {
       }
     });
 
-    if (onGround && (Math.abs(vx) > 0.3)) step++;
+    if (onGround && Math.abs(vx) > 0.3) step++;
     else if (!onGround) step += 0.5;
 
-    // ✅ КАМЕРА: плавно следит за головой игрока (lerp)
     const targetCamX = px + 12 - W * 0.5;
     const targetCamY = py - 60  - H * 0.40;
     camX += (targetCamX - camX) * 0.12;
@@ -1509,24 +1535,19 @@ function exbRunGame(game, W, H) {
   }
 
   function draw() {
-    // Небо (не скроллится)
     const grad = cv.createLinearGradient(0,0,0,H);
     grad.addColorStop(0,'#1a2040'); grad.addColorStop(1,'#0d1230');
     cv.fillStyle=grad; cv.fillRect(0,0,W,H);
 
-    // ── Всё ниже рисуется со смещением камеры ──
     cv.save();
     cv.translate(-Math.round(camX), -Math.round(camY));
 
-    // Платформы
     for (const p of platforms) {
       cv.fillStyle = p.color||'#4a9a30';
       cv.fillRect(p.x, p.y, p.w, p.h);
       cv.fillStyle='rgba(255,255,255,.15)';
       cv.fillRect(p.x, p.y, p.w, Math.min(7, p.h));
     }
-
-    // Пружины
     springs.forEach(sp => {
       cv.fillStyle='#555'; cv.fillRect(sp.x,sp.y+sp.h-8,sp.w,8);
       cv.strokeStyle='#f1c40f'; cv.lineWidth=2;
@@ -1536,14 +1557,10 @@ function exbRunGame(game, W, H) {
         cv.stroke();
       }
     });
-
-    // Шипы
     spikes.forEach(sk => {
       cv.fillStyle='#aaa';
       cv.beginPath(); cv.moveTo(sk.x,sk.y+sk.h); cv.lineTo(sk.x+sk.w/2,sk.y); cv.lineTo(sk.x+sk.w,sk.y+sk.h); cv.closePath(); cv.fill();
     });
-
-    // Лава (анимированная)
     lava.forEach(lv => {
       cv.fillStyle='#ff4500'; cv.fillRect(lv.x,lv.y,lv.w,lv.h);
       cv.fillStyle='#ff6e00';
@@ -1552,8 +1569,6 @@ function exbRunGame(game, W, H) {
         cv.fillRect(lv.x+lx,lv.y,6,lh);
       }
     });
-
-    // Монеты
     coins.forEach((co,i) => {
       if (!collected.has(i)) {
         const pulse = 1+0.08*Math.sin(step/6);
@@ -1565,13 +1580,9 @@ function exbRunGame(game, W, H) {
       }
     });
 
-    // Стикмен (игрок) — в мировых координатах
     exbDrawStickman(cv, Math.round(px+12), Math.round(py+60), skin, 1.15, !onGround, facing, step);
-
     cv.restore();
-    // ── Конец мирового рисования ──
 
-    // HUD (поверх всего, без смещения камеры)
     cv.fillStyle='rgba(0,0,0,.5)'; cv.fillRect(0,0,W,28);
     cv.fillStyle='#fff'; cv.font='bold 13px Segoe UI'; cv.textAlign='left';
     cv.fillText(`🪙 ${scored}/${coins.length}`, 12, 19);
@@ -1600,13 +1611,16 @@ function exbDoSearch(query) {
   const results = EXB.games.filter(g=>g.name.toLowerCase().includes(query.toLowerCase()));
   const c = el('exb-content');
   if(!c) return;
-  EXB.tab = 'home';
-  document.querySelectorAll('.exb-nav-btn').forEach(b=>b.classList.remove('exb-active'));
+  EXB.tab = 'store';
+  document.querySelectorAll('.exb-nav-btn').forEach(b=>{
+    const m = b.getAttribute('onclick').match(/'(\w+)'/);
+    if(m) b.classList.toggle('exb-active', m[1]==='store');
+  });
   c.innerHTML=`
-  <div class="exb-section" style="padding-top:26px;">
+  <div class="exb-section">
     <div class="exb-sec-title">🔍 Поиск: "${escHtmlExb(query)}"</div>
     ${results.length ? `<div class="exb-cards-row">${exbGameCards(results)}</div>` : '<div style="color:rgba(255,255,255,.3);font-size:13px;padding:30px 0;">Ничего не найдено 😕</div>'}
-    <button class="exb-btn2 exb-btn2-gray" style="margin-top:16px;" onclick="exbTab('home')">← Назад</button>
+    <button class="exb-btn2 exb-btn2-gray" style="margin-top:16px;" onclick="exbTab('store')">← Назад</button>
   </div>`;
 }
 
