@@ -823,6 +823,26 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   </div>
   <div class="resize-handle" onmousedown="resizeWin(event,'win-exianai')"></div>
 </div>
+  <!-- 1. Окно — вставить перед </body> -->
+<div class="window" id="win-exiblox" style="width:1100px;height:700px;top:20px;left:40px;" onclick="bringFront('win-exiblox')">
+  <div class="titlebar" onmousedown="dragWin(event,'win-exiblox')">
+    <span class="tb-icon">🐍</span>
+    <span class="tb-title">Exiblox v3</span>
+    <div class="win-btns">
+      <div class="wb" onclick="minimizeWin('exiblox')">─</div>
+      <div class="wb" onclick="toggleMax('win-exiblox')">⬜</div>
+      <div class="wb cls" onclick="closeWin('exiblox')">✕</div>
+    </div>
+  </div>
+  <div class="win-body" id="exiblox-root" style="overflow:hidden;"></div>
+  <div class="resize-handle" onmousedown="resizeWin(event,'win-exiblox')"></div>
+</div>
+
+<!-- 2. Кнопка в таскбаре (в #tb-center) -->
+<div class="tb-btn" id="tb-exiblox" onclick="tbClick('exiblox')">🐍</div>
+
+<!-- 3. Скрипт -->
+<script src="exiblox.js"></script>
 
 <!-- NOTIFICATIONS -->
 <div id="notif-stack"></div>
