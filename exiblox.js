@@ -1268,7 +1268,6 @@ const EXB_AI_KB = [
 function exbAIGetResponse(input) {
   const q = input.toLowerCase().trim();
 
-  // Точный поиск по ключевым словам
   let bestMatch = null;
   let bestScore = 0;
 
@@ -1276,7 +1275,7 @@ function exbAIGetResponse(input) {
     let score = 0;
     for (const kw of entry.k) {
       if (q.includes(kw)) {
-        score += kw.length; // длиннее ключ = приоритетнее
+        score += kw.length;
       }
     }
     if (score > bestScore) {
@@ -1287,7 +1286,6 @@ function exbAIGetResponse(input) {
 
   if (bestMatch && bestScore > 0) return bestMatch.a;
 
-  // ── Fallback: контекстный ответ ──
   if (/\?|как|что|где|когда|зачем|почему|можно/.test(q)) {
     const topics = [
       'как создать игру в Studio',
@@ -1300,7 +1298,6 @@ function exbAIGetResponse(input) {
     return `🤔 Не совсем понял вопрос, но могу помочь с:\n\n${topics.map(t=>`• **"${t}"**`).join('\n')}\n\nСпроси об одном из этих — отвечу подробно! 😊`;
   }
 
-  // Самый общий fallback
   return `Хм, я пока не знаю ответа на это 😅\n\nПопробуй спросить:\n• **"Как создать игру?"**\n• **"Что такое Studio?"**\n• **"Как добавить друга?"**\n\nИли напиши **"что умеешь"** — покажу все темы!`;
 }
 
@@ -1313,7 +1310,6 @@ function exbAISend() {
   EXB.aiHistory.push({role:'user', content:text});
   exbAIMsg('user', text);
 
-  // Typing dots
   EXB._aiTyping = true;
   const msgs = el('exb-ai-msgs');
   const typing = document.createElement('div');
@@ -1326,7 +1322,6 @@ function exbAISend() {
     </div>`;
   if (msgs) { msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight; }
 
-  // Имитация "обдумывания" 600–1200ms
   const delay = 600 + Math.random() * 600;
   setTimeout(() => {
     typing.remove();
@@ -1351,11 +1346,16 @@ function exbPlayGame(id) {
   exbOpenGame(game);
 }
 
+// ════════════════════════════════════════════
+// ИСПРАВЛЕНО: exbOpenGame — адаптивный размер холста
+// ════════════════════════════════════════════
 function exbOpenGame(game) {
   const overlay = document.createElement('div');
   overlay.id='exb-game-overlay';
   overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:99999;display:flex;flex-direction:column;';
-  const W=800,H=480;
+  // Адаптивный размер — подстраивается под окно браузера
+  const W = Math.min(window.innerWidth - 20, 900);
+  const H = Math.min(window.innerHeight - 120, 520);
   overlay.innerHTML=`
   <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:#111;border-bottom:1px solid #222;">
     <span style="font-size:18px;">${game.icon||'🎮'}</span>
@@ -1366,31 +1366,31 @@ function exbOpenGame(game) {
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#1a2040;">
     <canvas id="exb-game-canvas" width="${W}" height="${H}" style="border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8);"></canvas>
     <div style="display:flex;gap:16px;margin-top:12px;align-items:center;">
-      <button id="exb-g-left" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;">◀</button>
+      <button id="exb-g-left" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">◀</button>
       <span id="exb-g-score" style="color:#FFD700;font-size:16px;font-weight:700;min-width:140px;text-align:center;">🪙 0</span>
-      <button id="exb-g-jump" style="background:#c0392b;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;">▲</button>
-      <button id="exb-g-right" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;">▶</button>
+      <button id="exb-g-jump" style="background:#c0392b;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">▲</button>
+      <button id="exb-g-right" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">▶</button>
     </div>
   </div>`;
   document.body.appendChild(overlay);
   exbRunGame(game, W, H);
 }
 
+// ════════════════════════════════════════════
+// ИСПРАВЛЕНО: exbRunGame — камера следит за игроком,
+// граница экрана убрана, игрок может ходить по всей карте
+// ════════════════════════════════════════════
 function exbRunGame(game, W, H) {
   const canvas = el('exb-game-canvas');
   if (!canvas) return;
   const cv = canvas.getContext('2d');
-  const FLOOR    = H - 60;
   const GRAVITY  = 0.55, JUMP_FORCE = -13, SPEED = 5;
 
   // Скин
   const skinId = EXB.skin || 'red';
   const skin   = EXB_SKINS.find(s=>s.id===skinId) || EXB_SKINS[0];
 
-  let px=100, py=FLOOR-70, vx=0, vy=0, onGround=true, step=0, facing=1;
-  const keys = {left:false, right:false};
-
-  const objs = game.objects || [];
+  const objs     = game.objects || [];
   const platforms = objs.filter(o=>['block','platform','ice'].includes(o.type))
                         .map(o=>({x:o.x, y:o.y, w:o.w, h:o.h, color:o.color||'#4a9a30', type:o.type}));
   const coins   = objs.filter(o=>o.type==='coin').map(o=>({x:o.x+o.w/2, y:o.y+o.h/2}));
@@ -1400,18 +1400,32 @@ function exbRunGame(game, W, H) {
 
   if (!platforms.length) {
     platforms.push(
-      {x:0,  y:FLOOR,   w:W*4, h:40,  color:'#4a9a30', type:'block'},
-      {x:200,y:FLOOR-120,w:160,h:20, color:'#2980b9', type:'platform'},
-      {x:430,y:FLOOR-200,w:160,h:20, color:'#8e44ad', type:'platform'},
-      {x:660,y:FLOOR-280,w:160,h:20, color:'#c0392b', type:'platform'},
+      {x:0,  y:760, w:3200, h:40,  color:'#4a9a30', type:'block'},
+      {x:200,y:620, w:160,  h:20,  color:'#2980b9', type:'platform'},
+      {x:430,y:520, w:160,  h:20,  color:'#8e44ad', type:'platform'},
+      {x:660,y:420, w:160,  h:20,  color:'#c0392b', type:'platform'},
     );
   }
-  if (!coins.length) [{x:250,y:FLOOR-150},{x:470,y:FLOOR-230},{x:700,y:FLOOR-310}].forEach(c=>coins.push(c));
+  if (!coins.length) [{x:250,y:590},{x:470,y:490},{x:700,y:390}].forEach(c=>coins.push(c));
 
+  // Стартовая позиция — по спавну или над первой платформой
+  const spawnObj = objs.find(o=>o.type==='spawn');
+  let px = spawnObj ? spawnObj.x + 20 : (platforms.length ? platforms[0].x + 80 : 100);
+  let py = spawnObj ? spawnObj.y - 65 : (platforms.length ? platforms[0].y - 65 : 500);
+  const startX = px, startY = py;
+
+  let vx=0, vy=0, onGround=false, step=0, facing=1;
+
+  // ── КАМЕРА: инициализируем сразу на игроке ──
+  let camX = px + 12 - W / 2;
+  let camY = py - 60  - H * 0.38;
+  if (camX < 0) camX = 0;
+  if (camY < -200) camY = -200;
+
+  const keys = {left:false, right:false};
   const collected = new Set();
   let scored = 0;
 
-  // Controls
   const setKey = (k,v) => keys[k]=v;
   el('exb-g-left')?.addEventListener('mousedown', ()=>setKey('left',true));
   el('exb-g-left')?.addEventListener('mouseup',   ()=>setKey('left',false));
@@ -1424,9 +1438,21 @@ function exbRunGame(game, W, H) {
   document.addEventListener('keydown',  onKey);
   document.addEventListener('keyup',    onKeyUp);
 
-  function onKey(e)   { if(e.key==='ArrowLeft')setKey('left',true); if(e.key==='ArrowRight')setKey('right',true); if(e.key===' '||e.key==='ArrowUp')doJump(); }
-  function onKeyUp(e) { if(e.key==='ArrowLeft')setKey('left',false); if(e.key==='ArrowRight')setKey('right',false); }
-  function doJump()   { if(onGround){ vy=JUMP_FORCE; onGround=false; } }
+  function onKey(e)   {
+    if(e.key==='ArrowLeft')  setKey('left',true);
+    if(e.key==='ArrowRight') setKey('right',true);
+    if(e.key===' '||e.key==='ArrowUp') { e.preventDefault(); doJump(); }
+  }
+  function onKeyUp(e) {
+    if(e.key==='ArrowLeft')  setKey('left',false);
+    if(e.key==='ArrowRight') setKey('right',false);
+  }
+  function doJump() { if(onGround){ vy=JUMP_FORCE; onGround=false; } }
+
+  function respawn() {
+    px=startX; py=startY; vx=0; vy=0;
+    showNotif('Exiblox','Ой! Начни сначала 😵','💥');
+  }
 
   function update() {
     if (keys.left)       { vx=-SPEED; facing=-1; }
@@ -1434,30 +1460,31 @@ function exbRunGame(game, W, H) {
     else vx *= 0.72;
 
     vy += GRAVITY;
-    px += vx; py += vy;
-    px = Math.max(0, Math.min(px, W-24));
-    if (py > H+120) { py=FLOOR-70; px=100; vy=0; }
+    px += vx;
+    py += vy;
+
+    // ✅ ГРАНИЦА УБРАНА: только не уходим левее 0
+    if (px < 0) { px = 0; vx = 0; }
+
+    // Падение в пропасть — респавн
+    if (py > 2400) respawn();
 
     onGround = false;
     for (const p of platforms) {
-      const friction = p.type==='ice' ? 0.98 : 1;
-      if (px+22>p.x && px<p.x+p.w && py+60>p.y && py+60<p.y+p.h+vy+2 && vy>=0) {
+      if (px+22>p.x && px<p.x+p.w && py+60>p.y && py+60<p.y+p.h+Math.abs(vy)+2 && vy>=0) {
         py=p.y-60; vy=0; onGround=true;
-        if (p.type==='ice') vx *= friction;
+        if (p.type==='ice') vx *= 0.98;
       }
     }
-    // Пружина — прыжок×2
+    // Пружина — суперпрыжок
     for (const sp of springs) {
       if (px+22>sp.x && px<sp.x+sp.w && py+60>sp.y && py+60<=sp.y+sp.h && vy>=0) {
         vy = JUMP_FORCE * 1.8; onGround=false;
       }
     }
-    // Шипы и лава — сброс позиции
+    // Шипы и лава — респавн
     for (const sk of [...spikes, ...lava]) {
-      if (px+20>sk.x && px<sk.x+sk.w && py+55>sk.y && py<sk.y+sk.h) {
-        py=FLOOR-70; px=100; vy=0;
-        showNotif('Exiblox','Ой! Начни сначала 😵','💥');
-      }
+      if (px+20>sk.x && px<sk.x+sk.w && py+55>sk.y && py<sk.y+sk.h) respawn();
     }
 
     // Монеты
@@ -1470,16 +1497,28 @@ function exbRunGame(game, W, H) {
     });
 
     if (onGround && (Math.abs(vx) > 0.3)) step++;
-    else if (!onGround) step = (step + 0.5);
+    else if (!onGround) step += 0.5;
+
+    // ✅ КАМЕРА: плавно следит за головой игрока (lerp)
+    const targetCamX = px + 12 - W * 0.5;
+    const targetCamY = py - 60  - H * 0.40;
+    camX += (targetCamX - camX) * 0.12;
+    camY += (targetCamY - camY) * 0.10;
+    if (camX < 0)    camX = 0;
+    if (camY < -300) camY = -300;
   }
 
   function draw() {
-    // Sky
+    // Небо (не скроллится)
     const grad = cv.createLinearGradient(0,0,0,H);
     grad.addColorStop(0,'#1a2040'); grad.addColorStop(1,'#0d1230');
     cv.fillStyle=grad; cv.fillRect(0,0,W,H);
 
-    // Platforms
+    // ── Всё ниже рисуется со смещением камеры ──
+    cv.save();
+    cv.translate(-Math.round(camX), -Math.round(camY));
+
+    // Платформы
     for (const p of platforms) {
       cv.fillStyle = p.color||'#4a9a30';
       cv.fillRect(p.x, p.y, p.w, p.h);
@@ -1487,7 +1526,7 @@ function exbRunGame(game, W, H) {
       cv.fillRect(p.x, p.y, p.w, Math.min(7, p.h));
     }
 
-    // Springs
+    // Пружины
     springs.forEach(sp => {
       cv.fillStyle='#555'; cv.fillRect(sp.x,sp.y+sp.h-8,sp.w,8);
       cv.strokeStyle='#f1c40f'; cv.lineWidth=2;
@@ -1498,13 +1537,13 @@ function exbRunGame(game, W, H) {
       }
     });
 
-    // Spikes
+    // Шипы
     spikes.forEach(sk => {
       cv.fillStyle='#aaa';
       cv.beginPath(); cv.moveTo(sk.x,sk.y+sk.h); cv.lineTo(sk.x+sk.w/2,sk.y); cv.lineTo(sk.x+sk.w,sk.y+sk.h); cv.closePath(); cv.fill();
     });
 
-    // Lava (animated)
+    // Лава (анимированная)
     lava.forEach(lv => {
       cv.fillStyle='#ff4500'; cv.fillRect(lv.x,lv.y,lv.w,lv.h);
       cv.fillStyle='#ff6e00';
@@ -1514,7 +1553,7 @@ function exbRunGame(game, W, H) {
       }
     });
 
-    // Coins
+    // Монеты
     coins.forEach((co,i) => {
       if (!collected.has(i)) {
         const pulse = 1+0.08*Math.sin(step/6);
@@ -1526,16 +1565,18 @@ function exbRunGame(game, W, H) {
       }
     });
 
-    // Stickman player
-    const bx = Math.round(px+12); // центр X
-    const by = Math.round(py+60); // центр бёдер
-    exbDrawStickman(cv, bx, by, skin, 1.15, !onGround, facing, step);
+    // Стикмен (игрок) — в мировых координатах
+    exbDrawStickman(cv, Math.round(px+12), Math.round(py+60), skin, 1.15, !onGround, facing, step);
 
-    // HUD
+    cv.restore();
+    // ── Конец мирового рисования ──
+
+    // HUD (поверх всего, без смещения камеры)
     cv.fillStyle='rgba(0,0,0,.5)'; cv.fillRect(0,0,W,28);
     cv.fillStyle='#fff'; cv.font='bold 13px Segoe UI'; cv.textAlign='left';
     cv.fillText(`🪙 ${scored}/${coins.length}`, 12, 19);
-    cv.fillText(game.name||'Игра', W/2-40, 19);
+    cv.textAlign='center';
+    cv.fillText(game.name||'Игра', W/2, 19);
     cv.textAlign='left';
   }
 
