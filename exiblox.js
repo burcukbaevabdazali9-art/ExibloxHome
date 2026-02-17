@@ -15,25 +15,68 @@ const EXB = {
   studioSelObj: null,
   studioDragging: null,
   studioProjectName: 'Новый проект',
-  paintCtx: null,
-  paintDrawing: false,
+  studioScrollX: 0,
+  studioScrollY: 0,
+  studioPanning: false,
+  studioPanStart: null,
   aiHistory: [],
   TILE: 40,
+  CANVAS_W: 3200,   // бесконечный холст
+  CANVAS_H: 1200,
+  _publishing: false,
 };
 
-const EXB_BASEPLATE = [
-  {type:'block', x:0,   y:400, w:1600, h:40,  color:'#4a9a30'},
-  {type:'spawn', x:80,  y:350, w:40,   h:40,  color:'#00b2ff'},
+// ── Скины стикменов ──
+const EXB_SKINS = [
+  { id:'red',    name:'Красный',              bodyColor:'#e74c3c', headColor:'#e74c3c', capColor:null,     limbColor:'#c0392b' },
+  { id:'white',  name:'Белый с красной кепкой', bodyColor:'#ecf0f1', headColor:'#ecf0f1', capColor:'#e74c3c', limbColor:'#bdc3c7' },
+  { id:'blue',   name:'Голубой',              bodyColor:'#3498db', headColor:'#3498db', capColor:null,     limbColor:'#2980b9' },
+  { id:'orange', name:'Оранжевый',            bodyColor:'#e67e22', headColor:'#e67e22', capColor:null,     limbColor:'#d35400' },
 ];
 
-const EXB_ICONS = ['🎮','🎯','🏆','⚡','🌟','🔥','💎','🎲','🚀','🦊'];
+const EXB_BASEPLATE = [
+  {type:'block',    x:0,    y:760, w:3200, h:40,  color:'#4a9a30'},
+  {type:'block',    x:200,  y:620, w:160,  h:20,  color:'#2980b9'},
+  {type:'block',    x:460,  y:520, w:160,  h:20,  color:'#8e44ad'},
+  {type:'block',    x:700,  y:420, w:160,  h:20,  color:'#c0392b'},
+  {type:'spawn',    x:80,   y:680, w:40,   h:40,  color:'#00b2ff'},
+  {type:'coin',     x:260,  y:580, w:30,   h:30,  color:'#FFD700'},
+  {type:'coin',     x:520,  y:480, w:30,   h:30,  color:'#FFD700'},
+  {type:'coin',     x:760,  y:380, w:30,   h:30,  color:'#FFD700'},
+];
+
+const EXB_ICONS  = ['🎮','🎯','🏆','⚡','🌟','🔥','💎','🎲','🚀','🦊'];
 const EXB_COLORS = ['#7c3aed','#1a6fa8','#b8860b','#ba5a00','#8b0000','#2d5a1b'];
+
+// ── Инструменты студии ──
+const EXB_TOOLS = [
+  {id:'select',   label:'🖱 Выбор'},
+  {id:'block',    label:'🧱 Блок'},
+  {id:'platform', label:'🟫 Платформа'},
+  {id:'spawn',    label:'📍 Спавн'},
+  {id:'coin',     label:'🪙 Монета'},
+  {id:'enemy',    label:'💥 Враг'},
+  {id:'spike',    label:'🔺 Шип'},
+  {id:'spring',   label:'🟡 Пружина'},
+  {id:'ice',      label:'🧊 Лёд'},
+  {id:'lava',     label:'🌋 Лава'},
+  {id:'deco',     label:'🌲 Декор'},
+  {id:'eraser',   label:'🧹 Ластик'},
+];
+
+const EXB_BLOCK_COLORS = {
+  block:'#4a9a30', platform:'#8B6914', spawn:'#00b2ff',
+  coin:'#FFD700',  enemy:'#e74c3c',  spike:'#888',
+  spring:'#f1c40f',ice:'#aee6f5',    lava:'#ff4500',
+  deco:'#2ecc71',
+};
 
 // ── INIT ─────────────────────────────────────
 function initExiblox() {
   EXB.users = JSON.parse(localStorage.getItem('exiblox_users') || '{}');
   EXB.games = JSON.parse(localStorage.getItem('exiblox_games') || '[]');
   EXB.user  = JSON.parse(localStorage.getItem('exiblox_curuser') || 'null');
+  EXB.skin  = localStorage.getItem('exiblox_skin') || 'red';
   exbRender();
 }
 
@@ -236,7 +279,7 @@ function exbRenderMain(root) {
         <input id="exb-search" placeholder="Поиск игр..." onkeydown="if(event.key==='Enter')exbDoSearch(this.value)">
       </div>
       <div class="exb-user-info">
-        <span class="exb-robux">💰 ${me.robux||0} R$</span>
+        <span class="exb-robux">🪙 ${me.ecoins||0} E$</span>
         <span style="font-size:12px;color:rgba(255,255,255,.6);">${me.isGuest?'👤 Гость':('👤 '+EXB.user)}</span>
         <div class="exb-btn2 exb-btn2-gray" onclick="exbLogout()" style="padding:5px 12px;font-size:11px;">Выйти</div>
       </div>
@@ -252,6 +295,7 @@ function exbRenderMain(root) {
           ['friends','👥','Друзья'],
           ['publish','📤','Publish'],
           ['ai','🤖','AI'],
+          ['avatar','🎭','Аватар'],
           ['profile','👤','Профиль'],
         ].map(([tab,ico,lbl])=>`
           <div class="exb-nav-btn ${EXB.tab===tab?'exb-active':''}" onclick="exbTab('${tab}')">
@@ -278,7 +322,7 @@ function exbTab(tab) {
 function exbTabContent(tab) {
   const c = el('exb-content');
   if (!c) return;
-  const fn = {home:exbHome, store:exbStore, studio:exbStudio, friends:exbFriends, publish:exbPublish, ai:exbAI, profile:exbProfile}[tab];
+  const fn = {home:exbHome, store:exbStore, studio:exbStudio, friends:exbFriends, publish:exbPublish, ai:exbAI, avatar:exbAvatar, profile:exbProfile}[tab];
   if (fn) fn(c);
 }
 
@@ -348,65 +392,140 @@ function exbStudio(c) {
   const me = EXB.users[EXB.user] || {};
   const projects = me.projects || [];
 
+  // Показываем список проектов если он не пуст и мы ещё не в режиме редактирования
+  if (projects.length > 0 && !EXB._studioEditing) {
+    exbStudioProjectList(c, projects);
+    return;
+  }
+  EXB._studioEditing = true;
+
   c.innerHTML = `
   <div style="display:flex;flex-direction:column;height:100%;overflow:hidden;">
     <!-- Studio Toolbar -->
-    <div style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:#0c0e14;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:6px;padding:6px 10px;background:#0c0e14;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;flex-wrap:wrap;">
       <button class="exb-btn2 exb-btn2-blue" onclick="exbStudioSave()" style="font-size:11px;">💾 Сохранить</button>
-      <button class="exb-btn2 exb-btn2-gray" onclick="exbStudioLoad()" style="font-size:11px;">📂 Загрузить</button>
+      <button class="exb-btn2 exb-btn2-gray" onclick="EXB._studioEditing=false;exbTab('studio')" style="font-size:11px;">📋 Мои проекты</button>
       <button class="exb-btn2 exb-btn2-gray" onclick="exbStudioBaseplate()" style="font-size:11px;">🏗 Baseplate</button>
-      <button class="exb-btn2 exb-btn2-blue" style="background:#2ecc71;font-size:11px;" onclick="exbStudioTest()">▶ Тест</button>
+      <button class="exb-btn2" style="background:#2ecc71;color:#fff;font-size:11px;" onclick="exbStudioTest()">▶ Тест</button>
       ${me.isGuest ? '' : `<button class="exb-btn2" style="background:#7c3aed;color:#fff;font-size:11px;" onclick="exbPublishDialog()">📤 Publish</button>`}
       <button class="exb-btn2 exb-btn2-red" onclick="exbStudioClear()" style="font-size:11px;">🗑 Очистить</button>
-      <input id="exb-proj-name" class="exb-inp2" value="${escHtmlExb(EXB.studioProjectName)}" style="width:180px;font-size:12px;" oninput="EXB.studioProjectName=this.value">
-      <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.3);">Объектов: <span id="exb-obj-count">${EXB.studioObjects.length}</span></span>
+      <input id="exb-proj-name" class="exb-inp2" value="${escHtmlExb(EXB.studioProjectName)}" style="width:160px;font-size:12px;" oninput="EXB.studioProjectName=this.value">
+      <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.3);">Объектов: <span id="exb-obj-count">${EXB.studioObjects.length}</span> &nbsp;|&nbsp; Scroll: ПКМ+drag или ⬛</span>
     </div>
     <!-- Studio Body -->
     <div class="exb-studio-wrap" style="flex:1;overflow:hidden;">
       <!-- Tools -->
-      <div class="exb-studio-side">
-        <div style="font-size:10px;color:rgba(255,255,255,.4);padding:4px 6px 8px;letter-spacing:.5px;text-transform:uppercase;">Инструменты</div>
-        ${['🖱 Выбор','🧱 Блок','📍 Спавн','🪙 Монета','💥 Враг','🧹 Ластик'].map((t,i)=>{
-          const id=['select','block','spawn','coin','enemy','eraser'][i];
-          return `<div class="exb-tool-btn ${EXB.studioTool===id?'exb-tool-active':''}" onclick="exbSetTool('${id}',this)">${t}</div>`;
-        }).join('')}
-        <div style="height:1px;background:rgba(255,255,255,.07);margin:8px 0;"></div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);padding:4px 6px 6px;letter-spacing:.5px;text-transform:uppercase;">Цвет</div>
-        <div id="exb-color-prev" style="width:36px;height:26px;border-radius:7px;background:${EXB.studioColor};border:2px solid rgba(255,255,255,.2);cursor:pointer;margin:0 auto;" onclick="exbPickColor()"></div>
+      <div class="exb-studio-side" style="width:105px;overflow-y:auto;">
+        <div style="font-size:9px;color:rgba(255,255,255,.4);padding:4px 5px 6px;letter-spacing:.5px;text-transform:uppercase;">Инструменты</div>
+        ${EXB_TOOLS.map(t=>`<div class="exb-tool-btn ${EXB.studioTool===t.id?'exb-tool-active':''}" onclick="exbSetTool('${t.id}',this)" style="font-size:10px;padding:6px 4px;">${t.label}</div>`).join('')}
+        <div style="height:1px;background:rgba(255,255,255,.07);margin:6px 0;"></div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);padding:2px 5px 4px;letter-spacing:.5px;text-transform:uppercase;">Цвет</div>
+        <div id="exb-color-prev" style="width:32px;height:22px;border-radius:6px;background:${EXB.studioColor};border:2px solid rgba(255,255,255,.2);cursor:pointer;margin:0 auto 6px;" onclick="exbPickColor()"></div>
         <input type="color" id="exb-color-pick" value="${EXB.studioColor}" oninput="EXB.studioColor=this.value;el('exb-color-prev').style.background=this.value" style="position:absolute;opacity:0;pointer-events:none;">
-        <div style="height:1px;background:rgba(255,255,255,.07);margin:8px 0;"></div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4);padding:4px 6px 6px;letter-spacing:.5px;text-transform:uppercase;">Сетка</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.5);text-align:center;">40px</div>
+        <div style="height:1px;background:rgba(255,255,255,.07);margin:4px 0;"></div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);padding:2px 5px 4px;letter-spacing:.5px;text-transform:uppercase;">Камера</div>
+        <div onclick="EXB.studioScrollX=0;EXB.studioScrollY=0;exbStudioRedraw()" style="font-size:9px;color:rgba(255,255,255,.5);text-align:center;cursor:pointer;padding:4px;border-radius:5px;background:rgba(255,255,255,.05);">🏠 Сброс</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.3);text-align:center;margin-top:4px;">Холст: 3200×1200</div>
       </div>
       <!-- Canvas -->
-      <div class="exb-canvas-wrap" id="exb-studio-wrap">
-        <canvas id="exb-studio-canvas" style="display:block;"></canvas>
+      <div class="exb-canvas-wrap" id="exb-studio-wrap" style="overflow:hidden;position:relative;">
+        <canvas id="exb-studio-canvas" style="display:block;cursor:crosshair;"></canvas>
+        <!-- Mini-scroll indicators -->
+        <div style="position:absolute;bottom:6px;right:6px;font-size:10px;color:rgba(255,255,255,.25);pointer-events:none;" id="exb-scroll-info">0, 0</div>
       </div>
     </div>
   </div>`;
   requestAnimationFrame(exbStudioInitCanvas);
 }
 
+// Список проектов при открытии Studio
+function exbStudioProjectList(c, projects) {
+  c.innerHTML = `
+  <div class="exb-section" style="padding-top:24px;">
+    <div style="display:flex;align-items:center;margin-bottom:20px;">
+      <div class="exb-sec-title" style="margin-bottom:0;">🛠 Мои проекты</div>
+      <button class="exb-btn2 exb-btn2-blue" style="margin-left:auto;font-size:11px;" onclick="EXB.studioObjects=[];EXB.studioProjectName='Новый проект';EXB._studioEditing=true;exbTab('studio')">+ Новый проект</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+      ${projects.map((p,i)=>`
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;" 
+             onmouseover="this.style.borderColor='rgba(0,178,255,.5)';this.style.background='rgba(0,178,255,.08)'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,.08)';this.style.background='rgba(255,255,255,.05)'">
+          <div style="font-size:28px;margin-bottom:8px;">🛠</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:4px;">${escHtmlExb(p.name)}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);">Объектов: ${(p.objects||[]).length} &nbsp;·&nbsp; ${p.updated||'—'}</div>
+          <div style="display:flex;gap:6px;margin-top:12px;">
+            <button class="exb-btn2 exb-btn2-blue" style="font-size:10px;padding:5px 10px;" onclick="exbStudioOpenProject(${i})">✏️ Открыть</button>
+            <button class="exb-btn2 exb-btn2-red" style="font-size:10px;padding:5px 10px;" onclick="exbStudioDeleteProject(${i})">🗑</button>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function exbStudioOpenProject(idx) {
+  const me = EXB.users[EXB.user] || {};
+  const p = (me.projects||[])[idx];
+  if (!p) return;
+  EXB.studioObjects = p.objects ? p.objects.map(o=>({...o})) : [];
+  EXB.studioProjectName = p.name;
+  EXB.studioScrollX = 0;
+  EXB.studioScrollY = 0;
+  EXB._studioEditing = true;
+  exbTab('studio');
+}
+
+function exbStudioDeleteProject(idx) {
+  if (!confirm('Удалить проект?')) return;
+  const me = EXB.users[EXB.user] || {};
+  me.projects = me.projects || [];
+  me.projects.splice(idx, 1);
+  exbSaveUsers();
+  exbTab('studio');
+}
+
 function exbStudioInitCanvas() {
   const wrap = el('exb-studio-wrap');
   const canvas = el('exb-studio-canvas');
   if (!wrap || !canvas) return;
-  canvas.width = wrap.clientWidth || 800;
-  canvas.height = wrap.clientHeight || 450;
+  canvas.width  = wrap.clientWidth  || 900;
+  canvas.height = wrap.clientHeight || 480;
   EXB.studioPaintCtx = canvas.getContext('2d');
+  EXB.studioScrollX = EXB.studioScrollX || 0;
+  EXB.studioScrollY = EXB.studioScrollY || 0;
   exbStudioRedraw();
 
-  canvas.addEventListener('mousedown', exbStudioMouseDown);
-  canvas.addEventListener('mousemove', exbStudioMouseMove);
-  canvas.addEventListener('mouseup',   () => EXB.studioDragging = null);
-  canvas.addEventListener('contextmenu', exbStudioRightClick);
-  canvas.addEventListener('mouseleave', () => EXB.studioDragging = null);
+  canvas.addEventListener('mousedown',  exbStudioMouseDown);
+  canvas.addEventListener('mousemove',  exbStudioMouseMove);
+  canvas.addEventListener('mouseup',    exbStudioMouseUp);
+  canvas.addEventListener('contextmenu',exbStudioRightClick);
+  canvas.addEventListener('mouseleave', ()=>{ EXB.studioDragging=null; EXB.studioPanning=false; });
+  canvas.addEventListener('wheel', e=>{
+    e.preventDefault();
+    EXB.studioScrollX = Math.max(0, EXB.studioScrollX + e.deltaX);
+    EXB.studioScrollY = Math.max(0, EXB.studioScrollY + e.deltaY);
+    const si = el('exb-scroll-info');
+    if(si) si.textContent = `${Math.round(EXB.studioScrollX)}, ${Math.round(EXB.studioScrollY)}`;
+    exbStudioRedraw();
+  }, {passive:false});
+}
+
+function exbStudioMouseUp() {
+  EXB.studioDragging = null;
+  EXB.studioPanning  = false;
 }
 
 function exbStudioMouseDown(e) {
   e.preventDefault();
-  const {x,y} = exbStudioPos(e);
+  // ПКМ зажат через средствию — пан
+  if (e.button === 1 || (e.button === 2 && EXB.studioTool === 'select')) {
+    EXB.studioPanning = true;
+    EXB.studioPanStart = {x: e.clientX + EXB.studioScrollX, y: e.clientY + EXB.studioScrollY};
+    return;
+  }
+  const {x, y} = exbStudioPos(e);
   const tool = EXB.studioTool;
+
   if (tool === 'eraser') {
     EXB.studioObjects = EXB.studioObjects.filter(o => !(x>=o.x&&x<=o.x+o.w&&y>=o.y&&y<=o.y+o.h));
     exbStudioRedraw(); exbUpdateObjCount(); return;
@@ -415,23 +534,47 @@ function exbStudioMouseDown(e) {
     EXB.studioSelObj = null;
     for (let i = EXB.studioObjects.length-1; i>=0; i--) {
       const o = EXB.studioObjects[i];
-      if (x>=o.x&&x<=o.x+o.w&&y>=o.y&&y<=o.y+o.h) { EXB.studioSelObj=o; EXB.studioDragging={ox:x-o.x,oy:y-o.y}; break; }
+      if (x>=o.x&&x<=o.x+o.w&&y>=o.y&&y<=o.y+o.h) {
+        EXB.studioSelObj = o;
+        EXB.studioDragging = {ox: x-o.x, oy: y-o.y};
+        break;
+      }
     }
     exbStudioRedraw(); return;
   }
   const TILE = EXB.TILE;
-  const sx = Math.floor(x/TILE)*TILE, sy = Math.floor(y/TILE)*TILE;
-  const colorMap = {block:'#4a9a30',spawn:'#00b2ff',coin:'#FFD700',enemy:'#e74c3c'};
-  EXB.studioObjects.push({type:tool, x:sx, y:sy, w:TILE, h:TILE, color:EXB.studioColor||colorMap[tool]||'#888'});
+  const sx = Math.floor(x/TILE)*TILE;
+  const sy = Math.floor(y/TILE)*TILE;
+  const defColor = EXB_BLOCK_COLORS[tool] || '#888';
+  const useColor = EXB.studioColor || defColor;
+
+  // Размеры разных блоков
+  let bw = TILE, bh = TILE;
+  if (tool === 'block')    { bw = TILE*3; bh = TILE; }
+  if (tool === 'platform') { bw = TILE*4; bh = TILE/2; }
+  if (tool === 'spike')    { bw = TILE;   bh = TILE; }
+  if (tool === 'spring')   { bw = TILE;   bh = TILE*1.5|0; }
+  if (tool === 'lava')     { bw = TILE*2; bh = TILE/2; }
+  if (tool === 'ice')      { bw = TILE*3; bh = TILE; }
+  if (tool === 'deco')     { bw = TILE*2; bh = TILE*3; }
+
+  EXB.studioObjects.push({type:tool, x:sx, y:sy, w:bw, h:bh, color:useColor});
   exbStudioRedraw(); exbUpdateObjCount();
 }
 
 function exbStudioMouseMove(e) {
-  if (EXB.studioTool==='select' && EXB.studioSelObj && EXB.studioDragging) {
+  if (EXB.studioPanning && EXB.studioPanStart) {
+    EXB.studioScrollX = Math.max(0, EXB.studioPanStart.x - e.clientX);
+    EXB.studioScrollY = Math.max(0, EXB.studioPanStart.y - e.clientY);
+    const si = el('exb-scroll-info');
+    if(si) si.textContent = `${Math.round(EXB.studioScrollX)}, ${Math.round(EXB.studioScrollY)}`;
+    exbStudioRedraw(); return;
+  }
+  if (EXB.studioTool === 'select' && EXB.studioSelObj && EXB.studioDragging) {
     const {x,y} = exbStudioPos(e);
     const TILE = EXB.TILE;
-    EXB.studioSelObj.x = Math.floor((x-EXB.studioDragging.ox)/TILE)*TILE;
-    EXB.studioSelObj.y = Math.floor((y-EXB.studioDragging.oy)/TILE)*TILE;
+    EXB.studioSelObj.x = Math.floor((x - EXB.studioDragging.ox)/TILE)*TILE;
+    EXB.studioSelObj.y = Math.floor((y - EXB.studioDragging.oy)/TILE)*TILE;
     exbStudioRedraw();
   }
 }
@@ -445,7 +588,10 @@ function exbStudioRightClick(e) {
 
 function exbStudioPos(e) {
   const r = el('exb-studio-canvas').getBoundingClientRect();
-  return {x: e.clientX-r.left, y: e.clientY-r.top};
+  return {
+    x: e.clientX - r.left  + EXB.studioScrollX,
+    y: e.clientY - r.top   + EXB.studioScrollY,
+  };
 }
 
 function exbStudioRedraw() {
@@ -454,33 +600,142 @@ function exbStudioRedraw() {
   const canvas = el('exb-studio-canvas');
   const W = canvas.width, H = canvas.height;
   const TILE = EXB.TILE;
-  // BG
-  for (let i=0;i<H;i++){
-    const s = Math.floor(26+i*0.04);
-    cv.fillStyle=`rgb(${s},${s+10},64)`;
-    cv.fillRect(0,i,W,1);
+  const sx = EXB.studioScrollX, sy = EXB.studioScrollY;
+
+  // BG gradient (scrollable sky)
+  for (let i=0; i<H; i++) {
+    const s = Math.floor(20 + i*0.03);
+    cv.fillStyle = `rgb(${s},${s+8},58)`;
+    cv.fillRect(0, i, W, 1);
   }
+
   // Grid
-  cv.strokeStyle='rgba(255,255,255,.04)';
-  cv.lineWidth=1;
-  for(let x=0;x<W;x+=TILE){cv.beginPath();cv.moveTo(x,0);cv.lineTo(x,H);cv.stroke();}
-  for(let y=0;y<H;y+=TILE){cv.beginPath();cv.moveTo(0,y);cv.lineTo(W,y);cv.stroke();}
+  cv.strokeStyle = 'rgba(255,255,255,.04)';
+  cv.lineWidth = 1;
+  const gox = sx % TILE, goy = sy % TILE;
+  for (let x = -gox; x < W; x += TILE) { cv.beginPath(); cv.moveTo(x,0); cv.lineTo(x,H); cv.stroke(); }
+  for (let y = -goy; y < H; y += TILE) { cv.beginPath(); cv.moveTo(0,y); cv.lineTo(W,y); cv.stroke(); }
+
+  // Ruler marks every 200px
+  cv.fillStyle = 'rgba(255,255,255,.15)';
+  cv.font = '9px monospace';
+  for (let x=0; x<3200; x+=200) {
+    const rx = x - sx;
+    if (rx >= 0 && rx <= W) { cv.fillText(x, rx+2, 10); }
+  }
+
   // Objects
-  EXB.studioObjects.forEach(o=>{
-    const sel = o===EXB.studioSelObj;
-    cv.fillStyle=o.color||'#888';
-    cv.fillRect(o.x,o.y,o.w,o.h);
-    cv.strokeStyle=sel?'#fff':'rgba(255,255,255,.2)';
-    cv.lineWidth=sel?2:1;
-    cv.strokeRect(o.x,o.y,o.w,o.h);
-    // Label
-    const labels={block:'🧱',spawn:'📍',coin:'🪙',enemy:'💥'};
-    if(labels[o.type]){
-      cv.font='18px serif';
-      cv.textAlign='center';
-      cv.fillText(labels[o.type],o.x+o.w/2,o.y+o.h/2+6);
+  EXB.studioObjects.forEach(o => {
+    const ox = o.x - sx, oy = o.y - sy;
+    if (ox + o.w < 0 || ox > W || oy + o.h < 0 || oy > H) return; // culling
+    const sel = o === EXB.studioSelObj;
+    const col = o.color || EXB_BLOCK_COLORS[o.type] || '#888';
+
+    switch(o.type) {
+      case 'block':
+      case 'ice':
+        cv.fillStyle = col;
+        cv.fillRect(ox, oy, o.w, o.h);
+        cv.fillStyle = 'rgba(255,255,255,.18)';
+        cv.fillRect(ox, oy, o.w, 8);
+        break;
+      case 'platform':
+        cv.fillStyle = col;
+        cv.fillRect(ox, oy, o.w, o.h);
+        cv.fillStyle = 'rgba(255,255,255,.3)';
+        cv.fillRect(ox, oy, o.w, 4);
+        break;
+      case 'lava':
+        cv.fillStyle = col;
+        cv.fillRect(ox, oy, o.w, o.h);
+        // лава волны
+        cv.fillStyle = '#ff6e00';
+        for(let lx=0;lx<o.w;lx+=8){
+          const lh = 4 + 3*Math.sin((lx+Date.now()/80)/6);
+          cv.fillRect(ox+lx, oy, 6, lh);
+        }
+        break;
+      case 'spike':
+        cv.fillStyle = col;
+        cv.beginPath();
+        cv.moveTo(ox, oy+o.h);
+        cv.lineTo(ox+o.w/2, oy);
+        cv.lineTo(ox+o.w, oy+o.h);
+        cv.closePath();
+        cv.fill();
+        break;
+      case 'spring':
+        cv.fillStyle = '#555';
+        cv.fillRect(ox, oy+o.h-10, o.w, 10);
+        // пружина рисовка
+        cv.strokeStyle = col;
+        cv.lineWidth = 3;
+        for(let si=0;si<4;si++){
+          const sy2=oy+o.h-10-si*((o.h-10)/4);
+          cv.beginPath();
+          cv.ellipse(ox+o.w/2, sy2, o.w/2-3, 4, 0, 0, Math.PI*2);
+          cv.stroke();
+        }
+        break;
+      case 'spawn':
+        cv.fillStyle = col;
+        cv.beginPath();
+        cv.arc(ox+o.w/2, oy+o.h/2, o.w/2, 0, Math.PI*2);
+        cv.fill();
+        cv.fillStyle = '#fff';
+        cv.font = 'bold 16px serif';
+        cv.textAlign = 'center';
+        cv.fillText('S', ox+o.w/2, oy+o.h/2+6);
+        cv.textAlign = 'left';
+        break;
+      case 'coin':
+        cv.fillStyle = col;
+        cv.beginPath();
+        cv.arc(ox+o.w/2, oy+o.h/2, o.w/2, 0, Math.PI*2);
+        cv.fill();
+        cv.fillStyle = '#c8860a';
+        cv.font = 'bold 13px serif';
+        cv.textAlign='center';
+        cv.fillText('E$', ox+o.w/2, oy+o.h/2+5);
+        cv.textAlign='left';
+        break;
+      case 'enemy':
+        cv.fillStyle = col;
+        cv.fillRect(ox, oy, o.w, o.h);
+        cv.fillStyle='#fff';
+        cv.font='16px serif';
+        cv.textAlign='center';
+        cv.fillText('💀', ox+o.w/2, oy+o.h/2+6);
+        cv.textAlign='left';
+        break;
+      case 'deco':
+        cv.fillStyle = 'rgba(0,100,30,.5)';
+        cv.fillRect(ox+o.w/4, oy+o.h*0.4, o.w/2, o.h*0.6);
+        cv.fillStyle = col;
+        cv.beginPath();
+        cv.ellipse(ox+o.w/2, oy+o.h*0.4, o.w/2, o.h*0.5, 0, 0, Math.PI*2);
+        cv.fill();
+        break;
+      default:
+        cv.fillStyle = col;
+        cv.fillRect(ox, oy, o.w, o.h);
+    }
+
+    if (sel) {
+      cv.strokeStyle = '#fff';
+      cv.lineWidth = 2;
+      cv.setLineDash([4,4]);
+      cv.strokeRect(ox-1, oy-1, o.w+2, o.h+2);
+      cv.setLineDash([]);
     }
   });
+
+  // Scroll position shadow on edges
+  if (sx > 10) {
+    const g = cv.createLinearGradient(0,0,20,0);
+    g.addColorStop(0,'rgba(0,0,0,.4)'); g.addColorStop(1,'transparent');
+    cv.fillStyle=g; cv.fillRect(0,0,20,H);
+  }
 }
 
 function exbUpdateObjCount() {
@@ -502,42 +757,26 @@ function exbPickColor() {
 function exbStudioSave() {
   const name = EXB.studioProjectName.trim() || 'Без названия';
   const me = EXB.users[EXB.user];
-  if(!me) return;
-  const proj = me.projects || [];
+  if (!me) return;
+  const proj = me.projects = me.projects || [];
   const idx = proj.findIndex(p=>p.name===name);
-  const data = {name, objects: EXB.studioObjects, updated: new Date().toLocaleString('ru')};
-  if(idx>=0) proj[idx]=data; else proj.unshift(data);
-  me.projects = proj;
+  const data = {name, objects: EXB.studioObjects.map(o=>({...o})), updated: new Date().toLocaleString('ru')};
+  if (idx>=0) proj[idx]=data; else proj.unshift(data);
   exbSaveUsers();
-  showNotif('ExiStudio','Проект "'+name+'" сохранён','💾');
-}
-
-function exbStudioLoad() {
-  const me = EXB.users[EXB.user] || {};
-  const projects = me.projects || [];
-  if(!projects.length) { showNotif('ExiStudio','Нет сохранённых проектов','📂'); return; }
-  const list = projects.map((p,i)=>`${i+1}. ${p.name}`).join('\n');
-  const ans = prompt('Выберите номер проекта:\n'+list);
-  const idx = parseInt(ans)-1;
-  if(isNaN(idx)||!projects[idx]) return;
-  const proj = projects[idx];
-  EXB.studioObjects = proj.objects || [];
-  EXB.studioProjectName = proj.name;
-  const ni = el('exb-proj-name');
-  if(ni) ni.value=proj.name;
-  exbStudioRedraw();
-  exbUpdateObjCount();
-  showNotif('ExiStudio','Загружен: '+proj.name,'📂');
+  showNotif('ExiStudio', `Проект "${name}" сохранён`, '💾');
 }
 
 function exbStudioBaseplate() {
   EXB.studioObjects = EXB_BASEPLATE.map(o=>({...o}));
   EXB.studioProjectName = 'Baseplate';
+  EXB.studioScrollX = 0;
+  EXB.studioScrollY = 0;
+  EXB._studioEditing = true;
   const ni = el('exb-proj-name');
-  if(ni) ni.value='Baseplate';
+  if (ni) ni.value = 'Baseplate';
   exbStudioRedraw();
   exbUpdateObjCount();
-  showNotif('ExiStudio','Baseplate загружен!','🏗');
+  showNotif('ExiStudio', 'Baseplate загружен!', '🏗');
 }
 
 function exbStudioClear() {
@@ -548,7 +787,11 @@ function exbStudioClear() {
 }
 
 function exbStudioTest() {
-  const game = {name:'Тест: '+EXB.studioProjectName, icon:'🛠', color:'#1a2040', objects:EXB.studioObjects};
+  const game = {
+    name: 'Тест: ' + EXB.studioProjectName,
+    icon: '🛠', color: '#1a2040',
+    objects: EXB.studioObjects.map(o=>({...o})),
+  };
   exbOpenGame(game);
 }
 
@@ -577,23 +820,55 @@ function exbPublishDialog() {
 }
 
 function exbDoPublish() {
+  if (EXB._publishing) return; // защита от двойного нажатия
+  EXB._publishing = true;
+
+  const btn = document.querySelector('[onclick="exbDoPublish()"]');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Публикация...'; }
+
   const name = (el('exb-pub-name')?.value||'').trim() || 'Untitled Game';
   const desc = (el('exb-pub-desc')?.value||'').trim() || 'Без описания';
+
+  // Проверка на дубликат (тот же автор + то же название)
+  const duplicate = EXB.games.find(g => g.author === EXB.user && g.name === name);
+  if (duplicate) {
+    // Обновляем существующую игру
+    duplicate.objects = EXB.studioObjects;
+    duplicate.updated = new Date().toLocaleDateString('ru');
+    exbSaveGames();
+    document.querySelector('[style*="position:fixed"]')?.remove();
+    showNotif('Exiblox', `Игра "${name}" обновлена! ✏️`, '📤');
+    EXB._publishing = false;
+    return;
+  }
+
   const id = Math.random().toString(36).slice(2,10).toUpperCase();
   const game = {
     id, name, desc, author: EXB.user,
-    objects: EXB.studioObjects,
-    icon: EXB_ICONS[Math.floor(Math.random()*EXB_ICONS.length)],
-    color: EXB_COLORS[Math.floor(Math.random()*EXB_COLORS.length)],
+    objects: EXB.studioObjects.map(o=>({...o})),
+    icon:    EXB_ICONS[Math.floor(Math.random()*EXB_ICONS.length)],
+    color:   EXB_COLORS[Math.floor(Math.random()*EXB_COLORS.length)],
     rating: '100%', players: '0',
     created: new Date().toLocaleDateString('ru'),
   };
+
   EXB.games.unshift(game);
   exbSaveGames();
+
   const me = EXB.users[EXB.user];
-  if(me){ me.pubGames = me.pubGames||[]; me.pubGames.push(id); exbSaveUsers(); }
+  if (me) {
+    me.pubGames  = me.pubGames  || [];
+    me.pubGames.push(id);
+    me.ecoins    = (me.ecoins || 0) + 5;   // 🎁 +5 E$
+    exbSaveUsers();
+    // Обновить отображение E$ в топбаре
+    const robuxEl = document.querySelector('.exb-robux');
+    if (robuxEl) robuxEl.textContent = `🪙 ${me.ecoins} E$`;
+  }
+
   document.querySelector('[style*="position:fixed"]')?.remove();
-  showNotif('Exiblox',`Игра "${name}" опубликована! 🎉`,'📤');
+  showNotif('Exiblox', `Игра "${name}" опубликована! +5 E$ 🎉`, '📤');
+  EXB._publishing = false;
 }
 
 // ════════════════════════════════════════════
@@ -675,27 +950,165 @@ function exbPublish(c) {
 }
 
 // ════════════════════════════════════════════
+// AVATAR TAB
+// ════════════════════════════════════════════
+function exbAvatar(c) {
+  const skinId = EXB.skin || 'red';
+  c.innerHTML = `
+  <div class="exb-section" style="padding-top:24px;">
+    <div class="exb-sec-title">🎭 Выбери скин персонажа</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px;">Стикмен применится в игре автоматически</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;">
+      ${EXB_SKINS.map(sk=>`
+        <div onclick="exbSelectSkin('${sk.id}')" style="
+            width:160px;background:${sk.id===skinId?'rgba(0,178,255,.2)':'rgba(255,255,255,.05)'};
+            border:2px solid ${sk.id===skinId?'#00b2ff':'rgba(255,255,255,.08)'};
+            border-radius:16px;padding:18px 12px 14px;cursor:pointer;text-align:center;transition:.2s;"
+          onmouseover="this.style.borderColor='rgba(0,178,255,.6)'"
+          onmouseout="this.style.borderColor='${sk.id===skinId?'#00b2ff':'rgba(255,255,255,.08)'}'">
+          <canvas id="av-preview-${sk.id}" width="80" height="100" style="display:block;margin:0 auto 10px;"></canvas>
+          <div style="font-size:13px;font-weight:700;">${sk.name}</div>
+          ${sk.id===skinId?'<div style="font-size:11px;color:#00b2ff;margin-top:4px;">✓ Активен</div>':''}
+        </div>`).join('')}
+    </div>
+  </div>`;
+  // Рисуем превью стикменов
+  EXB_SKINS.forEach(sk => {
+    const cv = document.getElementById(`av-preview-${sk.id}`)?.getContext('2d');
+    if (!cv) return;
+    exbDrawStickman(cv, 40, 85, sk, 10, false, false, 0); // стоит
+  });
+}
+
+function exbSelectSkin(id) {
+  EXB.skin = id;
+  localStorage.setItem('exiblox_skin', id);
+  exbAvatar(el('exb-content')); // перерисовать
+  showNotif('Exiblox', 'Скин изменён!', '🎭');
+}
+
+// ── Рисование стикмена ──────────────────────
+// cx, cy = центр бёдер; sk = скин; scale = масштаб
+// walkStep = шаг анимации; jumping = в прыжке; facing = 1 right -1 left
+function exbDrawStickman(cv, cx, cy, sk, scale, jumping, facing, walkStep) {
+  const s  = scale || 1;
+  const HL = 18 * s;  // длина ноги
+  const AL = 15 * s;  // длина руки
+  const HS = 10 * s;  // размер головы (радиус)
+  const BL = 20 * s;  // тело
+
+  const bodyColor = sk.bodyColor;
+  const headColor = sk.headColor;
+  const limbColor = sk.limbColor;
+
+  cv.lineWidth   = 2.5 * s;
+  cv.lineCap     = 'round';
+  cv.strokeStyle = limbColor;
+
+  // --- НОГИ ---
+  const legSwing = jumping ? 0 : Math.sin(walkStep * 0.28) * 22 * s;
+  const legBend  = jumping ? -20 * s : 0;
+
+  // Левая нога
+  cv.beginPath();
+  cv.moveTo(cx, cy);
+  cv.lineTo(cx - 6*s + legSwing, cy + HL + legBend);
+  cv.stroke();
+
+  // Правая нога
+  cv.beginPath();
+  cv.moveTo(cx, cy);
+  cv.lineTo(cx + 6*s - legSwing, cy + HL + legBend);
+  cv.stroke();
+
+  // --- ТЕЛО ---
+  cv.strokeStyle = bodyColor;
+  cv.lineWidth   = 3 * s;
+  cv.beginPath();
+  cv.moveTo(cx, cy);
+  cv.lineTo(cx, cy - BL);
+  cv.stroke();
+
+  // --- РУКИ ---
+  cv.strokeStyle = limbColor;
+  cv.lineWidth   = 2.5 * s;
+  const armSwing = jumping ? -30*s : Math.sin(walkStep * 0.28 + Math.PI) * 20 * s;
+  const shoulderY = cy - BL + 4*s;
+
+  // Левая рука
+  cv.beginPath();
+  cv.moveTo(cx, shoulderY);
+  cv.lineTo(cx - AL + armSwing, shoulderY + 10*s + (jumping ? -10*s : 0));
+  cv.stroke();
+
+  // Правая рука
+  cv.beginPath();
+  cv.moveTo(cx, shoulderY);
+  cv.lineTo(cx + AL - armSwing, shoulderY + 10*s + (jumping ? -10*s : 0));
+  cv.stroke();
+
+  // --- ГОЛОВА ---
+  cv.fillStyle   = headColor;
+  cv.strokeStyle = limbColor;
+  cv.lineWidth   = 2 * s;
+  cv.beginPath();
+  cv.arc(cx, cy - BL - HS, HS, 0, Math.PI * 2);
+  cv.fill();
+  cv.stroke();
+
+  // --- КЕПКА (если есть) ---
+  if (sk.capColor) {
+    cv.fillStyle = sk.capColor;
+    cv.beginPath();
+    // Поля кепки
+    cv.ellipse(cx, cy - BL - HS * 2 + 4*s, HS + 5*s, 4*s, 0, 0, Math.PI * 2);
+    cv.fill();
+    // Тулья
+    cv.fillRect(cx - HS, cy - BL - HS * 2 - 10*s, HS * 2, 14*s);
+  }
+
+  // --- ГЛАЗА ---
+  cv.fillStyle = '#1a1a1a';
+  const ex = (facing < 0 ? -4 : 3) * s;
+  cv.beginPath();
+  cv.arc(cx + ex, cy - BL - HS - 2*s, 2*s, 0, Math.PI * 2);
+  cv.fill();
+}
+
+// ════════════════════════════════════════════
 // PROFILE
 // ════════════════════════════════════════════
 function exbProfile(c) {
   const me = EXB.users[EXB.user] || {};
+  const curSkin = EXB_SKINS.find(s=>s.id===(EXB.skin||'red')) || EXB_SKINS[0];
   c.innerHTML = `
   <div class="exb-section" style="padding-top:26px;max-width:520px;">
     <div class="exb-sec-title">👤 Профиль</div>
     <div class="exb-profile-card" style="flex-direction:column;align-items:flex-start;gap:10px;">
-      <div style="font-size:18px;font-weight:700;">${me.isGuest?'👤 Гость':'👤 '+EXB.user}</div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <canvas id="profile-skin-prev" width="50" height="70"></canvas>
+        <div>
+          <div style="font-size:18px;font-weight:700;">${me.isGuest?'👤 Гость':'👤 '+EXB.user}</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4);">Скин: ${curSkin.name}</div>
+        </div>
+      </div>
       ${!me.isGuest?`<div style="font-size:12px;color:rgba(255,255,255,.4);">📧 ${me.email||'—'}</div>`:''}
       ${!me.isGuest?`<div style="font-size:12px;color:#00b2ff;">🎫 Код: ${me.code||'—'}</div>`:''}
-      <div style="font-size:12px;color:rgba(255,255,255,.4);">💰 ${me.robux||0} R$</div>
+      <div style="font-size:13px;font-weight:700;color:#FFD700;">🪙 ${me.ecoins||0} E$</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);">👥 Друзей: ${(me.friends||[]).length}</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);">🛠 Проектов: ${(me.projects||[]).length}</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);">📤 Опубликовано: ${(me.pubGames||[]).length}</div>
     </div>
     <div style="display:flex;gap:10px;margin-top:16px;">
+      <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('avatar')" style="font-size:11px;">🎭 Сменить скин</button>
       <button class="exb-btn2 exb-btn2-red" onclick="exbLogout()">🚪 Выйти</button>
       ${me.isGuest?`<button class="exb-btn2 exb-btn2-blue" onclick="exbLogout()">Создать аккаунт</button>`:''}
     </div>
   </div>`;
+
+  // Рисуем скин в профиле
+  const pc = document.getElementById('profile-skin-prev')?.getContext('2d');
+  if (pc) exbDrawStickman(pc, 25, 60, curSkin, 1, false, 1, 0);
 }
 
 // ════════════════════════════════════════════
@@ -965,113 +1378,174 @@ function exbOpenGame(game) {
 
 function exbRunGame(game, W, H) {
   const canvas = el('exb-game-canvas');
-  if(!canvas) return;
+  if (!canvas) return;
   const cv = canvas.getContext('2d');
-  const FLOOR = H - 60;
-  const GRAVITY = 0.55, JUMP_FORCE = -13, SPEED = 5;
-  const RAINBOW = ['#ff0000','#ff7700','#ffff00','#00cc00','#0000ff','#8800cc'];
+  const FLOOR    = H - 60;
+  const GRAVITY  = 0.55, JUMP_FORCE = -13, SPEED = 5;
 
-  let px=100,py=FLOOR-50,vx=0,vy=0,onGround=true,step=0;
-  const keys={left:false,right:false};
+  // Скин
+  const skinId = EXB.skin || 'red';
+  const skin   = EXB_SKINS.find(s=>s.id===skinId) || EXB_SKINS[0];
+
+  let px=100, py=FLOOR-70, vx=0, vy=0, onGround=true, step=0, facing=1;
+  const keys = {left:false, right:false};
 
   const objs = game.objects || [];
-  const platforms = objs.filter(o=>o.type==='block').map(o=>({x:o.x,y:o.y,w:o.w,h:o.h,color:o.color||'#4a9a30'}));
-  const coins = objs.filter(o=>o.type==='coin').map(o=>({x:o.x+o.w/2,y:o.y+o.h/2}));
-  if(!platforms.length) platforms.push({x:0,y:FLOOR,w:W*3,h:40,color:'#4a9a30'},{x:200,y:340,w:140,h:18,color:'#4a9a30'},{x:420,y:270,w:140,h:18,color:'#4a9a30'},{x:600,y:200,w:140,h:18,color:'#4a9a30'});
-  if(!coins.length) [{x:240,y:320},{x:460,y:250},{x:640,y:180},{x:330,y:150}].forEach(c=>coins.push(c));
+  const platforms = objs.filter(o=>['block','platform','ice'].includes(o.type))
+                        .map(o=>({x:o.x, y:o.y, w:o.w, h:o.h, color:o.color||'#4a9a30', type:o.type}));
+  const coins   = objs.filter(o=>o.type==='coin').map(o=>({x:o.x+o.w/2, y:o.y+o.h/2}));
+  const spikes  = objs.filter(o=>o.type==='spike');
+  const springs = objs.filter(o=>o.type==='spring');
+  const lava    = objs.filter(o=>o.type==='lava');
+
+  if (!platforms.length) {
+    platforms.push(
+      {x:0,  y:FLOOR,   w:W*4, h:40,  color:'#4a9a30', type:'block'},
+      {x:200,y:FLOOR-120,w:160,h:20, color:'#2980b9', type:'platform'},
+      {x:430,y:FLOOR-200,w:160,h:20, color:'#8e44ad', type:'platform'},
+      {x:660,y:FLOOR-280,w:160,h:20, color:'#c0392b', type:'platform'},
+    );
+  }
+  if (!coins.length) [{x:250,y:FLOOR-150},{x:470,y:FLOOR-230},{x:700,y:FLOOR-310}].forEach(c=>coins.push(c));
 
   const collected = new Set();
   let scored = 0;
 
   // Controls
-  const setKey=(k,v)=>keys[k]=v;
-  el('exb-g-left').addEventListener('mousedown',()=>setKey('left',true));
-  el('exb-g-left').addEventListener('mouseup',()=>setKey('left',false));
-  el('exb-g-left').addEventListener('mouseleave',()=>setKey('left',false));
-  el('exb-g-right').addEventListener('mousedown',()=>setKey('right',true));
-  el('exb-g-right').addEventListener('mouseup',()=>setKey('right',false));
-  el('exb-g-right').addEventListener('mouseleave',()=>setKey('right',false));
-  el('exb-g-jump').addEventListener('click',doJump);
-  document.addEventListener('keydown',onKey);
-  document.addEventListener('keyup',onKeyUp);
+  const setKey = (k,v) => keys[k]=v;
+  el('exb-g-left')?.addEventListener('mousedown', ()=>setKey('left',true));
+  el('exb-g-left')?.addEventListener('mouseup',   ()=>setKey('left',false));
+  el('exb-g-left')?.addEventListener('mouseleave',()=>setKey('left',false));
+  el('exb-g-right')?.addEventListener('mousedown',()=>setKey('right',true));
+  el('exb-g-right')?.addEventListener('mouseup',  ()=>setKey('right',false));
+  el('exb-g-right')?.addEventListener('mouseleave',()=>setKey('right',false));
+  el('exb-g-jump')?.addEventListener('click', doJump);
 
-  function onKey(e){
-    if(e.key==='ArrowLeft') setKey('left',true);
-    if(e.key==='ArrowRight') setKey('right',true);
-    if(e.key===' '||e.key==='ArrowUp') doJump();
-  }
-  function onKeyUp(e){
-    if(e.key==='ArrowLeft') setKey('left',false);
-    if(e.key==='ArrowRight') setKey('right',false);
-  }
-  function doJump(){if(onGround){vy=JUMP_FORCE;onGround=false;}}
+  document.addEventListener('keydown',  onKey);
+  document.addEventListener('keyup',    onKeyUp);
 
-  function update(){
-    if(keys.left) vx=-SPEED;
-    else if(keys.right) vx=SPEED;
-    else vx*=0.75;
-    vy+=GRAVITY;
-    px+=vx; py+=vy;
-    px=Math.max(0,Math.min(px,W-40));
-    if(py>H+100){py=FLOOR-50;px=100;vy=0;}
-    onGround=false;
-    for(const p of platforms){
-      if(px+38>p.x&&px<p.x+p.w&&py+50>p.y&&py+50<p.y+p.h+vy+2&&vy>=0){
-        py=p.y-50;vy=0;onGround=true;
+  function onKey(e)   { if(e.key==='ArrowLeft')setKey('left',true); if(e.key==='ArrowRight')setKey('right',true); if(e.key===' '||e.key==='ArrowUp')doJump(); }
+  function onKeyUp(e) { if(e.key==='ArrowLeft')setKey('left',false); if(e.key==='ArrowRight')setKey('right',false); }
+  function doJump()   { if(onGround){ vy=JUMP_FORCE; onGround=false; } }
+
+  function update() {
+    if (keys.left)       { vx=-SPEED; facing=-1; }
+    else if (keys.right) { vx= SPEED; facing= 1; }
+    else vx *= 0.72;
+
+    vy += GRAVITY;
+    px += vx; py += vy;
+    px = Math.max(0, Math.min(px, W-24));
+    if (py > H+120) { py=FLOOR-70; px=100; vy=0; }
+
+    onGround = false;
+    for (const p of platforms) {
+      const friction = p.type==='ice' ? 0.98 : 1;
+      if (px+22>p.x && px<p.x+p.w && py+60>p.y && py+60<p.y+p.h+vy+2 && vy>=0) {
+        py=p.y-60; vy=0; onGround=true;
+        if (p.type==='ice') vx *= friction;
       }
     }
-    coins.forEach((c,i)=>{
-      if(!collected.has(i)&&Math.abs(px+20-c.x)<24&&Math.abs(py+25-c.y)<24){
-        collected.add(i);scored++;
-        const sc=el('exb-g-score');
-        if(sc)sc.textContent=`🪙 ${scored} / ${coins.length}`;
+    // Пружина — прыжок×2
+    for (const sp of springs) {
+      if (px+22>sp.x && px<sp.x+sp.w && py+60>sp.y && py+60<=sp.y+sp.h && vy>=0) {
+        vy = JUMP_FORCE * 1.8; onGround=false;
+      }
+    }
+    // Шипы и лава — сброс позиции
+    for (const sk of [...spikes, ...lava]) {
+      if (px+20>sk.x && px<sk.x+sk.w && py+55>sk.y && py<sk.y+sk.h) {
+        py=FLOOR-70; px=100; vy=0;
+        showNotif('Exiblox','Ой! Начни сначала 😵','💥');
+      }
+    }
+
+    // Монеты
+    coins.forEach((co,i) => {
+      if (!collected.has(i) && Math.abs(px+12-co.x)<22 && Math.abs(py+30-co.y)<22) {
+        collected.add(i); scored++;
+        const sc = el('exb-g-score');
+        if (sc) sc.textContent = `🪙 ${scored} / ${coins.length}`;
       }
     });
-    step=(step+1)%60;
+
+    if (onGround && (Math.abs(vx) > 0.3)) step++;
+    else if (!onGround) step = (step + 0.5);
   }
 
-  function draw(){
-    // Sky gradient
-    const grad=cv.createLinearGradient(0,0,0,H);
-    grad.addColorStop(0,'#1a2040');grad.addColorStop(1,'#0d1230');
-    cv.fillStyle=grad;cv.fillRect(0,0,W,H);
+  function draw() {
+    // Sky
+    const grad = cv.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0,'#1a2040'); grad.addColorStop(1,'#0d1230');
+    cv.fillStyle=grad; cv.fillRect(0,0,W,H);
+
     // Platforms
-    for(const p of platforms){
-      cv.fillStyle=p.color||'#4a9a30';
-      cv.fillRect(p.x,p.y,p.w,p.h);
+    for (const p of platforms) {
+      cv.fillStyle = p.color||'#4a9a30';
+      cv.fillRect(p.x, p.y, p.w, p.h);
       cv.fillStyle='rgba(255,255,255,.15)';
-      cv.fillRect(p.x,p.y,p.w,6);
+      cv.fillRect(p.x, p.y, p.w, Math.min(7, p.h));
     }
-    // Coins
-    coins.forEach((c,i)=>{
-      if(!collected.has(i)){
-        const pulse=1+0.08*Math.sin(step/8);
-        const r=11*pulse;
-        cv.beginPath();cv.arc(c.x,c.y,r,0,Math.PI*2);
-        cv.fillStyle='#FFD700';cv.fill();
-        cv.strokeStyle='#FFA500';cv.lineWidth=2;cv.stroke();
+
+    // Springs
+    springs.forEach(sp => {
+      cv.fillStyle='#555'; cv.fillRect(sp.x,sp.y+sp.h-8,sp.w,8);
+      cv.strokeStyle='#f1c40f'; cv.lineWidth=2;
+      for(let i=0;i<3;i++){
+        cv.beginPath();
+        cv.ellipse(sp.x+sp.w/2, sp.y+sp.h-8-(i*(sp.h-8)/3), sp.w/2-2, 3, 0,0,Math.PI*2);
+        cv.stroke();
       }
     });
-    // Player (rainbow)
-    const rc=(o=0)=>RAINBOW[Math.floor((step/8+o))%RAINBOW.length];
-    const bx=Math.round(px),by=Math.round(py);
-    cv.fillStyle=rc(0);cv.beginPath();cv.ellipse(bx+20,by+35,20,18,0,0,Math.PI*2);cv.fill();
-    cv.fillStyle=rc(1);cv.beginPath();cv.ellipse(bx+20,by+16,18,16,0,0,Math.PI*2);cv.fill();
+
+    // Spikes
+    spikes.forEach(sk => {
+      cv.fillStyle='#aaa';
+      cv.beginPath(); cv.moveTo(sk.x,sk.y+sk.h); cv.lineTo(sk.x+sk.w/2,sk.y); cv.lineTo(sk.x+sk.w,sk.y+sk.h); cv.closePath(); cv.fill();
+    });
+
+    // Lava (animated)
+    lava.forEach(lv => {
+      cv.fillStyle='#ff4500'; cv.fillRect(lv.x,lv.y,lv.w,lv.h);
+      cv.fillStyle='#ff6e00';
+      for(let lx=0;lx<lv.w;lx+=8){
+        const lh=3+2*Math.sin((lx+step*2)/5);
+        cv.fillRect(lv.x+lx,lv.y,6,lh);
+      }
+    });
+
+    // Coins
+    coins.forEach((co,i) => {
+      if (!collected.has(i)) {
+        const pulse = 1+0.08*Math.sin(step/6);
+        cv.beginPath(); cv.arc(co.x,co.y,10*pulse,0,Math.PI*2);
+        cv.fillStyle='#FFD700'; cv.fill();
+        cv.strokeStyle='#FFA500'; cv.lineWidth=2; cv.stroke();
+        cv.fillStyle='#8B6914'; cv.font='bold 8px monospace'; cv.textAlign='center';
+        cv.fillText('E$',co.x,co.y+3); cv.textAlign='left';
+      }
+    });
+
+    // Stickman player
+    const bx = Math.round(px+12); // центр X
+    const by = Math.round(py+60); // центр бёдер
+    exbDrawStickman(cv, bx, by, skin, 1.15, !onGround, facing, step);
+
     // HUD
-    cv.fillStyle='rgba(0,0,0,.5)';cv.fillRect(0,0,W,28);
-    cv.fillStyle='#fff';cv.font='bold 13px Segoe UI';
-    cv.fillText(`🪙 ${scored}/${coins.length}`,12,19);
-    cv.fillText(game.name||'Игра',W/2-40,19);
+    cv.fillStyle='rgba(0,0,0,.5)'; cv.fillRect(0,0,W,28);
+    cv.fillStyle='#fff'; cv.font='bold 13px Segoe UI'; cv.textAlign='left';
+    cv.fillText(`🪙 ${scored}/${coins.length}`, 12, 19);
+    cv.fillText(game.name||'Игра', W/2-40, 19);
+    cv.textAlign='left';
   }
 
-  let running=true;
-  function loop(){
-    if(!el('exb-game-canvas')){
-      document.removeEventListener('keydown',onKey);
-      document.removeEventListener('keyup',onKeyUp);
+  function loop() {
+    if (!el('exb-game-canvas')) {
+      document.removeEventListener('keydown',  onKey);
+      document.removeEventListener('keyup',    onKeyUp);
       return;
     }
-    update();draw();
+    update(); draw();
     requestAnimationFrame(loop);
   }
   loop();
