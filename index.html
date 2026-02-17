@@ -213,7 +213,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .cc-eq{background:var(--accent);color:#fff;}
 .cc-num{background:var(--card-bg);}
 .cc-sci-btn{background:rgba(96,205,255,.15);color:var(--accent2);font-size:12px;}
-.cc-span2{grid-column:span 2;}
 
 /* SETTINGS */
 .set-wrap{display:flex;height:100%;}
@@ -248,7 +247,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .br-searchbar input{background:none;border:none;outline:none;color:var(--text);font-size:14px;flex:1;font-family:inherit;}
 .br-searchbar button{background:var(--accent);border:none;color:#fff;padding:6px 16px;border-radius:16px;cursor:pointer;font-size:12px;font-family:inherit;}
 .br-shortcuts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:520px;max-width:100%;}
-.br-sc{background:var(--card-bg);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:background .12s;}
+.br-sc{background:var(--card-bg);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:background .12px;}
 .br-sc:hover{background:var(--bg2);}
 .br-sc .ico{font-size:20px;}
 .br-sc span{font-size:10.5px;color:var(--text2);}
@@ -287,30 +286,156 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .tm-perf-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-bottom:6px;}
 .tm-perf-info{font-size:11px;color:var(--text2);}
 
-/* EXIAN AI */
-.exian-wrap{display:flex;flex-direction:column;height:100%;background:rgba(8,10,18,.97);}
-body.light-theme .exian-wrap{background:rgba(248,251,255,.97);}
-.exian-toolbar{display:flex;align-items:center;gap:5px;padding:7px 10px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
-.exian-btn{padding:5px 12px;border-radius:6px;font-size:11.5px;cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:5px;background:var(--bg2);border:1px solid var(--border);color:var(--text);}
-.exian-btn:hover{filter:brightness(1.25);}
-.exian-btn.run{background:rgba(46,204,113,.25);color:#2ecc71;font-weight:600;}
-.exian-btn.run:hover{background:rgba(46,204,113,.4);}
-.exian-main{display:flex;flex:1;overflow:hidden;}
-.exian-editor{flex:1;display:flex;flex-direction:column;}
-.exian-tabs{display:flex;gap:2px;padding:5px 7px 0;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);flex-shrink:0;}
-.exian-tab{padding:5px 14px;border-radius:6px 6px 0 0;font-size:11.5px;color:var(--text2);cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:6px;}
-.exian-tab.active{background:rgba(8,10,18,1);color:var(--text);}
-body.light-theme .exian-tab.active{background:#fff;}
-#exian-code{flex:1;background:rgba(8,10,18,1);color:#d4d4d4;border:none;outline:none;padding:14px;font-size:12.5px;font-family:'Consolas','Courier New',monospace;resize:none;line-height:1.6;user-select:text;}
-body.light-theme #exian-code{background:#fff;color:#1a1a2e;}
-.exian-statusbar{display:flex;gap:14px;padding:4px 12px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;background:rgba(0,0,0,.25);}
-.exian-terminal{height:155px;border-top:1px solid var(--border);background:rgba(0,0,0,.65);padding:10px 12px;overflow-y:auto;font-family:'Consolas',monospace;font-size:11.5px;color:#00ff88;flex-shrink:0;}
-body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
-.exian-terminal-line{margin-bottom:3px;line-height:1.45;}
-.exian-terminal-prompt{color:#60cdff;}
-.exian-terminal-error{color:#ff6b6b;}
-.exian-terminal-success{color:#2ecc71;}
-.exian-terminal-info{color:#f1c40f;}
+/* ═══════════════════════════════════════════════
+   EXIAN AI — ЧАТ ИНТЕРФЕЙС
+═══════════════════════════════════════════════ */
+.echat-wrap{display:flex;height:100%;overflow:hidden;background:rgba(8,10,20,.97);}
+body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
+
+/* Сайдбар с историей */
+.echat-sidebar{
+  width:230px;flex-shrink:0;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  background:rgba(0,0,0,.2);
+}
+body.light-theme .echat-sidebar{background:rgba(0,0,0,.04);}
+.echat-sidebar-header{
+  padding:12px 10px 8px;
+  font-size:12px;font-weight:600;color:var(--text2);
+  letter-spacing:.5px;text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.echat-new-btn{
+  background:var(--accent);color:#fff;border:none;
+  border-radius:6px;padding:4px 10px;font-size:11px;
+  cursor:pointer;font-family:inherit;transition:background .15s;
+}
+.echat-new-btn:hover{background:#106ebe;}
+#exian-sessions-list{flex:1;overflow-y:auto;padding:6px;}
+.echat-session{
+  padding:8px 10px;border-radius:8px;cursor:pointer;
+  transition:background .12s;position:relative;margin-bottom:2px;
+}
+.echat-session:hover{background:var(--bg2);}
+.echat-session.active{background:rgba(0,120,212,.3);}
+.echat-session-t{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
+.echat-session-d{font-size:10px;color:var(--text2);margin-top:2px;}
+.echat-session-del{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:11px;opacity:0;transition:opacity .15s;cursor:pointer;padding:2px 4px;}
+.echat-session:hover .echat-session-del{opacity:1;}
+.echat-session-del:hover{color:#e74c3c;}
+.echat-sidebar-footer{padding:8px 10px;border-top:1px solid var(--border);}
+.echat-clear-btn{font-size:11px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;transition:background .12s;width:100%;}
+.echat-clear-btn:hover{background:rgba(231,76,60,.2);color:#e74c3c;}
+
+/* Главная область чата */
+.echat-main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+/* Шапка чата */
+.echat-header{
+  padding:12px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+  background:rgba(0,0,0,.15);
+}
+body.light-theme .echat-header{background:rgba(0,0,0,.04);}
+.echat-header-ico{font-size:28px;}
+.echat-header-info .echat-header-name{font-size:15px;font-weight:600;color:var(--text);}
+.echat-header-info .echat-header-status{font-size:11px;color:#2ecc71;display:flex;align-items:center;gap:4px;}
+.echat-header-info .echat-header-status::before{content:'';width:6px;height:6px;background:#2ecc71;border-radius:50%;display:inline-block;}
+
+/* Быстрые вопросы */
+.echat-quick{
+  display:flex;gap:8px;padding:10px 16px;
+  border-bottom:1px solid var(--border);flex-shrink:0;
+  flex-wrap:wrap;background:rgba(0,0,0,.08);
+}
+body.light-theme .echat-quick{background:rgba(0,0,0,.03);}
+.echat-quick-btn{
+  padding:5px 12px;border-radius:20px;font-size:11px;
+  background:var(--bg2);border:1px solid var(--border);
+  color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.echat-quick-btn:hover{background:rgba(0,120,212,.3);color:var(--text);border-color:var(--accent);}
+
+/* Сообщения */
+#exian-chat-messages{
+  flex:1;overflow-y:auto;padding:16px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.echat-msg{display:flex;gap:10px;align-items:flex-start;}
+.echat-user{flex-direction:row-reverse;}
+.echat-bot{flex-direction:row;}
+.echat-avatar-bot{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,#0078d4,#60cdff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.echat-bot-wrap{display:flex;flex-direction:column;gap:4px;max-width:75%;}
+.echat-bot-name{font-size:11px;color:var(--text2);margin-left:2px;}
+.echat-bubble{
+  padding:10px 14px;border-radius:14px;
+  font-size:13px;line-height:1.6;
+  word-break:break-word;user-select:text;
+}
+.echat-bubble-user{
+  background:linear-gradient(135deg,#0078d4,#006cbf);
+  color:#fff;border-radius:14px 14px 4px 14px;
+  max-width:65%;align-self:flex-end;
+}
+.echat-bubble-bot{
+  background:var(--bg2);border:1px solid var(--border);
+  color:var(--text);border-radius:4px 14px 14px 14px;
+}
+body.light-theme .echat-bubble-bot{background:rgba(0,0,0,.05);}
+.echat-bubble pre{background:rgba(0,0,0,.3);border-radius:6px;padding:8px;font-size:11px;overflow-x:auto;margin:6px 0;}
+body.light-theme .echat-bubble pre{background:rgba(0,0,0,.08);}
+.echat-bubble code{font-family:'Consolas',monospace;font-size:11.5px;background:rgba(0,0,0,.25);padding:1px 4px;border-radius:4px;}
+body.light-theme .echat-bubble code{background:rgba(0,0,0,.1);}
+.echat-time{font-size:10px;color:var(--text2);padding:0 4px;}
+.echat-msg-footer{display:flex;align-items:center;gap:8px;}
+.echat-action{font-size:13px;cursor:pointer;opacity:0;transition:opacity .2s;}
+.echat-bot-wrap:hover .echat-action{opacity:1;}
+.echat-action:hover{filter:brightness(1.3);}
+@keyframes echatIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.echat-animate{animation:echatIn .25s ease;}
+
+/* Typing indicator */
+.echat-typing{display:flex;align-items:center;gap:4px;padding:12px 14px;}
+.edot{width:7px;height:7px;border-radius:50%;background:var(--text2);display:inline-block;animation:dotBounce 1.2s ease infinite;}
+.edot:nth-child(2){animation-delay:.2s;}
+.edot:nth-child(3){animation-delay:.4s;}
+@keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+
+/* Инпут */
+.echat-input-area{
+  padding:12px 16px;border-top:1px solid var(--border);
+  background:rgba(0,0,0,.15);flex-shrink:0;
+}
+body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
+.echat-input-row{
+  display:flex;align-items:flex-end;gap:8px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:14px;padding:8px 8px 8px 14px;
+  transition:border .2s;
+}
+.echat-input-row:focus-within{border-color:var(--accent);}
+#exian-chat-input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--text);font-size:13px;font-family:inherit;
+  resize:none;line-height:1.5;max-height:120px;
+  min-height:20px;overflow-y:auto;user-select:text;
+}
+#exian-chat-input::placeholder{color:var(--text2);}
+#exian-send-btn{
+  width:34px;height:34px;border-radius:10px;
+  background:var(--accent);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:all .15s;flex-shrink:0;
+}
+#exian-send-btn:hover{background:#106ebe;transform:scale(1.05);}
+.echat-hint{font-size:10px;color:var(--text2);text-align:center;margin-top:6px;}
 
 /* NOTIFICATIONS */
 #notif-stack{position:fixed;bottom:60px;right:12px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
@@ -342,7 +467,7 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
     <div class="reg-logo">E✦</div>
     <h2>Добро пожаловать</h2>
     <p>Создайте аккаунт ExiWin 12</p>
-    <div class="reg-avatar-pick" id="av-pick">
+    <div class="reg-avatar-pick">
       <div class="av-opt sel" data-av="🧑" onclick="pickAv(this)">🧑</div>
       <div class="av-opt" data-av="👩" onclick="pickAv(this)">👩</div>
       <div class="av-opt" data-av="🧔" onclick="pickAv(this)">🧔</div>
@@ -386,31 +511,14 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div id="desktop" onclick="desktopClick(event)" oncontextmenu="showCtxMenu(event,'desktop')">
   <div class="desk-aurora"></div>
   <div class="desk-glow"></div>
-  <!-- Иконки -->
-  <div class="desk-icon" style="top:16px;left:18px" ondblclick="openApp('explorer')" onclick="selectIcon(this)">
-    <div class="dico">💻</div><span>Этот компьютер</span>
-  </div>
-  <div class="desk-icon" style="top:112px;left:18px" ondblclick="openApp('notepad')" onclick="selectIcon(this)">
-    <div class="dico">📝</div><span>Блокнот</span>
-  </div>
-  <div class="desk-icon" style="top:208px;left:18px" ondblclick="openApp('browser')" onclick="selectIcon(this)">
-    <div class="dico">🌐</div><span>Edge</span>
-  </div>
-  <div class="desk-icon" style="top:304px;left:18px" ondblclick="openApp('calc')" onclick="selectIcon(this)">
-    <div class="dico">🧮</div><span>Калькулятор</span>
-  </div>
-  <div class="desk-icon" style="top:400px;left:18px" ondblclick="openApp('settings')" onclick="selectIcon(this)">
-    <div class="dico">⚙️</div><span>Параметры</span>
-  </div>
-  <div class="desk-icon" style="top:16px;left:118px" ondblclick="openApp('paint')" onclick="selectIcon(this)">
-    <div class="dico">🎨</div><span>Paint</span>
-  </div>
-  <div class="desk-icon" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)">
-    <div class="dico">📊</div><span>Диспетчер задач</span>
-  </div>
-  <div class="desk-icon" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)">
-    <div class="dico">🤖</div><span>Exian.AI 3.0</span>
-  </div>
+  <div class="desk-icon" style="top:16px;left:18px" ondblclick="openApp('explorer')" onclick="selectIcon(this)"><div class="dico">💻</div><span>Этот компьютер</span></div>
+  <div class="desk-icon" style="top:112px;left:18px" ondblclick="openApp('notepad')" onclick="selectIcon(this)"><div class="dico">📝</div><span>Блокнот</span></div>
+  <div class="desk-icon" style="top:208px;left:18px" ondblclick="openApp('browser')" onclick="selectIcon(this)"><div class="dico">🌐</div><span>Edge</span></div>
+  <div class="desk-icon" style="top:304px;left:18px" ondblclick="openApp('calc')" onclick="selectIcon(this)"><div class="dico">🧮</div><span>Калькулятор</span></div>
+  <div class="desk-icon" style="top:400px;left:18px" ondblclick="openApp('settings')" onclick="selectIcon(this)"><div class="dico">⚙️</div><span>Параметры</span></div>
+  <div class="desk-icon" style="top:16px;left:118px" ondblclick="openApp('paint')" onclick="selectIcon(this)"><div class="dico">🎨</div><span>Paint</span></div>
+  <div class="desk-icon" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)"><div class="dico">📊</div><span>Диспетчер задач</span></div>
+  <div class="desk-icon" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)"><div class="dico">🤖</div><span>Exian.AI 3.0</span></div>
 </div>
 
 <!-- TASKBAR -->
@@ -420,31 +528,26 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
     <div class="tb-sep"></div>
   </div>
   <div id="tb-center">
-    <div class="tb-btn" onclick="toggleStart(event)" title="Поиск">🔍</div>
-    <div class="tb-btn" id="tb-explorer" title="Проводник" onclick="tbClick('explorer')">📁</div>
-    <div class="tb-btn" id="tb-browser"  title="Edge"       onclick="tbClick('browser')">🌐</div>
-    <div class="tb-btn" id="tb-notepad"  title="Блокнот"    onclick="tbClick('notepad')">📝</div>
-    <div class="tb-btn" id="tb-calc"     title="Калькулятор" onclick="tbClick('calc')">🧮</div>
-    <div class="tb-btn" id="tb-paint"    title="Paint"      onclick="tbClick('paint')">🎨</div>
-    <div class="tb-btn" id="tb-settings" title="Параметры"  onclick="tbClick('settings')">⚙️</div>
-    <div class="tb-btn" id="tb-taskman"  title="Диспетчер"  onclick="tbClick('taskman')">📊</div>
-    <div class="tb-btn" id="tb-exianai"  title="Exian.AI"   onclick="tbClick('exianai')">🤖</div>
+    <div class="tb-btn" onclick="toggleStart(event)">🔍</div>
+    <div class="tb-btn" id="tb-explorer" onclick="tbClick('explorer')">📁</div>
+    <div class="tb-btn" id="tb-browser"  onclick="tbClick('browser')">🌐</div>
+    <div class="tb-btn" id="tb-notepad"  onclick="tbClick('notepad')">📝</div>
+    <div class="tb-btn" id="tb-calc"     onclick="tbClick('calc')">🧮</div>
+    <div class="tb-btn" id="tb-paint"    onclick="tbClick('paint')">🎨</div>
+    <div class="tb-btn" id="tb-settings" onclick="tbClick('settings')">⚙️</div>
+    <div class="tb-btn" id="tb-taskman"  onclick="tbClick('taskman')">📊</div>
+    <div class="tb-btn" id="tb-exianai"  onclick="tbClick('exianai')">🤖</div>
   </div>
   <div id="tb-right">
-    <div class="tb-sys" onclick="toggleTray(event)" title="Системный лоток">
-      <span>📶</span><span>🔊</span><span>🔋</span>
-    </div>
-    <div id="tb-clock" onclick="toggleTray(event)">
-      <div id="clock-time">12:00</div>
-      <div id="clock-date-tb">17.02.2026</div>
-    </div>
+    <div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
+    <div id="tb-clock" onclick="toggleTray(event)"><div id="clock-time">12:00</div><div id="clock-date-tb">17.02.2026</div></div>
     <div style="width:4px"></div>
   </div>
 </div>
 
 <!-- START MENU -->
 <div id="start-menu" onclick="event.stopPropagation()">
-  <div id="sm-search"><span>🔍</span><input type="text" id="sm-search-input" placeholder="Поиск приложений..." oninput="smSearch(this.value)"></div>
+  <div id="sm-search"><span>🔍</span><input type="text" id="sm-search-input" placeholder="Поиск..." oninput="smSearch(this.value)"></div>
   <div id="sm-pinned-sec">
     <div class="sm-sec">Закреплённые</div>
     <div class="pinned-apps">
@@ -464,20 +567,17 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
   </div>
   <div class="sm-sec">Рекомендуемые</div>
   <div class="rec-list" id="sm-rec-list">
-    <div class="rec-row" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="rec-info"><div class="n">AI_NeuralNetwork.cpp</div><div class="t">Только что</div></div></div>
+    <div class="rec-row" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="rec-info"><div class="n">Exian.AI — Умный чат</div><div class="t">Только что</div></div></div>
     <div class="rec-row" onclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="rec-info"><div class="n">Мои заметки</div><div class="t">Вчера</div></div></div>
     <div class="rec-row" onclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="rec-info"><div class="n">Рисунок1.png</div><div class="t">2 дня назад</div></div></div>
   </div>
   <div id="sm-search-results"></div>
   <div id="sm-footer">
-    <div id="sm-user" onclick="openApp('settings');hideAll()">
-      <div id="sm-avatar">🧑</div>
-      <span id="sm-username">Пользователь</span>
-    </div>
+    <div id="sm-user" onclick="openApp('settings');hideAll()"><div id="sm-avatar">🧑</div><span id="sm-username">Пользователь</span></div>
     <div class="power-menu">
-      <div class="pw-btn" title="Блокировка" onclick="lockScreen()">🔒</div>
-      <div class="pw-btn" title="Перезагрузка" onclick="reboot()">🔄</div>
-      <div class="pw-btn" title="Выключение" onclick="shutdown()">⏻</div>
+      <div class="pw-btn" onclick="lockScreen()">🔒</div>
+      <div class="pw-btn" onclick="reboot()">🔄</div>
+      <div class="pw-btn" onclick="shutdown()">⏻</div>
     </div>
   </div>
 </div>
@@ -487,14 +587,14 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
   <div class="tray-time-big" id="tray-time-big">12:00</div>
   <div class="tray-date-str" id="tray-date-str">Понедельник, 17 февраля 2026</div>
   <div class="tray-tiles">
-    <div class="tr-tile on"  id="tr-wifi"    onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
-    <div class="tr-tile on"  id="tr-bt"      onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
-    <div class="tr-tile off" id="tr-airplane" onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
-    <div class="tr-tile off" id="tr-night"   onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной</div></div>
+    <div class="tr-tile on"  id="tr-wifi"       onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
+    <div class="tr-tile on"  id="tr-bt"         onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
+    <div class="tr-tile off" id="tr-airplane"   onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
+    <div class="tr-tile off" id="tr-night"      onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной</div></div>
     <div class="tr-tile off" id="tr-light-theme" onclick="toggleLightTheme()"><div class="ico">☀️</div><div class="lbl">Светлая</div></div>
-    <div class="tr-tile on"  id="tr-dark-theme"  onclick="toggleDarkTheme()"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
-    <div class="tr-tile on"  id="tr-sound"   onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
-    <div class="tr-tile off" id="tr-focus"   onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
+    <div class="tr-tile on"  id="tr-dark-theme" onclick="toggleDarkTheme()"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
+    <div class="tr-tile on"  id="tr-sound"      onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
+    <div class="tr-tile off" id="tr-focus"      onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
   </div>
   <div class="sl-row"><span class="ico">🔆</span><input type="range" min="10" max="100" value="85" id="bright-sl" oninput="setBright(this.value)"><span class="sl-val" id="bright-val">85%</span></div>
   <div class="sl-row"><span class="ico">🔊</span><input type="range" min="0" max="100" value="60" id="vol-sl" oninput="setVol(this.value)"><span class="sl-val" id="vol-val">60%</span></div>
@@ -505,9 +605,10 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
   <div class="ctx-item" id="ctx-new-file" onclick="ctxNewFile()" style="display:none"><span>📄</span>Новый файл</div>
   <div class="ctx-item" onclick="ctxRefresh()"><span>🔃</span>Обновить</div>
   <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры экрана</div>
   <div class="ctx-item" onclick="toggleLightTheme();hideAll()"><span>☀️</span>Светлая тема</div>
   <div class="ctx-item" onclick="toggleDarkTheme();hideAll()"><span>🌑</span>Тёмная тема</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры</div>
 </div>
 
 <!-- ════ WINDOWS ════ -->
@@ -516,21 +617,15 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div class="window" id="win-explorer" style="width:780px;height:520px;top:40px;left:60px;" onclick="bringFront('win-explorer')">
   <div class="titlebar" onmousedown="dragWin(event,'win-explorer')">
     <span class="tb-icon">📁</span><span class="tb-title">Проводник</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('explorer')">─</div>
-      <div class="wb" onclick="toggleMax('win-explorer')">⬜</div>
-      <div class="wb cls" onclick="closeWin('explorer')">✕</div>
-    </div>
+    <div class="win-btns"><div class="wb" onclick="minimizeWin('explorer')">─</div><div class="wb" onclick="toggleMax('win-explorer')">⬜</div><div class="wb cls" onclick="closeWin('explorer')">✕</div></div>
   </div>
   <div class="win-body">
     <div class="exp-wrap">
       <div class="exp-topbar">
-        <div class="exp-nav" onclick="showNotif('Проводник','Назад','◀')">◀</div>
-        <div class="exp-nav" onclick="showNotif('Проводник','Вперёд','▶')">▶</div>
-        <div class="exp-nav" onclick="expNav('ExiWin')">↑</div>
-        <input class="exp-path" id="exp-path" value="ExiWin://Рабочий стол" onkeydown="if(event.key==='Enter')expSearch(this.value)">
+        <div class="exp-nav">◀</div><div class="exp-nav">▶</div><div class="exp-nav" onclick="expNav('ExiWin')">↑</div>
+        <input class="exp-path" id="exp-path" value="ExiWin://Рабочий стол">
         <input type="text" class="exp-path" style="max-width:160px" placeholder="🔍 Поиск..." oninput="expSearch(this.value)">
-        <div class="exp-nav" onclick="expNewFolder()" title="Новая папка">📁+</div>
+        <div class="exp-nav" onclick="expNewFolder()">📁+</div>
       </div>
       <div class="exp-body">
         <div class="exp-side">
@@ -553,47 +648,17 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div class="window" id="win-notepad" style="width:680px;height:500px;top:50px;left:80px;" onclick="bringFront('win-notepad')">
   <div class="titlebar" onmousedown="dragWin(event,'win-notepad')">
     <span class="tb-icon">📝</span><span class="tb-title">Блокнот</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('notepad')">─</div>
-      <div class="wb" onclick="toggleMax('win-notepad')">⬜</div>
-      <div class="wb cls" onclick="closeWin('notepad')">✕</div>
-    </div>
+    <div class="win-btns"><div class="wb" onclick="minimizeWin('notepad')">─</div><div class="wb" onclick="toggleMax('win-notepad')">⬜</div><div class="wb cls" onclick="closeWin('notepad')">✕</div></div>
   </div>
   <div class="win-body">
     <div class="np-wrap">
       <div class="np-menubar">
-        <div class="np-menu-item" onclick="npToggleMenu(this)">Файл
-          <div class="np-dropdown">
-            <div class="np-dd-item" onclick="npNew()">Новый <kbd>Ctrl+N</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="npSave()">Сохранить <kbd>Ctrl+S</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="closeWin('notepad')">Закрыть</div>
-          </div>
-        </div>
-        <div class="np-menu-item" onclick="npToggleMenu(this)">Правка
-          <div class="np-dropdown">
-            <div class="np-dd-item" onclick="npCopy()">Копировать <kbd>Ctrl+C</kbd></div>
-            <div class="np-dd-item" onclick="npSelectAll()">Выбрать всё <kbd>Ctrl+A</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="npFind()">Найти <kbd>Ctrl+F</kbd></div>
-          </div>
-        </div>
-        <div class="np-menu-item" onclick="npToggleMenu(this)">Вид
-          <div class="np-dropdown">
-            <div class="np-dd-item" onclick="npFontUp()">Увеличить шрифт <kbd>Ctrl++</kbd></div>
-            <div class="np-dd-item" onclick="npFontDown()">Уменьшить шрифт <kbd>Ctrl+-</kbd></div>
-            <div class="np-dd-sep"></div>
-            <div class="np-dd-item" onclick="npWrap()">Перенос строк</div>
-          </div>
-        </div>
+        <div class="np-menu-item" onclick="npToggleMenu(this)">Файл<div class="np-dropdown"><div class="np-dd-item" onclick="npNew()">Новый <kbd>Ctrl+N</kbd></div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="npSave()">Сохранить <kbd>Ctrl+S</kbd></div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="closeWin('notepad')">Закрыть</div></div></div>
+        <div class="np-menu-item" onclick="npToggleMenu(this)">Правка<div class="np-dropdown"><div class="np-dd-item" onclick="npCopy()">Копировать</div><div class="np-dd-item" onclick="npSelectAll()">Выбрать всё</div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="npFind()">Найти</div></div></div>
+        <div class="np-menu-item" onclick="npToggleMenu(this)">Вид<div class="np-dropdown"><div class="np-dd-item" onclick="npFontUp()">Больше шрифт</div><div class="np-dd-item" onclick="npFontDown()">Меньше шрифт</div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="npWrap()">Перенос строк</div></div></div>
       </div>
       <textarea id="np-area" placeholder="Начните вводить текст..." oninput="npChanged()" onclick="npUpdateStatus()" onkeyup="npUpdateStatus()" spellcheck="false"></textarea>
-      <div class="np-statusbar">
-        <span id="np-status-ln">Строк: 1 | Слов: 0</span>
-        <span id="np-status-pos">Стр 1, Стб 1</span>
-        <span>UTF-8</span>
-      </div>
+      <div class="np-statusbar"><span id="np-status-ln">Строк: 1 | Слов: 0</span><span id="np-status-pos">Стр 1, Стб 1</span><span>UTF-8</span></div>
     </div>
   </div>
   <div class="resize-handle" onmousedown="resizeWin(event,'win-notepad')"></div>
@@ -603,55 +668,22 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div class="window" id="win-calc" style="width:320px;height:500px;top:50px;left:100px;" onclick="bringFront('win-calc')">
   <div class="titlebar" onmousedown="dragWin(event,'win-calc')">
     <span class="tb-icon">🧮</span><span class="tb-title">Калькулятор</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('calc')">─</div>
-      <div class="wb" onclick="toggleMax('win-calc')">⬜</div>
-      <div class="wb cls" onclick="closeWin('calc')">✕</div>
-    </div>
+    <div class="win-btns"><div class="wb" onclick="minimizeWin('calc')">─</div><div class="wb" onclick="toggleMax('win-calc')">⬜</div><div class="wb cls" onclick="closeWin('calc')">✕</div></div>
   </div>
   <div class="win-body">
     <div class="calc-wrap">
-      <div class="calc-modes">
-        <div class="calc-mode-btn active" data-mode="standard" onclick="calcSetMode('standard')">Обычный</div>
-        <div class="calc-mode-btn" data-mode="scientific" onclick="calcSetMode('scientific')">Научный</div>
-      </div>
-      <div class="calc-display">
-        <div class="calc-expr" id="calc-expr"></div>
-        <div class="calc-result" id="calc-result">0</div>
-      </div>
+      <div class="calc-modes"><div class="calc-mode-btn active" data-mode="standard" onclick="calcSetMode('standard')">Обычный</div><div class="calc-mode-btn" data-mode="scientific" onclick="calcSetMode('scientific')">Научный</div></div>
+      <div class="calc-display"><div class="calc-expr" id="calc-expr"></div><div class="calc-result" id="calc-result">0</div></div>
       <div class="calc-sci" id="calc-sci">
-        <div class="cc cc-sci-btn" onclick="calcSci('sin')">sin</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('cos')">cos</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('tan')">tan</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('sqrt')">√x</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('log')">log</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('ln')">ln</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('x2')">x²</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('x3')">x³</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('1/x')">1/x</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('pi')">π</div>
+        <div class="cc cc-sci-btn" onclick="calcSci('sin')">sin</div><div class="cc cc-sci-btn" onclick="calcSci('cos')">cos</div><div class="cc cc-sci-btn" onclick="calcSci('tan')">tan</div><div class="cc cc-sci-btn" onclick="calcSci('sqrt')">√x</div><div class="cc cc-sci-btn" onclick="calcSci('log')">log</div>
+        <div class="cc cc-sci-btn" onclick="calcSci('ln')">ln</div><div class="cc cc-sci-btn" onclick="calcSci('x2')">x²</div><div class="cc cc-sci-btn" onclick="calcSci('x3')">x³</div><div class="cc cc-sci-btn" onclick="calcSci('1/x')">1/x</div><div class="cc cc-sci-btn" onclick="calcSci('pi')">π</div>
       </div>
       <div class="calc-grid">
-        <div class="cc cc-fn" onclick="calcPress('C')">C</div>
-        <div class="cc cc-fn" onclick="calcPress('±')">±</div>
-        <div class="cc cc-fn" onclick="calcPress('%')">%</div>
-        <div class="cc cc-op" onclick="calcPress('÷')">÷</div>
-        <div class="cc cc-num" onclick="calcPress('7')">7</div>
-        <div class="cc cc-num" onclick="calcPress('8')">8</div>
-        <div class="cc cc-num" onclick="calcPress('9')">9</div>
-        <div class="cc cc-op" onclick="calcPress('×')">×</div>
-        <div class="cc cc-num" onclick="calcPress('4')">4</div>
-        <div class="cc cc-num" onclick="calcPress('5')">5</div>
-        <div class="cc cc-num" onclick="calcPress('6')">6</div>
-        <div class="cc cc-op" onclick="calcPress('-')">−</div>
-        <div class="cc cc-num" onclick="calcPress('1')">1</div>
-        <div class="cc cc-num" onclick="calcPress('2')">2</div>
-        <div class="cc cc-num" onclick="calcPress('3')">3</div>
-        <div class="cc cc-op" onclick="calcPress('+')">+</div>
-        <div class="cc cc-fn" onclick="calcPress('⌫')">⌫</div>
-        <div class="cc cc-num" onclick="calcPress('0')">0</div>
-        <div class="cc cc-num" onclick="calcPress('.')">.</div>
-        <div class="cc cc-eq" onclick="calcPress('=')">=</div>
+        <div class="cc cc-fn" onclick="calcPress('C')">C</div><div class="cc cc-fn" onclick="calcPress('±')">±</div><div class="cc cc-fn" onclick="calcPress('%')">%</div><div class="cc cc-op" onclick="calcPress('÷')">÷</div>
+        <div class="cc cc-num" onclick="calcPress('7')">7</div><div class="cc cc-num" onclick="calcPress('8')">8</div><div class="cc cc-num" onclick="calcPress('9')">9</div><div class="cc cc-op" onclick="calcPress('×')">×</div>
+        <div class="cc cc-num" onclick="calcPress('4')">4</div><div class="cc cc-num" onclick="calcPress('5')">5</div><div class="cc cc-num" onclick="calcPress('6')">6</div><div class="cc cc-op" onclick="calcPress('-')">−</div>
+        <div class="cc cc-num" onclick="calcPress('1')">1</div><div class="cc cc-num" onclick="calcPress('2')">2</div><div class="cc cc-num" onclick="calcPress('3')">3</div><div class="cc cc-op" onclick="calcPress('+')">+</div>
+        <div class="cc cc-fn" onclick="calcPress('⌫')">⌫</div><div class="cc cc-num" onclick="calcPress('0')">0</div><div class="cc cc-num" onclick="calcPress('.')">.</div><div class="cc cc-eq" onclick="calcPress('=')">=</div>
       </div>
     </div>
   </div>
@@ -661,11 +693,7 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div class="window" id="win-settings" style="width:720px;height:520px;top:50px;left:80px;" onclick="bringFront('win-settings')">
   <div class="titlebar" onmousedown="dragWin(event,'win-settings')">
     <span class="tb-icon">⚙️</span><span class="tb-title">Параметры</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('settings')">─</div>
-      <div class="wb" onclick="toggleMax('win-settings')">⬜</div>
-      <div class="wb cls" onclick="closeWin('settings')">✕</div>
-    </div>
+    <div class="win-btns"><div class="wb" onclick="minimizeWin('settings')">─</div><div class="wb" onclick="toggleMax('win-settings')">⬜</div><div class="wb cls" onclick="closeWin('settings')">✕</div></div>
   </div>
   <div class="win-body">
     <div class="set-wrap">
@@ -679,53 +707,13 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
         <div class="set-side-item" data-page="about" onclick="setPage('about')">ℹ️ О системе</div>
       </div>
       <div class="set-content">
-        <div class="set-page active" id="set-system">
-          <div class="set-h1">Система</div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Уведомления</div><div class="d">Показывать системные уведомления</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Автозапуск ExiWin</div><div class="d">Запускать при включении</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Режим производительности</div><div class="d">Оптимизировать ресурсы</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Безопасный режим</div><div class="d">Загрузка с минимальными драйверами</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
-        </div>
-        <div class="set-page" id="set-display">
-          <div class="set-h1">Экран</div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Яркость</div><div class="d">Текущая: 85%</div><div class="set-range-wrap"><input type="range" min="10" max="100" value="85" oninput="setBright(this.value)"></div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Разрешение экрана</div></div><select class="set-select"><option>1920×1080</option><option>2560×1440</option><option>3840×2160</option></select></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Частота обновления</div></div><select class="set-select"><option>60 Гц</option><option>120 Гц</option><option>144 Гц</option></select></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Ночной режим</div><div class="d">Снижает синий свет</div></div><div class="toggle" id="set-night-toggle" onclick="toggleNightMode();this.classList.toggle('on')"></div></div>
-        </div>
-        <div class="set-page" id="set-theme">
-          <div class="set-h1">Тема и персонализация</div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Тёмная тема</div><div class="d">Текущая активная тема</div></div><div class="toggle on" id="set-dark-t" onclick="toggleDarkTheme();el('set-light-t').classList.remove('on');this.classList.add('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Светлая тема</div><div class="d">Светлое оформление</div></div><div class="toggle" id="set-light-t" onclick="toggleLightTheme();el('set-dark-t').classList.remove('on');this.classList.add('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Цвет акцента</div></div><select class="set-select"><option>Синий (по умолч.)</option><option>Фиолетовый</option><option>Зелёный</option></select></div>
-        </div>
-        <div class="set-page" id="set-network">
-          <div class="set-h1">Сеть и Интернет</div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Wi-Fi</div><div class="d">ExiWin-Network · 100 Мбит/с</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Bluetooth</div><div class="d">Обнаруживаемый</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Режим полёта</div><div class="d">Отключить все беспроводные сети</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">VPN</div><div class="d">Не подключён</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
-        </div>
-        <div class="set-page" id="set-sound">
-          <div class="set-h1">Звук</div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Громкость</div><div class="d">Текущая: 60%</div><div class="set-range-wrap"><input type="range" min="0" max="100" value="60" oninput="setVol(this.value)"></div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Звук уведомлений</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Усилитель басов</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
-        </div>
-        <div class="set-page" id="set-account">
-          <div class="set-h1">Аккаунт</div>
-          <div class="set-card" id="set-user-card"><div class="set-card-l"><div class="n" id="set-uname">Пользователь</div><div class="d">Администратор ExiWin</div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Сбросить аккаунт</div><div class="d">Удалит все данные</div></div><div style="color:#e74c3c;cursor:pointer;font-size:13px" onclick="setResetUser()">Сбросить</div></div>
-        </div>
-        <div class="set-page" id="set-about">
-          <div class="set-h1">О системе</div>
-          <div class="set-card"><div class="set-card-l"><div class="n">ExiWin 12</div><div class="d">Версия 24H2 — Build 26100</div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Разработчик</div><div class="d">Exian Research Labs</div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Процессор</div><div class="d">ExiCPU x64 @ 3.6 ГГц</div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">ОЗУ</div><div class="d">8 ГБ DDR5</div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Хранилище</div><div class="d">256 ГБ NVMe SSD</div></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">ExiWin AI</div><div class="d">Exian.AI 3.0 Neural Engine</div></div></div>
-        </div>
+        <div class="set-page active" id="set-system"><div class="set-h1">Система</div><div class="set-card"><div class="set-card-l"><div class="n">Уведомления</div><div class="d">Показывать уведомления</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="set-card"><div class="set-card-l"><div class="n">Автозапуск ExiWin</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="set-card"><div class="set-card-l"><div class="n">Режим производительности</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div>
+        <div class="set-page" id="set-display"><div class="set-h1">Экран</div><div class="set-card"><div class="set-card-l"><div class="n">Яркость</div><div class="set-range-wrap"><input type="range" min="10" max="100" value="85" oninput="setBright(this.value)"></div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Разрешение</div></div><select class="set-select"><option>1920×1080</option><option>2560×1440</option></select></div><div class="set-card"><div class="set-card-l"><div class="n">Ночной режим</div></div><div class="toggle" onclick="toggleNightMode();this.classList.toggle('on')"></div></div></div>
+        <div class="set-page" id="set-theme"><div class="set-h1">Тема</div><div class="set-card"><div class="set-card-l"><div class="n">Тёмная тема</div></div><div class="toggle on" id="set-dark-t" onclick="toggleDarkTheme();el('set-light-t').classList.remove('on');this.classList.add('on')"></div></div><div class="set-card"><div class="set-card-l"><div class="n">Светлая тема</div></div><div class="toggle" id="set-light-t" onclick="toggleLightTheme();el('set-dark-t').classList.remove('on');this.classList.add('on')"></div></div></div>
+        <div class="set-page" id="set-network"><div class="set-h1">Сеть</div><div class="set-card"><div class="set-card-l"><div class="n">Wi-Fi</div><div class="d">ExiWin-Network</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="set-card"><div class="set-card-l"><div class="n">Bluetooth</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
+        <div class="set-page" id="set-sound"><div class="set-h1">Звук</div><div class="set-card"><div class="set-card-l"><div class="n">Громкость</div><div class="set-range-wrap"><input type="range" min="0" max="100" value="60" oninput="setVol(this.value)"></div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Звук уведомлений</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
+        <div class="set-page" id="set-account"><div class="set-h1">Аккаунт</div><div class="set-card"><div class="set-card-l"><div class="n" id="set-uname">Пользователь</div><div class="d">Администратор ExiWin</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Сбросить аккаунт</div><div class="d">Удалит все данные</div></div><div style="color:#e74c3c;cursor:pointer;font-size:13px" onclick="setResetUser()">Сбросить</div></div></div>
+        <div class="set-page" id="set-about"><div class="set-h1">О системе</div><div class="set-card"><div class="set-card-l"><div class="n">ExiWin 12</div><div class="d">Версия 24H2 — Build 26100</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Разработчик</div><div class="d">Exian Research Labs</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">ЦП</div><div class="d">ExiCPU x64 @ 3.6 ГГц</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">ОЗУ</div><div class="d">8 ГБ DDR5</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">AI</div><div class="d">Exian.AI 3.0 — Умный ассистент</div></div></div></div>
       </div>
     </div>
   </div>
@@ -736,29 +724,18 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div class="window" id="win-browser" style="width:820px;height:560px;top:40px;left:50px;" onclick="bringFront('win-browser')">
   <div class="titlebar" onmousedown="dragWin(event,'win-browser')">
     <span class="tb-icon">🌐</span><span class="tb-title">ExiWin Edge</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('browser')">─</div>
-      <div class="wb" onclick="toggleMax('win-browser')">⬜</div>
-      <div class="wb cls" onclick="closeWin('browser')">✕</div>
-    </div>
+    <div class="win-btns"><div class="wb" onclick="minimizeWin('browser')">─</div><div class="wb" onclick="toggleMax('win-browser')">⬜</div><div class="wb cls" onclick="closeWin('browser')">✕</div></div>
   </div>
   <div class="win-body">
     <div class="br-wrap">
       <div class="br-bar">
-        <div class="br-nav" onclick="brBack()">◀</div>
-        <div class="br-nav" onclick="brForward()">▶</div>
-        <div class="br-nav" onclick="brRefresh()">🔃</div>
-        <div class="br-nav" onclick="brNewTab()">🏠</div>
-        <input class="br-url-bar" id="br-url" type="text" placeholder="Введите адрес или запрос..." onkeydown="brKeyNav(event)">
+        <div class="br-nav" onclick="brBack()">◀</div><div class="br-nav" onclick="brForward()">▶</div><div class="br-nav" onclick="brRefresh()">🔃</div><div class="br-nav" onclick="brNewTab()">🏠</div>
+        <input class="br-url-bar" id="br-url" type="text" placeholder="Введите адрес..." onkeydown="brKeyNav(event)">
         <div class="br-nav" onclick="brNavigate(el('br-url').value)">→</div>
       </div>
       <div id="br-newtab">
         <div class="br-greeting" id="br-hello">Добрый день!</div>
-        <div class="br-searchbar">
-          <span>🔍</span>
-          <input type="text" id="br-search-input" placeholder="Поиск в интернете...">
-          <button onclick="brSearch(el('br-search-input').value)">Найти</button>
-        </div>
+        <div class="br-searchbar"><span>🔍</span><input type="text" id="br-search-input" placeholder="Поиск..."><button onclick="brSearch(el('br-search-input').value)">Найти</button></div>
         <div class="br-shortcuts">
           <div class="br-sc" onclick="brShortcut('https://google.com')"><div class="ico">🔍</div><span>Google</span></div>
           <div class="br-sc" onclick="brShortcut('https://github.com')"><div class="ico">🐙</div><span>GitHub</span></div>
@@ -767,7 +744,7 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
           <div class="br-sc" onclick="brShortcut('https://stackoverflow.com')"><div class="ico">💬</div><span>Stack Overflow</span></div>
         </div>
       </div>
-      <iframe id="br-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-navigation"></iframe>
+      <iframe id="br-frame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
     </div>
   </div>
   <div class="resize-handle" onmousedown="resizeWin(event,'win-browser')"></div>
@@ -777,21 +754,17 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div class="window" id="win-paint" style="width:760px;height:540px;top:40px;left:60px;" onclick="bringFront('win-paint')">
   <div class="titlebar" onmousedown="dragWin(event,'win-paint')">
     <span class="tb-icon">🎨</span><span class="tb-title">Paint</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('paint')">─</div>
-      <div class="wb" onclick="toggleMax('win-paint')">⬜</div>
-      <div class="wb cls" onclick="closeWin('paint')">✕</div>
-    </div>
+    <div class="win-btns"><div class="wb" onclick="minimizeWin('paint')">─</div><div class="wb" onclick="toggleMax('win-paint')">⬜</div><div class="wb cls" onclick="closeWin('paint')">✕</div></div>
   </div>
   <div class="win-body">
     <div class="paint-wrap">
       <div class="paint-toolbar">
-        <div class="paint-tool active" onclick="selectPaintTool('pen',this)" title="Карандаш">✏️</div>
-        <div class="paint-tool" onclick="selectPaintTool('eraser',this)" title="Ластик">🧹</div>
-        <div class="paint-tool" onclick="selectPaintTool('fill',this)" title="Заливка">🪣</div>
-        <div class="paint-tool" onclick="paintClear()" title="Очистить">🗑️</div>
-        <div class="paint-tool" onclick="paintSave()" title="Сохранить">💾</div>
-        <div style="width:1px;height:24px;background:var(--border);"></div>
+        <div class="paint-tool active" onclick="selectPaintTool('pen',this)">✏️</div>
+        <div class="paint-tool" onclick="selectPaintTool('eraser',this)">🧹</div>
+        <div class="paint-tool" onclick="selectPaintTool('fill',this)">🪣</div>
+        <div class="paint-tool" onclick="paintClear()">🗑️</div>
+        <div class="paint-tool" onclick="paintSave()">💾</div>
+        <div style="width:1px;height:24px;background:var(--border)"></div>
         <div class="paint-colors">
           <div class="paint-color active" style="background:#0078d4" onclick="selectPaintColor('#0078d4',this)"></div>
           <div class="paint-color" style="background:#e74c3c" onclick="selectPaintColor('#e74c3c',this)"></div>
@@ -801,18 +774,12 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
           <div class="paint-color" style="background:#e67e22" onclick="selectPaintColor('#e67e22',this)"></div>
           <div class="paint-color" style="background:#1abc9c" onclick="selectPaintColor('#1abc9c',this)"></div>
           <div class="paint-color" style="background:#ff69b4" onclick="selectPaintColor('#ff69b4',this)"></div>
-          <div class="paint-color" style="background:#000000" onclick="selectPaintColor('#000000',this)"></div>
-          <div class="paint-color" style="background:#ffffff;border-color:var(--border)" onclick="selectPaintColor('#ffffff',this)"></div>
+          <div class="paint-color" style="background:#000" onclick="selectPaintColor('#000000',this)"></div>
+          <div class="paint-color" style="background:#fff;border-color:var(--border)" onclick="selectPaintColor('#ffffff',this)"></div>
         </div>
-        <div class="paint-size">
-          <span>Размер:</span>
-          <input type="range" min="1" max="30" value="4" oninput="setPaintSize(this.value)">
-          <span id="paint-size-val">4px</span>
-        </div>
+        <div class="paint-size"><span>Размер:</span><input type="range" min="1" max="30" value="4" oninput="setPaintSize(this.value)"><span id="paint-size-val">4px</span></div>
       </div>
-      <div class="paint-canvas-wrap" id="paint-canvas-wrap">
-        <canvas id="paint-canvas"></canvas>
-      </div>
+      <div class="paint-canvas-wrap" id="paint-canvas-wrap"><canvas id="paint-canvas"></canvas></div>
     </div>
   </div>
   <div class="resize-handle" onmousedown="resizeWin(event,'win-paint')"></div>
@@ -822,11 +789,7 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <div class="window" id="win-taskman" style="width:700px;height:500px;top:50px;left:80px;" onclick="bringFront('win-taskman')">
   <div class="titlebar" onmousedown="dragWin(event,'win-taskman')">
     <span class="tb-icon">📊</span><span class="tb-title">Диспетчер задач</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('taskman')">─</div>
-      <div class="wb" onclick="toggleMax('win-taskman')">⬜</div>
-      <div class="wb cls" onclick="closeWin('taskman')">✕</div>
-    </div>
+    <div class="win-btns"><div class="wb" onclick="minimizeWin('taskman')">─</div><div class="wb" onclick="toggleMax('win-taskman')">⬜</div><div class="wb cls" onclick="closeWin('taskman')">✕</div></div>
   </div>
   <div class="win-body">
     <div class="tm-wrap">
@@ -835,68 +798,74 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
         <div class="tm-tab" data-tab="performance" onclick="tmRender('performance')">Производительность</div>
         <div class="tm-tab" data-tab="startup" onclick="tmRender('startup')">Автозагрузка</div>
       </div>
-      <div class="tm-body" id="tm-body">
-        <!-- processes -->
-        <table class="tm-table" id="tm-proc-table">
-          <thead><tr><th>Имя</th><th>ЦП</th><th>ОЗУ</th><th>PID</th><th>Статус</th></tr></thead>
-          <tbody id="tm-proc-body"></tbody>
-        </table>
+      <div class="tm-body">
+        <table class="tm-table" id="tm-proc-table"><thead><tr><th>Имя</th><th>ЦП</th><th>ОЗУ</th><th>PID</th><th>Статус</th></tr></thead><tbody id="tm-proc-body"></tbody></table>
         <div id="tm-perf-body" style="display:none"></div>
-        <div id="tm-startup-body-wrap" style="display:none">
-          <table class="tm-table"><thead><tr><th>Приложение</th><th>Влияние</th><th>Статус</th></tr></thead>
-          <tbody id="tm-startup-body"></tbody></table>
-        </div>
+        <div id="tm-startup-body-wrap" style="display:none"><table class="tm-table"><thead><tr><th>Приложение</th><th>Влияние</th><th>Статус</th></tr></thead><tbody id="tm-startup-body"></tbody></table></div>
       </div>
     </div>
   </div>
   <div class="resize-handle" onmousedown="resizeWin(event,'win-taskman')"></div>
 </div>
 
-<!-- EXIAN AI 3.0 -->
-<div class="window" id="win-exianai" style="width:950px;height:640px;top:30px;left:50px;" onclick="bringFront('win-exianai')">
+<!-- ═══ EXIAN.AI 3.0 — УМНЫЙ ЧАТ ═══ -->
+<div class="window" id="win-exianai" style="width:900px;height:620px;top:30px;left:50px;" onclick="bringFront('win-exianai')">
   <div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
-    <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0 — Neural Network IDE</span>
+    <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0 — Умный ассистент</span>
     <div class="win-btns">
       <div class="wb" onclick="minimizeWin('exianai')">─</div>
       <div class="wb" onclick="toggleMax('win-exianai')">⬜</div>
       <div class="wb cls" onclick="closeWin('exianai')">✕</div>
     </div>
   </div>
-  <div class="win-body">
-    <div class="exian-wrap">
-      <div class="exian-toolbar">
-        <div class="exian-btn" onclick="exianNewProject()">📁 Новый</div>
-        <div class="exian-btn" onclick="exianSave()">💾 Сохранить</div>
-        <div class="exian-btn" onclick="exianViewCpp()">📄 ExianAI.cpp</div>
-        <div style="width:1px;height:20px;background:var(--border);margin:0 4px"></div>
-        <div class="exian-btn run" onclick="exianRunAI()">▶️ Запустить</div>
-        <div class="exian-btn" onclick="exianTrainModel()">🎯 Обучить</div>
-        <div class="exian-btn" onclick="exianTestModel()">🧪 Тест</div>
-        <div class="exian-btn" onclick="exianExportModel()">📤 Экспорт</div>
-        <div style="flex:1"></div>
-        <div style="font-size:11px;color:var(--text2);padding:0 8px">C++17 | ExiWin 12</div>
-      </div>
-      <div class="exian-main">
-        <div class="exian-editor">
-          <div class="exian-tabs">
-            <div class="exian-tab active">📄 AI_NeuralNetwork.cpp</div>
-          </div>
-          <textarea id="exian-code" class="exian-code-area" spellcheck="false"
-            oninput="exianCodeChanged()" onclick="exianUpdateStatus()" onkeyup="exianUpdateStatus()"></textarea>
-          <div class="exian-statusbar">
-            <span id="exian-stat-ln">Стр 1, Стб 1 | Строк: 0</span>
-            <span>C++ 17</span>
-            <span>UTF-8</span>
-            <span id="exian-model-status">🤖 Модель не обучена</span>
-          </div>
+  <div class="win-body" style="overflow:hidden">
+    <div class="echat-wrap">
+
+      <!-- САЙДБАР: история чатов -->
+      <div class="echat-sidebar">
+        <div class="echat-sidebar-header">
+          <span>💬 Чаты</span>
+          <button class="echat-new-btn" onclick="newExianChat()">+ Новый</button>
+        </div>
+        <div id="exian-sessions-list"></div>
+        <div class="echat-sidebar-footer">
+          <div class="echat-clear-btn" onclick="clearAllChats()">🗑️ Очистить все чаты</div>
         </div>
       </div>
-      <div class="exian-terminal" id="exian-terminal">
-        <div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> 🤖 Exian.AI 3.0 готов к работе</div>
-        <div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Компилятор: g++ (GCC) 13.2.0 | C++17 | -O2</div>
-        <div class="exian-terminal-line"><span class="exian-terminal-success">✓</span> Библиотеки: iostream, vector, cmath, functional — загружены</div>
-        <div class="exian-terminal-line"><span class="exian-terminal-info">ℹ</span> Файл: AI_NeuralNetwork.cpp | Оптимизатор: Adam</div>
-        <div class="exian-terminal-line"><span class="exian-terminal-prompt">exian@ai:~$</span> Нажмите ▶️ для запуска или 🎯 для обучения...</div>
+
+      <!-- ГЛАВНАЯ ОБЛАСТЬ -->
+      <div class="echat-main">
+
+        <!-- Шапка -->
+        <div class="echat-header">
+          <div class="echat-header-ico">🤖</div>
+          <div class="echat-header-info">
+            <div class="echat-header-name">Exian.AI 3.0</div>
+            <div class="echat-header-status">Онлайн · ExiWin 12</div>
+          </div>
+        </div>
+
+        <!-- Быстрые вопросы -->
+        <div class="echat-quick">
+          <div class="echat-quick-btn" onclick="exianQuickPrompt('Что ты умеешь?')">🤔 Что ты умеешь?</div>
+          <div class="echat-quick-btn" onclick="exianQuickPrompt('Напиши код на Python')">💻 Код на Python</div>
+          <div class="echat-quick-btn" onclick="exianQuickPrompt('Объясни как работает нейросеть')">🧠 Как работает AI?</div>
+          <div class="echat-quick-btn" onclick="exianQuickPrompt('Придумай интересную идею для проекта')">💡 Идея для проекта</div>
+          <div class="echat-quick-btn" onclick="exianQuickPrompt('Расскажи анекдот')">😄 Расскажи анекдот</div>
+        </div>
+
+        <!-- Сообщения -->
+        <div id="exian-chat-messages"></div>
+
+        <!-- Поле ввода -->
+        <div class="echat-input-area">
+          <div class="echat-input-row">
+            <textarea id="exian-chat-input" placeholder="Напиши что-нибудь... (Enter — отправить)" rows="1"></textarea>
+            <button id="exian-send-btn" onclick="exianSendMessage()" title="Отправить">➤</button>
+          </div>
+          <div class="echat-hint">Enter — отправить · Shift+Enter — новая строка · Exian.AI 3.0 powered by ExiWin 12</div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -906,35 +875,27 @@ body.light-theme .exian-terminal{background:rgba(20,20,30,.92);color:#00ff88;}
 <!-- NOTIFICATIONS -->
 <div id="notif-stack"></div>
 
-<!-- JS FILES -->
 <script src="app.js"></script>
 <script src="windows.js"></script>
 <script src="apps.js"></script>
 <script src="exianai.js"></script>
-
 <script>
-// Патч для Task Manager tabs
-const _tmRenderOrig = tmRender;
+// Патч Task Manager
+const _tm = tmRender;
 tmRender = function(tab) {
-  document.querySelectorAll('.tm-tab').forEach(t => t.classList.toggle('active', t.dataset.tab===tab));
-  const proc = el('tm-proc-table');
-  const perf = el('tm-perf-body');
-  const start = el('tm-startup-body-wrap');
-  if(proc) proc.style.display = tab==='processes' ? 'table' : 'none';
-  if(perf) perf.style.display = tab==='performance' ? 'block' : 'none';
-  if(start) start.style.display = tab==='startup' ? 'block' : 'none';
+  document.querySelectorAll('.tm-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
+  const proc=el('tm-proc-table'), perf=el('tm-perf-body'), start=el('tm-startup-body-wrap');
+  if(proc) proc.style.display=tab==='processes'?'table':'none';
+  if(perf) perf.style.display=tab==='performance'?'block':'none';
+  if(start) start.style.display=tab==='startup'?'block':'none';
   if(tab==='processes') tmRenderProcesses();
   else if(tab==='performance') tmRenderPerf();
   else if(tab==='startup') tmRenderStartup();
 };
-
-// Привет из браузера
-window.addEventListener('DOMContentLoaded', () => {
-  const hour = new Date().getHours();
-  const greet = el('br-hello');
-  if(greet) {
-    greet.textContent = hour < 6 ? 'Доброй ночи!' : hour < 12 ? 'Доброе утро!' : hour < 18 ? 'Добрый день!' : 'Добрый вечер!';
-  }
+// Приветствие в браузере
+window.addEventListener('DOMContentLoaded',()=>{
+  const h=new Date().getHours(), g=el('br-hello');
+  if(g) g.textContent=h<6?'Доброй ночи!':h<12?'Доброе утро!':h<18?'Добрый день!':'Добрый вечер!';
 });
 </script>
 </body>
