@@ -125,15 +125,16 @@ async function initExiblox() {
     root.innerHTML = `
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0a0c14;gap:16px;">
         <div style="font-size:42px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ Exiblox v3</div>
-        <div style="color:rgba(255,255,255,.4);font-size:12px;">Загружаем игры из облака...</div>
+        <div style="color:rgba(255,255,255,.4);font-size:12px;">☁️ Загружаем игры со всего мира...</div>
         <div style="width:180px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;">
           <div style="height:100%;background:linear-gradient(90deg,#00b2ff,#7c3aed);border-radius:2px;animation:exbLoad .8s ease infinite alternate;width:60%;"></div>
         </div>
+        <div style="color:rgba(255,255,255,.25);font-size:11px;">Синхронизация с облаком Exiblox</div>
       </div>
       <style>@keyframes exbLoad{from{transform:translateX(-20%)}to{transform:translateX(120%)}}</style>`;
   }
 
-  // Загружаем игры из облака
+  // КРИТИЧЕСКИ ВАЖНО: Загружаем игры из ОБЩЕГО облака
   EXB.games = await exbCloudLoadGames();
   EXB._cloudReady = true;
 
@@ -410,12 +411,31 @@ function exbTabContent(tab) {
 // ════════════════════════════════════════════
 // HOME
 // ════════════════════════════════════════════
-function exbHome(c) {
+async function exbHome(c) {
+  // ВСЕГДА загружаем свежие игры из облака при открытии Home
+  c.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;"><div style="color:rgba(255,255,255,.3);font-size:13px;">☁️ Загрузка игр...</div></div>`;
+  EXB.games = await exbCloudLoadGames();
+  
   const me = EXB.users[EXB.user] || {};
   const frs = me.friends || [];
   const allGames = EXB.games;
+  
+  // Статистика облака
+  const authors = [...new Set(allGames.map(g => g.author))].length;
+  
   c.innerHTML = `
   <div class="exb-section">
+    <div style="background:rgba(0,178,255,.08);border:1px solid rgba(0,178,255,.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:24px;">☁️</span>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;color:#00b2ff;">Облачная платформа Exiblox</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);">
+          ${allGames.length} игр от ${authors} разработчиков · Все игры доступны с любого устройства
+        </div>
+      </div>
+      <button class="exb-btn2 exb-btn2-blue" onclick="exbRefreshGames()" style="font-size:10px;padding:5px 10px;">🔄 Обновить</button>
+    </div>
+
     <div class="exb-sec-title">👥 Соединения (${frs.length})
       <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('friends')" style="margin-left:auto;font-size:11px;">+ Добавить</button>
     </div>
@@ -429,17 +449,18 @@ function exbHome(c) {
     </div>
 
     ${allGames.length ? `
-    <div class="exb-sec-title">🎮 Играть сейчас
-      <span style="font-size:11px;color:rgba(255,255,255,.3);font-weight:400;">${allGames.length} игр в облаке</span>
+    <div class="exb-sec-title">🌍 Играть сейчас (игры от всех пользователей)
+      <span style="font-size:11px;color:rgba(255,255,255,.3);font-weight:400;">☁️ Облако</span>
     </div>
     <div class="exb-cards-row" style="margin-bottom:28px;">${exbGameCards(allGames.slice(0,4))}</div>
     ${allGames.length>4?`
-    <div class="exb-sec-title">⭐ Все игры</div>
+    <div class="exb-sec-title">⭐ Ещё игры</div>
     <div class="exb-cards-row" style="margin-bottom:28px;">${exbGameCards(allGames.slice(4))}</div>`:''}
     ` : `
     <div style="text-align:center;padding:50px 0;color:rgba(255,255,255,.25);font-size:14px;">
-      🎮 Пока нет игр в облаке<br><br>
-      <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('studio')">Создать первую игру →</button>
+      🌍 Пока нет игр в облаке<br><br>
+      <div style="font-size:12px;margin-bottom:16px;">Стань первым создателем!</div>
+      <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('studio')">🛠 Создать игру в Studio →</button>
     </div>`}
   </div>`;
 }
