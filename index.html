@@ -23,11 +23,7 @@ body.light-theme{
   --card-bg:rgba(0,0,0,.03);--input-bg:rgba(0,0,0,.05);
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden;width:100vw;height:100vh;color:var(--text);}
-
-/* RAINBOW CURSOR CANVAS */
 #rainbow-cursor-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:999999;}
-
-/* BOOT */
 #boot{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .5s;}
 .boot-logo{font-size:76px;font-weight:800;margin-bottom:48px;background:linear-gradient(135deg,#0078d4,#60cdff,#0078d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logoPulse 2s ease-in-out infinite;}
 @keyframes logoPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
@@ -35,8 +31,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 .boot-fill{height:100%;background:linear-gradient(90deg,#0078d4,#60cdff);border-radius:2px;animation:bootFill 2.2s ease forwards;}
 @keyframes bootFill{0%{width:0}60%{width:70%}100%{width:100%}}
 .boot-txt{color:rgba(255,255,255,.3);font-size:12px;margin-top:16px;letter-spacing:2px;}
-
-/* REG/LOGIN */
 #regscreen{position:fixed;inset:0;z-index:9990;display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#040e1f 0%,#091428 100%);}
 .reg-box{background:rgba(255,255,255,.05);backdrop-filter:var(--blur);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:40px;width:420px;box-shadow:var(--shadow);text-align:center;}
 .reg-logo{font-size:44px;font-weight:800;background:linear-gradient(135deg,#0078d4,#60cdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;}
@@ -53,8 +47,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 .reg-switch{color:rgba(255,255,255,.5);font-size:13px;margin-top:14px;cursor:pointer;}
 .reg-switch span{color:var(--accent2);}
 .reg-err{color:#ff6b6b;font-size:12px;margin-top:8px;min-height:18px;}
-
-/* LOCK */
 #lockscreen{position:fixed;inset:0;z-index:9980;display:none;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(160deg,#040c1a 0%,#081428 100%);}
 .lock-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,120,212,.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:glowPulse 4s ease-in-out infinite;}
 @keyframes glowPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
@@ -65,15 +57,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 #lock-username-disp{font-size:18px;color:#fff;}
 .lock-hint{font-size:13px;color:rgba(255,255,255,.3);margin-top:18px;animation:pulse 2s ease infinite;}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
-
-/* DESKTOP */
 #desktop{width:100%;height:calc(100% - 48px);position:relative;overflow:hidden;background:var(--desktop-bg);}
 .desk-aurora{position:absolute;inset:0;pointer-events:none;background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,80,180,.06) 60deg,rgba(0,150,255,.08) 100deg,rgba(60,0,180,.05) 150deg,transparent 200deg);animation:auroraRot 20s linear infinite;}
 @keyframes auroraRot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .desk-glow{position:absolute;width:700px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,100,200,.08) 0%,transparent 70%);top:20%;left:30%;pointer-events:none;}
 body.light-theme .desk-aurora{background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,120,212,.03) 60deg,rgba(0,150,255,.05) 100deg,rgba(100,80,255,.03) 150deg,transparent 200deg);}
-
-/* DESK ICONS — draggable */
 .desk-icon{position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 6px;width:82px;cursor:pointer;border-radius:10px;transition:background .15s;}
 .desk-icon:hover{background:rgba(255,255,255,.09);}
 body.light-theme .desk-icon:hover{background:rgba(0,0,0,.07);}
@@ -83,8 +71,6 @@ body.light-theme .desk-icon:hover{background:rgba(0,0,0,.07);}
 body.light-theme .desk-icon .dico{filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));}
 .desk-icon span{font-size:11px;color:#fff;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);line-height:1.3;word-break:break-word;pointer-events:none;}
 body.light-theme .desk-icon span{color:var(--text);text-shadow:0 1px 3px rgba(255,255,255,.8);}
-
-/* TASKBAR */
 #taskbar{position:fixed;bottom:0;left:0;right:0;height:48px;background:var(--taskbar-bg);backdrop-filter:var(--blur);border-top:1px solid var(--border);display:flex;align-items:center;z-index:1000;}
 #tb-left{display:flex;align-items:center;padding-left:8px;gap:2px;}
 #tb-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2px;}
@@ -102,8 +88,6 @@ body.light-theme .tb-btn.active-win{background:rgba(0,0,0,.10);}
 .tb-sys:hover{background:rgba(255,255,255,.09);}
 body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 #tb-clock{color:var(--text);font-size:11.5px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
-
-/* START MENU */
 #start-menu{position:fixed;bottom:56px;left:50%;transform:translateX(-50%) translateY(8px);width:680px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);display:none;flex-direction:column;z-index:900;overflow:hidden;opacity:0;transition:opacity .18s,transform .18s;}
 #start-menu.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #sm-search{margin:16px 16px 0;display:flex;align-items:center;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:9px 14px;gap:10px;}
@@ -130,8 +114,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .power-menu{display:flex;gap:3px;}
 .pw-btn{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:background .15s;color:var(--text2);}
 .pw-btn:hover{background:rgba(196,43,28,.7);color:#fff;}
-
-/* TRAY */
 #tray-popup{position:fixed;bottom:56px;right:8px;width:380px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow);display:none;z-index:900;}
 .tray-time-big{font-size:50px;font-weight:200;text-align:center;letter-spacing:2px;color:var(--text);}
 .tray-date-str{font-size:12px;color:var(--text2);text-align:center;margin-bottom:14px;}
@@ -145,16 +127,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .sl-row .ico{font-size:15px;flex-shrink:0;}
 .sl-row input[type=range]{flex:1;accent-color:var(--accent);height:4px;}
 .sl-val{font-size:11px;color:var(--text2);width:32px;text-align:right;}
-
-/* ══════════ WALLPAPER GALLERY ══════════ */
-#wallpaper-gallery{
-  position:fixed;bottom:56px;right:8px;width:520px;
-  background:var(--menu-bg);backdrop-filter:var(--blur);
-  border:1px solid var(--border);border-radius:18px;
-  padding:18px;box-shadow:var(--shadow);
-  z-index:9500;display:none;
-  animation:wpGalleryIn .2s ease;
-}
+#wallpaper-gallery{position:fixed;bottom:56px;right:8px;width:520px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);z-index:9500;display:none;animation:wpGalleryIn .2s ease;}
 @keyframes wpGalleryIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .wp-gallery-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;}
 .wp-gallery-sub{font-size:11px;color:var(--text2);margin-bottom:14px;}
@@ -164,40 +137,20 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .wp-tab{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--border);color:var(--text2);transition:all .15s;}
 .wp-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .wp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-height:360px;overflow-y:auto;}
-.wp-item{
-  aspect-ratio:16/9;border-radius:10px;cursor:pointer;
-  position:relative;overflow:hidden;
-  border:2px solid transparent;transition:all .18s;
-}
+.wp-item{aspect-ratio:16/9;border-radius:10px;cursor:pointer;position:relative;overflow:hidden;border:2px solid transparent;transition:all .18s;}
 .wp-item:hover{transform:scale(1.04);border-color:rgba(255,255,255,.3);}
 .wp-item.wp-active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
-.wp-item-label{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:4px 6px;font-size:9px;color:#fff;
-  background:linear-gradient(transparent,rgba(0,0,0,.6));
-  text-align:center;opacity:0;transition:opacity .15s;
-  border-radius:0 0 8px 8px;
-}
+.wp-item-label{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;font-size:9px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6));text-align:center;opacity:0;transition:opacity .15s;border-radius:0 0 8px 8px;}
 .wp-item:hover .wp-item-label{opacity:1;}
-.wp-default-badge{
-  position:absolute;top:4px;right:4px;
-  font-size:9px;background:rgba(0,120,212,.85);color:#fff;
-  padding:2px 5px;border-radius:8px;
-}
-
-/* CONTEXT MENU */
+.wp-default-badge{position:absolute;top:4px;right:4px;font-size:9px;background:rgba(0,120,212,.85);color:#fff;padding:2px 5px;border-radius:8px;}
 #ctx-menu{position:fixed;z-index:9998;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:210px;box-shadow:var(--shadow);display:none;}
 .ctx-item{padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;position:relative;}
 .ctx-item:hover{background:var(--bg2);}
 .ctx-sep{height:1px;background:var(--border);margin:3px 2px;}
 #ctx-create-sub{position:fixed;z-index:9999;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:200px;box-shadow:var(--shadow);display:none;}
-
-/* Explorer view mode */
 .exp-view-btn{width:26px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:var(--text2);transition:background .12s;}
 .exp-view-btn:hover{background:var(--bg2);}
 .exp-view-btn.active-view{background:rgba(0,120,212,.35);color:var(--text);}
-
-/* WINDOW BASE */
 .window{position:absolute;background:var(--bg1);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:none;flex-direction:column;min-width:320px;min-height:200px;z-index:100;animation:winOpen .14s ease;}
 @keyframes winOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 @keyframes winClose{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.95)}}
@@ -211,8 +164,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .wb.cls:hover{background:rgba(196,43,28,.85);color:#fff;}
 .win-body{flex:1;overflow:auto;border-radius:0 0 var(--radius) var(--radius);}
 .resize-handle{position:absolute;width:14px;height:14px;bottom:0;right:0;cursor:se-resize;}
-
-/* EXPLORER */
 .exp-wrap{display:flex;flex-direction:column;height:100%;}
 .exp-topbar{display:flex;align-items:center;gap:6px;padding:5px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
 .exp-nav{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:background .12s;}
@@ -229,8 +180,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .file-item .ico{font-size:32px;}
 .file-item .fname{font-size:10.5px;color:var(--text2);text-align:center;word-break:break-all;}
 .exp-statusbar{padding:3px 14px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
-
-/* NOTEPAD */
 .np-wrap{display:flex;flex-direction:column;height:100%;}
 .np-menubar{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
 .np-menu-item{padding:5px 12px;font-size:13px;color:var(--text2);cursor:pointer;transition:background .12px;position:relative;}
@@ -243,8 +192,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .np-dd-sep{height:1px;background:var(--border);margin:3px 0;}
 #np-area{flex:1;background:var(--input-bg);color:var(--text);border:none;outline:none;padding:14px;font-size:14px;font-family:'Consolas',monospace;resize:none;line-height:1.7;user-select:text;}
 .np-statusbar{display:flex;gap:16px;padding:3px 10px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;}
-
-/* CALCULATOR */
 .calc-wrap{padding:12px;display:flex;flex-direction:column;gap:8px;height:100%;}
 .calc-modes{display:flex;gap:2px;margin-bottom:2px;}
 .calc-mode-btn{padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text2);cursor:pointer;transition:background .12px;}
@@ -262,8 +209,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .cc-eq{background:var(--accent);color:#fff;}
 .cc-num{background:var(--card-bg);}
 .cc-sci-btn{background:rgba(96,205,255,.15);color:var(--accent2);font-size:12px;}
-
-/* SETTINGS */
 .set-wrap{display:flex;height:100%;}
 .set-side{width:200px;border-right:1px solid var(--border);padding:8px;overflow-y:auto;background:rgba(0,0,0,.1);flex-shrink:0;}
 .set-side-item{padding:9px 12px;border-radius:8px;font-size:12px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12px;}
@@ -283,8 +228,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .set-select{background:var(--input-bg);border:1px solid var(--border);border-radius:7px;padding:5px 9px;color:var(--text);font-size:12px;outline:none;font-family:inherit;cursor:pointer;}
 .set-range-wrap{display:flex;align-items:center;gap:8px;margin-top:6px;}
 .set-range-wrap input{flex:1;accent-color:var(--accent);}
-
-/* BROWSER */
 .br-wrap{display:flex;flex-direction:column;height:100%;}
 .br-bar{display:flex;align-items:center;gap:5px;padding:6px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
 .br-nav{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:background .12px;}
@@ -301,8 +244,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .br-sc .ico{font-size:20px;}
 .br-sc span{font-size:10.5px;color:var(--text2);}
 #br-frame{flex:1;width:100%;border:none;display:none;background:#fff;}
-
-/* PAINT */
 .paint-wrap{display:flex;flex-direction:column;height:100%;}
 .paint-toolbar{display:flex;align-items:center;gap:7px;padding:6px 10px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .paint-tool{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .12px;}
@@ -314,8 +255,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .paint-size input{width:70px;accent-color:var(--accent);}
 .paint-canvas-wrap{flex:1;overflow:hidden;background:#fff;position:relative;}
 #paint-canvas{cursor:crosshair;display:block;}
-
-/* TASK MANAGER */
 .tm-wrap{display:flex;flex-direction:column;height:100%;}
 .tm-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
 .tm-tab{padding:10px 16px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .12px;border-bottom:2px solid transparent;}
@@ -334,8 +273,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .tm-perf-big{font-size:32px;font-weight:200;color:var(--text);margin-bottom:8px;}
 .tm-perf-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-bottom:6px;}
 .tm-perf-info{font-size:11px;color:var(--text2);}
-
-/* EXIAN AI */
 .echat-wrap{display:flex;height:100%;overflow:hidden;background:rgba(8,10,20,.97);}
 body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 .echat-sidebar{width:230px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:rgba(0,0,0,.2);}
@@ -402,8 +339,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 #exian-send-btn{width:34px;height:34px;border-radius:10px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15px;flex-shrink:0;}
 #exian-send-btn:hover{background:#106ebe;transform:scale(1.05);}
 .echat-hint{font-size:10px;color:var(--text2);text-align:center;margin-top:6px;}
-
-/* NOTIFICATIONS */
 #notif-stack{position:fixed;bottom:60px;right:12px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .notif{background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:14px;padding:12px 14px;width:310px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:flex-start;animation:notifSlide .3s ease;}
 @keyframes notifSlide{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
@@ -412,7 +347,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 .notif-txt .nd{font-size:11.5px;color:var(--text2);}
 .notif-close{margin-left:auto;cursor:pointer;color:var(--text2);font-size:14px;padding:2px;}
 .notif-close:hover{color:var(--text);}
-
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(128,128,128,.25);border-radius:3px;}
@@ -488,6 +422,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="desk-icon" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📊</div><span>Диспетчер задач</span></div>
   <div class="desk-icon" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🤖</div><span>Exian.AI 3.0</span></div>
   <div class="desk-icon" style="top:304px;left:118px" ondblclick="launchExiblox()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🐍</div><span>Exiblox v3</span></div>
+  <div class="desk-icon" style="top:400px;left:118px" ondblclick="openApp('gta6')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎮</div><span>GTA 6</span></div>
 </div>
 
 <!-- TASKBAR -->
@@ -506,6 +441,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
     <div class="tb-btn" id="tb-settings" onclick="tbClick('settings')">⚙️</div>
     <div class="tb-btn" id="tb-taskman"  onclick="tbClick('taskman')">📊</div>
     <div class="tb-btn" id="tb-exianai"  onclick="tbClick('exianai')">🤖</div>
+    <div class="tb-btn" id="tb-gta6"     onclick="tbClick('gta6')">🎮</div>
   </div>
   <div id="tb-right">
     <div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
@@ -529,6 +465,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
       <div class="pin-app" onclick="openApp('taskman');hideAll()"><div class="ico">📊</div><div class="lbl">Диспетчер</div></div>
       <div class="pin-app" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="lbl">Exian.AI</div></div>
       <div class="pin-app" onclick="launchExiblox();hideAll()"><div class="ico">🐍</div><div class="lbl">Exiblox v3</div></div>
+      <div class="pin-app" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="lbl">GTA 6</div></div>
       <div class="pin-app" onclick="showNotif('Магазин','Скоро!','🛒')"><div class="ico">🛒</div><div class="lbl">Магазин</div></div>
       <div class="pin-app" onclick="showNotif('Почта','Нет писем','✉️')"><div class="ico">✉️</div><div class="lbl">Почта</div></div>
       <div class="pin-app" onclick="showNotif('Фото','Нет фото','🖼️')"><div class="ico">🖼️</div><div class="lbl">Фотографии</div></div>
@@ -536,9 +473,9 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   </div>
   <div class="sm-sec">Рекомендуемые</div>
   <div class="rec-list" id="sm-rec-list">
-    <div class="rec-row" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="rec-info"><div class="n">Exian.AI — Умный чат</div><div class="t">Только что</div></div></div>
-    <div class="rec-row" onclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="rec-info"><div class="n">Мои заметки</div><div class="t">Вчера</div></div></div>
-    <div class="rec-row" onclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="rec-info"><div class="n">Рисунок1.png</div><div class="t">2 дня назад</div></div></div>
+    <div class="rec-row" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="rec-info"><div class="n">GTA 6 — ExiWin City</div><div class="t">Только что</div></div></div>
+    <div class="rec-row" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="rec-info"><div class="n">Exian.AI — Умный чат</div><div class="t">Вчера</div></div></div>
+    <div class="rec-row" onclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="rec-info"><div class="n">Мои заметки</div><div class="t">2 дня назад</div></div></div>
   </div>
   <div id="sm-search-results"></div>
   <div id="sm-footer">
@@ -569,7 +506,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="sl-row"><span class="ico">🔊</span><input type="range" min="0" max="100" value="60" id="vol-sl" oninput="setVol(this.value)"><span class="sl-val" id="vol-val">60%</span></div>
 </div>
 
-<!-- ══════════ WALLPAPER GALLERY ══════════ -->
+<!-- WALLPAPER GALLERY -->
 <div id="wallpaper-gallery" onclick="event.stopPropagation()">
   <div class="wp-gallery-title">
     <span id="wp-gallery-heading">🖼️ Выбор обоев — Тёмная тема</span>
@@ -601,7 +538,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="ctx-sep"></div>
   <div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры</div>
 </div>
-
 <div id="ctx-create-sub" onclick="event.stopPropagation()">
   <div class="ctx-item" onclick="ctxCreateFolder()"><span>📁</span>Папку</div>
   <div class="ctx-item" onclick="ctxCreateTextDoc()"><span>📝</span>Текстовый документ</div>
@@ -609,7 +545,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="ctx-item" onclick="ctxCreateShortcut()"><span>🔗</span>Ярлык</div>
 </div>
 
-<!-- ════ WINDOWS ════ -->
 <!-- EXPLORER -->
 <div class="window" id="win-explorer" style="width:780px;height:520px;top:40px;left:60px;" onclick="bringFront('win-explorer')">
   <div class="titlebar" onmousedown="dragWin(event,'win-explorer')">
@@ -884,6 +819,21 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
   <div class="resize-handle" onmousedown="resizeWin(event,'win-exiblox')"></div>
 </div>
 
+<!-- GTA 6 -->
+<div class="window" id="win-gta6" style="width:1020px;height:680px;top:18px;left:30px;" onclick="bringFront('win-gta6')">
+  <div class="titlebar" onmousedown="dragWin(event,'win-gta6')">
+    <span class="tb-icon">🎮</span>
+    <span class="tb-title">GTA 6 — ExiWin City</span>
+    <div class="win-btns">
+      <div class="wb" onclick="minimizeWin('gta6')">─</div>
+      <div class="wb" onclick="toggleMax('win-gta6')">⬜</div>
+      <div class="wb cls" onclick="gta6Close()">✕</div>
+    </div>
+  </div>
+  <div class="win-body" id="gta6-root" style="overflow:hidden;padding:0;"></div>
+  <div class="resize-handle" onmousedown="resizeWin(event,'win-gta6')"></div>
+</div>
+
 <div class="tb-btn" id="tb-exiblox" onclick="tbClick('exiblox')">🐍</div>
 
 <div id="notif-stack"></div>
@@ -894,224 +844,132 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 <script src="exianai.js"></script>
 <script src="exiblox.js"></script>
 
-<!-- ══════════ DESKTOP ICON DRAG ══════════ -->
+<!-- DESKTOP ICON DRAG -->
 <script>
 (function(){
   let dragEl=null, dragOffX=0, dragOffY=0, hasMoved=false;
   const THRESHOLD=5;
   let startX=0,startY=0;
-
   window.iconDragStart=function(e,el){
-    // Only left button
     if(e.button!==0)return;
-    // Don't block dblclick
-    dragEl=el;
-    startX=e.clientX; startY=e.clientY;
+    dragEl=el; startX=e.clientX; startY=e.clientY;
     const rect=el.getBoundingClientRect();
-    dragOffX=e.clientX-rect.left;
-    dragOffY=e.clientY-rect.top;
-    hasMoved=false;
-    e.stopPropagation();
+    dragOffX=e.clientX-rect.left; dragOffY=e.clientY-rect.top;
+    hasMoved=false; e.stopPropagation();
   };
-
   document.addEventListener('mousemove',function(e){
     if(!dragEl)return;
     const dx=Math.abs(e.clientX-startX), dy=Math.abs(e.clientY-startY);
     if(!hasMoved && dx<THRESHOLD && dy<THRESHOLD)return;
-    if(!hasMoved){
-      hasMoved=true;
-      dragEl.classList.add('dragging-icon');
-    }
+    if(!hasMoved){hasMoved=true;dragEl.classList.add('dragging-icon');}
     const desk=document.getElementById('desktop');
     const deskRect=desk.getBoundingClientRect();
     let nx=e.clientX-deskRect.left-dragOffX;
     let ny=e.clientY-deskRect.top-dragOffY;
-    // Clamp within desktop
     nx=Math.max(0,Math.min(nx,deskRect.width-dragEl.offsetWidth));
     ny=Math.max(0,Math.min(ny,deskRect.height-dragEl.offsetHeight));
-    dragEl.style.left=nx+'px';
-    dragEl.style.top=ny+'px';
+    dragEl.style.left=nx+'px'; dragEl.style.top=ny+'px';
     e.preventDefault();
   });
-
   document.addEventListener('mouseup',function(e){
     if(!dragEl)return;
-    dragEl.classList.remove('dragging-icon');
-    dragEl=null;
+    dragEl.classList.remove('dragging-icon'); dragEl=null;
   });
 })();
 </script>
 
-<!-- ══════════ WALLPAPER GALLERY ══════════ -->
+<!-- WALLPAPER GALLERY -->
 <script>
-// ── Wallpaper definitions ──────────────────────────────────────────────────
 const WALLPAPERS = {
   dark:[
-    {id:'dark-default', name:'Midnight Blue (по умолч.)',
-     css:'linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%)',
-     isDefault:true},
-    {id:'dark-nebula',  name:'Туманность',
-     css:'radial-gradient(ellipse at 30% 40%,#1a0040 0%,#060010 50%,#001020 100%)'},
-    {id:'dark-aurora',  name:'Северное сияние',
-     css:'linear-gradient(160deg,#001a10 0%,#003322 30%,#002244 60%,#001133 100%)'},
-    {id:'dark-volcano', name:'Вулкан',
-     css:'radial-gradient(ellipse at 50% 90%,#3d0000 0%,#1a0000 40%,#0a0005 100%)'},
-    {id:'dark-ocean',   name:'Глубокий океан',
-     css:'linear-gradient(180deg,#000d1a 0%,#001428 50%,#001f3d 100%)'},
-    {id:'dark-galaxy',  name:'Галактика',
-     css:'radial-gradient(ellipse at 70% 30%,#0d001a 0%,#120033 40%,#000010 100%)'},
-    {id:'dark-matrix',  name:'Матрица',
-     css:'linear-gradient(160deg,#001400 0%,#002000 50%,#000a00 100%)'},
-    {id:'dark-copper',  name:'Медь',
-     css:'linear-gradient(135deg,#1a0a00 0%,#2d1200 40%,#0f0700 100%)'},
-    {id:'dark-steel',   name:'Сталь',
-     css:'linear-gradient(160deg,#0a0e14 0%,#131b26 50%,#0a0d13 100%)'},
-    {id:'dark-purple',  name:'Тёмный пурпур',
-     css:'linear-gradient(135deg,#0d0020 0%,#1a0035 50%,#08001a 100%)'},
-    {id:'dark-rose',    name:'Тёмная роза',
-     css:'linear-gradient(135deg,#1a0010 0%,#2d0022 50%,#0f0009 100%)'},
-    {id:'dark-arctic',  name:'Арктическая ночь',
-     css:'linear-gradient(180deg,#000814 0%,#001022 40%,#001530 70%,#000a1a 100%)'},
-    {id:'dark-teal',    name:'Кипарис',
-     css:'linear-gradient(135deg,#001a1a 0%,#002d2d 50%,#000f0f 100%)'},
-    {id:'dark-indigo',  name:'Индиго',
-     css:'linear-gradient(160deg,#050020 0%,#0a003d 50%,#030015 100%)'},
-    {id:'dark-ember',   name:'Угли',
-     css:'radial-gradient(ellipse at 50% 80%,#200500 0%,#100200 50%,#050000 100%)'},
-    {id:'dark-storm',   name:'Шторм',
-     css:'linear-gradient(160deg,#0a0a14 0%,#14141e 40%,#0a0a10 100%)'},
+    {id:'dark-default',name:'Midnight Blue (по умолч.)',css:'linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%)',isDefault:true},
+    {id:'dark-nebula',name:'Туманность',css:'radial-gradient(ellipse at 30% 40%,#1a0040 0%,#060010 50%,#001020 100%)'},
+    {id:'dark-aurora',name:'Северное сияние',css:'linear-gradient(160deg,#001a10 0%,#003322 30%,#002244 60%,#001133 100%)'},
+    {id:'dark-volcano',name:'Вулкан',css:'radial-gradient(ellipse at 50% 90%,#3d0000 0%,#1a0000 40%,#0a0005 100%)'},
+    {id:'dark-ocean',name:'Глубокий океан',css:'linear-gradient(180deg,#000d1a 0%,#001428 50%,#001f3d 100%)'},
+    {id:'dark-galaxy',name:'Галактика',css:'radial-gradient(ellipse at 70% 30%,#0d001a 0%,#120033 40%,#000010 100%)'},
+    {id:'dark-matrix',name:'Матрица',css:'linear-gradient(160deg,#001400 0%,#002000 50%,#000a00 100%)'},
+    {id:'dark-copper',name:'Медь',css:'linear-gradient(135deg,#1a0a00 0%,#2d1200 40%,#0f0700 100%)'},
+    {id:'dark-steel',name:'Сталь',css:'linear-gradient(160deg,#0a0e14 0%,#131b26 50%,#0a0d13 100%)'},
+    {id:'dark-purple',name:'Тёмный пурпур',css:'linear-gradient(135deg,#0d0020 0%,#1a0035 50%,#08001a 100%)'},
+    {id:'dark-rose',name:'Тёмная роза',css:'linear-gradient(135deg,#1a0010 0%,#2d0022 50%,#0f0009 100%)'},
+    {id:'dark-arctic',name:'Арктическая ночь',css:'linear-gradient(180deg,#000814 0%,#001022 40%,#001530 70%,#000a1a 100%)'},
+    {id:'dark-teal',name:'Кипарис',css:'linear-gradient(135deg,#001a1a 0%,#002d2d 50%,#000f0f 100%)'},
+    {id:'dark-indigo',name:'Индиго',css:'linear-gradient(160deg,#050020 0%,#0a003d 50%,#030015 100%)'},
+    {id:'dark-ember',name:'Угли',css:'radial-gradient(ellipse at 50% 80%,#200500 0%,#100200 50%,#050000 100%)'},
+    {id:'dark-storm',name:'Шторм',css:'linear-gradient(160deg,#0a0a14 0%,#14141e 40%,#0a0a10 100%)'},
   ],
   light:[
-    {id:'light-default',name:'Sky Blue (по умолч.)',
-     css:'linear-gradient(160deg,#dceeff 0%,#eef4fb 40%,#d8eaf5 100%)',
-     isDefault:true},
-    {id:'light-peach',  name:'Персик',
-     css:'linear-gradient(160deg,#fff3e0 0%,#ffe8cc 50%,#fff0d8 100%)'},
-    {id:'light-mint',   name:'Мята',
-     css:'linear-gradient(160deg,#e0fff4 0%,#ccf5e8 50%,#d8fff0 100%)'},
-    {id:'light-lavender',name:'Лаванда',
-     css:'linear-gradient(160deg,#f0e6ff 0%,#e8d5ff 50%,#eeddff 100%)'},
-    {id:'light-rose',   name:'Роза',
-     css:'linear-gradient(160deg,#ffe6ee 0%,#ffd5e3 50%,#ffdde8 100%)'},
-    {id:'light-lime',   name:'Лайм',
-     css:'linear-gradient(160deg,#edffd6 0%,#e0ffb8 50%,#e8ffcc 100%)'},
-    {id:'light-aqua',   name:'Аква',
-     css:'linear-gradient(160deg,#d6f8ff 0%,#b8f0ff 50%,#c8f4ff 100%)'},
-    {id:'light-blush',  name:'Румянец',
-     css:'linear-gradient(160deg,#ffe8e8 0%,#ffd0d0 50%,#ffdddd 100%)'},
-    {id:'light-sand',   name:'Песок',
-     css:'linear-gradient(160deg,#fff8e0 0%,#fff2c0 50%,#fff5d0 100%)'},
-    {id:'light-lilac',  name:'Сирень',
-     css:'linear-gradient(160deg,#f8e6ff 0%,#f0d0ff 50%,#f4dcff 100%)'},
-    {id:'light-cream',  name:'Крем',
-     css:'linear-gradient(160deg,#fffcf0 0%,#fff8e0 50%,#fffae8 100%)'},
-    {id:'light-gold',   name:'Золото',
-     css:'linear-gradient(160deg,#fff8d6 0%,#fff0b0 50%,#fff4c0 100%)'},
-    {id:'light-mist',   name:'Туман',
-     css:'linear-gradient(160deg,#eef2f8 0%,#e4eaf4 50%,#e8eef6 100%)'},
-    {id:'light-cyan',   name:'Бирюза',
-     css:'linear-gradient(160deg,#e0f8ff 0%,#c8f2ff 50%,#d4f6ff 100%)'},
-    {id:'light-coral',  name:'Коралл',
-     css:'linear-gradient(160deg,#fff0e8 0%,#ffe4d4 50%,#ffeadc 100%)'},
-    {id:'light-sage',   name:'Шалфей',
-     css:'linear-gradient(160deg,#e8f4ee 0%,#d8eedf 50%,#e0f0e6 100%)'},
+    {id:'light-default',name:'Sky Blue (по умолч.)',css:'linear-gradient(160deg,#dceeff 0%,#eef4fb 40%,#d8eaf5 100%)',isDefault:true},
+    {id:'light-peach',name:'Персик',css:'linear-gradient(160deg,#fff3e0 0%,#ffe8cc 50%,#fff0d8 100%)'},
+    {id:'light-mint',name:'Мята',css:'linear-gradient(160deg,#e0fff4 0%,#ccf5e8 50%,#d8fff0 100%)'},
+    {id:'light-lavender',name:'Лаванда',css:'linear-gradient(160deg,#f0e6ff 0%,#e8d5ff 50%,#eeddff 100%)'},
+    {id:'light-rose',name:'Роза',css:'linear-gradient(160deg,#ffe6ee 0%,#ffd5e3 50%,#ffdde8 100%)'},
+    {id:'light-lime',name:'Лайм',css:'linear-gradient(160deg,#edffd6 0%,#e0ffb8 50%,#e8ffcc 100%)'},
+    {id:'light-aqua',name:'Аква',css:'linear-gradient(160deg,#d6f8ff 0%,#b8f0ff 50%,#c8f4ff 100%)'},
+    {id:'light-blush',name:'Румянец',css:'linear-gradient(160deg,#ffe8e8 0%,#ffd0d0 50%,#ffdddd 100%)'},
+    {id:'light-sand',name:'Песок',css:'linear-gradient(160deg,#fff8e0 0%,#fff2c0 50%,#fff5d0 100%)'},
+    {id:'light-lilac',name:'Сирень',css:'linear-gradient(160deg,#f8e6ff 0%,#f0d0ff 50%,#f4dcff 100%)'},
+    {id:'light-cream',name:'Крем',css:'linear-gradient(160deg,#fffcf0 0%,#fff8e0 50%,#fffae8 100%)'},
+    {id:'light-gold',name:'Золото',css:'linear-gradient(160deg,#fff8d6 0%,#fff0b0 50%,#fff4c0 100%)'},
+    {id:'light-mist',name:'Туман',css:'linear-gradient(160deg,#eef2f8 0%,#e4eaf4 50%,#e8eef6 100%)'},
+    {id:'light-cyan',name:'Бирюза',css:'linear-gradient(160deg,#e0f8ff 0%,#c8f2ff 50%,#d4f6ff 100%)'},
+    {id:'light-coral',name:'Коралл',css:'linear-gradient(160deg,#fff0e8 0%,#ffe4d4 50%,#ffeadc 100%)'},
+    {id:'light-sage',name:'Шалфей',css:'linear-gradient(160deg,#e8f4ee 0%,#d8eedf 50%,#e0f0e6 100%)'},
   ]
 };
-
 let currentWpTab='dark';
 let currentWpId={dark:'dark-default',light:'light-default'};
 let isLightTheme=false;
-
-// ── Open / Close gallery ───────────────────────────────────────────────────
 window.openWallpaperGallery=function(mode){
   currentWpTab=mode||'dark';
   const g=document.getElementById('wallpaper-gallery');
   const heading=document.getElementById('wp-gallery-heading');
   heading.textContent=currentWpTab==='dark'?'🖼️ Выбор обоев — Тёмные':'🖼️ Выбор обоев — Светлые';
-  // Update tabs
   document.getElementById('wp-tab-dark').classList.toggle('active',currentWpTab==='dark');
   document.getElementById('wp-tab-light').classList.toggle('active',currentWpTab==='light');
   renderWpGrid(currentWpTab);
-  // Hide tray, show gallery
   document.getElementById('tray-popup').style.display='none';
   g.style.display='block';
 };
-window.closeWallpaperGallery=function(){
-  document.getElementById('wallpaper-gallery').style.display='none';
-};
+window.closeWallpaperGallery=function(){document.getElementById('wallpaper-gallery').style.display='none';};
 window.wpSwitchTab=function(tab){
   currentWpTab=tab;
   document.getElementById('wp-tab-dark').classList.toggle('active',tab==='dark');
   document.getElementById('wp-tab-light').classList.toggle('active',tab==='light');
-  const heading=document.getElementById('wp-gallery-heading');
-  heading.textContent=tab==='dark'?'🖼️ Выбор обоев — Тёмные':'🖼️ Выбор обоев — Светлые';
+  document.getElementById('wp-gallery-heading').textContent=tab==='dark'?'🖼️ Выбор обоев — Тёмные':'🖼️ Выбор обоев — Светлые';
   renderWpGrid(tab);
 };
-
-// ── Render grid ────────────────────────────────────────────────────────────
 function renderWpGrid(tab){
   const grid=document.getElementById('wp-grid');
   grid.innerHTML='';
   WALLPAPERS[tab].forEach(wp=>{
     const div=document.createElement('div');
     div.className='wp-item'+(currentWpId[tab]===wp.id?' wp-active':'');
-    div.style.background=wp.css;
-    div.title=wp.name;
-    const lbl=document.createElement('div');
-    lbl.className='wp-item-label';
-    lbl.textContent=wp.name;
-    div.appendChild(lbl);
-    if(wp.isDefault){
-      const badge=document.createElement('div');
-      badge.className='wp-default-badge';
-      badge.textContent='По умолч.';
-      div.appendChild(badge);
-    }
-    div.onclick=()=>applyWallpaper(tab,wp);
-    grid.appendChild(div);
+    div.style.background=wp.css; div.title=wp.name;
+    const lbl=document.createElement('div'); lbl.className='wp-item-label'; lbl.textContent=wp.name; div.appendChild(lbl);
+    if(wp.isDefault){const badge=document.createElement('div');badge.className='wp-default-badge';badge.textContent='По умолч.';div.appendChild(badge);}
+    div.onclick=()=>applyWallpaper(tab,wp); grid.appendChild(div);
   });
 }
-
-// ── Apply wallpaper ────────────────────────────────────────────────────────
 function applyWallpaper(tab,wp){
   currentWpId[tab]=wp.id;
-  // Determine if we need to switch theme too
   const wasLight=document.body.classList.contains('light-theme');
-  if(tab==='light' && !wasLight){
-    // Switch to light theme first
-    document.body.classList.add('light-theme');
-    isLightTheme=true;
-    document.getElementById('tr-light-theme').classList.remove('off');
-    document.getElementById('tr-dark-theme').classList.add('off');
-  } else if(tab==='dark' && wasLight){
-    document.body.classList.remove('light-theme');
-    isLightTheme=false;
-    document.getElementById('tr-dark-theme').classList.remove('off');
-    document.getElementById('tr-light-theme').classList.add('off');
-  }
-  // Apply background to desktop
+  if(tab==='light'&&!wasLight){document.body.classList.add('light-theme');isLightTheme=true;document.getElementById('tr-light-theme').classList.remove('off');document.getElementById('tr-dark-theme').classList.add('off');}
+  else if(tab==='dark'&&wasLight){document.body.classList.remove('light-theme');isLightTheme=false;document.getElementById('tr-dark-theme').classList.remove('off');document.getElementById('tr-light-theme').classList.add('off');}
   document.getElementById('desktop').style.background=wp.css;
-  // Update CSS var (for aurora etc)
   document.documentElement.style.setProperty('--desktop-bg',wp.css);
-  // Re-render grid to show active
   renderWpGrid(currentWpTab);
-  // Show notification
-  if(typeof showNotif==='function')
-    showNotif('Обои изменены','Фон «'+wp.name+'» применён','🖼️');
+  if(typeof showNotif==='function') showNotif('Обои изменены','Фон «'+wp.name+'» применён','🖼️');
 }
-
-// ── Close gallery on desktop click ────────────────────────────────────────
 document.addEventListener('click',function(e){
   const g=document.getElementById('wallpaper-gallery');
-  if(g.style.display==='block' && !g.contains(e.target)){
-    g.style.display='none';
-  }
+  if(g.style.display==='block'&&!g.contains(e.target)) g.style.display='none';
 });
 </script>
 
-<!-- ══════════ PATCHES ══════════ -->
+<!-- PATCHES -->
 <script>
-// Патч Task Manager
 const _tm = tmRender;
 tmRender = function(tab) {
   document.querySelectorAll('.tm-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
@@ -1123,15 +981,1293 @@ tmRender = function(tab) {
   else if(tab==='performance') tmRenderPerf();
   else if(tab==='startup') tmRenderStartup();
 };
-// Приветствие в браузере
 window.addEventListener('DOMContentLoaded',()=>{
   const h=new Date().getHours(), g=el('br-hello');
   if(g) g.textContent=h<6?'Доброй ночи!':h<12?'Доброе утро!':h<18?'Добрый день!':'Добрый вечер!';
 });
-window.addEventListener('DOMContentLoaded',()=>{
-  setExpView('large');
-});
+window.addEventListener('DOMContentLoaded',()=>{ setExpView('large'); });
 </script>
 <script src="phone.js"></script>
+
+<!-- ══════════ GTA 6 ENGINE ══════════ -->
+<script>
+'use strict';
+// ═══════════════════════════════════════════════════════════════
+//  GTA 6 — ExiWin Edition  •  Full City Sandbox
+// ═══════════════════════════════════════════════════════════════
+window.GTA6 = (function () {
+
+// ── Math helpers ───────────────────────────────────────────────
+const abs=Math.abs,sqrt=Math.sqrt,sin=Math.sin,cos=Math.cos,
+      atan2=Math.atan2,PI=Math.PI,floor=Math.floor,min=Math.min,max=Math.max;
+const clamp=(v,a,b)=>max(a,min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const dst=(ax,ay,bx,by)=>sqrt((ax-bx)**2+(ay-by)**2);
+const rnd=(a,b)=>Math.random()*(b-a)+a;
+const pick=arr=>arr[floor(Math.random()*arr.length)];
+const lerpA=(a,b,t)=>{
+  let d=b-a; while(d>PI)d-=PI*2; while(d<-PI)d+=PI*2; return a+d*t;
+};
+// hash for stable random
+const hash=(x,y)=>{let h=(x*374761393+y*668265263);h=((h^(h>>13))*1274126177);return abs(h%1000)/1000;};
+
+// ── World constants ────────────────────────────────────────────
+const TILE=48, MAP_W=110, MAP_H=110;
+const ROAD=0,SIDEWALK=1,BUILDING=2,PARK=3,WATER=4;
+
+// ── Palettes ───────────────────────────────────────────────────
+const CAR_COLORS=['#e74c3c','#e67e22','#f1c40f','#2ecc71','#1abc9c',
+  '#3498db','#9b59b6','#ff69b4','#ecf0f1','#2c3e50','#95a5a6',
+  '#c0392b','#27ae60','#2980b9','#8e44ad','#d35400','#16a085',
+  '#f39c12','#7f8c8d','#bdc3c7'];
+const SKIN=['#f5cba7','#e59866','#d4a574','#c07a4a','#a0522d','#f0e0c8','#e8c9a0'];
+const SHIRTS=['#e74c3c','#3498db','#2ecc71','#f1c40f','#9b59b6','#e67e22',
+  '#1abc9c','#ff69b4','#95a5a6','#c0392b','#27ae60','#2980b9','#16a085'];
+const PANTS=['#2c3e50','#1a252f','#34495e','#5d6d7e','#4a4a6a','#1a1a2e'];
+const BZONE={
+  downtown:['#5a6b7a','#6b7c8b','#4a5b6a','#7a8b9a','#8a9baa','#3a4b5a'],
+  midtown: ['#b8945a','#a07840','#c8a870','#907030','#d4b070','#806028','#9a8050'],
+  uptown:  ['#8b7a6a','#9a8a7a','#7a6a5a','#aa9a8a','#6a5a4a','#ba9a7a'],
+  industry:['#707070','#808080','#606060','#787878','#6a6a6a','#757575'],
+};
+
+// ── Entity IDs ─────────────────────────────────────────────────
+let _eid=1;
+class Entity{constructor(x,y){this.x=x;this.y=y;this.vx=0;this.vy=0;this.angle=0;this.alive=true;this.id=_eid++;}}
+
+// ── Player ─────────────────────────────────────────────────────
+class Player extends Entity{
+  constructor(x,y){
+    super(x,y); this.w=14;this.h=14;
+    this.speed=150; this.health=100; this.maxHealth=100;
+    this.inCar=null; this.money=2500;
+    this.skinColor=pick(SKIN); this.shirtColor=pick(SHIRTS); this.pantsColor=pick(PANTS);
+    this.animFrame=0; this.animTimer=0;
+    this._fCool=0; this._gCool=0;
+  }
+}
+
+// ── Car ────────────────────────────────────────────────────────
+class Car extends Entity{
+  constructor(x,y,color,type){
+    super(x,y); this.color=color||pick(CAR_COLORS); this.type=type||'sedan';
+    this.w=type==='truck'?38:type==='suv'?34:30;
+    this.h=type==='truck'?20:type==='suv'?18:16;
+    this.speed=0;
+    this.maxSpeed=type==='sports'?280:type==='truck'?120:type==='suv'?200:210;
+    this.accel=type==='sports'?220:type==='truck'?80:160;
+    this.handling=type==='sports'?3.8:type==='truck'?1.4:type==='suv'?2.8:2.6;
+    this.driver=null; this.passenger=null;
+    this.isParked=true; this.aiState='parked';
+    this.aiTimer=rnd(1,5); this.aiAngle=this.angle;
+    this.health=100; this.isPolice=(type==='police');
+    this.brakeLight=false; this.sirenOn=false;
+    this.colorNum=floor(Math.random()*10000);
+  }
+}
+
+// ── NPC ────────────────────────────────────────────────────────
+class NPC extends Entity{
+  constructor(x,y){
+    super(x,y); this.w=10;this.h=10;
+    this.speed=rnd(45,85);
+    this.skinColor=pick(SKIN); this.shirtColor=pick(SHIRTS); this.pantsColor=pick(PANTS);
+    this.dir={x:0,y:1}; this.aiState='walk';
+    this.aiTimer=rnd(2,6); this.turnTimer=rnd(1,5);
+    this.health=100; this.isPolice=false;
+    this.animFrame=0; this.animTimer=0;
+    this.fleeing=false;
+  }
+}
+
+// ── Police officer ─────────────────────────────────────────────
+class Officer extends NPC{
+  constructor(x,y){
+    super(x,y); this.isPolice=true;
+    this.speed=170; this.shirtColor='#1a3a6b'; this.pantsColor='#0d1f3a';
+    this.skinColor=pick(SKIN); this.aiState='patrol'; this.chasing=false;
+  }
+}
+
+// ── World generation ───────────────────────────────────────────
+function makeWorld(){
+  const map=Array.from({length:MAP_H},()=>new Uint8Array(MAP_W).fill(BUILDING));
+  const bColors=[]; for(let y=0;y<MAP_H;y++){bColors[y]=[];}
+
+  // Road grid — major arteries every 13 tiles (2-lane = 2 tiles wide)
+  const roadX=[], roadY=[];
+  for(let x=10;x<MAP_W-4;x+=13){roadX.push(x,x+1);}
+  for(let y=10;y<MAP_H-4;y+=13){roadY.push(y,y+1);}
+  // Extra diagonal cross roads
+  for(let x=16;x<MAP_W-4;x+=13){roadX.push(x,x+1);}
+
+  for(let y=0;y<MAP_H;y++)
+    for(let x=0;x<MAP_W;x++)
+      if(roadX.includes(x)||roadY.includes(y)) map[y][x]=ROAD;
+
+  // Sidewalks (1 tile border around road blocks)
+  for(let y=1;y<MAP_H-1;y++)
+    for(let x=1;x<MAP_W-1;x++)
+      if(map[y][x]===BUILDING){
+        let adj=false;
+        for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])
+          if(map[y+dy]?.[x+dx]===ROAD){adj=true;break;}
+        if(adj) map[y][x]=SIDEWALK;
+      }
+
+  // Water zone (top-left corner)
+  for(let y=0;y<12;y++) for(let x=0;x<12;x++) map[y][x]=WATER;
+
+  // Parks
+  for(let y=0;y<MAP_H;y++)
+    for(let x=0;x<MAP_W;x++)
+      if(map[y][x]===BUILDING && hash(x*3,y*3)<0.04)
+        map[y][x]=PARK;
+
+  // Building colors
+  function zonePal(x,y){
+    const cx=MAP_W/2,cy=MAP_H/2,d=dst(x,y,cx,cy);
+    if(d<18) return BZONE.downtown;
+    if(d<35) return BZONE.midtown;
+    if(d<50) return BZONE.uptown;
+    return BZONE.industry;
+  }
+  for(let y=0;y<MAP_H;y++)
+    for(let x=0;x<MAP_W;x++)
+      if(map[y][x]===BUILDING){
+        const p=zonePal(x,y);
+        bColors[y][x]=p[floor(hash(x*7,y*7)*p.length)];
+      }
+
+  // Building heights (for visual depth)
+  const bHeight=[];
+  for(let y=0;y<MAP_H;y++){
+    bHeight[y]=[];
+    for(let x=0;x<MAP_W;x++)
+      bHeight[y][x]=map[y][x]===BUILDING?floor(hash(x*11,y*13)*5+1):0;
+  }
+
+  return {map,bColors,bHeight,roadX,roadY};
+}
+
+// ── Game state ─────────────────────────────────────────────────
+let S={
+  canvas:null,ctx:null,W:800,H:600,
+  running:false,initialized:false,
+  world:null,
+  cam:{x:0,y:0},
+  player:null,
+  cars:[],npcs:[],officers:[],
+  wantedLevel:0,wantedCooldown:0,
+  score:0,keys:{},mouse:{x:0,y:0},
+  lastTime:0,frameCount:0,gameTime:0,
+  spawnCooldown:0,policeCooldown:0,
+  notifs:[],
+  hud:null,mmCanvas:null,
+  _listeners:[],
+  nightMode:false,
+  dayTime:8, // hour 0-24
+  totalKills:0,
+};
+
+// ── Initialise ─────────────────────────────────────────────────
+function init(rootEl){
+  if(!rootEl) return;
+  // Clean
+  if(S.canvas&&S.canvas.parentNode) S.canvas.parentNode.removeChild(S.canvas);
+  if(S.mmCanvas&&S.mmCanvas.parentNode) S.mmCanvas.parentNode.removeChild(S.mmCanvas);
+  for(const[el,ev,fn] of S._listeners) el.removeEventListener(ev,fn);
+  S._listeners=[];
+  rootEl.innerHTML='';
+  rootEl.style.cssText='position:relative;overflow:hidden;background:#000;';
+
+  // Main canvas
+  const canvas=document.createElement('canvas');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;';
+  canvas.tabIndex=0;
+  rootEl.appendChild(canvas);
+
+  // HUD overlay
+  const hud=document.createElement('div');
+  hud.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:5;font-family:\'Segoe UI\',sans-serif;';
+  rootEl.appendChild(hud);
+
+  // Minimap canvas
+  const mm=document.createElement('canvas');
+  mm.style.cssText='position:absolute;bottom:56px;right:10px;width:140px;height:140px;border-radius:50%;border:2px solid rgba(255,255,255,.35);box-shadow:0 0 12px rgba(0,0,0,.8);z-index:6;pointer-events:none;';
+  mm.width=140;mm.height=140;
+  rootEl.appendChild(mm);
+
+  // On-screen buttons
+  const btns=document.createElement('div');
+  btns.style.cssText='position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10;pointer-events:all;';
+  btns.innerHTML=`
+    <button id="gta6-spawn-btn" style="background:rgba(0,80,200,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">🚗 Спавн машины [G]</button>
+    <button id="gta6-sports-btn" style="background:rgba(200,80,0,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">🏎️ Спорткар [T]</button>
+    <button id="gta6-clear-btn" style="background:rgba(50,50,50,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">⭐ Снять розыск</button>
+    <button id="gta6-health-btn" style="background:rgba(0,150,80,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">❤️ Аптечка [$100]</button>
+  `;
+  rootEl.appendChild(btns);
+  btns.querySelector('#gta6-spawn-btn').onclick=()=>spawnCarNearPlayer('sedan');
+  btns.querySelector('#gta6-sports-btn').onclick=()=>spawnCarNearPlayer('sports');
+  btns.querySelector('#gta6-clear-btn').onclick=clearWanted;
+  btns.querySelector('#gta6-health-btn').onclick=buyHealth;
+
+  S.canvas=canvas; S.ctx=canvas.getContext('2d');
+  S.hud=hud; S.mmCanvas=mm;
+
+  // Resize
+  function resize(){
+    const r=rootEl.getBoundingClientRect();
+    canvas.width=max(400,r.width||800);
+    canvas.height=max(300,r.height-36||560);
+    S.W=canvas.width; S.H=canvas.height;
+  }
+  resize();
+  const ro=new ResizeObserver(resize);
+  ro.observe(rootEl);
+  S._listeners.push([window,'resize',resize]);
+
+  // Keys
+  const kd=e=>{S.keys[e.code]=true; if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();};
+  const ku=e=>{ S.keys[e.code]=false; };
+  const addL=(el,ev,fn)=>{ el.addEventListener(ev,fn); S._listeners.push([el,ev,fn]); };
+  addL(window,'keydown',kd); addL(window,'keyup',ku);
+  canvas.addEventListener('click',()=>canvas.focus());
+
+  // Generate world
+  S.world=makeWorld();
+
+  // Player at city center
+  const startX=(MAP_W/2)*TILE+TILE/2, startY=(MAP_H/2)*TILE+TILE/2;
+  S.player=new Player(startX,startY);
+  S.cars=[]; S.npcs=[]; S.officers=[];
+  S.wantedLevel=0; S.wantedCooldown=0;
+  S.score=0; S.spawnCooldown=0; S.policeCooldown=0;
+  S.frameCount=0; S.gameTime=0; S.dayTime=10;
+  S.notifs=[];
+
+  spawnInitialCars();
+  spawnInitialNPCs();
+
+  S.cam={x:startX-S.W/2,y:startY-S.H/2};
+  S.running=true; S.initialized=true;
+  S.lastTime=performance.now();
+
+  notify('🎮 WASD — движение • F — войти/выйти из авто • G — спавн машины',4500);
+  setTimeout(()=>notify('🚗 Подойдите к любой машине и нажмите F!',3000),1800);
+  setTimeout(()=>notify('🌆 Добро пожаловать в GTA 6 — ExiWin Edition!',3000),200);
+
+  canvas.focus();
+  requestAnimationFrame(gameLoop);
+}
+
+// ── Spawn helpers ──────────────────────────────────────────────
+function findRoadPos(){
+  for(let i=0;i<500;i++){
+    const rx=pick(S.world.roadX),ry=floor(rnd(2,MAP_H-2));
+    if(S.world.map[ry]?.[rx]===ROAD)
+      return{x:(rx+0.5)*TILE,y:(ry+0.5)*TILE};
+  }
+  return{x:MAP_W/2*TILE,y:MAP_H/2*TILE};
+}
+function findSidewalkPos(){
+  for(let i=0;i<500;i++){
+    const x=floor(rnd(2,MAP_W-2)),y=floor(rnd(2,MAP_H-2));
+    if(S.world.map[y]?.[x]===SIDEWALK)
+      return{x:(x+0.5)*TILE,y:(y+0.5)*TILE};
+  }
+  return{x:(MAP_W/2+5)*TILE,y:MAP_H/2*TILE};
+}
+
+function spawnInitialCars(){
+  const types=['sedan','sedan','sedan','sedan','sports','suv','suv','truck'];
+  let n=0;
+  for(let attempt=0;attempt<3000&&n<80;attempt++){
+    const p=findRoadPos();
+    if(carOverlapAt(p.x,p.y,30,null)){continue;}
+    const c=new Car(p.x,p.y,pick(CAR_COLORS),pick(types));
+    // Snap to road angle
+    if(S.world.roadX.includes(floor(p.x/TILE))) c.angle=PI/2; else c.angle=0;
+    if(Math.random()<0.4){c.aiState='driving';c.isParked=false;}
+    S.cars.push(c); n++;
+  }
+  // Spawn some police cars
+  for(let i=0;i<4;i++){
+    const p=findRoadPos();
+    const c=new Car(p.x,p.y,pick(['#1e3a8a','#152c6b']),'police');
+    c.aiState='patrol'; c.isParked=false;
+    S.cars.push(c);
+  }
+}
+
+function spawnInitialNPCs(){
+  for(let i=0;i<100;i++){
+    const p=findSidewalkPos();
+    const ang=Math.random()*PI*2;
+    const npc=new NPC(p.x,p.y);
+    npc.dir={x:cos(ang),y:sin(ang)};
+    S.npcs.push(npc);
+  }
+  for(let i=0;i<6;i++){
+    const p=findSidewalkPos();
+    S.officers.push(new Officer(p.x,p.y));
+  }
+}
+
+function carOverlapAt(x,y,r,exclude){
+  for(const c of S.cars){
+    if(c===exclude) continue;
+    if(dst(c.x,c.y,x,y)<r) return true;
+  }
+  return false;
+}
+
+// ── Game loop ──────────────────────────────────────────────────
+function gameLoop(ts){
+  if(!S.running||!S.canvas||!S.canvas.isConnected){S.running=false;return;}
+  const dt=min((ts-S.lastTime)/1000,0.05);
+  S.lastTime=ts; S.frameCount++; S.gameTime+=dt;
+  S.dayTime=(S.dayTime+dt*0.015)%24; // 1 real min = ~1 game hour
+
+  update(dt);
+  render();
+  drawHUD();
+  drawMinimap();
+
+  requestAnimationFrame(gameLoop);
+}
+
+// ── Update ────────────────────────────────────────────────────
+function update(dt){
+  const K=S.keys, p=S.player;
+  if(S.spawnCooldown>0) S.spawnCooldown-=dt;
+  if(S.policeCooldown>0) S.policeCooldown-=dt;
+
+  // ── Player ──────────────────────────────────────────────────
+  if(p.inCar) updateDriving(dt);
+  else        updateWalk(dt);
+
+  // ── F key: enter/exit ────────────────────────────────────────
+  p._fCool=max(0,p._fCool-dt);
+  if(K['KeyF']&&p._fCool<=0){
+    p._fCool=0.35;
+    if(p.inCar){ exitCar(p); }
+    else {
+      const nc=nearestCar();
+      if(nc&&!nc.driver&&dst(p.x,p.y,nc.x,nc.y)<55){
+        enterCar(p,nc);
+      } else if(nc){
+        notify('🚗 Подойдите ближе к машине!',1200);
+      }
+    }
+  }
+
+  // ── G key: spawn sedan ───────────────────────────────────────
+  p._gCool=max(0,p._gCool-dt);
+  if(K['KeyG']&&p._gCool<=0){
+    p._gCool=0.4;
+    spawnCarNearPlayer('sedan');
+  }
+  // T key: sports
+  if(K['KeyT']&&p._gCool<=0){
+    p._gCool=0.4;
+    spawnCarNearPlayer('sports');
+  }
+
+  // ── Camera ──────────────────────────────────────────────────
+  const tx=p.inCar?p.inCar.x:p.x, ty=p.inCar?p.inCar.y:p.y;
+  S.cam.x=lerp(S.cam.x,tx-S.W/2,0.12);
+  S.cam.y=lerp(S.cam.y,ty-S.H/2,0.12);
+  S.cam.x=clamp(S.cam.x,0,MAP_W*TILE-S.W);
+  S.cam.y=clamp(S.cam.y,0,MAP_H*TILE-S.H);
+
+  // ── Cars ─────────────────────────────────────────────────────
+  for(const c of S.cars){
+    if(c.driver===p) continue;
+    updateCarAI(c,dt);
+  }
+
+  // ── NPCs ─────────────────────────────────────────────────────
+  for(const n of S.npcs) updateNPC(n,dt);
+  for(const o of S.officers) updateOfficer(o,dt);
+
+  // ── Wanted: spawn police ─────────────────────────────────────
+  if(S.wantedLevel>0){
+    S.wantedCooldown-=dt;
+    if(S.wantedCooldown<=0){
+      S.wantedLevel=max(0,S.wantedLevel-1);
+      S.wantedCooldown=S.wantedLevel>0?18:0;
+      if(S.wantedLevel===0){
+        notify('⭐ Полиция вас потеряла!',2000);
+        // Stand down police
+        for(const c of S.cars) if(c.isPolice&&c.aiState==='chase') c.aiState='patrol';
+        for(const o of S.officers) o.chasing=false;
+      }
+    }
+    if(S.policeCooldown<=0&&S.wantedLevel>0){
+      S.policeCooldown=8/S.wantedLevel;
+      spawnPoliceUnit();
+    }
+  }
+
+  // ── Cleanup dead ─────────────────────────────────────────────
+  if(S.frameCount%300===0){
+    const px=p.inCar?p.inCar.x:p.x, py=p.inCar?p.inCar.y:p.y;
+    // Remove faraway npcs
+    S.npcs=S.npcs.filter(n=>!n.alive?dst(n.x,n.y,px,py)<600:true);
+    // Replenish
+    if(S.npcs.filter(n=>n.alive).length<80){
+      for(let i=0;i<5;i++){
+        const sp=findSidewalkPos(); S.npcs.push(new NPC(sp.x,sp.y));
+      }
+    }
+    if(S.cars.filter(c=>!c.isPolice&&c.aiState!=='player').length<60){
+      for(let i=0;i<4;i++){
+        const p2=findRoadPos();
+        if(!carOverlapAt(p2.x,p2.y,35,null)){
+          const c=new Car(p2.x,p2.y,pick(CAR_COLORS),pick(['sedan','suv']));
+          c.aiState='driving'; c.isParked=false;
+          S.cars.push(c);
+        }
+      }
+    }
+  }
+
+  // ── Notifications ────────────────────────────────────────────
+  S.notifs=S.notifs.filter(n=>{n.t-=dt;return n.t>0;});
+}
+
+function updateWalk(dt){
+  const K=S.keys,p=S.player;
+  let dx=0,dy=0;
+  if(K['ArrowUp']   ||K['KeyW']) dy=-1;
+  if(K['ArrowDown'] ||K['KeyS']) dy=1;
+  if(K['ArrowLeft'] ||K['KeyA']) dx=-1;
+  if(K['ArrowRight']||K['KeyD']) dx=1;
+  const run=K['ShiftLeft']||K['ShiftRight'];
+  const sp=p.speed*(run?1.75:1);
+  if(dx||dy){
+    const len=sqrt(dx*dx+dy*dy);
+    dx/=len; dy/=len;
+    p.angle=atan2(dy,dx);
+    p.animTimer+=dt; if(p.animTimer>0.13){p.animFrame=(p.animFrame+1)%4;p.animTimer=0;}
+  }
+  const nx=p.x+dx*sp*dt, ny=p.y+dy*sp*dt;
+  if(!solidAt(nx,p.y)) p.x=clamp(nx,8,MAP_W*TILE-8);
+  if(!solidAt(p.x,ny)) p.y=clamp(ny,8,MAP_H*TILE-8);
+}
+
+function updateDriving(dt){
+  const K=S.keys,p=S.player,c=p.inCar;
+  let thr=0,str=0;
+  if(K['ArrowUp']   ||K['KeyW']) thr=1;
+  if(K['ArrowDown'] ||K['KeyS']) thr=-0.6;
+  if(K['ArrowLeft'] ||K['KeyA']) str=-1;
+  if(K['ArrowRight']||K['KeyD']) str=1;
+  const brake=K['Space'];
+
+  c.speed+=thr*c.accel*dt;
+  if(!thr){ c.speed*=Math.pow(0.82,dt*60/60); if(abs(c.speed)<1)c.speed=0; }
+  if(brake){ c.speed*=Math.pow(0.65,dt*60/60); c.brakeLight=true; } else c.brakeLight=thr<0;
+  c.speed=clamp(c.speed,-c.maxSpeed*0.45,c.maxSpeed);
+
+  if(abs(c.speed)>8){
+    c.angle+=str*c.handling*dt*(abs(c.speed)/c.maxSpeed);
+  }
+
+  const nx=c.x+cos(c.angle)*c.speed*dt;
+  const ny=c.y+sin(c.angle)*c.speed*dt;
+  if(!carSolid(nx,c.y,c)){c.x=nx;}else{c.speed*=-0.3;}
+  if(!carSolid(c.x,ny,c)){c.y=ny;}else{c.speed*=-0.3;}
+  c.x=clamp(c.x,20,MAP_W*TILE-20); c.y=clamp(c.y,20,MAP_H*TILE-20);
+
+  // Car-car collision
+  for(const o of S.cars){
+    if(o===c||!o.isParked) continue;
+    if(dst(c.x,c.y,o.x,o.y)<36){
+      const ang=atan2(c.y-o.y,c.x-o.x);
+      c.x+=cos(ang)*2; c.y+=sin(ang)*2;
+      o.x-=cos(ang)*1; o.y-=sin(ang)*1;
+      if(abs(c.speed)>60){ gainWanted(1); c.speed*=0.4; }
+      c.speed*=0.3;
+    }
+  }
+
+  // Hit NPCs
+  if(abs(c.speed)>55){
+    for(const n of S.npcs){
+      if(!n.alive) continue;
+      if(dst(c.x,c.y,n.x,n.y)<28){
+        n.alive=false; S.totalKills++; gainWanted(2);
+        p.money=max(0,p.money); S.score+=150;
+        notify('💀 Наезд! Розыск ↑↑',1800);
+      }
+    }
+    // Hit officer
+    for(const o of S.officers){
+      if(!o.alive) continue;
+      if(dst(c.x,c.y,o.x,o.y)<28){
+        gainWanted(3); o.alive=false;
+        notify('🚨 Наезд на полицейского! ВНИМАНИЕ!',2500);
+      }
+    }
+  }
+
+  p.x=c.x+sin(c.angle)*12; p.y=c.y-cos(c.angle)*12;
+
+  // Police catch
+  if(S.wantedLevel>0){
+    for(const pc of S.cars){
+      if(!pc.isPolice||pc.driver===p) continue;
+      if(dst(pc.x,pc.y,c.x,c.y)<40){
+        bustedPlayer();
+        return;
+      }
+    }
+    for(const o of S.officers){
+      if(dst(o.x,o.y,p.x,p.y)<25&&o.chasing){
+        bustedPlayer();
+        return;
+      }
+    }
+  }
+}
+
+function enterCar(p,c){
+  p.inCar=c; c.driver=p; c.isParked=false; c.aiState='player';
+  c.speed=0;
+  notify('🚗 Едем на '+carName(c)+'! Удачи!',1500);
+}
+function exitCar(p){
+  const c=p.inCar; if(!c) return;
+  c.driver=null; c.speed*=0.2; c.isParked=true; c.aiState='parked';
+  // Place player beside car
+  p.x=c.x+cos(c.angle+PI/2)*32; p.y=c.y+sin(c.angle+PI/2)*32;
+  p.inCar=null;
+  notify('🚶 Вышли из машины',1000);
+}
+
+function updateCarAI(car,dt){
+  if(car.aiState==='parked') return;
+  car.aiTimer-=dt;
+
+  if(car.aiState==='patrol'||car.aiState==='driving'){
+    car.speed=lerp(car.speed,70,dt*1.5);
+    if(car.aiTimer<=0){
+      car.aiTimer=rnd(2,6);
+      // Turn at random
+      car.angle+=pick([-PI/2,0,PI/2,PI]);
+    }
+    const nx=car.x+cos(car.angle)*car.speed*dt;
+    const ny=car.y+sin(car.angle)*car.speed*dt;
+    if(!carSolid(nx,car.y,car)){car.x=nx;}
+    else{car.angle+=PI/2;car.aiTimer=rnd(1,2);}
+    if(!carSolid(car.x,ny,car)){car.y=ny;}
+    else{car.angle+=PI/2;car.aiTimer=rnd(1,2);}
+    car.x=clamp(car.x,20,MAP_W*TILE-20);
+    car.y=clamp(car.y,20,MAP_H*TILE-20);
+  }
+
+  if(car.aiState==='chase'){
+    const p=S.player;
+    const tx=p.inCar?p.inCar.x:p.x, ty=p.inCar?p.inCar.y:p.y;
+    const ta=atan2(ty-car.y,tx-car.x);
+    car.angle=lerpA(car.angle,ta,dt*3.5);
+    car.speed=lerp(car.speed,car.maxSpeed*0.85,dt*2.5);
+    const nx=car.x+cos(car.angle)*car.speed*dt;
+    const ny=car.y+sin(car.angle)*car.speed*dt;
+    if(!carSolid(nx,car.y,car)) car.x=nx;
+    if(!carSolid(car.x,ny,car)) car.y=ny;
+    car.x=clamp(car.x,20,MAP_W*TILE-20);
+    car.y=clamp(car.y,20,MAP_H*TILE-20);
+    car.sirenOn=true;
+    if(dst(car.x,car.y,tx,ty)<42) bustedPlayer();
+  }
+}
+
+function updateNPC(n,dt){
+  if(!n.alive) return;
+  n.aiTimer-=dt; n.turnTimer-=dt;
+
+  const p=S.player;
+  const px=p.inCar?p.inCar.x:p.x,py=p.inCar?p.inCar.y:p.y;
+  const pd=dst(n.x,n.y,px,py);
+
+  // Flee from player if close and running
+  if(pd<80&&S.wantedLevel>2){
+    n.fleeing=true;
+  } else if(pd>200) n.fleeing=false;
+
+  if(n.fleeing){
+    const fa=atan2(n.y-py,n.x-px);
+    n.dir={x:cos(fa),y:sin(fa)};
+    n.aiTimer=0.5;
+  } else if(n.turnTimer<=0){
+    n.turnTimer=rnd(2,7);
+    const a=Math.random()*PI*2;
+    n.dir={x:cos(a),y:sin(a)};
+  }
+
+  const sp=n.fleeing?n.speed*1.6:n.speed;
+  const nx=n.x+n.dir.x*sp*dt;
+  const ny=n.y+n.dir.y*sp*dt;
+  const tx2=floor(nx/TILE),ty2=floor(ny/TILE);
+  const tile=S.world.map[ty2]?.[tx2];
+  if(tile===SIDEWALK||tile===ROAD||tile===PARK){
+    n.x=clamp(nx,4,MAP_W*TILE-4);
+    n.y=clamp(ny,4,MAP_H*TILE-4);
+  } else { n.turnTimer=0; }
+
+  n.animTimer+=dt; if(n.animTimer>0.18){n.animFrame=(n.animFrame+1)%4;n.animTimer=0;}
+}
+
+function updateOfficer(o,dt){
+  if(!o.alive) return;
+  const p=S.player;
+  const px=p.inCar?p.inCar.x:p.x,py=p.inCar?p.inCar.y:p.y;
+  const pd=dst(o.x,o.y,px,py);
+
+  if(S.wantedLevel>0){ o.chasing=true; o.aiState='chase'; }
+  else { o.chasing=false; o.aiState='patrol'; }
+
+  if(o.chasing){
+    const ta=atan2(py-o.y,px-o.x);
+    o.dir={x:cos(ta),y:sin(ta)};
+    // Walk fast toward player
+    const sp=o.speed;
+    const nx=o.x+o.dir.x*sp*dt;
+    const ny=o.y+o.dir.y*sp*dt;
+    if(!solidAt(nx,o.y)) o.x=clamp(nx,4,MAP_W*TILE-4);
+    if(!solidAt(o.x,ny)) o.y=clamp(ny,4,MAP_H*TILE-4);
+    if(pd<28) bustedPlayer();
+  } else {
+    // Patrol
+    o.aiTimer-=dt; o.turnTimer-=dt;
+    if(o.turnTimer<=0){
+      o.turnTimer=rnd(3,8);
+      const a=Math.random()*PI*2;
+      o.dir={x:cos(a),y:sin(a)};
+    }
+    const nx=o.x+o.dir.x*60*dt, ny=o.y+o.dir.y*60*dt;
+    const tx2=floor(nx/TILE),ty2=floor(ny/TILE);
+    const tile=S.world.map[ty2]?.[tx2];
+    if(tile===SIDEWALK||tile===ROAD){
+      o.x=clamp(nx,4,MAP_W*TILE-4);
+      o.y=clamp(ny,4,MAP_H*TILE-4);
+    } else o.turnTimer=0;
+  }
+  o.animTimer=(o.animTimer||0)+dt;
+  if(o.animTimer>0.14){o.animFrame=(o.animFrame||0+1)%4;o.animTimer=0;}
+}
+
+function gainWanted(n){
+  S.wantedLevel=clamp(S.wantedLevel+n,0,5);
+  S.wantedCooldown=20+S.wantedLevel*5;
+  for(const c of S.cars) if(c.isPolice) c.aiState='chase';
+  for(const o of S.officers) o.chasing=true;
+}
+function clearWanted(){
+  S.wantedLevel=0; S.wantedCooldown=0;
+  for(const c of S.cars) if(c.isPolice&&c.aiState==='chase') c.aiState='patrol';
+  for(const o of S.officers) o.chasing=false;
+  notify('⭐ Розыск снят!',1500);
+}
+function buyHealth(){
+  const p=S.player;
+  if(p.money<100){notify('💸 Недостаточно денег!',1500);return;}
+  p.money-=100; p.health=min(p.maxHealth,p.health+50);
+  notify('❤️ +50 здоровья',1200);
+}
+function bustedPlayer(){
+  const p=S.player;
+  if(p.inCar) exitCar(p);
+  p.money=max(0,p.money-500);
+  clearWanted();
+  p.x=(MAP_W/2)*TILE; p.y=(MAP_H/2)*TILE;
+  S.score=max(0,S.score-1000);
+  notify('🚔 ЗАДЕРЖАН! Штраф: $500. Перемещён в центр.',4000);
+}
+function spawnPoliceUnit(){
+  const p=S.player;
+  const px=p.inCar?p.inCar.x:p.x, py=p.inCar?p.inCar.y:p.y;
+  const ang=Math.random()*PI*2, r=rnd(400,700);
+  const x=clamp(px+cos(ang)*r,40,MAP_W*TILE-40);
+  const y=clamp(py+sin(ang)*r,40,MAP_H*TILE-40);
+  // Police car
+  const pc=new Car(x,y,pick(['#1e3a8a','#152c6b']),'police');
+  pc.aiState='chase'; pc.isParked=false; pc.sirenOn=true;
+  S.cars.push(pc);
+  // Officer on foot
+  const o=new Officer(x+rnd(-30,30),y+rnd(-30,30));
+  o.chasing=true; o.aiState='chase';
+  S.officers.push(o);
+  if(S.officers.length>S.wantedLevel*4+4)
+    S.officers=S.officers.filter((_,i)=>i>S.officers.length-S.wantedLevel*4-4);
+}
+
+function spawnCarNearPlayer(type){
+  if(S.spawnCooldown>0){notify(`⏳ Подождите ${S.spawnCooldown.toFixed(1)}с`,800);return;}
+  const p=S.player;
+  const ang=(p.inCar?p.inCar.angle:p.angle)+PI/2;
+  const r=55;
+  const x=clamp((p.inCar?p.inCar.x:p.x)+cos(ang)*r,20,MAP_W*TILE-20);
+  const y=clamp((p.inCar?p.inCar.y:p.y)+sin(ang)*r,20,MAP_H*TILE-20);
+  const c=new Car(x,y,pick(CAR_COLORS),type);
+  c.angle=p.inCar?p.inCar.angle:p.angle;
+  c.isParked=true; c.aiState='parked';
+  S.cars.push(c);
+  S.spawnCooldown=3;
+  notify('🚗 Заспавнен '+carName(c)+'!',1500);
+}
+
+// ── Collision ─────────────────────────────────────────────────
+function solidAt(wx,wy){
+  const tx=floor(wx/TILE),ty=floor(wy/TILE);
+  if(tx<0||ty<0||tx>=MAP_W||ty>=MAP_H) return true;
+  const t=S.world.map[ty][tx];
+  return t===BUILDING||t===WATER;
+}
+function carSolid(wx,wy,car){
+  const pts=[[-car.w/2,-car.h/2],[car.w/2,-car.h/2],[-car.w/2,car.h/2],[car.w/2,car.h/2]];
+  for(const[ox,oy] of pts){
+    const rx=wx+ox*cos(car.angle)-oy*sin(car.angle);
+    const ry=wy+ox*sin(car.angle)+oy*cos(car.angle);
+    if(solidAt(rx,ry)) return true;
+  }
+  return false;
+}
+
+function nearestCar(){
+  const p=S.player;
+  let best=null,bd=9999;
+  for(const c of S.cars){
+    if(c.driver) continue;
+    const d=dst(p.x,p.y,c.x,c.y);
+    if(d<bd){bd=d;best=c;}
+  }
+  return best;
+}
+
+// ── Rendering ─────────────────────────────────────────────────
+function render(){
+  const ctx=S.ctx,W=S.W,H=S.H;
+  const cx=S.cam.x,cy=S.cam.y;
+  // Night overlay
+  const isNight=S.dayTime<6||S.dayTime>20;
+  const nightAlpha=isNight?0.45:max(0,(abs(S.dayTime-13)-6)/4*0.3);
+
+  ctx.clearRect(0,0,W,H);
+  ctx.save();
+  ctx.translate(-cx,-cy);
+
+  const tx0=max(0,floor(cx/TILE)-1);
+  const ty0=max(0,floor(cy/TILE)-1);
+  const tx1=min(MAP_W,tx0+ceil(W/TILE)+2);
+  const ty1=min(MAP_H,ty0+ceil(H/TILE)+2);
+
+  // ── Tiles ──────────────────────────────────────────────────
+  for(let ty=ty0;ty<ty1;ty++){
+    for(let tx=tx0;tx<tx1;tx++){
+      const tile=S.world.map[ty][tx];
+      const px=tx*TILE, py=ty*TILE;
+      switch(tile){
+        case ROAD:
+          ctx.fillStyle='#454545';
+          ctx.fillRect(px,py,TILE,TILE);
+          break;
+        case SIDEWALK:
+          ctx.fillStyle='#8a8a8a';
+          ctx.fillRect(px,py,TILE,TILE);
+          // Curb line
+          ctx.fillStyle='rgba(200,200,200,.15)';
+          ctx.fillRect(px,py,TILE,1); ctx.fillRect(px,py,1,TILE);
+          break;
+        case BUILDING:{
+          const bc=S.world.bColors[ty][tx]||'#667';
+          ctx.fillStyle=bc;
+          ctx.fillRect(px,py,TILE,TILE);
+          // Roof shadow
+          ctx.fillStyle='rgba(0,0,0,0.2)';
+          ctx.fillRect(px+1,py+1,TILE-2,TILE-2);
+          // Windows — stable hash-based
+          const wCols=3,wRows=3;
+          for(let wr=0;wr<wRows;wr++){
+            for(let wc=0;wc<wCols;wc++){
+              const wx2=px+5+wc*(TILE-10)/(wCols);
+              const wy2=py+5+wr*(TILE-10)/(wRows);
+              const lit=hash(tx*31+wc*7,ty*37+wr*11)>0.4;
+              if(isNight){
+                ctx.fillStyle=lit?'rgba(255,240,160,0.85)':'rgba(0,0,0,0.5)';
+              } else {
+                ctx.fillStyle=lit?'rgba(160,200,255,0.55)':'rgba(0,0,0,0.25)';
+              }
+              ctx.fillRect(wx2,wy2,5,5);
+            }
+          }
+          // Rooftop detail
+          ctx.fillStyle='rgba(0,0,0,0.1)';
+          ctx.fillRect(px+2,py+2,4,TILE-4);
+          break;
+        }
+        case PARK:
+          ctx.fillStyle='#2a6e2a';
+          ctx.fillRect(px,py,TILE,TILE);
+          ctx.fillStyle='#236023';
+          ctx.fillRect(px+4,py+4,TILE-8,TILE-8);
+          // Trees dots
+          if(hash(tx*5,ty*5)>0.5){
+            ctx.fillStyle='#1a5a1a';
+            ctx.beginPath();
+            ctx.arc(px+TILE/2,py+TILE/2,8,0,PI*2);
+            ctx.fill();
+          }
+          break;
+        case WATER:
+          ctx.fillStyle='#1a4a6a';
+          ctx.fillRect(px,py,TILE,TILE);
+          ctx.fillStyle='rgba(30,100,160,0.4)';
+          ctx.fillRect(px+2,py+2,TILE-4,TILE-4);
+          // Ripple
+          if((S.frameCount+tx+ty)%8<4){
+            ctx.strokeStyle='rgba(80,150,220,0.25)';
+            ctx.lineWidth=1;
+            ctx.beginPath();
+            ctx.arc(px+TILE/2+sin(S.gameTime+tx)*6,py+TILE/2,6,0,PI*2);
+            ctx.stroke();
+          }
+          break;
+        default:
+          ctx.fillStyle='#333';
+          ctx.fillRect(px,py,TILE,TILE);
+      }
+    }
+  }
+
+  // ── Road markings ──────────────────────────────────────────
+  ctx.setLineDash([10,10]);
+  ctx.lineWidth=1.2;
+  ctx.strokeStyle='rgba(255,240,0,0.35)';
+  for(let ty=ty0;ty<ty1;ty++){
+    for(let tx=tx0;tx<tx1;tx++){
+      if(S.world.map[ty][tx]!==ROAD) continue;
+      const px=tx*TILE, py=ty*TILE;
+      const isVert=S.world.roadX.includes(tx);
+      ctx.beginPath();
+      if(isVert){ ctx.moveTo(px+TILE/2,py); ctx.lineTo(px+TILE/2,py+TILE); }
+      else       { ctx.moveTo(px,py+TILE/2); ctx.lineTo(px+TILE,py+TILE/2); }
+      ctx.stroke();
+    }
+  }
+  ctx.setLineDash([]);
+
+  // ── Skid marks ────────────────────────────────────────────
+  // (dynamic, not stored per tile — just visual flicker)
+  if(S.player.inCar&&abs(S.player.inCar.speed)>80&&S.keys['Space']){
+    const c=S.player.inCar;
+    ctx.strokeStyle='rgba(0,0,0,0.35)';
+    ctx.lineWidth=4;
+    ctx.beginPath();
+    ctx.moveTo(c.x-cos(c.angle)*20,c.y-sin(c.angle)*20);
+    ctx.lineTo(c.x-cos(c.angle)*40,c.y-sin(c.angle)*40);
+    ctx.stroke();
+  }
+
+  // ── Dead NPCs ─────────────────────────────────────────────
+  for(const n of S.npcs){
+    if(n.alive) continue;
+    ctx.save();
+    ctx.translate(n.x,n.y);
+    ctx.fillStyle='rgba(180,0,0,0.7)';
+    ctx.beginPath(); ctx.ellipse(0,0,10,6,0,0,PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  // ── Parked cars ──────────────────────────────────────────
+  for(const c of S.cars) if(c.isParked&&c.driver!==S.player) drawCar(ctx,c);
+  // ── Moving cars ──────────────────────────────────────────
+  for(const c of S.cars) if(!c.isParked&&c.driver!==S.player) drawCar(ctx,c);
+  // ── Player car ───────────────────────────────────────────
+  if(S.player.inCar) drawCar(ctx,S.player.inCar);
+
+  // ── NPCs ─────────────────────────────────────────────────
+  for(const n of S.npcs) if(n.alive) drawHuman(ctx,n);
+  for(const o of S.officers) if(o.alive) drawHuman(ctx,o);
+
+  // ── Player ───────────────────────────────────────────────
+  if(!S.player.inCar) drawPlayer(ctx,S.player);
+
+  // ── Enter-car prompt ─────────────────────────────────────
+  if(!S.player.inCar){
+    const nc=nearestCar();
+    if(nc&&dst(S.player.x,S.player.y,nc.x,nc.y)<55){
+      ctx.save();
+      ctx.translate(nc.x,nc.y);
+      ctx.fillStyle='rgba(0,0,0,0.7)';
+      ctx.beginPath(); ctx.roundRect(-28,-26,56,18,5); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='bold 10px Segoe UI';
+      ctx.textAlign='center'; ctx.fillText('[F] Войти в машину',0,-14);
+      ctx.restore();
+    }
+  }
+
+  // ── Night overlay ─────────────────────────────────────────
+  if(nightAlpha>0.05){
+    ctx.fillStyle=`rgba(0,10,30,${nightAlpha})`;
+    ctx.fillRect(cx,cy,W,H);
+    // Headlights cones
+    if(S.player.inCar){
+      const c=S.player.inCar;
+      const grd=ctx.createRadialGradient(c.x,c.y,5,
+        c.x+cos(c.angle)*60,c.y+sin(c.angle)*60,90);
+      grd.addColorStop(0,'rgba(255,255,200,0.18)');
+      grd.addColorStop(1,'transparent');
+      ctx.fillStyle=grd;
+      ctx.beginPath();ctx.arc(c.x+cos(c.angle)*60,c.y+sin(c.angle)*60,90,0,PI*2);ctx.fill();
+    }
+  }
+
+  ctx.restore();
+}
+
+function drawCar(ctx,car){
+  ctx.save();
+  ctx.translate(car.x,car.y);
+  ctx.rotate(car.angle);
+  const w=car.w,h=car.h;
+  // Shadow
+  ctx.fillStyle='rgba(0,0,0,0.28)';
+  ctx.fillRect(-w/2+2,h/2,w,3);
+  // Body
+  ctx.fillStyle=car.color;
+  ctx.beginPath();
+  if(ctx.roundRect) ctx.roundRect(-w/2,-h/2,w,h,4);
+  else ctx.rect(-w/2,-h/2,w,h);
+  ctx.fill();
+  // Stripe (for variety)
+  const dark=darken(car.color,0.2);
+  ctx.fillStyle=dark;
+  ctx.fillRect(-w/2+3,-2,w-6,4);
+  // Cabin
+  ctx.fillStyle=darken(car.color,0.3);
+  const cw=w*0.5,ch=h*0.55;
+  if(ctx.roundRect) ctx.beginPath(),ctx.roundRect(-cw/2,-ch/2,cw,ch,3),ctx.fill();
+  else ctx.fillRect(-cw/2,-ch/2,cw,ch);
+  // Windshield
+  ctx.fillStyle='rgba(100,180,255,0.55)';
+  ctx.fillRect(w/2-9,-h/2+2,6,h-4);
+  ctx.fillStyle='rgba(100,180,255,0.35)';
+  ctx.fillRect(-w/2+3,-h/2+2,6,h-4);
+  // Headlights
+  ctx.fillStyle='rgba(255,255,180,0.9)';
+  ctx.fillRect(w/2-2,-h/2+2,2,3);
+  ctx.fillRect(w/2-2,h/2-5,2,3);
+  // Tail
+  ctx.fillStyle=car.brakeLight?'rgba(255,0,0,0.95)':'rgba(200,30,30,0.7)';
+  ctx.fillRect(-w/2,-h/2+2,2,3);
+  ctx.fillRect(-w/2,h/2-5,2,3);
+  // Wheels
+  ctx.fillStyle='#111';
+  for(const[wx2,wy2] of [[w/2-8,-h/2-2],[w/2-8,h/2-1],[-w/2+2,-h/2-2],[-w/2+2,h/2-1]]){
+    ctx.fillRect(wx2,wy2,6,3);
+  }
+  // Police extras
+  if(car.isPolice){
+    ctx.fillStyle='rgba(255,255,255,0.9)';
+    ctx.font='bold 5px Arial';ctx.textAlign='center';
+    ctx.fillText('POLICE',0,h/2+2);
+    // Siren lights
+    if(car.sirenOn||S.wantedLevel>0){
+      ctx.fillStyle=S.frameCount%14<7?'#f00':'#00f';
+      ctx.fillRect(-4,-h/2-4,4,3);
+      ctx.fillStyle=S.frameCount%14<7?'#00f':'#f00';
+      ctx.fillRect(1,-h/2-4,4,3);
+    }
+  }
+  // Type label
+  if(car.type==='truck'){
+    ctx.fillStyle='rgba(255,255,255,0.25)';
+    ctx.font='5px Arial'; ctx.textAlign='center';
+    ctx.fillText('TRUCK',0,1);
+  }
+  if(car.type==='sports'){
+    // Low spoiler
+    ctx.fillStyle=darken(car.color,0.1);
+    ctx.fillRect(-w/2-2,h/2-1,4,2);
+  }
+  ctx.restore();
+}
+
+function drawHuman(ctx,n){
+  ctx.save();
+  ctx.translate(n.x,n.y);
+  const ang=atan2(n.dir.y||0,n.dir.x||1)+PI/2;
+  ctx.rotate(ang);
+  const lo=n.animFrame<2?2:-2;
+  // Legs
+  ctx.fillStyle=n.pantsColor;
+  ctx.fillRect(-3,1,2,5+lo); ctx.fillRect(1,1,2,5-lo);
+  // Arms (swing)
+  ctx.fillStyle=n.skinColor;
+  ctx.fillRect(-6,-3,2,4+lo); ctx.fillRect(4,-3,2,4-lo);
+  // Body
+  ctx.fillStyle=n.shirtColor;
+  if(ctx.roundRect) ctx.beginPath(),ctx.roundRect(-4,-5,8,8,2),ctx.fill();
+  else ctx.fillRect(-4,-5,8,8);
+  // Head
+  ctx.fillStyle=n.skinColor;
+  ctx.beginPath(); ctx.arc(0,-9,4,0,PI*2); ctx.fill();
+  // Police hat
+  if(n.isPolice){
+    ctx.fillStyle='#1a3a6b';
+    ctx.fillRect(-5,-14,10,3);
+    ctx.fillStyle='#ffd700';
+    ctx.font='bold 5px Arial'; ctx.textAlign='center';
+    ctx.fillText('👮',0,-20);
+  }
+  ctx.restore();
+}
+
+function drawPlayer(ctx,p){
+  ctx.save();
+  ctx.translate(p.x,p.y);
+  ctx.rotate(p.angle+PI/2);
+  const lo=p.animFrame<2?3:-3;
+  // Shadow
+  ctx.fillStyle='rgba(0,0,0,0.22)';
+  ctx.beginPath(); ctx.ellipse(0,3,7,3,0,0,PI*2); ctx.fill();
+  // Legs
+  ctx.fillStyle=p.pantsColor;
+  ctx.fillRect(-4,2,3,7+lo); ctx.fillRect(1,2,3,7-lo);
+  // Arms
+  ctx.fillStyle=p.skinColor;
+  ctx.fillRect(-7,-4,3,5+lo); ctx.fillRect(4,-4,3,5-lo);
+  // Body
+  ctx.fillStyle=p.shirtColor;
+  if(ctx.roundRect) ctx.beginPath(),ctx.roundRect(-5,-7,10,11,2),ctx.fill();
+  else ctx.fillRect(-5,-7,10,11);
+  // Head
+  ctx.fillStyle=p.skinColor;
+  ctx.beginPath(); ctx.arc(0,-11,5,0,PI*2); ctx.fill();
+  // Eyes
+  ctx.fillStyle='#222';
+  ctx.fillRect(-2,-13,1.5,1.5); ctx.fillRect(1,-13,1.5,1.5);
+  // Arrow "YOU"
+  ctx.fillStyle='rgba(255,255,255,0.9)';
+  ctx.font='bold 8px Arial'; ctx.textAlign='center';
+  ctx.fillText('▼ ВЫ',0,-20);
+  ctx.restore();
+}
+
+// ── HUD ───────────────────────────────────────────────────────
+function drawHUD(){
+  const hud=S.hud; if(!hud) return;
+  const p=S.player;
+  const night=S.dayTime<6||S.dayTime>20;
+  const hour=floor(S.dayTime),min2=floor((S.dayTime%1)*60);
+  const timeStr=`${hour.toString().padStart(2,'0')}:${min2.toString().padStart(2,'0')}`;
+  const timeEmoji=night?'🌙':S.dayTime<12?'🌅':'☀️';
+
+  const stars=Array.from({length:5},(_,i)=>i<S.wantedLevel?'⭐':'☆').join('');
+
+  let html=`
+  <!-- Health + money -->
+  <div style="position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;pointer-events:none;">
+    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:6px 12px;display:flex;align-items:center;gap:8px;">
+      <span style="font-size:13px;">❤️</span>
+      <div style="width:90px;height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden;">
+        <div style="width:${p.health}%;height:100%;background:${p.health>60?'#2ecc71':p.health>30?'#f1c40f':'#e74c3c'};border-radius:4px;transition:width .4s;"></div>
+      </div>
+      <span style="color:#fff;font-size:11px;">${p.health}</span>
+    </div>
+    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:5px 12px;color:#f1c40f;font-size:13px;font-weight:700;">💰 $${p.money.toLocaleString()}</div>
+    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:5px 12px;color:#95a5a6;font-size:11px;">🏆 ${S.score.toLocaleString()} pts</div>
+    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:5px 12px;color:#aaa;font-size:11px;">${timeEmoji} ${timeStr}</div>
+  </div>
+
+  <!-- Wanted -->
+  <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.78);border-radius:9px;padding:8px 14px;text-align:right;pointer-events:none;">
+    <div style="color:#aaa;font-size:9px;letter-spacing:1px;margin-bottom:3px;">РОЗЫСК</div>
+    <div style="font-size:17px;letter-spacing:3px;color:${S.wantedLevel===0?'#444':S.wantedLevel<3?'#f1c40f':'#e74c3c'};">${stars}</div>
+    ${S.wantedLevel>0?`<div style="color:#e74c3c;font-size:9px;margin-top:3px;animation:blink 0.8s ease infinite;">⚠️ Полиция активна!</div>`:''}
+  </div>`;
+
+  // Speedometer (driving)
+  if(p.inCar){
+    const spd=abs(floor(p.inCar.speed));
+    const gear=spd<2?'P':p.inCar.speed<0?'R':'D';
+    html+=`<div style="position:absolute;bottom:50px;left:10px;background:rgba(0,0,0,.85);border-radius:14px;padding:10px 18px;text-align:center;pointer-events:none;">
+      <div style="color:#fff;font-size:30px;font-weight:200;line-height:1;">${spd}</div>
+      <div style="color:#888;font-size:8px;letter-spacing:1px;">КМ/Ч</div>
+      <div style="color:${gear==='R'?'#e74c3c':gear==='P'?'#f1c40f':'#2ecc71'};font-size:13px;font-weight:700;margin-top:2px;">${gear}</div>
+      <div style="color:#666;font-size:9px;margin-top:1px;">${carName(p.inCar)}</div>
+    </div>`;
+  }
+
+  // Notifications
+  if(S.notifs.length>0){
+    html+=`<div style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:5px;align-items:center;pointer-events:none;">`;
+    S.notifs.slice(-4).forEach(n=>{
+      const op=min(1,n.t*2);
+      html+=`<div style="background:rgba(0,0,0,.87);border-radius:10px;padding:8px 20px;color:#fff;font-size:12.5px;opacity:${op};white-space:nowrap;border:1px solid rgba(255,255,255,.1);">${n.msg}</div>`;
+    });
+    html+='</div>';
+  }
+
+  // Controls (collapsed)
+  const inCar=!!p.inCar;
+  html+=`<div style="position:absolute;top:42%;right:10px;background:rgba(0,0,0,.65);border-radius:9px;padding:8px 12px;font-size:9.5px;color:rgba(255,255,255,.6);line-height:1.9;pointer-events:none;text-align:right;">
+    <div>WASD — движение</div>
+    <div>F — ${inCar?'выйти из машины':'войти в машину'}</div>
+    <div>G — спавн авто</div>
+    <div>T — спорткар</div>
+    ${inCar?'<div>Space — тормоз</div>':'<div>Shift — бег</div>'}
+  </div>`;
+
+  // NPC / car counter
+  html+=`<div style="position:absolute;bottom:50px;right:155px;background:rgba(0,0,0,.6);border-radius:8px;padding:5px 10px;font-size:10px;color:#888;pointer-events:none;">
+    🚗 ${S.cars.length}  👥 ${S.npcs.filter(n=>n.alive).length}  👮 ${S.officers.filter(o=>o.alive).length}
+  </div>`;
+
+  hud.innerHTML=html;
+}
+
+// ── Minimap ───────────────────────────────────────────────────
+function drawMinimap(){
+  const mm=S.mmCanvas; if(!mm) return;
+  const ctx=mm.getContext('2d');
+  const SZ=140, SC=0.11;
+  ctx.clearRect(0,0,SZ,SZ);
+
+  // Clip circle
+  ctx.save();
+  ctx.beginPath(); ctx.arc(SZ/2,SZ/2,SZ/2,0,PI*2); ctx.clip();
+
+  // Background
+  ctx.fillStyle='#222';
+  ctx.fillRect(0,0,SZ,SZ);
+
+  const p=S.player;
+  const px=p.inCar?p.inCar.x:p.x, py=p.inCar?p.inCar.y:p.y;
+  const ox=SZ/2-px*SC, oy=SZ/2-py*SC;
+
+  // Draw tiles
+  for(let ty=0;ty<MAP_H;ty++){
+    for(let tx=0;tx<MAP_W;tx++){
+      const sx=tx*TILE*SC+ox, sy=ty*TILE*SC+oy;
+      const sw=TILE*SC+0.5;
+      if(sx<-sw||sy<-sw||sx>SZ||sy>SZ) continue;
+      const tile=S.world.map[ty][tx];
+      ctx.fillStyle=tile===ROAD?'#666':tile===SIDEWALK?'#999':tile===BUILDING?(S.world.bColors[ty][tx]||'#445'):tile===PARK?'#2a6a2a':'#1a3a5a';
+      ctx.fillRect(sx,sy,sw,sw);
+    }
+  }
+
+  // Cars
+  for(const c of S.cars){
+    const sx=c.x*SC+ox, sy=c.y*SC+oy;
+    ctx.fillStyle=c.isPolice?'#3af':'red';
+    ctx.fillRect(sx-1.5,sy-1.5,3,3);
+  }
+
+  // NPCs
+  ctx.fillStyle='rgba(255,220,0,0.7)';
+  for(const n of S.npcs) if(n.alive){
+    ctx.fillRect(n.x*SC+ox-0.8,n.y*SC+oy-0.8,1.6,1.6);
+  }
+
+  // Officers (blue)
+  ctx.fillStyle='#1af';
+  for(const o of S.officers) if(o.alive){
+    ctx.beginPath(); ctx.arc(o.x*SC+ox,o.y*SC+oy,2,0,PI*2); ctx.fill();
+  }
+
+  // Player dot
+  ctx.fillStyle='#e74c3c';
+  ctx.beginPath(); ctx.arc(SZ/2,SZ/2,4.5,0,PI*2); ctx.fill();
+  ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+
+  ctx.restore();
+
+  // Compass
+  ctx.fillStyle='rgba(255,255,255,0.8)';
+  ctx.font='bold 9px Arial'; ctx.textAlign='center';
+  ctx.fillText('С',SZ/2,8);
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function carName(c){
+  return{sedan:'Sedan',sports:'Sports',suv:'SUV',truck:'Truck',police:'Police'}[c.type]||'Car';
+}
+function darken(hex,t){
+  try{
+    hex=hex.replace('#','');
+    const r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
+    return`rgb(${floor(r*(1-t))},${floor(g*(1-t))},${floor(b*(1-t))})`;
+  }catch(e){return hex;}
+}
+function ceil(x){return Math.ceil(x);}
+function notify(msg,ms=2000){S.notifs.push({msg,t:ms/1000});}
+
+// ── Public ────────────────────────────────────────────────────
+function stop(){
+  S.running=false;
+  for(const[el,ev,fn] of S._listeners) el.removeEventListener(ev,fn);
+  S._listeners=[];
+}
+
+return{init,stop,spawnCar:spawnCarNearPlayer,clearWanted,state:S,_started:false};
+})();
+
+</script>
+
+<!-- ══════════ GTA 6 OPEN/CLOSE PATCH ══════════ -->
+<script>
+(function(){
+  var _orig = window.openApp;
+  window.openApp = function(app) {
+    if (app === 'gta6') {
+      var w = document.getElementById('win-gta6');
+      var root = document.getElementById('gta6-root');
+      if (w) {
+        w.style.display = 'flex';
+        if (typeof bringFront === 'function') bringFront('win-gta6');
+        var tb = document.getElementById('tb-gta6');
+        if (tb) tb.classList.add('running','active-win');
+        if (root && !window._gta6started) {
+          GTA6.init(root);
+          window._gta6started = true;
+        }
+      }
+      return;
+    }
+    if (_orig) _orig.call(window, app);
+  };
+  var _origClose = window.closeWin;
+  window.closeWin = function(app) {
+    if (app === 'gta6') { gta6Close(); return; }
+    if (_origClose) _origClose.call(window, app);
+  };
+  window.gta6Close = function() {
+    var w = document.getElementById('win-gta6');
+    if (w) w.style.display = 'none';
+    var tb = document.getElementById('tb-gta6');
+    if (tb) tb.classList.remove('running','active-win');
+    if (window.GTA6 && window._gta6started) { GTA6.stop(); window._gta6started = false; }
+  };
+  var _origTb = window.tbClick;
+  window.tbClick = function(app) {
+    if (app === 'gta6') {
+      var w = document.getElementById('win-gta6');
+      if (!w) return;
+      if (!w.style.display || w.style.display === 'none') openApp('gta6');
+      else if (typeof bringFront === 'function') bringFront('win-gta6');
+      return;
+    }
+    if (_origTb) _origTb.call(window, app);
+  };
+})();
+</script>
+
 </body>
 </html>
