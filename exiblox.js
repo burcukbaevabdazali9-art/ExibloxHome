@@ -78,39 +78,76 @@ const EXB_BLOCK_COLORS = {
 let _exbPublishIconData = null;
 
 // ════════════════════════════════════════════
-// CLOUD STORAGE — обёртки над window.storage
+// CLOUD STORAGE — Firebase (настоящее облако!)
 // ════════════════════════════════════════════
 
-// Проверяем наличие window.storage (только в Claude.ai)
+// Проверка доступности облака
 function exbHasCloud() {
-  return typeof window !== 'undefined' && typeof window.storage !== 'undefined';
+  // Приоритет: Firebase > window.storage > localStorage
+  if (typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable()) {
+    return true; // Firebase активен!
+  }
+  if (typeof window !== 'undefined' && typeof window.storage !== 'undefined') {
+    return true; // Claude.ai storage
+  }
+  return false; // Только localStorage
 }
 
 async function exbCloudLoadGames() {
-  if (!exbHasCloud()) {
-    // Fallback: localStorage
-    return JSON.parse(localStorage.getItem('exiblox_games') || '[]');
+  // Приоритет 1: Firebase (настоящее облако)
+  if (typeof window.exbFirebaseLoadGames === 'function') {
+    try {
+      const games = await window.exbFirebaseLoadGames();
+      console.log(`📥 Загружено ${games.length} игр из Firebase`);
+      return games;
+    } catch (e) {
+      console.error('Firebase load error:', e);
+    }
   }
-  try {
-    const result = await window.storage.get('exiblox_games_v3', true);
-    return result ? JSON.parse(result.value) : [];
-  } catch (e) {
-    return [];
+  
+  // Приоритет 2: Claude.ai storage
+  if (typeof window !== 'undefined' && typeof window.storage !== 'undefined') {
+    try {
+      const result = await window.storage.get('exiblox_games_v3', true);
+      return result ? JSON.parse(result.value) : [];
+    } catch (e) {
+      console.error('window.storage error:', e);
+    }
   }
+  
+  // Fallback: localStorage
+  return JSON.parse(localStorage.getItem('exiblox_games') || '[]');
 }
 
 async function exbCloudSaveGames() {
-  if (!exbHasCloud()) {
-    localStorage.setItem('exiblox_games', JSON.stringify(EXB.games));
-    return;
+  let saved = false;
+  
+  // Приоритет 1: Firebase
+  if (typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable()) {
+    try {
+      // Сохраняем каждую игру отдельно для лучшей синхронизации
+      for (const game of EXB.games) {
+        await window.exbFirebaseSaveGame(game);
+      }
+      console.log('✅ Игры сохранены в Firebase');
+      saved = true;
+    } catch (e) {
+      console.error('Firebase save error:', e);
+    }
   }
-  try {
-    await window.storage.set('exiblox_games_v3', JSON.stringify(EXB.games), true);
-  } catch (e) {
-    console.error('Exiblox cloud save error:', e);
-    // Fallback
-    localStorage.setItem('exiblox_games', JSON.stringify(EXB.games));
+  
+  // Приоритет 2: Claude.ai storage
+  if (!saved && typeof window !== 'undefined' && typeof window.storage !== 'undefined') {
+    try {
+      await window.storage.set('exiblox_games_v3', JSON.stringify(EXB.games), true);
+      saved = true;
+    } catch (e) {
+      console.error('window.storage save error:', e);
+    }
   }
+  
+  // Всегда сохраняем в localStorage как backup
+  localStorage.setItem('exiblox_games', JSON.stringify(EXB.games));
 }
 
 // ── INIT ─────────────────────────────────────
@@ -125,16 +162,21 @@ async function initExiblox() {
     root.innerHTML = `
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0a0c14;gap:16px;">
         <div style="font-size:42px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ Exiblox v3</div>
-        <div style="color:rgba(255,255,255,.4);font-size:12px;">☁️ Загружаем игры со всего мира...</div>
+        <div style="color:rgba(255,255,255,.4);font-size:12px;">🔥 Подключение к Firebase...</div>
         <div style="width:180px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;">
           <div style="height:100%;background:linear-gradient(90deg,#00b2ff,#7c3aed);border-radius:2px;animation:exbLoad .8s ease infinite alternate;width:60%;"></div>
         </div>
-        <div style="color:rgba(255,255,255,.25);font-size:11px;">Синхронизация с облаком Exiblox</div>
+        <div style="color:rgba(255,255,255,.25);font-size:11px;">Загрузка игр со всего мира</div>
       </div>
       <style>@keyframes exbLoad{from{transform:translateX(-20%)}to{transform:translateX(120%)}}</style>`;
   }
 
-  // КРИТИЧЕСКИ ВАЖНО: Загружаем игры из ОБЩЕГО облака
+  // КРИТИЧЕСКИ ВАЖНО: Инициализация Firebase
+  if (typeof window.initFirebase === 'function') {
+    await window.initFirebase();
+  }
+
+  // Загружаем игры из ОБЩЕГО облака (Firebase или window.storage)
   EXB.games = await exbCloudLoadGames();
   EXB._cloudReady = true;
 
@@ -279,7 +321,9 @@ function exbLogout() {
 function exbRenderMain(root) {
   const me = EXB.users[EXB.user] || {};
   const cloudBadge = exbHasCloud()
-    ? `<span style="background:rgba(0,178,255,.2);border:1px solid rgba(0,178,255,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#00b2ff;">☁️ Облако</span>`
+    ? (typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable()
+        ? `<span style="background:rgba(255,100,0,.2);border:1px solid rgba(255,100,0,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#ff6347;">🔥 Firebase</span>`
+        : `<span style="background:rgba(0,178,255,.2);border:1px solid rgba(0,178,255,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#00b2ff;">☁️ Облако</span>`)
     : `<span style="background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#ffd700;">💾 Локально</span>`;
 
   root.innerHTML = `
@@ -437,20 +481,20 @@ async function exbHome(c) {
       <div style="flex:1;">
         <div style="font-size:14px;font-weight:700;color:#ffa500;margin-bottom:6px;">Облачное хранилище недоступно</div>
         <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:10px;">
-          Игры сохраняются <strong>локально в браузере</strong> (localStorage) и НЕ синхронизируются между устройствами/пользователями.<br>
-          Для работы облака откройте Exiblox как <strong>отдельный Artifact в Claude.ai</strong>
+          Игры сохраняются <strong>локально в браузере</strong> (localStorage) и НЕ синхронизируются.<br>
+          <strong>Для настоящего облака:</strong> настрой <strong>Firebase</strong> (инструкция в файле firebase-config.js)
         </div>
         <div style="font-size:11px;color:rgba(255,255,255,.4);">
-          💡 Как включить: создайте React Artifact в claude.ai, скопируйте туда код Exiblox → облако заработает автоматически
+          💡 Firebase = бесплатный облачный database от Google → игры доступны с ЛЮБОГО устройства, ЛЮБОГО аккаунта!
         </div>
       </div>
     </div>` : `
-    <div style="background:rgba(0,178,255,.08);border:1px solid rgba(0,178,255,.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
-      <span style="font-size:24px;">☁️</span>
+    <div style="background:${typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable() ? 'rgba(255,100,0,.12)' : 'rgba(0,178,255,.08)'};border:1px solid ${typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable() ? 'rgba(255,100,0,.3)' : 'rgba(0,178,255,.2)'};border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:24px;">${typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable() ? '🔥' : '☁️'}</span>
       <div style="flex:1;">
-        <div style="font-size:13px;font-weight:700;color:#00b2ff;">✅ Облачная платформа активна</div>
+        <div style="font-size:13px;font-weight:700;color:${typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable() ? '#ff6347' : '#00b2ff'};">✅ ${typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable() ? 'Firebase активен — НАСТОЯЩЕЕ облако!' : 'Облачная платформа активна'}</div>
         <div style="font-size:11px;color:rgba(255,255,255,.5);">
-          ${allGames.length} игр от ${authors} разработчиков · Все игры доступны с любого устройства
+          ${allGames.length} игр от ${authors} разработчиков · ${typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable() ? 'Доступно с ЛЮБОГО ПК/телефона' : 'Все игры доступны с любого устройства'}
         </div>
       </div>
       <button class="exb-btn2 exb-btn2-blue" onclick="exbRefreshGames()" style="font-size:10px;padding:5px 10px;">🔄 Обновить</button>
@@ -1064,7 +1108,14 @@ async function exbDoPublish() {
     duplicate.objects   = EXB.studioObjects.map(o=>({...o}));
     duplicate.iconImage = _exbPublishIconData || duplicate.iconImage || null;
     duplicate.updated   = new Date().toLocaleDateString('ru');
-    await exbSaveGames();
+    
+    // Сохранение через Firebase API (если доступен)
+    if (typeof window.exbFirebaseSaveGame === 'function') {
+      await window.exbFirebaseSaveGame(duplicate);
+    } else {
+      await exbSaveGames();
+    }
+    
     document.querySelector('.exb-pub-overlay')?.remove();
     showNotif('Exiblox', `Игра "${name}" обновлена! ✏️`, '📤');
     EXB._publishing = false;
@@ -1085,8 +1136,12 @@ async function exbDoPublish() {
 
   EXB.games.unshift(game);
 
-  // Сохраняем в облако
-  await exbSaveGames();
+  // Сохраняем в облако (Firebase API напрямую если доступен)
+  if (typeof window.exbFirebaseSaveGame === 'function') {
+    await window.exbFirebaseSaveGame(game);
+  } else {
+    await exbSaveGames();
+  }
 
   const me = EXB.users[EXB.user];
   if (me) {
@@ -1100,10 +1155,14 @@ async function exbDoPublish() {
 
   document.querySelector('.exb-pub-overlay')?.remove();
   
-  if (exbHasCloud()) {
-    showNotif('Exiblox', `✅ "${name}" опубликована в ОБЩЕМ ОБЛАКЕ! 🌍\nВсе пользователи видят игру · +5 E$ 🎉`, '☁️');
+  const isFirebase = typeof window.exbFirebaseAvailable === 'function' && window.exbFirebaseAvailable();
+  
+  if (isFirebase) {
+    showNotif('Exiblox', `🔥 "${name}" в Firebase!\nДоступно с ЛЮБОГО ПК/аккаунта/email! · +5 E$ 🎉`, '🔥');
+  } else if (exbHasCloud()) {
+    showNotif('Exiblox', `✅ "${name}" опубликована в облаке! 🌍 · +5 E$ 🎉`, '☁️');
   } else {
-    showNotif('Exiblox', `⚠️ "${name}" сохранена ЛОКАЛЬНО (облако недоступно)\nОткройте как Artifact в claude.ai для синхронизации · +5 E$`, '💾');
+    showNotif('Exiblox', `⚠️ "${name}" сохранена ЛОКАЛЬНО\nНастрой Firebase для глобального облака · +5 E$`, '💾');
   }
   
   EXB._publishing = false;
