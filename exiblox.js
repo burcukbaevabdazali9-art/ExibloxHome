@@ -165,7 +165,7 @@ function exbRenderAuth(root) {
   <div style="display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(160deg,#0a0c14,#0f1824);">
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:40px 50px;width:420px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);">
       <div style="font-size:52px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;">✦ Exiblox</div>
-      <div style="color:rgba(255,255,255,.4);font-size:13px;margin-bottom:28px;">v3 — Game Platform · ${EXB.games.length} игр в облаке</div>
+      <div style="color:rgba(255,255,255,.4);font-size:13px;margin-bottom:28px;">v3 — Game Platform · ${EXB.games.length} игр в ОБЩЕМ облаке 🌍</div>
       <div id="exb-auth-tabs" style="display:flex;background:rgba(255,255,255,.06);border-radius:10px;padding:4px;margin-bottom:24px;">
         <div class="exb-auth-tab active" onclick="exbAuthTab('login')" style="flex:1;padding:8px;border-radius:8px;cursor:pointer;font-size:13px;transition:.2s;">Войти</div>
         <div class="exb-auth-tab" onclick="exbAuthTab('register')" style="flex:1;padding:8px;border-radius:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.5);transition:.2s;">Регистрация</div>
@@ -385,11 +385,11 @@ function exbRenderMain(root) {
 }
 
 async function exbRefreshGames() {
-  showNotif('Exiblox', 'Обновляем игры из облака...', '☁️');
+  showNotif('Exiblox', '☁️ Синхронизация с облаком...', '🔄');
   EXB.games = await exbCloudLoadGames();
-  const c = el('exb-content');
-  if (c) exbTabContent(EXB.tab);
-  showNotif('Exiblox', `Загружено ${EXB.games.length} игр!`, '✅');
+  showNotif('Exiblox', `✅ Загружено ${EXB.games.length} игр из облака!`, '☁️');
+  // Перезагружаем текущую вкладку
+  exbTabContent(EXB.tab);
 }
 
 function exbTab(tab) {
@@ -404,8 +404,13 @@ function exbTab(tab) {
 function exbTabContent(tab) {
   const c = el('exb-content');
   if (!c) return;
-  const fn = {home:exbHome, store:exbStore, studio:exbStudio, friends:exbFriends, publish:exbPublish, ai:exbAI, avatar:exbAvatar, profile:exbProfile}[tab];
-  if (fn) fn(c);
+  const fns = {home:exbHome, store:exbStore, studio:exbStudio, friends:exbFriends, publish:exbPublish, ai:exbAI, avatar:exbAvatar, profile:exbProfile};
+  const fn = fns[tab];
+  if (fn) {
+    // Поддержка async функций (Home и Store загружают из облака)
+    const result = fn(c);
+    if (result instanceof Promise) result.catch(err => console.error('Tab error:', err));
+  }
 }
 
 // ════════════════════════════════════════════
@@ -484,15 +489,31 @@ function exbGameCards(games) {
 // ════════════════════════════════════════════
 // STORE
 // ════════════════════════════════════════════
-function exbStore(c) {
+async function exbStore(c) {
+  // ВСЕГДА загружаем свежие игры из облака
+  c.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;"><div style="color:rgba(255,255,255,.3);font-size:13px;">☁️ Синхронизация с облаком...</div></div>`;
+  EXB.games = await exbCloudLoadGames();
+  
+  const authors = [...new Set(EXB.games.map(g => g.author))].length;
+  
   c.innerHTML = `
   <div class="exb-section">
     <div style="display:flex;align-items:center;margin-bottom:18px;">
       <div class="exb-sec-title" style="margin-bottom:0;">🛒 Магазин Exiblox</div>
-      <span style="margin-left:10px;font-size:11px;color:rgba(255,255,255,.4);">${EXB.games.length} игр · ${exbHasCloud()?'☁️ облако':'💾 локально'}</span>
+      <span style="margin-left:10px;font-size:11px;color:rgba(255,255,255,.4);">${EXB.games.length} игр · ${authors} разработчиков · ${exbHasCloud()?'☁️ облако':'💾 локально'}</span>
       <button class="exb-btn2 exb-btn2-gray" onclick="exbRefreshGames()" style="margin-left:auto;font-size:11px;padding:5px 12px;">🔄 Обновить</button>
     </div>
-    ${EXB.games.length ? `<div class="exb-cards-row">${exbGameCards(EXB.games)}</div>` : '<div style="color:rgba(255,255,255,.3);font-size:13px;padding:40px 0;text-align:center;">Магазин пуст. Публикуйте игры в Studio!</div>'}
+    <div style="background:rgba(0,178,255,.06);border:1px solid rgba(0,178,255,.15);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:rgba(255,255,255,.6);">
+      <strong style="color:#00b2ff;">🌍 Глобальный магазин</strong><br>
+      Все игры доступны с любого устройства. Создай свою игру и она появится здесь для всех пользователей!
+    </div>
+    ${EXB.games.length ? `<div class="exb-cards-row">${exbGameCards(EXB.games)}</div>` : `
+    <div style="text-align:center;padding:60px 20px;color:rgba(255,255,255,.25);">
+      <div style="font-size:48px;margin-bottom:16px;">🌍</div>
+      <div style="font-size:15px;margin-bottom:8px;">Магазин пуст</div>
+      <div style="font-size:12px;margin-bottom:20px;">Стань первым создателем игр в облаке!</div>
+      <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('studio')">🛠 Создать игру →</button>
+    </div>`}
   </div>`;
 }
 
@@ -1049,7 +1070,7 @@ async function exbDoPublish() {
   }
 
   document.querySelector('.exb-pub-overlay')?.remove();
-  showNotif('Exiblox', `"${name}" в облаке! +5 E$ 🎉`, '☁️');
+  showNotif('Exiblox', `"${name}" в ОБЩЕМ ОБЛАКЕ! 🌍 Все пользователи видят игру · +5 E$ 🎉`, '☁️');
   EXB._publishing = false;
 }
 
@@ -1303,7 +1324,7 @@ function exbAI(c) {
       <button class="exb-btn2 exb-btn2-blue" onclick="exbAISend()" style="padding:10px 18px;">➤ Отправить</button>
     </div>
   </div>`;
-  exbAIMsg('bot','Привет! Я **Exiblox AI** 🤖\n\nЗнаю всё о платформе: Studio, публикация, друзья, игры, облачное хранилище.\nСпроси что-нибудь или нажми быстрый вопрос ниже 👇');
+  exbAIMsg('bot','Привет! Я **Exiblox AI** 🤖\n\n🌍 **ГЛОБАЛЬНАЯ ПЛАТФОРМА** как Roblox:\n• Все игры в общем облаке\n• Доступно с любого устройства\n• Опубликовал → весь мир видит\n\nЗнаю всё о Studio, публикации, облаке, друзьях.\nСпроси что-нибудь или кликни быстрый вопрос 👇');
   EXB.aiHistory = [];
 }
 
@@ -1324,7 +1345,7 @@ function exbAIMsg(who, text) {
 
 const EXB_AI_KB = [
   { k:['привет','здравствуй','хай','hi','hello','прив','салют','ку'],
-    a:'Привет! 👋 Я **Exiblox AI** — твой умный помощник на платформе.\nМогу помочь с созданием игр в Studio, публикацией в облако, друзьями и многим другим. Спрашивай!' },
+    a:'Привет! 👋 Я **Exiblox AI** — твой умный помощник.\n\n🌍 **Платформа работает ГЛОБАЛЬНО:**\n• Создай на ПК → играй на телефоне\n• Опубликуй → ВСЕ увидят\n• Общее облако как в Roblox\n\nСпрашивай что угодно!' },
   { k:['как дела','как ты','что нового'],
     a:'Отлично! 🚀 Помогаю пользователям создавать крутые игры в **ExiStudio**.\nА ты уже попробовал создать свою первую игру?' },
   { k:['студия','studio','как создать игру','создание игры'],
@@ -1333,8 +1354,12 @@ const EXB_AI_KB = [
     a:'🏗 **Baseplate** — стартовый шаблон.\n\nСодержит зелёную платформу (пол) и точку спавна 🔵.\nНажми кнопку **🏗 Baseplate** в Studio чтобы загрузить шаблон.' },
   { k:['иконка','картинка','изображение игры','логотип'],
     a:'🖼 **Кастомная иконка игры:**\n\n1. В Studio нажми **📤 Publish**\n2. В диалоге публикации есть блок **"Иконка игры"**\n3. Кликни на квадрат или кнопку **📁 Загрузить картинку**\n4. Выбери PNG, JPG или GIF (макс. 1 МБ)\n5. Можно перетащить файл прямо на квадрат!\n\nИконка отображается на карточке игры в Магазине для всех пользователей.' },
-  { k:['облако','cloud','совместное','хранилище','общие игры'],
-    a:'☁️ **Облачное хранилище Exiblox:**\n\nИгры хранятся в **общем облаке** — все зарегистрированные пользователи видят игры друг друга!\n\nЭто как **Roblox**: опубликовал → сразу появляется у всех в Магазине.\n\nКнопка **🔄 Обновить** в шапке подгружает свежие игры из облака.' },
+  { k:['облако','cloud','совместное','хранилище','общие игры','другие устройства','телефон','компьютер','планшет','другой браузер'],
+    a:'☁️ **Глобальное облачное хранилище:**\n\n🌍 **КАК ROBLOX/БЛОКСЕЛИ** — все игры общие!\n\n**Работает между устройствами:**\n• Создал на ПК → открыл на телефоне → ТА ЖЕ ИГРА\n• Другой пользователь опубликовал → ты ВИДИШЬ в Магазине\n• Общий каталог для ВСЕХ\n\n**Технология:** shared window.storage\n**Обновление:** кнопка 🔄 Обновить\n\nЭто НАСТОЯЩЕЕ облако!' },
+  { k:['не вижу игру','где моя игра','пропала','не отображается','другое устройство'],
+    a:'🔍 **Если не видишь игру:**\n\n1. **🔄 Обновить** (в шапке)\n2. Перейди в **🛒 Магазин** — ВСЕ игры там\n3. Проверь **📤 Publish** — точно опубликовал?\n\n**Если с другого устройства:**\n• Игры в ОБЩЕМ облаке\n• Нажми 🔄 — подгрузится\n• Может быть задержка 1-2 сек\n\n**Важно:** Все опубликованные игры видны ВСЕМ!' },
+  { k:['другой пользователь','чужие игры','игры других','играть в чужие'],
+    a:'👥 **Играть в игры ДРУГИХ пользователей — ДА!**\n\n🌍 **Exiblox — ОБЩАЯ платформа!**\n\n1. **🛒 Магазин**\n2. Все карточки = игры от разных людей\n3. На карточке "by НикАвтора"\n4. Кликни → играй!\n\n**Это главная фишка** — как в Roblox, все делятся играми!' },
   { k:['опубликовать','публикация','publish','выложить'],
     a:'📤 **Публикация в облако:**\n\n1. Создай игру в **Studio**\n2. Нажми **📤 Publish**\n3. Введи **название** и **описание**\n4. Добавь **иконку** из файла (необязательно)\n5. Нажми **🚀 Опубликовать**\n\nИгра появится у **всех пользователей** в Магазине! ☁️\n\n*Гостям публикация недоступна.*' },
   { k:['добавить друга','друг','друзья','код'],
