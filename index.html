@@ -490,16 +490,15 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 <div class="tb-btn" id="tb-gta6" onclick="tbClick('gta6')">🎮</div>
 <div class="tb-btn" id="tb-updates" onclick="tbClick('updates')">🔔</div>
 <div class="tb-btn" id="tb-parkour" onclick="tbClick('parkour')">🏃</div>
- <div class="tb-btn" id="tb-parkour" onclick="tbClick('parkour')">🏃</div>
-
-<div id="win-exiblox" class="window" style="display:none; position:absolute; width:900px; height:600px; top:50px; left:100px; flex-direction:column; z-index:2000;">
+    <div class="tb-btn" id="tb-exiblox" onclick="openExibloxApp()">🐍</div>
+</div> <div id="win-exiblox" class="window" style="display:none; position:absolute; width:900px; height:600px; top:50px; left:100px; flex-direction:column; z-index:2000;">
     <div class="titlebar">
         <div style="display:flex; align-items:center; gap:8px;">
             <span class="tb-icon">🐍</span>
             <span class="tb-title">Exiblox v3</span>
         </div>
         <div class="win-btns">
-            <div class="wb" onclick="document.getElementById('win-exiblox').style.display='none'">✕</div>
+            <div class="wb cls" onclick="document.getElementById('win-exiblox').style.display='none'">✕</div>
         </div>
     </div>
     <div class="win-body" style="background:#0a0c14; flex:1; position:relative; overflow:hidden;">
@@ -508,12 +507,12 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <div id="tb-right">
-</div>
-<div id="tb-right">
-<div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
-<div id="tb-clock" onclick="toggleTray(event)"><div id="clock-time">12:00</div><div id="clock-date-tb">17.02.2026</div></div>
-<div style="width:4px"></div>
-</div>
+    <div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
+    <div id="tb-clock" onclick="toggleTray(event)">
+        <div id="clock-time">12:00</div>
+        <div id="clock-date-tb">17.02.2026</div>
+    </div>
+    <div style="width:4px"></div>
 </div>
 
 <!-- START MENU -->
