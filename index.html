@@ -155,7 +155,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .ctx-item{padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;position:relative;}
 .ctx-item:hover{background:var(--bg2);}
 .ctx-sep{height:1px;background:var(--border);margin:3px 2px;}
-#ctx-create-sub{position:fixed;z-index:9999;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:200px;box-shadow:var(--shadow);display:none;}
 
 .window{position:absolute;background:var(--bg1);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:none;flex-direction:column;min-width:320px;min-height:200px;z-index:100;animation:winOpen .14s ease;}
 @keyframes winOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
@@ -181,9 +180,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .exp-side-item:hover{background:var(--bg2);}
 .exp-side-item.active{background:rgba(0,120,212,.3);color:var(--text);}
 .exp-files{flex:1;padding:10px;display:grid;grid-template-columns:repeat(auto-fill,88px);gap:6px;align-content:start;overflow-y:auto;}
-.exp-view-btn{width:26px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:var(--text2);transition:background .12s;}
-.exp-view-btn:hover{background:var(--bg2);}
-.exp-view-btn.active-view{background:rgba(0,120,212,.35);color:var(--text);}
 .file-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 5px;border-radius:8px;cursor:pointer;transition:background .12s;}
 .file-item:hover{background:var(--bg2);}
 .file-item .ico{font-size:32px;}
@@ -191,27 +187,14 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .exp-statusbar{padding:3px 14px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
 
 .np-wrap{display:flex;flex-direction:column;height:100%;}
-.np-menubar{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.np-menu-item{padding:5px 12px;font-size:13px;color:var(--text2);cursor:pointer;transition:background .12s;position:relative;}
-.np-menu-item:hover,.np-menu-item.open{background:var(--bg2);color:var(--text);}
-.np-dropdown{position:absolute;top:100%;left:0;background:var(--menu-bg);border:1px solid var(--border);border-radius:8px;padding:4px;min-width:160px;z-index:9999;display:none;box-shadow:var(--shadow);}
-.np-menu-item.open .np-dropdown{display:block;}
-.np-dd-item{padding:6px 12px;border-radius:6px;font-size:13px;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
-.np-dd-item:hover{background:var(--bg2);}
-.np-dd-item kbd{font-size:10px;color:var(--text2);background:var(--bg2);padding:1px 5px;border-radius:4px;}
-.np-dd-sep{height:1px;background:var(--border);margin:3px 0;}
 #np-area{flex:1;background:var(--input-bg);color:var(--text);border:none;outline:none;padding:14px;font-size:14px;font-family:'Consolas',monospace;resize:none;line-height:1.7;user-select:text;}
 .np-statusbar{display:flex;gap:16px;padding:3px 10px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;}
 
 .calc-wrap{padding:12px;display:flex;flex-direction:column;gap:8px;height:100%;}
-.calc-modes{display:flex;gap:2px;margin-bottom:2px;}
-.calc-mode-btn{padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text2);cursor:pointer;transition:background .12s;}
-.calc-mode-btn:hover,.calc-mode-btn.active{background:var(--bg2);color:var(--text);}
 .calc-display{background:var(--input-bg);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;align-items:flex-end;}
-.calc-expr{font-size:12px;color:var(--text2);min-height:18px;word-break:break-all;}
+.calc-expr{font-size:12px;color:var(--text2);min-height:18px;}
 .calc-result{font-size:36px;font-weight:300;min-height:48px;word-break:break-all;color:var(--text);}
 .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;flex:1;}
-.calc-sci{display:none;grid-template-columns:repeat(5,1fr);gap:6px;}
 .cc{border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:all .1s;color:var(--text);min-height:44px;}
 .cc:hover{filter:brightness(1.2);}
 .cc:active{transform:scale(.93);}
@@ -219,7 +202,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .cc-op{background:rgba(0,120,212,.3);}
 .cc-eq{background:var(--accent);color:#fff;}
 .cc-num{background:var(--card-bg);}
-.cc-sci-btn{background:rgba(96,205,255,.15);color:var(--accent2);font-size:12px;}
 
 .set-wrap{display:flex;height:100%;}
 .set-side{width:200px;border-right:1px solid var(--border);padding:8px;overflow-y:auto;background:rgba(0,0,0,.1);flex-shrink:0;}
@@ -233,13 +215,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .set-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
 .set-card-l .n{font-size:13px;color:var(--text);}
 .set-card-l .d{font-size:11px;color:var(--text2);margin-top:2px;}
-.toggle{width:42px;height:22px;border-radius:11px;background:var(--bg2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
-.toggle.on{background:var(--accent);}
-.toggle::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;}
-.toggle.on::after{transform:translateX(20px);}
-.set-select{background:var(--input-bg);border:1px solid var(--border);border-radius:7px;padding:5px 9px;color:var(--text);font-size:12px;outline:none;font-family:inherit;cursor:pointer;}
-.set-range-wrap{display:flex;align-items:center;gap:8px;margin-top:6px;}
-.set-range-wrap input{flex:1;accent-color:var(--accent);}
 
 .br-wrap{display:flex;flex-direction:column;height:100%;}
 .br-bar{display:flex;align-items:center;gap:5px;padding:6px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -254,8 +229,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .br-shortcuts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:520px;max-width:100%;}
 .br-sc{background:var(--card-bg);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:background .12s;}
 .br-sc:hover{background:var(--bg2);}
-.br-sc .ico{font-size:20px;}
-.br-sc span{font-size:10.5px;color:var(--text2);}
 #br-frame{flex:1;width:100%;border:none;display:none;background:#fff;}
 
 .paint-wrap{display:flex;flex-direction:column;height:100%;}
@@ -271,73 +244,33 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 #paint-canvas{cursor:crosshair;display:block;}
 
 .tm-wrap{display:flex;flex-direction:column;height:100%;}
-.tm-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.tm-tab{padding:10px 16px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .12s;border-bottom:2px solid transparent;}
-.tm-tab:hover{color:var(--text);}
-.tm-tab.active{color:var(--text);border-bottom-color:var(--accent);}
 .tm-body{flex:1;padding:12px;overflow-y:auto;}
 .tm-table{width:100%;border-collapse:collapse;font-size:12px;}
 .tm-table th{text-align:left;padding:7px 10px;color:var(--text2);font-weight:400;border-bottom:1px solid var(--border);}
 .tm-table td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--text);}
 .tm-table tr:hover td{background:var(--bg2);}
-.tm-bar{height:5px;background:var(--bg2);border-radius:3px;overflow:hidden;display:inline-block;width:60px;vertical-align:middle;margin-right:4px;}
-.tm-fill{height:100%;border-radius:3px;background:var(--accent);}
-.tm-perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.tm-perf-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:16px;}
-.tm-perf-title{font-size:11px;color:var(--text2);margin-bottom:8px;}
-.tm-perf-big{font-size:32px;font-weight:200;color:var(--text);margin-bottom:8px;}
-.tm-perf-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-bottom:6px;}
-.tm-perf-info{font-size:11px;color:var(--text2);}
 
 .echat-wrap{display:flex;height:100%;overflow:hidden;background:rgba(8,10,20,.97);}
 body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
-.echat-sidebar{width:230px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:rgba(0,0,0,.2);}
-body.light-theme .echat-sidebar{background:rgba(0,0,0,.04);}
-.echat-sidebar-header{padding:12px 10px 8px;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.echat-new-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit;}
-.echat-new-btn:hover{background:#106ebe;}
-#exian-sessions-list{flex:1;overflow-y:auto;padding:6px;}
-.echat-session{padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .12s;position:relative;margin-bottom:2px;}
-.echat-session:hover{background:var(--bg2);}
-.echat-session.active{background:rgba(0,120,212,.3);}
-.echat-session-t{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
-.echat-session-d{font-size:10px;color:var(--text2);margin-top:2px;}
-.echat-session-del{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:11px;opacity:0;transition:opacity .15s;cursor:pointer;padding:2px 4px;}
-.echat-session:hover .echat-session-del{opacity:1;}
-.echat-session-del:hover{color:#e74c3c;}
-.echat-sidebar-footer{padding:8px 10px;border-top:1px solid var(--border);}
-.echat-clear-btn{font-size:11px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;transition:background .12s;width:100%;}
-.echat-clear-btn:hover{background:rgba(231,76,60,.2);color:#e74c3c;}
 .echat-main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .echat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:rgba(0,0,0,.15);}
-body.light-theme .echat-header{background:rgba(0,0,0,.04);}
 .echat-header-ico{font-size:28px;}
 .echat-header-info .echat-header-name{font-size:15px;font-weight:600;color:var(--text);}
-.echat-header-info .echat-header-status{font-size:11px;color:#2ecc71;display:flex;align-items:center;gap:4px;}
-.echat-header-info .echat-header-status::before{content:'';width:6px;height:6px;background:#2ecc71;border-radius:50%;display:inline-block;}
+.echat-header-info .echat-header-status{font-size:11px;color:#2ecc71;}
 .echat-quick{display:flex;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;background:rgba(0,0,0,.08);}
-body.light-theme .echat-quick{background:rgba(0,0,0,.03);}
 .echat-quick-btn{padding:5px 12px;border-radius:20px;font-size:11px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .echat-quick-btn:hover{background:rgba(0,120,212,.3);color:var(--text);border-color:var(--accent);}
 #exian-chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;}
 .echat-msg{display:flex;gap:10px;align-items:flex-start;}
 .echat-user{flex-direction:row-reverse;}
-.echat-bot{flex-direction:row;}
 .echat-avatar-bot{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#0078d4,#60cdff);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .echat-bot-wrap{display:flex;flex-direction:column;gap:4px;max-width:75%;}
 .echat-bot-name{font-size:11px;color:var(--text2);margin-left:2px;}
 .echat-bubble{padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.6;word-break:break-word;user-select:text;}
 .echat-bubble-user{background:linear-gradient(135deg,#0078d4,#006cbf);color:#fff;border-radius:14px 14px 4px 14px;max-width:65%;align-self:flex-end;}
 .echat-bubble-bot{background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:4px 14px 14px 14px;}
-body.light-theme .echat-bubble-bot{background:rgba(0,0,0,.05);}
 .echat-bubble pre{background:rgba(0,0,0,.3);border-radius:6px;padding:8px;font-size:11px;overflow-x:auto;margin:6px 0;}
-body.light-theme .echat-bubble pre{background:rgba(0,0,0,.08);}
-.echat-bubble code{font-family:'Consolas',monospace;font-size:11.5px;background:rgba(0,0,0,.25);padding:1px 4px;border-radius:4px;}
-body.light-theme .echat-bubble code{background:rgba(0,0,0,.1);}
 .echat-time{font-size:10px;color:var(--text2);padding:0 4px;}
-.echat-msg-footer{display:flex;align-items:center;gap:8px;}
-.echat-action{font-size:13px;cursor:pointer;opacity:0;transition:opacity .2s;}
-.echat-bot-wrap:hover .echat-action{opacity:1;}
 @keyframes echatIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .echat-animate{animation:echatIn .25s ease;}
 .echat-typing{display:flex;align-items:center;gap:4px;padding:12px 14px;}
@@ -346,7 +279,6 @@ body.light-theme .echat-bubble code{background:rgba(0,0,0,.1);}
 .edot:nth-child(3){animation-delay:.4s;}
 @keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
 .echat-input-area{padding:12px 16px;border-top:1px solid var(--border);background:rgba(0,0,0,.15);flex-shrink:0;}
-body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 .echat-input-row{display:flex;align-items:flex-end;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:8px 8px 8px 14px;transition:border .2s;}
 .echat-input-row:focus-within{border-color:var(--accent);}
 #exian-chat-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:inherit;resize:none;line-height:1.5;max-height:120px;min-height:20px;overflow-y:auto;user-select:text;}
@@ -355,7 +287,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 #exian-send-btn:hover{background:#106ebe;transform:scale(1.05);}
 .echat-hint{font-size:10px;color:var(--text2);text-align:center;margin-top:6px;}
 
-/* Updates App */
 .updates-wrap{display:flex;flex-direction:column;height:100%;padding:16px;}
 .updates-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
 .updates-header h2{font-size:18px;font-weight:400;color:var(--text);}
@@ -368,18 +299,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 .tag-fix{background:rgba(231,76,60,.2);color:#e74c3c;}
 .tag-improve{background:rgba(52,152,219,.2);color:#3498db;}
 
-/* Parkour Game */
-.parkour-menu{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;background:linear-gradient(135deg,#1a1a2e,#16213e);}
-.parkour-menu h2{font-size:28px;font-weight:300;color:#fff;}
-.parkour-menu p{color:rgba(255,255,255,.5);font-size:13px;}
-.parkour-diff-btns{display:flex;gap:10px;margin-top:10px;}
-.parkour-diff-btn{padding:12px 28px;border-radius:10px;border:none;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s;}
-.parkour-diff-btn:hover{transform:scale(1.05);}
-.parkour-diff-easy{background:#2ecc71;color:#fff;}
-.parkour-diff-normal{background:#f1c40f;color:#000;}
-.parkour-diff-hard{background:#e74c3c;color:#fff;}
-.parkour-diff-extreme{background:linear-gradient(135deg,#8e44ad,#e74c3c);color:#fff;}
-
 #notif-stack{position:fixed;bottom:60px;right:12px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .notif{background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:14px;padding:12px 14px;width:310px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:flex-start;animation:notifSlide .3s ease;}
 @keyframes notifSlide{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
@@ -387,7 +306,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 .notif-txt .nt{font-size:12.5px;font-weight:600;margin-bottom:2px;color:var(--text);}
 .notif-txt .nd{font-size:11.5px;color:var(--text2);}
 .notif-close{margin-left:auto;cursor:pointer;color:var(--text2);font-size:14px;padding:2px;}
-.notif-close:hover{color:var(--text);}
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(128,128,128,.25);border-radius:3px;}
@@ -460,12 +378,9 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 <div class="desk-icon" data-icon-id="icon-paint" style="top:16px;left:118px" ondblclick="openApp('paint')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎨</div><span>Paint</span></div>
 <div class="desk-icon" data-icon-id="icon-taskman" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📊</div><span>Диспетчер задач</span></div>
 <div class="desk-icon" data-icon-id="icon-exianai" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🤖</div><span>Exian.AI 3.0</span></div>
-<div class="desk-icon" data-icon-id="icon-exiblox" ondblclick="openExibloxApp()" onmousedown="iconDragStart(event,this)">
-    <div class="dico">🐍</div>
-    <span>Exiblox v3</span>
-</div>
+<!-- ✅ EXIBLOX ICON — FIXED -->
+<div class="desk-icon" data-icon-id="icon-exiblox" style="top:304px;left:118px" ondblclick="openExibloxApp()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🐍</div><span>Exiblox v3</span></div>
 <div class="desk-icon" data-icon-id="icon-gta6" style="top:400px;left:118px" ondblclick="openApp('gta6')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎮</div><span>GTA 6</span></div>
-<!-- NEW ICONS -->
 <div class="desk-icon" data-icon-id="icon-updates" style="top:16px;left:218px" ondblclick="openApp('updates')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🔔</div><span>Обновления</span></div>
 <div class="desk-icon" data-icon-id="icon-telegram" style="top:112px;left:218px" ondblclick="openTelegram()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📱</div><span>Exiblox Telegram</span></div>
 <div class="desk-icon" data-icon-id="icon-parkour" style="top:208px;left:218px" ondblclick="openApp('parkour')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🏃</div><span>3D Паркур</span></div>
@@ -490,29 +405,16 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 <div class="tb-btn" id="tb-gta6" onclick="tbClick('gta6')">🎮</div>
 <div class="tb-btn" id="tb-updates" onclick="tbClick('updates')">🔔</div>
 <div class="tb-btn" id="tb-parkour" onclick="tbClick('parkour')">🏃</div>
-    <div class="tb-btn" id="tb-exiblox" onclick="openExibloxApp()">🐍</div>
-</div> <div id="win-exiblox" class="window" style="display:none; position:absolute; width:900px; height:600px; top:50px; left:100px; flex-direction:column; z-index:2000;">
-    <div class="titlebar">
-        <div style="display:flex; align-items:center; gap:8px;">
-            <span class="tb-icon">🐍</span>
-            <span class="tb-title">Exiblox v3</span>
-        </div>
-        <div class="win-btns">
-            <div class="wb cls" onclick="document.getElementById('win-exiblox').style.display='none'">✕</div>
-        </div>
-    </div>
-    <div class="win-body" style="background:#0a0c14; flex:1; position:relative; overflow:hidden;">
-        <div id="exiblox-root" style="height:100%; width:100%;"></div>
-    </div>
+<div class="tb-btn" id="tb-exiblox" onclick="openExibloxApp()">🐍</div>
 </div>
-
 <div id="tb-right">
-    <div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
-    <div id="tb-clock" onclick="toggleTray(event)">
-        <div id="clock-time">12:00</div>
-        <div id="clock-date-tb">17.02.2026</div>
-    </div>
-    <div style="width:4px"></div>
+<div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
+<div id="tb-clock" onclick="toggleTray(event)">
+<div id="clock-time">12:00</div>
+<div id="clock-date-tb">17.02.2026</div>
+</div>
+<div style="width:4px"></div>
+</div>
 </div>
 
 <!-- START MENU -->
@@ -539,7 +441,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 <div class="rec-list" id="sm-rec-list">
 <div class="rec-row" onclick="openApp('updates');hideAll()"><div class="ico">🔔</div><div class="rec-info"><div class="n">Обновление v2.5</div><div class="t">Новые приложения!</div></div></div>
 <div class="rec-row" onclick="openApp('parkour');hideAll()"><div class="ico">🏃</div><div class="rec-info"><div class="n">3D Паркур — Новинка!</div><div class="t">Только что</div></div></div>
-<div class="rec-row" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="rec-info"><div class="n">GTA 6 — ExiWin City</div><div class="t">Вчера</div></div></div>
+<div class="rec-row" onclick="openExibloxApp();hideAll()"><div class="ico">🐍</div><div class="rec-info"><div class="n">Exiblox v3</div><div class="t">Игровая платформа</div></div></div>
 </div>
 <div id="sm-search-results"></div>
 <div id="sm-footer">
@@ -586,9 +488,6 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 
 <!-- CONTEXT MENU -->
 <div id="ctx-menu">
-<div class="ctx-item" id="ctx-open-item" onclick="ctxOpenFile()" style="display:none"><span>📂</span>Открыть</div>
-<div class="ctx-item" id="ctx-delete-item" onclick="ctxDeleteFile()" style="display:none"><span>🗑️</span>Удалить</div>
-<div class="ctx-sep" id="ctx-file-sep" style="display:none"></div>
 <div class="ctx-sep"></div>
 <div class="ctx-item" onclick="ctxRefresh()"><span>🔃</span>Обновить</div>
 <div class="ctx-sep"></div>
@@ -598,10 +497,10 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 <div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры</div>
 </div>
 
-<!-- ALL WINDOWS -->
+<!-- ═══════════════ ALL WINDOWS ═══════════════ -->
 
 <!-- EXPLORER -->
-<div class="window" id="win-explorer" style="width:780px;height:520px;top:40px;left:60px;" onclick="bringFront('win-explorer')">
+<div class="window" id="win-explorer" style="width:780px;height:520px;" onclick="bringFront('win-explorer')">
 <div class="titlebar" onmousedown="dragWin(event,'win-explorer')">
 <span class="tb-icon">📁</span><span class="tb-title">Проводник</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('explorer')">─</div><div class="wb" onclick="toggleMax('win-explorer')">⬜</div><div class="wb cls" onclick="closeWin('explorer')">✕</div></div>
@@ -628,7 +527,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- NOTEPAD -->
-<div class="window" id="win-notepad" style="width:680px;height:500px;top:50px;left:80px;" onclick="bringFront('win-notepad')">
+<div class="window" id="win-notepad" style="width:680px;height:500px;" onclick="bringFront('win-notepad')">
 <div class="titlebar" onmousedown="dragWin(event,'win-notepad')">
 <span class="tb-icon">📝</span><span class="tb-title">Блокнот</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('notepad')">─</div><div class="wb" onclick="toggleMax('win-notepad')">⬜</div><div class="wb cls" onclick="closeWin('notepad')">✕</div></div>
@@ -643,7 +542,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- CALCULATOR -->
-<div class="window" id="win-calc" style="width:320px;height:500px;top:50px;left:100px;" onclick="bringFront('win-calc')">
+<div class="window" id="win-calc" style="width:320px;height:500px;" onclick="bringFront('win-calc')">
 <div class="titlebar" onmousedown="dragWin(event,'win-calc')">
 <span class="tb-icon">🧮</span><span class="tb-title">Калькулятор</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('calc')">─</div><div class="wb" onclick="toggleMax('win-calc')">⬜</div><div class="wb cls" onclick="closeWin('calc')">✕</div></div>
@@ -663,7 +562,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- SETTINGS -->
-<div class="window" id="win-settings" style="width:720px;height:520px;top:50px;left:80px;" onclick="bringFront('win-settings')">
+<div class="window" id="win-settings" style="width:720px;height:520px;" onclick="bringFront('win-settings')">
 <div class="titlebar" onmousedown="dragWin(event,'win-settings')">
 <span class="tb-icon">⚙️</span><span class="tb-title">Параметры</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('settings')">─</div><div class="wb" onclick="toggleMax('win-settings')">⬜</div><div class="wb cls" onclick="closeWin('settings')">✕</div></div>
@@ -696,7 +595,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- BROWSER -->
-<div class="window" id="win-browser" style="width:820px;height:560px;top:40px;left:50px;" onclick="bringFront('win-browser')">
+<div class="window" id="win-browser" style="width:820px;height:560px;" onclick="bringFront('win-browser')">
 <div class="titlebar" onmousedown="dragWin(event,'win-browser')">
 <span class="tb-icon">🌐</span><span class="tb-title">ExiWin Edge</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('browser')">─</div><div class="wb" onclick="toggleMax('win-browser')">⬜</div><div class="wb cls" onclick="closeWin('browser')">✕</div></div>
@@ -719,7 +618,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- PAINT -->
-<div class="window" id="win-paint" style="width:760px;height:540px;top:40px;left:60px;" onclick="bringFront('win-paint')">
+<div class="window" id="win-paint" style="width:760px;height:540px;" onclick="bringFront('win-paint')">
 <div class="titlebar" onmousedown="dragWin(event,'win-paint')">
 <span class="tb-icon">🎨</span><span class="tb-title">Paint</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('paint')">─</div><div class="wb" onclick="toggleMax('win-paint')">⬜</div><div class="wb cls" onclick="closeWin('paint')">✕</div></div>
@@ -747,7 +646,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- TASK MANAGER -->
-<div class="window" id="win-taskman" style="width:700px;height:500px;top:50px;left:80px;" onclick="bringFront('win-taskman')">
+<div class="window" id="win-taskman" style="width:700px;height:500px;" onclick="bringFront('win-taskman')">
 <div class="titlebar" onmousedown="dragWin(event,'win-taskman')">
 <span class="tb-icon">📊</span><span class="tb-title">Диспетчер задач</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('taskman')">─</div><div class="wb" onclick="toggleMax('win-taskman')">⬜</div><div class="wb cls" onclick="closeWin('taskman')">✕</div></div>
@@ -759,7 +658,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- EXIAN.AI 3.0 -->
-<div class="window" id="win-exianai" style="width:900px;height:620px;top:30px;left:50px;" onclick="bringFront('win-exianai')">
+<div class="window" id="win-exianai" style="width:900px;height:620px;" onclick="bringFront('win-exianai')">
 <div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
 <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('exianai')">─</div><div class="wb" onclick="toggleMax('win-exianai')">⬜</div><div class="wb cls" onclick="closeWin('exianai')">✕</div></div>
@@ -794,7 +693,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- UPDATES APP -->
-<div class="window" id="win-updates" style="width:550px;height:500px;top:30px;right:20px;left:auto;" onclick="bringFront('win-updates')">
+<div class="window" id="win-updates" style="width:550px;height:500px;" onclick="bringFront('win-updates')">
 <div class="titlebar" onmousedown="dragWin(event,'win-updates')">
 <span class="tb-icon">🔔</span><span class="tb-title">Обновления ExiWin</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('updates')">─</div><div class="wb" onclick="toggleMax('win-updates')">⬜</div><div class="wb cls" onclick="closeWin('updates')">✕</div></div>
@@ -806,7 +705,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- 3D PARKOUR -->
-<div class="window" id="win-parkour" style="width:900px;height:620px;top:20px;left:40px;" onclick="bringFront('win-parkour')">
+<div class="window" id="win-parkour" style="width:900px;height:620px;" onclick="bringFront('win-parkour')">
 <div class="titlebar" onmousedown="dragWin(event,'win-parkour')">
 <span class="tb-icon">🏃</span><span class="tb-title">3D Паркур — Noob Runner</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('parkour')">─</div><div class="wb" onclick="toggleMax('win-parkour')">⬜</div><div class="wb cls" onclick="parkourClose()">✕</div></div>
@@ -816,7 +715,7 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </div>
 
 <!-- GTA 6 -->
-<div class="window" id="win-gta6" style="width:1020px;height:680px;top:18px;left:30px;" onclick="bringFront('win-gta6')">
+<div class="window" id="win-gta6" style="width:1020px;height:680px;" onclick="bringFront('win-gta6')">
 <div class="titlebar" onmousedown="dragWin(event,'win-gta6')">
 <span class="tb-icon">🎮</span><span class="tb-title">GTA 6 — ExiWin City</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('gta6')">─</div><div class="wb" onclick="toggleMax('win-gta6')">⬜</div><div class="wb cls" onclick="gta6Close()">✕</div></div>
@@ -825,10 +724,26 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 <div class="resize-handle" onmousedown="resizeWin(event,'win-gta6')"></div>
 </div>
 
+<!-- ✅ EXIBLOX v3 WINDOW -->
+<div class="window" id="win-exiblox" style="width:900px;height:620px;" onclick="bringFront('win-exiblox')">
+<div class="titlebar" onmousedown="dragWin(event,'win-exiblox')">
+<span class="tb-icon">🐍</span><span class="tb-title">Exiblox v3</span>
+<div class="win-btns">
+<div class="wb" onclick="minimizeWin('exiblox')">─</div>
+<div class="wb" onclick="toggleMax('win-exiblox')">⬜</div>
+<div class="wb cls" onclick="closeWin('exiblox')">✕</div>
+</div>
+</div>
+<div class="win-body" style="overflow:hidden;padding:0;">
+<div id="exiblox-root" style="height:100%;width:100%;"></div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-exiblox')"></div>
+</div>
+
 <div id="notif-stack"></div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- MAIN ENGINE SCRIPT -->
+<!-- MAIN ENGINE -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <script>
 'use strict';
@@ -894,20 +809,43 @@ function updateClock(){
 }
 function startClock(){updateClock();setInterval(updateClock,10000);}
 
+// ── CENTERING HELPER ──────────────────────────────────
+// ✅ Центрирует окно по экрану (с учётом тасбара снизу)
+function centerWindow(winEl){
+ if(!winEl||winEl.classList.contains('maximized'))return;
+ const vw=window.innerWidth;
+ const vh=window.innerHeight-48; // минус taskbar
+ const ww=winEl.offsetWidth||parseInt(winEl.style.width)||800;
+ const wh=winEl.offsetHeight||parseInt(winEl.style.height)||500;
+ const left=Math.max(0,Math.round((vw-ww)/2));
+ const top=Math.max(0,Math.round((vh-wh)/2));
+ winEl.style.left=left+'px';
+ winEl.style.top=top+'px';
+}
+
 // ── WINDOW MANAGEMENT ─────────────────────────────────
 window.bringFront=function(id){const w=el(id);if(w){w.style.zIndex=++winZ;}};
+
+// ✅ openApp — открывает окно по центру экрана
 window.openApp=function(app){
  if(app==='gta6'){openGta6();return;}
  if(app==='parkour'){openParkour();return;}
  const w=el('win-'+app);
- if(w){w.style.display='flex';bringFront('win-'+app);const tb=el('tb-'+app);if(tb)tb.classList.add('running','active-win');}
+ if(w){
+  w.style.display='flex';
+  // Сначала делаем видимым, потом центрируем (offsetWidth работает только после display:flex)
+  requestAnimationFrame(()=>{
+   centerWindow(w);
+   bringFront('win-'+app);
+  });
+  const tb=el('tb-'+app);if(tb)tb.classList.add('running','active-win');
+ }
  if(app==='updates')renderUpdates();
  if(app==='taskman')renderTaskMan();
  hideAll();
 };
+
 window.closeWin=function(app){
- if(app==='gta6'){gta6Close();return;}
- if(app==='parkour'){parkourClose();return;}
  const w=el('win-'+app);if(w)w.style.display='none';
  const tb=el('tb-'+app);if(tb)tb.classList.remove('running','active-win');
 };
@@ -1052,7 +990,7 @@ function initPaint(){
 // ── TASK MANAGER ──────────────────────────────────────
 function renderTaskMan(){
  const c=el('tm-body-content');if(!c)return;
- const apps=['ExiWin Shell','Exian.AI','Edge','Paint','Проводник','Диспетчер задач','3D Паркур','GTA 6'];
+ const apps=['ExiWin Shell','Exian.AI','Edge','Paint','Проводник','Диспетчер задач','3D Паркур','GTA 6','Exiblox v3'];
  let h='<table class="tm-table"><thead><tr><th>Процесс</th><th>ЦП</th><th>ОЗУ</th><th>PID</th></tr></thead><tbody>';
  apps.forEach((a,i)=>{
   const cpu=(Math.random()*15).toFixed(1),ram=(Math.random()*200+20).toFixed(0);
@@ -1061,17 +999,16 @@ function renderTaskMan(){
  h+='</tbody></table>';c.innerHTML=h;
 }
 
-// ── EXIAN.AI 3.0 (FIXED) ─────────────────────────────
+// ── EXIAN.AI 3.0 ─────────────────────────────────────
 const aiKnowledge={
  'привет':['Привет! 👋 Как дела?','Здравствуйте! Рад вас видеть!','Привет! Чем могу помочь?'],
  'как дела':['Отлично, спасибо! А у вас?','Прекрасно! Готов помочь!','Всё хорошо! 😊'],
  'что ты умеешь':['Я Exian.AI 3.0! Умею:\n• Отвечать на вопросы\n• Писать код на Python, JS, и др.\n• Рассказывать анекдоты\n• Объяснять сложные темы\n• Помогать с проектами\n• И многое другое! 🚀'],
- 'код':['Вот пример на Python:\n```python\ndef fibonacci(n):\n    a, b = 0, 1\n    result = []\n    for _ in range(n):\n        result.append(a)\n        a, b = b, a + b\n    return result\n\nprint(fibonacci(10))\n# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n```'],
- 'python':['Вот пример на Python:\n```python\nclass Calculator:\n    def add(self, a, b):\n        return a + b\n    def multiply(self, a, b):\n        return a * b\n\ncalc = Calculator()\nprint(calc.add(5, 3))  # 8\nprint(calc.multiply(4, 7))  # 28\n```'],
- 'анекдот':['Программист спрашивает: "Почему мой код не работает?" — Ответ: "Потому что ты его написал!" 😂','Заходит программист в бар. Заказывает 1 пиво, 2 пива, 0 пив, -1 пиво, 99999 пив, asdfjkl. 🍺😄','— Алло, это служба поддержки?\n— Да.\n— У меня не работает интернет.\n— А как вы нам звоните?\n— По телефону!\n— А как вы узнали наш номер?\n— В интернете нашёл... 😅'],
- 'нейросеть':['Нейросеть — это математическая модель, вдохновлённая мозгом 🧠\n\n1. **Нейроны** — узлы с весами\n2. **Слои** — входной, скрытые, выходной\n3. **Обучение** — подстройка весов через обратное распространение ошибки\n4. **Активация** — функции типа ReLU, sigmoid\n\nОни учатся на данных и находят паттерны!'],
- 'идея':['💡 Идеи для проектов:\n1. AI-бот для Telegram\n2. Веб-игра на Canvas\n3. Трекер привычек\n4. Генератор мемов\n5. Визуализация данных\n6. Чат-приложение на WebSocket'],
- 'exiwin':['ExiWin 12 — это операционная система нового поколения! 🖥️\n\nОсобенности:\n• Встроенный AI — Exian.AI 3.0\n• Браузер Edge\n• Paint, Калькулятор\n• GTA 6, 3D Паркур\n• Смена обоев и тем\n• И многое другое!'],
+ 'код':['Вот пример на Python:\n```python\ndef fibonacci(n):\n    a, b = 0, 1\n    result = []\n    for _ in range(n):\n        result.append(a)\n        a, b = b, a + b\n    return result\n\nprint(fibonacci(10))\n```'],
+ 'python':['Вот пример на Python:\n```python\nclass Calculator:\n    def add(self, a, b):\n        return a + b\n    def multiply(self, a, b):\n        return a * b\n\ncalc = Calculator()\nprint(calc.add(5, 3))  # 8\n```'],
+ 'анекдот':['Программист спрашивает: "Почему мой код не работает?" — Ответ: "Потому что ты его написал!" 😂','Заходит программист в бар. Заказывает 1 пиво, 2 пива, 0 пив... 🍺😄'],
+ 'идея':['💡 Идеи для проектов:\n1. AI-бот для Telegram\n2. Веб-игра на Canvas\n3. Трекер привычек\n4. Генератор мемов\n5. Чат-приложение на WebSocket'],
+ 'exiwin':['ExiWin 12 — операционная система нового поколения! 🖥️\nОсобенности:\n• Встроенный AI — Exian.AI 3.0\n• Браузер Edge\n• Paint, Калькулятор\n• GTA 6, 3D Паркур, Exiblox v3\n• Смена обоев и тем'],
 };
 
 function aiResponse(msg){
@@ -1080,10 +1017,9 @@ function aiResponse(msg){
   if(m.includes(key)) return vals[Math.floor(Math.random()*vals.length)];
  }
  const defaults=[
-  `Интересный вопрос! Давайте разберёмся. "${msg}" — это тема, которую я могу обсудить. Задайте более конкретный вопрос! 🤔`,
-  `Я понял ваш запрос: "${msg}". Вот что я думаю:\n\nЭто действительно интересная тема! Могу помочь подробнее, если уточните. 💡`,
-  `Хм, "${msg}" — отличный вопрос! К сожалению, мне нужно больше контекста. Попробуйте спросить по-другому! 😊`,
-  `Спасибо за вопрос! Я Exian.AI 3.0, и хотя не знаю всего, я постараюсь помочь. Уточните, что именно вас интересует? 🤖`,
+  `Интересный вопрос! "${msg}" — это тема, которую я могу обсудить подробнее. 🤔`,
+  `Я понял ваш запрос: "${msg}". Попробуйте задать более конкретный вопрос! 💡`,
+  `Хм, "${msg}" — интересно! Могу помочь, если уточните. 😊`,
  ];
  return defaults[Math.floor(Math.random()*defaults.length)];
 }
@@ -1119,12 +1055,11 @@ window.exianSend=function(){
 window.exianQuick=function(msg){
  el('exian-chat-input').value=msg;exianSend();
 };
-// Enter to send
 document.addEventListener('keydown',e=>{
  if(e.target===el('exian-chat-input')&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();exianSend();}
 });
 
-// ── TELEGRAM APP ──────────────────────────────────────
+// ── TELEGRAM ──────────────────────────────────────────
 window.openTelegram=function(){
  window.open('https://t.me/exiblox','_blank');
  showNotif('Exiblox Telegram','Открыто в новой вкладке','📱');
@@ -1136,51 +1071,33 @@ function renderUpdates(){
  c.innerHTML=`
   <div class="updates-header"><span style="font-size:32px">🔔</span><h2>Обновления ExiWin 12</h2></div>
   <div class="update-item">
+   <div class="update-ver">📦 Версия 2.6.0</div>
+   <div class="update-date">Февраль 2026</div>
+   <div class="update-desc">
+    • ✅ Все окна теперь открываются по центру экрана<br>
+    • 🐍 Exiblox v3 — подключение exiblox.js исправлено<br>
+    • 🪟 Убраны хардкод-позиции окон<br>
+    • 🐛 Прочие исправления
+   </div>
+   <span class="update-tag tag-fix">Исправления</span>
+  </div>
+  <div class="update-item">
    <div class="update-ver">📦 Версия 2.5.0</div>
    <div class="update-date">17 февраля 2026</div>
    <div class="update-desc">
-    • 🔔 Новое приложение «Обновления» — центр уведомлений<br>
-    • 📱 Exiblox Telegram — быстрый доступ к t.me/exiblox<br>
-    • 🏃 3D Паркур — новая игра с нубиком из Roblox!<br>
-    • 💾 Сохранение позиций иконок рабочего стола<br>
-    • 💾 Сохранение выбранных обоев<br>
-    • 🤖 Исправлен AI — Exian.AI 3.0 теперь умнее<br>
-    • 🐛 Исправлены баги окон и меню
+    • 🔔 Новое приложение «Обновления»<br>
+    • 📱 Exiblox Telegram — быстрый доступ<br>
+    • 🏃 3D Паркур — новая игра<br>
+    • 💾 Сохранение позиций иконок и обоев
    </div>
    <span class="update-tag tag-new">Новое</span>
-   <span class="update-tag tag-fix">Исправления</span>
   </div>
   <div class="update-item">
    <div class="update-ver">📦 Версия 2.4.0</div>
    <div class="update-date">15 февраля 2026</div>
-   <div class="update-desc">
-    • 🎮 GTA 6 — полный открытый мир<br>
-    • 🖼️ Галерея обоев — 32 варианта<br>
-    • 🎨 Улучшен Paint
-   </div>
+   <div class="update-desc">• 🎮 GTA 6 — открытый мир<br>• 🖼️ Галерея обоев — 18 вариантов</div>
    <span class="update-tag tag-improve">Улучшение</span>
-  </div>
-  <div class="update-item">
-   <div class="update-ver">📦 Версия 2.3.0</div>
-   <div class="update-date">10 февраля 2026</div>
-   <div class="update-desc">
-    • 🤖 Exian.AI 3.0 — новый умный ассистент<br>
-    • 📊 Диспетчер задач<br>
-    • 🌐 Браузер Edge с поиском
-   </div>
-   <span class="update-tag tag-new">Новое</span>
-  </div>
-  <div class="update-item">
-   <div class="update-ver">📦 Версия 2.0.0</div>
-   <div class="update-date">1 февраля 2026</div>
-   <div class="update-desc">
-    • 🚀 Первый релиз ExiWin 12!<br>
-    • Регистрация и авторизация<br>
-    • Рабочий стол, Проводник, Блокнот, Калькулятор
-   </div>
-   <span class="update-tag tag-new">Релиз</span>
-  </div>
- `;
+  </div>`;
 }
 
 // ── ICON POSITIONS SAVE/LOAD ──────────────────────────
@@ -1214,7 +1131,7 @@ function loadSavedWallpaper(){
  }
 }
 
-// ── DESKTOP ICON DRAG WITH SAVE ───────────────────────
+// ── DESKTOP ICON DRAG ─────────────────────────────────
 (function(){
  let dragEl=null,dragOffX=0,dragOffY=0,hasMoved=false,startX=0,startY=0;
  const THRESHOLD=5;
@@ -1296,16 +1213,87 @@ function renderWpGrid(tab){
 document.addEventListener('click',e=>{const g=el('wallpaper-gallery');if(g.style.display==='block'&&!g.contains(e.target))g.style.display='none';});
 
 // ── INIT PAINT ON OPEN ────────────────────────────────
-const origOpen=window.openApp;
 const _openApp=window.openApp;
 window.openApp=function(app){
  _openApp(app);
- if(app==='paint')setTimeout(initPaint,100);
+ if(app==='paint')setTimeout(initPaint,150);
  if(app==='explorer')setTimeout(()=>expNav('Рабочий стол'),50);
 };
 
-// ── SEARCH ────────────────────────────────────────────
-window.smSearch=function(q){/* stub */};
+window.smSearch=function(q){};
+
+// ══════════════════════════════════════════════════════
+// ✅ EXIBLOX v3 — ОТКРЫТИЕ + ЗАГРУЗКА exiblox.js
+// ══════════════════════════════════════════════════════
+window.openExibloxApp = function(){
+ const win = el('win-exiblox');
+ if(win){
+  win.style.display = 'flex';
+  // Центрируем после рендера
+  requestAnimationFrame(()=>{
+   centerWindow(win);
+   bringFront('win-exiblox');
+  });
+  const tb = el('tb-exiblox');
+  if(tb) tb.classList.add('running','active-win');
+ }
+
+ // Загружаем exiblox.js если ещё не загружен
+ if(typeof initExiblox === 'undefined'){
+  // Показываем прелоадер внутри окна
+  const root = el('exiblox-root');
+  if(root){
+   root.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+                height:100%;background:#0a0c14;gap:16px;">
+     <div style="font-size:42px;font-weight:900;
+                 background:linear-gradient(135deg,#00b2ff,#7c3aed);
+                 -webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ Exiblox v3</div>
+     <div style="color:rgba(255,255,255,.4);font-size:13px;">⏳ Загрузка exiblox.js...</div>
+     <div style="width:200px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;">
+      <div style="height:100%;width:60%;background:linear-gradient(90deg,#00b2ff,#7c3aed);
+                  border-radius:2px;animation:exbProg 1s ease infinite alternate;"></div>
+     </div>
+    </div>
+    <style>@keyframes exbProg{from{transform:translateX(-30%)}to{transform:translateX(130%);}}</style>`;
+  }
+  const script = document.createElement('script');
+  script.src = 'exiblox.js';
+  script.onload = function(){
+   console.log('✅ Exiblox v3 загружен!');
+   if(typeof initExiblox === 'function'){
+    initExiblox();
+   }else{
+    const r=el('exiblox-root');
+    if(r)r.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ff6b6b;font-size:14px;">❌ initExiblox не найден в exiblox.js</div>';
+   }
+  };
+  script.onerror = function(){
+   console.error('❌ exiblox.js не найден!');
+   showNotif('Exiblox','Файл exiblox.js не найден рядом с index.html','❌');
+   const r=el('exiblox-root');
+   if(r)r.innerHTML=`
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+                height:100%;background:#0a0c14;gap:12px;padding:20px;text-align:center;">
+     <div style="font-size:48px;">❌</div>
+     <div style="color:#ff6b6b;font-size:16px;font-weight:600;">exiblox.js не найден</div>
+     <div style="color:rgba(255,255,255,.4);font-size:12px;max-width:360px;line-height:1.6;">
+      Убедись что файл <strong style="color:#00b2ff;">exiblox.js</strong> лежит в той же папке, что и <strong style="color:#00b2ff;">index.html</strong>
+     </div>
+     <button onclick="openExibloxApp()" 
+             style="background:#0078d4;border:none;color:#fff;padding:10px 24px;
+                    border-radius:8px;cursor:pointer;font-size:13px;margin-top:8px;">
+      🔄 Попробовать снова
+     </button>
+    </div>`;
+  };
+  document.body.appendChild(script);
+ } else {
+  // Уже загружен — просто вызываем init
+  if(typeof initExiblox === 'function') initExiblox();
+ }
+ hideAll();
+};
 
 // ══════════════════════════════════════════════════════
 // 3D PARKOUR GAME ENGINE
@@ -1368,13 +1356,10 @@ window.PARKOUR=(function(){
  function update(){
   if(gameState!=='playing')return;
   const p=player;
-  // Movement
   if(keys['ArrowLeft']||keys['KeyA'])p.x-=moveSpeed;
   if(keys['ArrowRight']||keys['KeyD'])p.x+=moveSpeed;
   if((keys['ArrowUp']||keys['KeyW']||keys['Space'])&&p.onGround){p.vy=jumpForce;p.onGround=false;}
-  // Gravity
   p.vy+=gravity;p.y+=p.vy;p.onGround=false;
-  // Platform collision
   for(const pl of platforms){
    if(pl.type==='moving'){pl.x+=pl.moveDir*pl.moveSpeed;pl.moveRange--;if(pl.moveRange<=0){pl.moveDir*=-1;pl.moveRange=80;}}
    if(p.vy>=0&&p.x+p.w>pl.x&&p.x<pl.x+pl.w&&p.y+p.h>=pl.y&&p.y+p.h<=pl.y+20){
@@ -1382,125 +1367,74 @@ window.PARKOUR=(function(){
     if(pl.type==='crumble'){pl.crumbleTimer+=1;if(pl.crumbleTimer>30)pl.y=9999;}
    }
   }
-  // Fall death
-  if(p.y>H+50){deaths++;score=Math.max(0,score-50);
-   p.x=cam.x+100;p.y=100;p.vy=0;
-  }
-  // Score
+  if(p.y>H+50){deaths++;score=Math.max(0,score-50);p.x=cam.x+100;p.y=100;p.vy=0;}
   score=Math.max(score,Math.floor((p.x-100)/10));
-  // Camera
   cam.x=Math.max(0,p.x-200);
-  // Generate more platforms
   const maxPlatX=Math.max(...platforms.map(p=>p.x+p.w));
   if(p.x>maxPlatX-W*2){generatePlatforms(maxPlatX+platformGap,15);level++;}
  }
 
  function render(){
-  // Sky gradient
   const skyGrad=ctx.createLinearGradient(0,0,0,H);
   if(difficulty==='extreme'){skyGrad.addColorStop(0,'#1a0000');skyGrad.addColorStop(1,'#3d0000');}
   else if(difficulty==='hard'){skyGrad.addColorStop(0,'#0a0a2e');skyGrad.addColorStop(1,'#1a1a4e');}
   else{skyGrad.addColorStop(0,'#87CEEB');skyGrad.addColorStop(1,'#E0F7FA');}
   ctx.fillStyle=skyGrad;ctx.fillRect(0,0,W,H);
-
-  // Background mountains
   ctx.fillStyle='rgba(100,150,100,0.3)';
-  for(let i=0;i<10;i++){
-   const bx=-cam.x*0.1+i*200;
-   ctx.beginPath();ctx.moveTo(bx,H);ctx.lineTo(bx+100,H-120-Math.sin(i)*30);ctx.lineTo(bx+200,H);ctx.fill();
-  }
-
+  for(let i=0;i<10;i++){const bx=-cam.x*0.1+i*200;ctx.beginPath();ctx.moveTo(bx,H);ctx.lineTo(bx+100,H-120-Math.sin(i)*30);ctx.lineTo(bx+200,H);ctx.fill();}
   ctx.save();ctx.translate(-cam.x,0);
-
-  // Platforms with 3D effect
   for(const pl of platforms){
    if(pl.x+pl.w<cam.x-50||pl.x>cam.x+W+50)continue;
-   // Shadow
    ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(pl.x+3,pl.y+3,pl.w,pl.h);
-   // Top face (3D)
-   ctx.fillStyle=pl.color;
-   ctx.fillRect(pl.x,pl.y,pl.w,pl.h);
-   // Side face
-   ctx.fillStyle=darkenColor(pl.color,0.3);
-   ctx.fillRect(pl.x,pl.y+pl.h,pl.w,6);
-   // Highlight
-   ctx.fillStyle='rgba(255,255,255,0.2)';
-   ctx.fillRect(pl.x,pl.y,pl.w,3);
+   ctx.fillStyle=pl.color;ctx.fillRect(pl.x,pl.y,pl.w,pl.h);
+   ctx.fillStyle='rgba(0,0,0,.25)';ctx.fillRect(pl.x,pl.y+pl.h,pl.w,6);
+   ctx.fillStyle='rgba(255,255,255,.2)';ctx.fillRect(pl.x,pl.y,pl.w,3);
   }
-
-  // Player — Roblox Noob style
   if(gameState==='playing'){
    const p=player;
    ctx.save();ctx.translate(p.x+p.w/2,p.y+p.h/2);
-   // Legs (blue)
-   ctx.fillStyle='#00a2ff';
-   ctx.fillRect(-8,8,6,12);ctx.fillRect(2,8,6,12);
-   // Body (yellow)
-   ctx.fillStyle='#f1c40f';
-   ctx.fillRect(-9,-6,18,16);
-   // Arms
+   ctx.fillStyle='#00a2ff';ctx.fillRect(-8,8,6,12);ctx.fillRect(2,8,6,12);
+   ctx.fillStyle='#f1c40f';ctx.fillRect(-9,-6,18,16);
    ctx.fillStyle='#f1c40f';
    const armSwing=Math.sin(Date.now()/150)*3;
    ctx.fillRect(-13,-4,4,12+armSwing);ctx.fillRect(9,-4,4,12-armSwing);
-   // Head
-   ctx.fillStyle='#f1c40f';
-   ctx.fillRect(-7,-18,14,14);
-   // Face
-   ctx.fillStyle='#000';
-   ctx.fillRect(-5,-14,3,3);ctx.fillRect(2,-14,3,3); // eyes
-   ctx.fillStyle='#fff';
-   ctx.fillRect(-4,-13,1.5,1.5);ctx.fillRect(3,-13,1.5,1.5); // pupils
-   // Smile
-   ctx.fillStyle='#000';
-   ctx.fillRect(-3,-9,6,1.5);
-   // "noob" text above
+   ctx.fillStyle='#f1c40f';ctx.fillRect(-7,-18,14,14);
+   ctx.fillStyle='#000';ctx.fillRect(-5,-14,3,3);ctx.fillRect(2,-14,3,3);
+   ctx.fillStyle='#fff';ctx.fillRect(-4,-13,1.5,1.5);ctx.fillRect(3,-13,1.5,1.5);
+   ctx.fillStyle='#000';ctx.fillRect(-3,-9,6,1.5);
    ctx.fillStyle='rgba(255,255,255,0.8)';ctx.font='bold 8px Arial';ctx.textAlign='center';
-   ctx.fillText('NOOB',-0,-22);
-   ctx.restore();
+   ctx.fillText('NOOB',0,-22);ctx.restore();
   }
   ctx.restore();
-
-  // HUD
-  ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(8,8,200,70);ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.strokeRect(8,8,200,70);
+  ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(8,8,200,70);
   ctx.fillStyle='#fff';ctx.font='bold 14px Segoe UI';ctx.textAlign='left';
   ctx.fillText(`🏃 Очки: ${score}`,18,30);
   ctx.fillText(`💀 Смерти: ${deaths}`,18,50);
   ctx.fillText(`📊 Уровень: ${level} | ${difficulties[difficulty].name}`,18,70);
-
-  // Menu
   if(gameState==='menu'){
    ctx.fillStyle='rgba(0,0,20,0.85)';ctx.fillRect(0,0,W,H);
    ctx.fillStyle='#fff';ctx.font='bold 36px Segoe UI';ctx.textAlign='center';
    ctx.fillText('🏃 3D Паркур — Noob Runner',W/2,H/2-80);
    ctx.font='16px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.6)';
    ctx.fillText('Выберите сложность:',W/2,H/2);
-
    const btns=[
-    {x:W/2-200,label:'😊 Легко',color:'#2ecc71',d:'easy'},
-    {x:W/2-80,label:'😐 Нормально',color:'#f1c40f',d:'normal'},
-    {x:W/2+40,label:'😤 Сложно',color:'#e74c3c',d:'hard'},
-    {x:W/2+160,label:'💀 Экстрим',color:'#8e44ad',d:'extreme'},
+    {x:W/2-200,label:'😊 Легко',color:'#2ecc71'},{x:W/2-80,label:'😐 Нормально',color:'#f1c40f'},
+    {x:W/2+40,label:'😤 Сложно',color:'#e74c3c'},{x:W/2+160,label:'💀 Экстрим',color:'#8e44ad'},
    ];
    btns.forEach(b=>{
     ctx.fillStyle=b.color;ctx.beginPath();
     if(ctx.roundRect)ctx.roundRect(b.x,H/2+20,90,40,8);else ctx.rect(b.x,H/2+20,90,40);
     ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 11px Segoe UI';ctx.fillText(b.label,b.x+45,H/2+45);
    });
-
-   ctx.font='13px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.4)';
+   ctx.font='13px Segoe UI';ctx.fillStyle='rgba(255,255,255,.4)';
    ctx.fillText('WASD / Стрелки — движение, Пробел — прыжок',W/2,H/2+90);
-
-   // Draw noob preview
    ctx.save();ctx.translate(W/2,H/2-140);
    ctx.fillStyle='#f1c40f';ctx.fillRect(-14,-6,28,24);
    ctx.fillStyle='#00a2ff';ctx.fillRect(-12,18,10,16);ctx.fillRect(2,18,10,16);
    ctx.fillStyle='#f1c40f';ctx.fillRect(-10,-24,20,20);
-   ctx.fillStyle='#000';ctx.fillRect(-7,-18,4,4);ctx.fillRect(3,-18,4,4);
-   ctx.fillRect(-5,-12,10,2);
+   ctx.fillStyle='#000';ctx.fillRect(-7,-18,4,4);ctx.fillRect(3,-18,4,4);ctx.fillRect(-5,-12,10,2);
    ctx.restore();
   }
-
-  // Death screen
   if(gameState==='dead'){
    ctx.fillStyle='rgba(80,0,0,0.8)';ctx.fillRect(0,0,W,H);
    ctx.fillStyle='#fff';ctx.font='bold 32px Segoe UI';ctx.textAlign='center';
@@ -1530,7 +1464,11 @@ window.PARKOUR=(function(){
 // ── PARKOUR OPEN/CLOSE ────────────────────────────────
 window.openParkour=function(){
  const w=el('win-parkour'),root=el('parkour-root');
- if(w){w.style.display='flex';bringFront('win-parkour');const tb=el('tb-parkour');if(tb)tb.classList.add('running','active-win');}
+ if(w){
+  w.style.display='flex';
+  requestAnimationFrame(()=>{centerWindow(w);bringFront('win-parkour');});
+  const tb=el('tb-parkour');if(tb)tb.classList.add('running','active-win');
+ }
  if(root&&!window._parkourStarted){PARKOUR.init(root);window._parkourStarted=true;}
 };
 window.parkourClose=function(){
@@ -1539,22 +1477,6 @@ window.parkourClose=function(){
  if(window._parkourStarted){PARKOUR.stop();window._parkourStarted=false;}
 };
 
-// ── GTA6 STUB (simplified for size) ───────────────────
-window.openGta6=function(){
- const w=el('win-gta6'),root=el('gta6-root');
- if(w){w.style.display='flex';bringFront('win-gta6');const tb=el('tb-gta6');if(tb)tb.classList.add('running','active-win');}
- if(root&&!window._gta6started){
-  if(typeof GTA6!=='undefined'){GTA6.init(root);window._gta6started=true;}
-  else{root.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;font-size:18px;">🎮 GTA 6 загружается...</div>';}
- }
-};
-window.gta6Close=function(){
- const w=el('win-gta6');if(w)w.style.display='none';
- const tb=el('tb-gta6');if(tb)tb.classList.remove('running','active-win');
- if(typeof GTA6!=='undefined'&&window._gta6started){GTA6.stop();window._gta6started=false;}
-};
-window.launchExiblox=function(){showNotif('Exiblox v3','Загрузка...','🐍');};
-
 // ── INITIAL GREETING ──────────────────────────────────
 window.addEventListener('DOMContentLoaded',()=>{
  const h=new Date().getHours(),g=el('br-hello');
@@ -1562,7 +1484,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 
-<!-- GTA 6 ENGINE (preserved) -->
+<!-- GTA 6 ENGINE -->
 <script>
 'use strict';
 window.GTA6=(function(){
@@ -1588,7 +1510,7 @@ for(let y=0;y<8;y++)for(let x=0;x<8;x++)map[y][x]=WATER;
 for(let y=0;y<MAP_H;y++)for(let x=0;x<MAP_W;x++)if(map[y][x]===BUILDING){bColors[y][x]=['#5a6b7a','#6b7c8b','#4a5b6a','#b8945a','#8b7a6a'][floor(hash(x*7,y*7)*5)];}
 return{map,bColors,roadX,roadY};}
 
-let S={canvas:null,ctx:null,W:800,H:600,running:false,world:null,cam:{x:0,y:0},player:null,cars:[],npcs:[],wantedLevel:0,wantedCooldown:0,score:0,keys:{},lastTime:0,frameCount:0,gameTime:0,spawnCooldown:0,notifs:[],hud:null,mmCanvas:null,_listeners:[],dayTime:10};
+let S={canvas:null,ctx:null,W:800,H:600,running:false,world:null,cam:{x:0,y:0},player:null,cars:[],npcs:[],wantedLevel:0,wantedCooldown:0,score:0,keys:{},lastTime:0,frameCount:0,gameTime:0,spawnCooldown:0,notifs:[],hud:null,_listeners:[],dayTime:10};
 
 function init(rootEl){if(!rootEl)return;for(const[el,ev,fn]of S._listeners)el.removeEventListener(ev,fn);S._listeners=[];rootEl.innerHTML='';rootEl.style.cssText='position:relative;overflow:hidden;background:#000;';
 const canvas=document.createElement('canvas');canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;';canvas.tabIndex=0;rootEl.appendChild(canvas);
@@ -1601,9 +1523,7 @@ const ku=e=>{S.keys[e.code]=false;};
 const addL=(el,ev,fn)=>{el.addEventListener(ev,fn);S._listeners.push([el,ev,fn]);};
 addL(window,'keydown',kd);addL(window,'keyup',ku);canvas.addEventListener('click',()=>canvas.focus());
 S.world=makeWorld();const startX=(MAP_W/2)*TILE,startY=(MAP_H/2)*TILE;S.player=new Player(startX,startY);S.cars=[];S.npcs=[];
-// Spawn cars
 for(let i=0;i<40;i++){const rx=pick(S.world.roadX),ry=floor(rnd(2,MAP_H-2));if(S.world.map[ry]?.[rx]===ROAD){const c=new Car((rx+.5)*TILE,(ry+.5)*TILE,pick(CAR_COLORS),pick(['sedan','sports']));S.cars.push(c);}}
-// Spawn NPCs
 for(let i=0;i<50;i++){const x=floor(rnd(2,MAP_W-2)),y=floor(rnd(2,MAP_H-2));if(S.world.map[y]?.[x]===SIDEWALK)S.npcs.push(new NPC((x+.5)*TILE,(y+.5)*TILE));}
 S.cam={x:startX-S.W/2,y:startY-S.H/2};S.running=true;S.lastTime=performance.now();
 S.notifs=[{msg:'🎮 WASD — движение • F — авто • G — спавн',t:4}];
@@ -1615,7 +1535,7 @@ const dt=min((ts-S.lastTime)/1000,0.05);S.lastTime=ts;S.frameCount++;S.gameTime+
 function update(dt){const K=S.keys,p=S.player;
 if(S.spawnCooldown>0)S.spawnCooldown-=dt;
 p._fCool=max(0,p._fCool-dt);p._gCool=max(0,p._gCool-dt);
-if(p.inCar){// Driving
+if(p.inCar){
  const c=p.inCar;let thr=0,str=0;
  if(K['ArrowUp']||K['KeyW'])thr=1;if(K['ArrowDown']||K['KeyS'])thr=-.6;if(K['ArrowLeft']||K['KeyA'])str=-1;if(K['ArrowRight']||K['KeyD'])str=1;
  c.speed+=thr*c.accel*dt;if(!thr){c.speed*=.95;if(abs(c.speed)<1)c.speed=0;}if(K['Space'])c.speed*=.9;
@@ -1623,16 +1543,13 @@ if(p.inCar){// Driving
  const nx=c.x+cos(c.angle)*c.speed*dt,ny=c.y+sin(c.angle)*c.speed*dt;
  if(!solidAt(nx,c.y))c.x=nx;else c.speed*=-.3;if(!solidAt(c.x,ny))c.y=ny;else c.speed*=-.3;
  c.x=clamp(c.x,20,MAP_W*TILE-20);c.y=clamp(c.y,20,MAP_H*TILE-20);p.x=c.x;p.y=c.y;
-}else{// Walking
+}else{
  let dx=0,dy=0;if(K['ArrowUp']||K['KeyW'])dy=-1;if(K['ArrowDown']||K['KeyS'])dy=1;if(K['ArrowLeft']||K['KeyA'])dx=-1;if(K['ArrowRight']||K['KeyD'])dx=1;
  const sp=p.speed*(K['ShiftLeft']?1.7:1);if(dx||dy){const len=sqrt(dx*dx+dy*dy);dx/=len;dy/=len;p.angle=atan2(dy,dx);}
  const nx=p.x+dx*sp*dt,ny=p.y+dy*sp*dt;if(!solidAt(nx,p.y))p.x=clamp(nx,8,MAP_W*TILE-8);if(!solidAt(p.x,ny))p.y=clamp(ny,8,MAP_H*TILE-8);
 }
-// F key
 if(K['KeyF']&&p._fCool<=0){p._fCool=.35;if(p.inCar){p.inCar.driver=null;p.inCar.isParked=true;p.x+=30;p.inCar=null;}else{let best=null,bd=9999;for(const c of S.cars){if(c.driver)continue;const d=dst(p.x,p.y,c.x,c.y);if(d<55&&d<bd){bd=d;best=c;}}if(best){p.inCar=best;best.driver=p;best.isParked=false;best.speed=0;}}}
-// G key
 if(K['KeyG']&&p._gCool<=0){p._gCool=.4;const c=new Car(p.x+cos(p.angle+PI/2)*55,p.y+sin(p.angle+PI/2)*55,pick(CAR_COLORS),'sedan');c.angle=p.angle;S.cars.push(c);}
-// Camera
 const tx=p.inCar?p.inCar.x:p.x,ty=p.inCar?p.inCar.y:p.y;
 S.cam.x=lerp(S.cam.x,tx-S.W/2,.12);S.cam.y=lerp(S.cam.y,ty-S.H/2,.12);
 S.cam.x=clamp(S.cam.x,0,MAP_W*TILE-S.W);S.cam.y=clamp(S.cam.y,0,MAP_H*TILE-S.H);
@@ -1649,13 +1566,9 @@ else if(tile===BUILDING){ctx.fillStyle=S.world.bColors[ty][tx]||'#667';ctx.fillR
 else if(tile===PARK){ctx.fillStyle='#2a6e2a';ctx.fillRect(px,py,TILE,TILE);}
 else if(tile===WATER){ctx.fillStyle='#1a4a6a';ctx.fillRect(px,py,TILE,TILE);}
 }}
-// Cars
 for(const c of S.cars){ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.angle);ctx.fillStyle=c.color;ctx.fillRect(-15,-8,30,16);ctx.fillStyle='rgba(100,180,255,.5)';ctx.fillRect(10,-6,4,12);ctx.restore();}
-// NPCs
 for(const n of S.npcs){if(!n.alive)continue;ctx.fillStyle=n.shirtColor;ctx.fillRect(n.x-5,n.y-7,10,14);ctx.fillStyle=n.skinColor;ctx.beginPath();ctx.arc(n.x,n.y-11,4,0,PI*2);ctx.fill();}
-// Player
 if(!S.player.inCar){const p=S.player;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle+PI/2);ctx.fillStyle=p.shirtColor;ctx.fillRect(-5,-7,10,14);ctx.fillStyle=p.skinColor;ctx.beginPath();ctx.arc(0,-11,5,0,PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 8px Arial';ctx.textAlign='center';ctx.fillText('▼ ВЫ',0,-20);ctx.restore();}
-// Car prompt
 if(!S.player.inCar){let best=null,bd=9999;for(const c of S.cars){if(c.driver)continue;const d=dst(S.player.x,S.player.y,c.x,c.y);if(d<55&&d<bd){bd=d;best=c;}}if(best){ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(best.x-30,best.y-28,60,16);ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.fillText('[F] Сесть',best.x,best.y-17);}}
 ctx.restore();}
 
@@ -1670,6 +1583,24 @@ hud.innerHTML=h;}
 function stop(){S.running=false;for(const[el,ev,fn]of S._listeners)el.removeEventListener(ev,fn);S._listeners=[];}
 return{init,stop};
 })();
+
+// ── GTA6 OPEN/CLOSE ───────────────────────────────────
+window.openGta6=function(){
+ const w=el('win-gta6'),root=el('gta6-root');
+ if(w){
+  w.style.display='flex';
+  requestAnimationFrame(()=>{centerWindow(w);bringFront('win-gta6');});
+  const tb=el('tb-gta6');if(tb)tb.classList.add('running','active-win');
+ }
+ if(root&&!window._gta6started){
+  GTA6.init(root);window._gta6started=true;
+ }
+};
+window.gta6Close=function(){
+ const w=el('win-gta6');if(w)w.style.display='none';
+ const tb=el('tb-gta6');if(tb)tb.classList.remove('running','active-win');
+ if(typeof GTA6!=='undefined'&&window._gta6started){GTA6.stop();window._gta6started=false;}
+};
 </script>
 </body>
 </html>
