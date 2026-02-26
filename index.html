@@ -6,24 +6,23 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;}
 :root{
-  --accent:#0078d4;--accent2:#60cdff;
-  --bg1:rgba(15,20,35,0.95);--bg2:rgba(255,255,255,0.06);
-  --border:rgba(255,255,255,0.10);--text:#fff;--text2:rgba(255,255,255,0.55);
-  --radius:12px;--shadow:0 12px 48px rgba(0,0,0,0.55);--blur:blur(40px);
-  --desktop-bg:linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%);
-  --taskbar-bg:rgba(8,12,22,.92);--menu-bg:rgba(12,16,28,.97);
-  --card-bg:rgba(255,255,255,.04);--input-bg:rgba(255,255,255,.07);
+--accent:#0078d4;--accent2:#60cdff;
+--bg1:rgba(15,20,35,0.95);--bg2:rgba(255,255,255,0.06);
+--border:rgba(255,255,255,0.10);--text:#fff;--text2:rgba(255,255,255,0.55);
+--radius:12px;--shadow:0 12px 48px rgba(0,0,0,0.55);--blur:blur(40px);
+--desktop-bg:linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%);
+--taskbar-bg:rgba(8,12,22,.92);--menu-bg:rgba(12,16,28,.97);
+--card-bg:rgba(255,255,255,.04);--input-bg:rgba(255,255,255,.07);
 }
 body.light-theme{
-  --bg1:rgba(250,252,255,0.97);--bg2:rgba(0,0,0,0.04);
-  --border:rgba(0,0,0,0.10);--text:#111;--text2:rgba(0,0,0,0.55);
-  --shadow:0 8px 28px rgba(0,0,0,0.12);
-  --desktop-bg:linear-gradient(160deg,#dceeff 0%,#eef4fb 40%,#d8eaf5 100%);
-  --taskbar-bg:rgba(245,249,255,.96);--menu-bg:rgba(255,255,255,.99);
-  --card-bg:rgba(0,0,0,.03);--input-bg:rgba(0,0,0,.05);
+--bg1:rgba(250,252,255,0.97);--bg2:rgba(0,0,0,0.04);
+--border:rgba(0,0,0,0.10);--text:#111;--text2:rgba(0,0,0,0.55);
+--shadow:0 8px 28px rgba(0,0,0,0.12);
+--desktop-bg:linear-gradient(160deg,#dceeff 0%,#eef4fb 40%,#d8eaf5 100%);
+--taskbar-bg:rgba(245,249,255,.96);--menu-bg:rgba(255,255,255,.99);
+--card-bg:rgba(0,0,0,.03);--input-bg:rgba(0,0,0,.05);
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden;width:100vw;height:100vh;color:var(--text);}
-#rainbow-cursor-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:999999;}
 #boot{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .5s;}
 .boot-logo{font-size:76px;font-weight:800;margin-bottom:48px;background:linear-gradient(135deg,#0078d4,#60cdff,#0078d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logoPulse 2s ease-in-out infinite;}
 @keyframes logoPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
@@ -31,6 +30,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 .boot-fill{height:100%;background:linear-gradient(90deg,#0078d4,#60cdff);border-radius:2px;animation:bootFill 2.2s ease forwards;}
 @keyframes bootFill{0%{width:0}60%{width:70%}100%{width:100%}}
 .boot-txt{color:rgba(255,255,255,.3);font-size:12px;margin-top:16px;letter-spacing:2px;}
+
 #regscreen{position:fixed;inset:0;z-index:9990;display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#040e1f 0%,#091428 100%);}
 .reg-box{background:rgba(255,255,255,.05);backdrop-filter:var(--blur);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:40px;width:420px;box-shadow:var(--shadow);text-align:center;}
 .reg-logo{font-size:44px;font-weight:800;background:linear-gradient(135deg,#0078d4,#60cdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;}
@@ -47,6 +47,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 .reg-switch{color:rgba(255,255,255,.5);font-size:13px;margin-top:14px;cursor:pointer;}
 .reg-switch span{color:var(--accent2);}
 .reg-err{color:#ff6b6b;font-size:12px;margin-top:8px;min-height:18px;}
+
 #lockscreen{position:fixed;inset:0;z-index:9980;display:none;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(160deg,#040c1a 0%,#081428 100%);}
 .lock-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,120,212,.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:glowPulse 4s ease-in-out infinite;}
 @keyframes glowPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
@@ -57,11 +58,13 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 #lock-username-disp{font-size:18px;color:#fff;}
 .lock-hint{font-size:13px;color:rgba(255,255,255,.3);margin-top:18px;animation:pulse 2s ease infinite;}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
+
 #desktop{width:100%;height:calc(100% - 48px);position:relative;overflow:hidden;background:var(--desktop-bg);}
 .desk-aurora{position:absolute;inset:0;pointer-events:none;background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,80,180,.06) 60deg,rgba(0,150,255,.08) 100deg,rgba(60,0,180,.05) 150deg,transparent 200deg);animation:auroraRot 20s linear infinite;}
 @keyframes auroraRot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .desk-glow{position:absolute;width:700px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,100,200,.08) 0%,transparent 70%);top:20%;left:30%;pointer-events:none;}
 body.light-theme .desk-aurora{background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,120,212,.03) 60deg,rgba(0,150,255,.05) 100deg,rgba(100,80,255,.03) 150deg,transparent 200deg);}
+
 .desk-icon{position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 6px;width:82px;cursor:pointer;border-radius:10px;transition:background .15s;}
 .desk-icon:hover{background:rgba(255,255,255,.09);}
 body.light-theme .desk-icon:hover{background:rgba(0,0,0,.07);}
@@ -71,6 +74,7 @@ body.light-theme .desk-icon:hover{background:rgba(0,0,0,.07);}
 body.light-theme .desk-icon .dico{filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));}
 .desk-icon span{font-size:11px;color:#fff;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);line-height:1.3;word-break:break-word;pointer-events:none;}
 body.light-theme .desk-icon span{color:var(--text);text-shadow:0 1px 3px rgba(255,255,255,.8);}
+
 #taskbar{position:fixed;bottom:0;left:0;right:0;height:48px;background:var(--taskbar-bg);backdrop-filter:var(--blur);border-top:1px solid var(--border);display:flex;align-items:center;z-index:1000;}
 #tb-left{display:flex;align-items:center;padding-left:8px;gap:2px;}
 #tb-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2px;}
@@ -88,6 +92,7 @@ body.light-theme .tb-btn.active-win{background:rgba(0,0,0,.10);}
 .tb-sys:hover{background:rgba(255,255,255,.09);}
 body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 #tb-clock{color:var(--text);font-size:11.5px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
+
 #start-menu{position:fixed;bottom:56px;left:50%;transform:translateX(-50%) translateY(8px);width:680px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);display:none;flex-direction:column;z-index:900;overflow:hidden;opacity:0;transition:opacity .18s,transform .18s;}
 #start-menu.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #sm-search{margin:16px 16px 0;display:flex;align-items:center;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:9px 14px;gap:10px;}
@@ -114,6 +119,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .power-menu{display:flex;gap:3px;}
 .pw-btn{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:background .15s;color:var(--text2);}
 .pw-btn:hover{background:rgba(196,43,28,.7);color:#fff;}
+
 #tray-popup{position:fixed;bottom:56px;right:8px;width:380px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow);display:none;z-index:900;}
 .tray-time-big{font-size:50px;font-weight:200;text-align:center;letter-spacing:2px;color:var(--text);}
 .tray-date-str{font-size:12px;color:var(--text2);text-align:center;margin-bottom:14px;}
@@ -127,6 +133,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .sl-row .ico{font-size:15px;flex-shrink:0;}
 .sl-row input[type=range]{flex:1;accent-color:var(--accent);height:4px;}
 .sl-val{font-size:11px;color:var(--text2);width:32px;text-align:right;}
+
 #wallpaper-gallery{position:fixed;bottom:56px;right:8px;width:520px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);z-index:9500;display:none;animation:wpGalleryIn .2s ease;}
 @keyframes wpGalleryIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .wp-gallery-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;}
@@ -143,17 +150,15 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .wp-item-label{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;font-size:9px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6));text-align:center;opacity:0;transition:opacity .15s;border-radius:0 0 8px 8px;}
 .wp-item:hover .wp-item-label{opacity:1;}
 .wp-default-badge{position:absolute;top:4px;right:4px;font-size:9px;background:rgba(0,120,212,.85);color:#fff;padding:2px 5px;border-radius:8px;}
+
 #ctx-menu{position:fixed;z-index:9998;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:210px;box-shadow:var(--shadow);display:none;}
 .ctx-item{padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;position:relative;}
 .ctx-item:hover{background:var(--bg2);}
 .ctx-sep{height:1px;background:var(--border);margin:3px 2px;}
 #ctx-create-sub{position:fixed;z-index:9999;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:200px;box-shadow:var(--shadow);display:none;}
-.exp-view-btn{width:26px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:var(--text2);transition:background .12s;}
-.exp-view-btn:hover{background:var(--bg2);}
-.exp-view-btn.active-view{background:rgba(0,120,212,.35);color:var(--text);}
+
 .window{position:absolute;background:var(--bg1);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:none;flex-direction:column;min-width:320px;min-height:200px;z-index:100;animation:winOpen .14s ease;}
 @keyframes winOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-@keyframes winClose{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.95)}}
 .window.maximized{border-radius:0!important;top:0!important;left:0!important;width:100%!important;height:calc(100vh - 48px)!important;}
 .titlebar{height:40px;display:flex;align-items:center;padding:0 10px;cursor:move;border-radius:var(--radius) var(--radius) 0 0;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--border);}
 .tb-icon{font-size:15px;margin-right:8px;}
@@ -164,6 +169,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .wb.cls:hover{background:rgba(196,43,28,.85);color:#fff;}
 .win-body{flex:1;overflow:auto;border-radius:0 0 var(--radius) var(--radius);}
 .resize-handle{position:absolute;width:14px;height:14px;bottom:0;right:0;cursor:se-resize;}
+
 .exp-wrap{display:flex;flex-direction:column;height:100%;}
 .exp-topbar{display:flex;align-items:center;gap:6px;padding:5px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
 .exp-nav{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:background .12s;}
@@ -171,18 +177,22 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .exp-path{flex:1;background:var(--input-bg);border:1px solid var(--border);border-radius:7px;padding:4px 12px;font-size:12px;color:var(--text);cursor:text;outline:none;font-family:inherit;}
 .exp-body{display:flex;flex:1;overflow:hidden;}
 .exp-side{width:170px;border-right:1px solid var(--border);padding:8px;overflow-y:auto;flex-shrink:0;background:rgba(0,0,0,.1);}
-.exp-side-item{padding:6px 10px;border-radius:7px;font-size:12px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12px;}
+.exp-side-item{padding:6px 10px;border-radius:7px;font-size:12px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;}
 .exp-side-item:hover{background:var(--bg2);}
 .exp-side-item.active{background:rgba(0,120,212,.3);color:var(--text);}
 .exp-files{flex:1;padding:10px;display:grid;grid-template-columns:repeat(auto-fill,88px);gap:6px;align-content:start;overflow-y:auto;}
-.file-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 5px;border-radius:8px;cursor:pointer;transition:background .12px;}
+.exp-view-btn{width:26px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:var(--text2);transition:background .12s;}
+.exp-view-btn:hover{background:var(--bg2);}
+.exp-view-btn.active-view{background:rgba(0,120,212,.35);color:var(--text);}
+.file-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 5px;border-radius:8px;cursor:pointer;transition:background .12s;}
 .file-item:hover{background:var(--bg2);}
 .file-item .ico{font-size:32px;}
 .file-item .fname{font-size:10.5px;color:var(--text2);text-align:center;word-break:break-all;}
 .exp-statusbar{padding:3px 14px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
+
 .np-wrap{display:flex;flex-direction:column;height:100%;}
 .np-menubar{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.np-menu-item{padding:5px 12px;font-size:13px;color:var(--text2);cursor:pointer;transition:background .12px;position:relative;}
+.np-menu-item{padding:5px 12px;font-size:13px;color:var(--text2);cursor:pointer;transition:background .12s;position:relative;}
 .np-menu-item:hover,.np-menu-item.open{background:var(--bg2);color:var(--text);}
 .np-dropdown{position:absolute;top:100%;left:0;background:var(--menu-bg);border:1px solid var(--border);border-radius:8px;padding:4px;min-width:160px;z-index:9999;display:none;box-shadow:var(--shadow);}
 .np-menu-item.open .np-dropdown{display:block;}
@@ -192,9 +202,10 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .np-dd-sep{height:1px;background:var(--border);margin:3px 0;}
 #np-area{flex:1;background:var(--input-bg);color:var(--text);border:none;outline:none;padding:14px;font-size:14px;font-family:'Consolas',monospace;resize:none;line-height:1.7;user-select:text;}
 .np-statusbar{display:flex;gap:16px;padding:3px 10px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;}
+
 .calc-wrap{padding:12px;display:flex;flex-direction:column;gap:8px;height:100%;}
 .calc-modes{display:flex;gap:2px;margin-bottom:2px;}
-.calc-mode-btn{padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text2);cursor:pointer;transition:background .12px;}
+.calc-mode-btn{padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text2);cursor:pointer;transition:background .12s;}
 .calc-mode-btn:hover,.calc-mode-btn.active{background:var(--bg2);color:var(--text);}
 .calc-display{background:var(--input-bg);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;align-items:flex-end;}
 .calc-expr{font-size:12px;color:var(--text2);min-height:18px;word-break:break-all;}
@@ -209,9 +220,10 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .cc-eq{background:var(--accent);color:#fff;}
 .cc-num{background:var(--card-bg);}
 .cc-sci-btn{background:rgba(96,205,255,.15);color:var(--accent2);font-size:12px;}
+
 .set-wrap{display:flex;height:100%;}
 .set-side{width:200px;border-right:1px solid var(--border);padding:8px;overflow-y:auto;background:rgba(0,0,0,.1);flex-shrink:0;}
-.set-side-item{padding:9px 12px;border-radius:8px;font-size:12px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12px;}
+.set-side-item{padding:9px 12px;border-radius:8px;font-size:12px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;}
 .set-side-item:hover{background:var(--bg2);}
 .set-side-item.active{background:rgba(0,120,212,.3);color:var(--text);}
 .set-content{flex:1;padding:22px;overflow-y:auto;}
@@ -228,9 +240,10 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .set-select{background:var(--input-bg);border:1px solid var(--border);border-radius:7px;padding:5px 9px;color:var(--text);font-size:12px;outline:none;font-family:inherit;cursor:pointer;}
 .set-range-wrap{display:flex;align-items:center;gap:8px;margin-top:6px;}
 .set-range-wrap input{flex:1;accent-color:var(--accent);}
+
 .br-wrap{display:flex;flex-direction:column;height:100%;}
 .br-bar{display:flex;align-items:center;gap:5px;padding:6px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
-.br-nav{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:background .12px;}
+.br-nav{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:background .12s;}
 .br-nav:hover{background:var(--bg2);}
 .br-url-bar{flex:1;background:var(--input-bg);border:1px solid var(--border);border-radius:18px;padding:5px 14px;font-size:12px;color:var(--text);outline:none;font-family:inherit;}
 #br-newtab{flex:1;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:18px;overflow-y:auto;}
@@ -239,25 +252,27 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .br-searchbar input{background:none;border:none;outline:none;color:var(--text);font-size:14px;flex:1;font-family:inherit;}
 .br-searchbar button{background:var(--accent);border:none;color:#fff;padding:6px 16px;border-radius:16px;cursor:pointer;font-size:12px;font-family:inherit;}
 .br-shortcuts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:520px;max-width:100%;}
-.br-sc{background:var(--card-bg);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:background .12px;}
+.br-sc{background:var(--card-bg);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:background .12s;}
 .br-sc:hover{background:var(--bg2);}
 .br-sc .ico{font-size:20px;}
 .br-sc span{font-size:10.5px;color:var(--text2);}
 #br-frame{flex:1;width:100%;border:none;display:none;background:#fff;}
+
 .paint-wrap{display:flex;flex-direction:column;height:100%;}
 .paint-toolbar{display:flex;align-items:center;gap:7px;padding:6px 10px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
-.paint-tool{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .12px;}
+.paint-tool{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .12s;}
 .paint-tool:hover,.paint-tool.active{background:rgba(0,120,212,.35);}
 .paint-colors{display:flex;gap:4px;flex-wrap:wrap;max-width:160px;}
-.paint-color{width:18px;height:18px;border-radius:4px;cursor:pointer;border:2px solid transparent;transition:border .12px;}
+.paint-color{width:18px;height:18px;border-radius:4px;cursor:pointer;border:2px solid transparent;transition:border .12s;}
 .paint-color.active{border-color:var(--text);}
 .paint-size{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);}
 .paint-size input{width:70px;accent-color:var(--accent);}
 .paint-canvas-wrap{flex:1;overflow:hidden;background:#fff;position:relative;}
 #paint-canvas{cursor:crosshair;display:block;}
+
 .tm-wrap{display:flex;flex-direction:column;height:100%;}
 .tm-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.tm-tab{padding:10px 16px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .12px;border-bottom:2px solid transparent;}
+.tm-tab{padding:10px 16px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .12s;border-bottom:2px solid transparent;}
 .tm-tab:hover{color:var(--text);}
 .tm-tab.active{color:var(--text);border-bottom-color:var(--accent);}
 .tm-body{flex:1;padding:12px;overflow-y:auto;}
@@ -273,24 +288,25 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .tm-perf-big{font-size:32px;font-weight:200;color:var(--text);margin-bottom:8px;}
 .tm-perf-bar{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-bottom:6px;}
 .tm-perf-info{font-size:11px;color:var(--text2);}
+
 .echat-wrap{display:flex;height:100%;overflow:hidden;background:rgba(8,10,20,.97);}
 body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 .echat-sidebar{width:230px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:rgba(0,0,0,.2);}
 body.light-theme .echat-sidebar{background:rgba(0,0,0,.04);}
 .echat-sidebar-header{padding:12px 10px 8px;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.echat-new-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit;transition:background .15px;}
+.echat-new-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit;}
 .echat-new-btn:hover{background:#106ebe;}
 #exian-sessions-list{flex:1;overflow-y:auto;padding:6px;}
-.echat-session{padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .12px;position:relative;margin-bottom:2px;}
+.echat-session{padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .12s;position:relative;margin-bottom:2px;}
 .echat-session:hover{background:var(--bg2);}
 .echat-session.active{background:rgba(0,120,212,.3);}
 .echat-session-t{font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
 .echat-session-d{font-size:10px;color:var(--text2);margin-top:2px;}
-.echat-session-del{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:11px;opacity:0;transition:opacity .15px;cursor:pointer;padding:2px 4px;}
+.echat-session-del{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:11px;opacity:0;transition:opacity .15s;cursor:pointer;padding:2px 4px;}
 .echat-session:hover .echat-session-del{opacity:1;}
 .echat-session-del:hover{color:#e74c3c;}
 .echat-sidebar-footer{padding:8px 10px;border-top:1px solid var(--border);}
-.echat-clear-btn{font-size:11px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;transition:background .12px;width:100%;}
+.echat-clear-btn{font-size:11px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;transition:background .12s;width:100%;}
 .echat-clear-btn:hover{background:rgba(231,76,60,.2);color:#e74c3c;}
 .echat-main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .echat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:rgba(0,0,0,.15);}
@@ -301,7 +317,7 @@ body.light-theme .echat-header{background:rgba(0,0,0,.04);}
 .echat-header-info .echat-header-status::before{content:'';width:6px;height:6px;background:#2ecc71;border-radius:50%;display:inline-block;}
 .echat-quick{display:flex;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;background:rgba(0,0,0,.08);}
 body.light-theme .echat-quick{background:rgba(0,0,0,.03);}
-.echat-quick-btn{padding:5px 12px;border-radius:20px;font-size:11px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15px;white-space:nowrap;}
+.echat-quick-btn{padding:5px 12px;border-radius:20px;font-size:11px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .echat-quick-btn:hover{background:rgba(0,120,212,.3);color:var(--text);border-color:var(--accent);}
 #exian-chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;}
 .echat-msg{display:flex;gap:10px;align-items:flex-start;}
@@ -320,9 +336,8 @@ body.light-theme .echat-bubble pre{background:rgba(0,0,0,.08);}
 body.light-theme .echat-bubble code{background:rgba(0,0,0,.1);}
 .echat-time{font-size:10px;color:var(--text2);padding:0 4px;}
 .echat-msg-footer{display:flex;align-items:center;gap:8px;}
-.echat-action{font-size:13px;cursor:pointer;opacity:0;transition:opacity .2px;}
+.echat-action{font-size:13px;cursor:pointer;opacity:0;transition:opacity .2s;}
 .echat-bot-wrap:hover .echat-action{opacity:1;}
-.echat-action:hover{filter:brightness(1.3);}
 @keyframes echatIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .echat-animate{animation:echatIn .25s ease;}
 .echat-typing{display:flex;align-items:center;gap:4px;padding:12px 14px;}
@@ -332,13 +347,39 @@ body.light-theme .echat-bubble code{background:rgba(0,0,0,.1);}
 @keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
 .echat-input-area{padding:12px 16px;border-top:1px solid var(--border);background:rgba(0,0,0,.15);flex-shrink:0;}
 body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
-.echat-input-row{display:flex;align-items:flex-end;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:8px 8px 8px 14px;transition:border .2px;}
+.echat-input-row{display:flex;align-items:flex-end;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:8px 8px 8px 14px;transition:border .2s;}
 .echat-input-row:focus-within{border-color:var(--accent);}
 #exian-chat-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:inherit;resize:none;line-height:1.5;max-height:120px;min-height:20px;overflow-y:auto;user-select:text;}
 #exian-chat-input::placeholder{color:var(--text2);}
-#exian-send-btn{width:34px;height:34px;border-radius:10px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15px;flex-shrink:0;}
+#exian-send-btn{width:34px;height:34px;border-radius:10px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;flex-shrink:0;}
 #exian-send-btn:hover{background:#106ebe;transform:scale(1.05);}
 .echat-hint{font-size:10px;color:var(--text2);text-align:center;margin-top:6px;}
+
+/* Updates App */
+.updates-wrap{display:flex;flex-direction:column;height:100%;padding:16px;}
+.updates-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.updates-header h2{font-size:18px;font-weight:400;color:var(--text);}
+.update-item{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:8px;}
+.update-item .update-ver{font-size:14px;font-weight:600;color:var(--accent2);}
+.update-item .update-date{font-size:11px;color:var(--text2);margin-bottom:6px;}
+.update-item .update-desc{font-size:12px;color:var(--text);line-height:1.6;}
+.update-item .update-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-right:4px;margin-top:6px;}
+.tag-new{background:rgba(46,204,113,.2);color:#2ecc71;}
+.tag-fix{background:rgba(231,76,60,.2);color:#e74c3c;}
+.tag-improve{background:rgba(52,152,219,.2);color:#3498db;}
+
+/* Parkour Game */
+.parkour-menu{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;background:linear-gradient(135deg,#1a1a2e,#16213e);}
+.parkour-menu h2{font-size:28px;font-weight:300;color:#fff;}
+.parkour-menu p{color:rgba(255,255,255,.5);font-size:13px;}
+.parkour-diff-btns{display:flex;gap:10px;margin-top:10px;}
+.parkour-diff-btn{padding:12px 28px;border-radius:10px;border:none;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s;}
+.parkour-diff-btn:hover{transform:scale(1.05);}
+.parkour-diff-easy{background:#2ecc71;color:#fff;}
+.parkour-diff-normal{background:#f1c40f;color:#000;}
+.parkour-diff-hard{background:#e74c3c;color:#fff;}
+.parkour-diff-extreme{background:linear-gradient(135deg,#8e44ad,#e74c3c);color:#fff;}
+
 #notif-stack{position:fixed;bottom:60px;right:12px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .notif{background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:14px;padding:12px 14px;width:310px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:flex-start;animation:notifSlide .3s ease;}
 @keyframes notifSlide{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
@@ -354,1920 +395,1261 @@ body.light-theme .echat-input-area{background:rgba(0,0,0,.04);}
 </head>
 <body>
 
-<canvas id="rainbow-cursor-canvas"></canvas>
-
 <!-- BOOT -->
 <div id="boot">
-  <div class="boot-logo">E✦</div>
-  <div class="boot-bar"><div class="boot-fill"></div></div>
-  <div class="boot-txt">ExiWin 12</div>
+<div class="boot-logo">E✦</div>
+<div class="boot-bar"><div class="boot-fill"></div></div>
+<div class="boot-txt">ExiWin 12</div>
 </div>
 
 <!-- REGISTER / LOGIN -->
 <div id="regscreen" style="display:none;">
-  <div class="reg-box" id="reg-box">
-    <div class="reg-logo">E✦</div>
-    <h2>Добро пожаловать</h2>
-    <p>Создайте аккаунт ExiWin 12</p>
-    <div class="reg-avatar-pick">
-      <div class="av-opt sel" data-av="🧑" onclick="pickAv(this)">🧑</div>
-      <div class="av-opt" data-av="👩" onclick="pickAv(this)">👩</div>
-      <div class="av-opt" data-av="🧔" onclick="pickAv(this)">🧔</div>
-      <div class="av-opt" data-av="👨‍💻" onclick="pickAv(this)">👨‍💻</div>
-      <div class="av-opt" data-av="🦊" onclick="pickAv(this)">🦊</div>
-      <div class="av-opt" data-av="🐱" onclick="pickAv(this)">🐱</div>
-      <div class="av-opt" data-av="🤖" onclick="pickAv(this)">🤖</div>
-      <div class="av-opt" data-av="🎮" onclick="pickAv(this)">🎮</div>
-    </div>
-    <input class="reg-input" type="text" id="reg-name" placeholder="Имя пользователя" maxlength="20">
-    <input class="reg-input" type="password" id="reg-pass" placeholder="Пароль (минимум 4 символа)">
-    <input class="reg-input" type="password" id="reg-pass2" placeholder="Повторите пароль">
-    <button class="reg-btn" onclick="doRegister()">Создать аккаунт</button>
-    <div class="reg-err" id="reg-err"></div>
-    <div class="reg-switch" onclick="showLogin()">Уже есть аккаунт? <span>Войти</span></div>
-  </div>
-  <div class="reg-box" id="login-box" style="display:none;">
-    <div id="login-avatar" style="font-size:52px;margin-bottom:10px;">🧑</div>
-    <h2 id="login-name-disp">Пользователь</h2>
-    <p>Введите пароль для входа</p>
-    <input class="reg-input" type="password" id="login-pass" placeholder="Пароль" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="reg-btn" onclick="doLogin()">Войти</button>
-    <div class="reg-err" id="login-err"></div>
-    <div class="reg-switch" onclick="showRegister()">Новый аккаунт? <span>Регистрация</span></div>
-  </div>
+<div class="reg-box" id="reg-box">
+<div class="reg-logo">E✦</div>
+<h2>Добро пожаловать</h2>
+<p>Создайте аккаунт ExiWin 12</p>
+<div class="reg-avatar-pick">
+<div class="av-opt sel" data-av="🧑" onclick="pickAv(this)">🧑</div>
+<div class="av-opt" data-av="👩" onclick="pickAv(this)">👩</div>
+<div class="av-opt" data-av="🧔" onclick="pickAv(this)">🧔</div>
+<div class="av-opt" data-av="👨‍💻" onclick="pickAv(this)">👨‍💻</div>
+<div class="av-opt" data-av="🦊" onclick="pickAv(this)">🦊</div>
+<div class="av-opt" data-av="🐱" onclick="pickAv(this)">🐱</div>
+<div class="av-opt" data-av="🤖" onclick="pickAv(this)">🤖</div>
+<div class="av-opt" data-av="🎮" onclick="pickAv(this)">🎮</div>
+</div>
+<input class="reg-input" type="text" id="reg-name" placeholder="Имя пользователя" maxlength="20">
+<input class="reg-input" type="password" id="reg-pass" placeholder="Пароль (мин 4 символа)">
+<input class="reg-input" type="password" id="reg-pass2" placeholder="Повторите пароль">
+<button class="reg-btn" onclick="doRegister()">Создать аккаунт</button>
+<div class="reg-err" id="reg-err"></div>
+<div class="reg-switch" onclick="showLogin()">Уже есть аккаунт? <span>Войти</span></div>
+</div>
+<div class="reg-box" id="login-box" style="display:none;">
+<div id="login-avatar" style="font-size:52px;margin-bottom:10px;">🧑</div>
+<h2 id="login-name-disp">Пользователь</h2>
+<p>Введите пароль для входа</p>
+<input class="reg-input" type="password" id="login-pass" placeholder="Пароль" onkeydown="if(event.key==='Enter')doLogin()">
+<button class="reg-btn" onclick="doLogin()">Войти</button>
+<div class="reg-err" id="login-err"></div>
+<div class="reg-switch" onclick="showRegister()">Новый аккаунт? <span>Регистрация</span></div>
+</div>
 </div>
 
 <!-- LOCK -->
 <div id="lockscreen" style="display:none;">
-  <div class="lock-glow"></div>
-  <div id="lock-clock">12:00</div>
-  <div id="lock-date-lock">Понедельник, 17 февраля</div>
-  <div class="lock-user">
-    <div id="lock-avatar">🧑</div>
-    <div id="lock-username-disp">Пользователь</div>
-    <div class="lock-hint">🔒 Нажмите для разблокировки</div>
-  </div>
+<div class="lock-glow"></div>
+<div id="lock-clock">12:00</div>
+<div id="lock-date-lock">Понедельник, 17 февраля</div>
+<div class="lock-user">
+<div id="lock-avatar">🧑</div>
+<div id="lock-username-disp">Пользователь</div>
+<div class="lock-hint">🔒 Нажмите для разблокировки</div>
+</div>
 </div>
 
 <!-- DESKTOP -->
 <div id="desktop" onclick="desktopClick(event)" oncontextmenu="showCtxMenu(event,'desktop')">
-  <div class="desk-aurora"></div>
-  <div class="desk-glow"></div>
-  <div class="desk-icon" style="top:16px;left:18px" ondblclick="openApp('explorer')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">💻</div><span>Этот компьютер</span></div>
-  <div class="desk-icon" style="top:112px;left:18px" ondblclick="openApp('notepad')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📝</div><span>Блокнот</span></div>
-  <div class="desk-icon" style="top:208px;left:18px" ondblclick="openApp('browser')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🌐</div><span>Edge</span></div>
-  <div class="desk-icon" style="top:304px;left:18px" ondblclick="openApp('calc')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🧮</div><span>Калькулятор</span></div>
-  <div class="desk-icon" style="top:400px;left:18px" ondblclick="openApp('settings')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">⚙️</div><span>Параметры</span></div>
-  <div class="desk-icon" style="top:16px;left:118px" ondblclick="openApp('paint')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎨</div><span>Paint</span></div>
-  <div class="desk-icon" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📊</div><span>Диспетчер задач</span></div>
-  <div class="desk-icon" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🤖</div><span>Exian.AI 3.0</span></div>
-  <div class="desk-icon" style="top:304px;left:118px" ondblclick="launchExiblox()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🐍</div><span>Exiblox v3</span></div>
-  <div class="desk-icon" style="top:400px;left:118px" ondblclick="openApp('gta6')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎮</div><span>GTA 6</span></div>
+<div class="desk-aurora"></div>
+<div class="desk-glow"></div>
+<div class="desk-icon" data-icon-id="icon-pc" style="top:16px;left:18px" ondblclick="openApp('explorer')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">💻</div><span>Этот компьютер</span></div>
+<div class="desk-icon" data-icon-id="icon-notepad" style="top:112px;left:18px" ondblclick="openApp('notepad')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📝</div><span>Блокнот</span></div>
+<div class="desk-icon" data-icon-id="icon-browser" style="top:208px;left:18px" ondblclick="openApp('browser')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🌐</div><span>Edge</span></div>
+<div class="desk-icon" data-icon-id="icon-calc" style="top:304px;left:18px" ondblclick="openApp('calc')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🧮</div><span>Калькулятор</span></div>
+<div class="desk-icon" data-icon-id="icon-settings" style="top:400px;left:18px" ondblclick="openApp('settings')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">⚙️</div><span>Параметры</span></div>
+<div class="desk-icon" data-icon-id="icon-paint" style="top:16px;left:118px" ondblclick="openApp('paint')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎨</div><span>Paint</span></div>
+<div class="desk-icon" data-icon-id="icon-taskman" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📊</div><span>Диспетчер задач</span></div>
+<div class="desk-icon" data-icon-id="icon-exianai" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🤖</div><span>Exian.AI 3.0</span></div>
+<div class="desk-icon" data-icon-id="icon-exiblox" style="top:304px;left:118px" ondblclick="launchExiblox()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🐍</div><span>Exiblox v3</span></div>
+<div class="desk-icon" data-icon-id="icon-gta6" style="top:400px;left:118px" ondblclick="openApp('gta6')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎮</div><span>GTA 6</span></div>
+<!-- NEW ICONS -->
+<div class="desk-icon" data-icon-id="icon-updates" style="top:16px;left:218px" ondblclick="openApp('updates')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🔔</div><span>Обновления</span></div>
+<div class="desk-icon" data-icon-id="icon-telegram" style="top:112px;left:218px" ondblclick="openTelegram()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📱</div><span>Exiblox Telegram</span></div>
+<div class="desk-icon" data-icon-id="icon-parkour" style="top:208px;left:218px" ondblclick="openApp('parkour')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🏃</div><span>3D Паркур</span></div>
 </div>
 
 <!-- TASKBAR -->
 <div id="taskbar">
-  <div id="tb-left">
-    <div id="start-btn" onclick="toggleStart(event)" title="Пуск">E✦</div>
-    <div class="tb-sep"></div>
-  </div>
-  <div id="tb-center">
-    <div class="tb-btn" onclick="toggleStart(event)">🔍</div>
-    <div class="tb-btn" id="tb-explorer" onclick="tbClick('explorer')">📁</div>
-    <div class="tb-btn" id="tb-browser"  onclick="tbClick('browser')">🌐</div>
-    <div class="tb-btn" id="tb-notepad"  onclick="tbClick('notepad')">📝</div>
-    <div class="tb-btn" id="tb-calc"     onclick="tbClick('calc')">🧮</div>
-    <div class="tb-btn" id="tb-paint"    onclick="tbClick('paint')">🎨</div>
-    <div class="tb-btn" id="tb-settings" onclick="tbClick('settings')">⚙️</div>
-    <div class="tb-btn" id="tb-taskman"  onclick="tbClick('taskman')">📊</div>
-    <div class="tb-btn" id="tb-exianai"  onclick="tbClick('exianai')">🤖</div>
-    <div class="tb-btn" id="tb-gta6"     onclick="tbClick('gta6')">🎮</div>
-  </div>
-  <div id="tb-right">
-    <div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
-    <div id="tb-clock" onclick="toggleTray(event)"><div id="clock-time">12:00</div><div id="clock-date-tb">17.02.2026</div></div>
-    <div style="width:4px"></div>
-  </div>
+<div id="tb-left">
+<div id="start-btn" onclick="toggleStart(event)" title="Пуск">E✦</div>
+<div class="tb-sep"></div>
+</div>
+<div id="tb-center">
+<div class="tb-btn" onclick="toggleStart(event)">🔍</div>
+<div class="tb-btn" id="tb-explorer" onclick="tbClick('explorer')">📁</div>
+<div class="tb-btn" id="tb-browser" onclick="tbClick('browser')">🌐</div>
+<div class="tb-btn" id="tb-notepad" onclick="tbClick('notepad')">📝</div>
+<div class="tb-btn" id="tb-calc" onclick="tbClick('calc')">🧮</div>
+<div class="tb-btn" id="tb-paint" onclick="tbClick('paint')">🎨</div>
+<div class="tb-btn" id="tb-settings" onclick="tbClick('settings')">⚙️</div>
+<div class="tb-btn" id="tb-taskman" onclick="tbClick('taskman')">📊</div>
+<div class="tb-btn" id="tb-exianai" onclick="tbClick('exianai')">🤖</div>
+<div class="tb-btn" id="tb-gta6" onclick="tbClick('gta6')">🎮</div>
+<div class="tb-btn" id="tb-updates" onclick="tbClick('updates')">🔔</div>
+<div class="tb-btn" id="tb-parkour" onclick="tbClick('parkour')">🏃</div>
+</div>
+<div id="tb-right">
+<div class="tb-sys" onclick="toggleTray(event)"><span>📶</span><span>🔊</span><span>🔋</span></div>
+<div id="tb-clock" onclick="toggleTray(event)"><div id="clock-time">12:00</div><div id="clock-date-tb">17.02.2026</div></div>
+<div style="width:4px"></div>
+</div>
 </div>
 
 <!-- START MENU -->
 <div id="start-menu" onclick="event.stopPropagation()">
-  <div id="sm-search"><span>🔍</span><input type="text" id="sm-search-input" placeholder="Поиск..." oninput="smSearch(this.value)"></div>
-  <div id="sm-pinned-sec">
-    <div class="sm-sec">Закреплённые</div>
-    <div class="pinned-apps">
-      <div class="pin-app" onclick="openApp('explorer');hideAll()"><div class="ico">📁</div><div class="lbl">Проводник</div></div>
-      <div class="pin-app" onclick="openApp('settings');hideAll()"><div class="ico">⚙️</div><div class="lbl">Параметры</div></div>
-      <div class="pin-app" onclick="openApp('browser');hideAll()"><div class="ico">🌐</div><div class="lbl">Edge</div></div>
-      <div class="pin-app" onclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="lbl">Блокнот</div></div>
-      <div class="pin-app" onclick="openApp('calc');hideAll()"><div class="ico">🧮</div><div class="lbl">Калькулятор</div></div>
-      <div class="pin-app" onclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="lbl">Paint</div></div>
-      <div class="pin-app" onclick="openApp('taskman');hideAll()"><div class="ico">📊</div><div class="lbl">Диспетчер</div></div>
-      <div class="pin-app" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="lbl">Exian.AI</div></div>
-      <div class="pin-app" onclick="launchExiblox();hideAll()"><div class="ico">🐍</div><div class="lbl">Exiblox v3</div></div>
-      <div class="pin-app" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="lbl">GTA 6</div></div>
-      <div class="pin-app" onclick="showNotif('Магазин','Скоро!','🛒')"><div class="ico">🛒</div><div class="lbl">Магазин</div></div>
-      <div class="pin-app" onclick="showNotif('Почта','Нет писем','✉️')"><div class="ico">✉️</div><div class="lbl">Почта</div></div>
-      <div class="pin-app" onclick="showNotif('Фото','Нет фото','🖼️')"><div class="ico">🖼️</div><div class="lbl">Фотографии</div></div>
-    </div>
-  </div>
-  <div class="sm-sec">Рекомендуемые</div>
-  <div class="rec-list" id="sm-rec-list">
-    <div class="rec-row" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="rec-info"><div class="n">GTA 6 — ExiWin City</div><div class="t">Только что</div></div></div>
-    <div class="rec-row" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="rec-info"><div class="n">Exian.AI — Умный чат</div><div class="t">Вчера</div></div></div>
-    <div class="rec-row" onclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="rec-info"><div class="n">Мои заметки</div><div class="t">2 дня назад</div></div></div>
-  </div>
-  <div id="sm-search-results"></div>
-  <div id="sm-footer">
-    <div id="sm-user" onclick="openApp('settings');hideAll()"><div id="sm-avatar">🧑</div><span id="sm-username">Пользователь</span></div>
-    <div class="power-menu">
-      <div class="pw-btn" onclick="lockScreen()">🔒</div>
-      <div class="pw-btn" onclick="reboot()">🔄</div>
-      <div class="pw-btn" onclick="shutdown()">⏻</div>
-    </div>
-  </div>
+<div id="sm-search"><span>🔍</span><input type="text" id="sm-search-input" placeholder="Поиск..." oninput="smSearch(this.value)"></div>
+<div id="sm-pinned-sec">
+<div class="sm-sec">Закреплённые</div>
+<div class="pinned-apps">
+<div class="pin-app" onclick="openApp('explorer');hideAll()"><div class="ico">📁</div><div class="lbl">Проводник</div></div>
+<div class="pin-app" onclick="openApp('settings');hideAll()"><div class="ico">⚙️</div><div class="lbl">Параметры</div></div>
+<div class="pin-app" onclick="openApp('browser');hideAll()"><div class="ico">🌐</div><div class="lbl">Edge</div></div>
+<div class="pin-app" onclick="openApp('notepad');hideAll()"><div class="ico">📝</div><div class="lbl">Блокнот</div></div>
+<div class="pin-app" onclick="openApp('calc');hideAll()"><div class="ico">🧮</div><div class="lbl">Калькулятор</div></div>
+<div class="pin-app" onclick="openApp('paint');hideAll()"><div class="ico">🎨</div><div class="lbl">Paint</div></div>
+<div class="pin-app" onclick="openApp('taskman');hideAll()"><div class="ico">📊</div><div class="lbl">Диспетчер</div></div>
+<div class="pin-app" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="lbl">Exian.AI</div></div>
+<div class="pin-app" onclick="openApp('updates');hideAll()"><div class="ico">🔔</div><div class="lbl">Обновления</div></div>
+<div class="pin-app" onclick="openTelegram();hideAll()"><div class="ico">📱</div><div class="lbl">Telegram</div></div>
+<div class="pin-app" onclick="openApp('parkour');hideAll()"><div class="ico">🏃</div><div class="lbl">3D Паркур</div></div>
+<div class="pin-app" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="lbl">GTA 6</div></div>
+</div>
+</div>
+<div class="sm-sec">Рекомендуемые</div>
+<div class="rec-list" id="sm-rec-list">
+<div class="rec-row" onclick="openApp('updates');hideAll()"><div class="ico">🔔</div><div class="rec-info"><div class="n">Обновление v2.5</div><div class="t">Новые приложения!</div></div></div>
+<div class="rec-row" onclick="openApp('parkour');hideAll()"><div class="ico">🏃</div><div class="rec-info"><div class="n">3D Паркур — Новинка!</div><div class="t">Только что</div></div></div>
+<div class="rec-row" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="rec-info"><div class="n">GTA 6 — ExiWin City</div><div class="t">Вчера</div></div></div>
+</div>
+<div id="sm-search-results"></div>
+<div id="sm-footer">
+<div id="sm-user" onclick="openApp('settings');hideAll()"><div id="sm-avatar">🧑</div><span id="sm-username">Пользователь</span></div>
+<div class="power-menu">
+<div class="pw-btn" onclick="lockScreen()">🔒</div>
+<div class="pw-btn" onclick="reboot()">🔄</div>
+<div class="pw-btn" onclick="shutdown()">⏻</div>
+</div>
+</div>
 </div>
 
 <!-- TRAY POPUP -->
 <div id="tray-popup" onclick="event.stopPropagation()">
-  <div class="tray-time-big" id="tray-time-big">12:00</div>
-  <div class="tray-date-str" id="tray-date-str">Понедельник, 17 февраля 2026</div>
-  <div class="tray-tiles">
-    <div class="tr-tile on"  id="tr-wifi"        onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
-    <div class="tr-tile on"  id="tr-bt"          onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
-    <div class="tr-tile off" id="tr-airplane"    onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
-    <div class="tr-tile off" id="tr-night"       onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной</div></div>
-    <div class="tr-tile off" id="tr-light-theme" onclick="openWallpaperGallery('light')"><div class="ico">☀️</div><div class="lbl">Светлая</div></div>
-    <div class="tr-tile on"  id="tr-dark-theme"  onclick="openWallpaperGallery('dark')"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
-    <div class="tr-tile on"  id="tr-sound"       onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
-    <div class="tr-tile off" id="tr-focus"       onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
-  </div>
-  <div class="sl-row"><span class="ico">🔆</span><input type="range" min="10" max="100" value="85" id="bright-sl" oninput="setBright(this.value)"><span class="sl-val" id="bright-val">85%</span></div>
-  <div class="sl-row"><span class="ico">🔊</span><input type="range" min="0" max="100" value="60" id="vol-sl" oninput="setVol(this.value)"><span class="sl-val" id="vol-val">60%</span></div>
+<div class="tray-time-big" id="tray-time-big">12:00</div>
+<div class="tray-date-str" id="tray-date-str">Понедельник, 17 февраля 2026</div>
+<div class="tray-tiles">
+<div class="tr-tile on" id="tr-wifi" onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
+<div class="tr-tile on" id="tr-bt" onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
+<div class="tr-tile off" id="tr-airplane" onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
+<div class="tr-tile off" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной</div></div>
+<div class="tr-tile off" id="tr-light-theme" onclick="openWallpaperGallery('light')"><div class="ico">☀️</div><div class="lbl">Светлая</div></div>
+<div class="tr-tile on" id="tr-dark-theme" onclick="openWallpaperGallery('dark')"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
+<div class="tr-tile on" id="tr-sound" onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
+<div class="tr-tile off" id="tr-focus" onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
+</div>
+<div class="sl-row"><span class="ico">🔆</span><input type="range" min="10" max="100" value="85" id="bright-sl" oninput="setBright(this.value)"><span class="sl-val" id="bright-val">85%</span></div>
+<div class="sl-row"><span class="ico">🔊</span><input type="range" min="0" max="100" value="60" id="vol-sl" oninput="setVol(this.value)"><span class="sl-val" id="vol-val">60%</span></div>
 </div>
 
 <!-- WALLPAPER GALLERY -->
 <div id="wallpaper-gallery" onclick="event.stopPropagation()">
-  <div class="wp-gallery-title">
-    <span id="wp-gallery-heading">🖼️ Выбор обоев — Тёмная тема</span>
-    <div class="wp-gallery-close" onclick="closeWallpaperGallery()">✕</div>
-  </div>
-  <div class="wp-gallery-sub">Выберите фон рабочего стола. Нажмите для применения.</div>
-  <div class="wp-tabs">
-    <div class="wp-tab active" id="wp-tab-dark" onclick="wpSwitchTab('dark')">🌑 Тёмные</div>
-    <div class="wp-tab" id="wp-tab-light" onclick="wpSwitchTab('light')">☀️ Светлые</div>
-  </div>
-  <div class="wp-grid" id="wp-grid"></div>
+<div class="wp-gallery-title">
+<span id="wp-gallery-heading">🖼️ Выбор обоев</span>
+<div class="wp-gallery-close" onclick="closeWallpaperGallery()">✕</div>
+</div>
+<div class="wp-gallery-sub">Выберите фон рабочего стола.</div>
+<div class="wp-tabs">
+<div class="wp-tab active" id="wp-tab-dark" onclick="wpSwitchTab('dark')">🌑 Тёмные</div>
+<div class="wp-tab" id="wp-tab-light" onclick="wpSwitchTab('light')">☀️ Светлые</div>
+</div>
+<div class="wp-grid" id="wp-grid"></div>
 </div>
 
 <!-- CONTEXT MENU -->
 <div id="ctx-menu">
-  <div class="ctx-item" id="ctx-open-item" onclick="ctxOpenFile()" style="display:none"><span>📂</span>Открыть</div>
-  <div class="ctx-item" id="ctx-move-item" onclick="ctxMoveFile()" style="display:none"><span>📦</span>Переместить в...</div>
-  <div class="ctx-item" id="ctx-delete-item" onclick="ctxDeleteFile()" style="display:none"><span>🗑️</span>Удалить</div>
-  <div class="ctx-sep" id="ctx-file-sep" style="display:none"></div>
-  <div class="ctx-item" id="ctx-new-file" onclick="ctxNewFile()" style="display:none"><span>📄</span>Новый файл</div>
-  <div class="ctx-item" id="ctx-create-item" onmouseenter="showCreateSub(event)" onclick="showCreateSub(event)" style="display:none">
-    <span>✨</span>Создать <span style="margin-left:auto;opacity:.6">▶</span>
-  </div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="ctxRefresh()"><span>🔃</span>Обновить</div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="openWallpaperGallery('light');hideAll()"><span>☀️</span>Светлые обои</div>
-  <div class="ctx-item" onclick="openWallpaperGallery('dark');hideAll()"><span>🌑</span>Тёмные обои</div>
-  <div class="ctx-sep"></div>
-  <div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры</div>
+<div class="ctx-item" id="ctx-open-item" onclick="ctxOpenFile()" style="display:none"><span>📂</span>Открыть</div>
+<div class="ctx-item" id="ctx-delete-item" onclick="ctxDeleteFile()" style="display:none"><span>🗑️</span>Удалить</div>
+<div class="ctx-sep" id="ctx-file-sep" style="display:none"></div>
+<div class="ctx-sep"></div>
+<div class="ctx-item" onclick="ctxRefresh()"><span>🔃</span>Обновить</div>
+<div class="ctx-sep"></div>
+<div class="ctx-item" onclick="openWallpaperGallery('light');hideAll()"><span>☀️</span>Светлые обои</div>
+<div class="ctx-item" onclick="openWallpaperGallery('dark');hideAll()"><span>🌑</span>Тёмные обои</div>
+<div class="ctx-sep"></div>
+<div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры</div>
 </div>
-<div id="ctx-create-sub" onclick="event.stopPropagation()">
-  <div class="ctx-item" onclick="ctxCreateFolder()"><span>📁</span>Папку</div>
-  <div class="ctx-item" onclick="ctxCreateTextDoc()"><span>📝</span>Текстовый документ</div>
-  <div class="ctx-item" onclick="ctxCreateFile()"><span>📄</span>Новый файл</div>
-  <div class="ctx-item" onclick="ctxCreateShortcut()"><span>🔗</span>Ярлык</div>
-</div>
+
+<!-- ALL WINDOWS -->
 
 <!-- EXPLORER -->
 <div class="window" id="win-explorer" style="width:780px;height:520px;top:40px;left:60px;" onclick="bringFront('win-explorer')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-explorer')">
-    <span class="tb-icon">📁</span><span class="tb-title">Проводник</span>
-    <div class="win-btns"><div class="wb" onclick="minimizeWin('explorer')">─</div><div class="wb" onclick="toggleMax('win-explorer')">⬜</div><div class="wb cls" onclick="closeWin('explorer')">✕</div></div>
-  </div>
-  <div class="win-body">
-    <div class="exp-wrap">
-      <div class="exp-topbar">
-        <div class="exp-nav">◀</div><div class="exp-nav">▶</div><div class="exp-nav" onclick="expNav('ExiWin')">↑</div>
-        <input class="exp-path" id="exp-path" value="ExiWin://Рабочий стол">
-        <input type="text" class="exp-path" style="max-width:160px" placeholder="🔍 Поиск..." oninput="expSearch(this.value)">
-        <div class="exp-nav" onclick="expNewFolder()">📁+</div>
-      </div>
-      <div class="exp-body">
-        <div class="exp-side">
-          <div class="exp-side-item active" data-folder="Рабочий стол" onclick="expNav('Рабочий стол')">🖥️ Рабочий стол</div>
-          <div class="exp-side-item" data-folder="Документы" onclick="expNav('Документы')">📄 Документы</div>
-          <div class="exp-side-item" data-folder="Загрузки" onclick="expNav('Загрузки')">⬇️ Загрузки</div>
-          <div class="exp-side-item" data-folder="Изображения" onclick="expNav('Изображения')">🖼️ Изображения</div>
-          <div class="exp-side-item" data-folder="Музыка" onclick="expNav('Музыка')">🎵 Музыка</div>
-          <div class="exp-side-item" data-folder="ExiWin" onclick="expNav('ExiWin')">💻 ExiWin (C:)</div>
-        </div>
-        <div class="exp-files" id="exp-files-content" oncontextmenu="showCtxMenu(event,'explorer')"></div>
-      </div>
-      <div class="exp-statusbar">
-        <span id="exp-status">Объектов: 0</span>
-        <div style="display:flex;align-items:center;gap:3px;">
-          <div class="exp-view-btn active-view" id="exp-view-large" onclick="setExpView('large')" title="Крупные значки">⊞</div>
-          <div class="exp-view-btn" id="exp-view-normal" onclick="setExpView('normal')" title="Обычные">⊟</div>
-          <div class="exp-view-btn" id="exp-view-small" onclick="setExpView('small')" title="Мелкие">☰</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-explorer')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-explorer')">
+<span class="tb-icon">📁</span><span class="tb-title">Проводник</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('explorer')">─</div><div class="wb" onclick="toggleMax('win-explorer')">⬜</div><div class="wb cls" onclick="closeWin('explorer')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="exp-wrap">
+<div class="exp-topbar">
+<div class="exp-nav">◀</div><div class="exp-nav">▶</div><div class="exp-nav" onclick="expNav('ExiWin')">↑</div>
+<input class="exp-path" id="exp-path" value="ExiWin://Рабочий стол">
+</div>
+<div class="exp-body">
+<div class="exp-side">
+<div class="exp-side-item active" data-folder="Рабочий стол" onclick="expNav('Рабочий стол')">🖥️ Рабочий стол</div>
+<div class="exp-side-item" data-folder="Документы" onclick="expNav('Документы')">📄 Документы</div>
+<div class="exp-side-item" data-folder="Загрузки" onclick="expNav('Загрузки')">⬇️ Загрузки</div>
+<div class="exp-side-item" data-folder="Изображения" onclick="expNav('Изображения')">🖼️ Изображения</div>
+</div>
+<div class="exp-files" id="exp-files-content"></div>
+</div>
+<div class="exp-statusbar"><span id="exp-status">Объектов: 0</span></div>
+</div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-explorer')"></div>
 </div>
 
 <!-- NOTEPAD -->
 <div class="window" id="win-notepad" style="width:680px;height:500px;top:50px;left:80px;" onclick="bringFront('win-notepad')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-notepad')">
-    <span class="tb-icon">📝</span><span class="tb-title">Блокнот</span>
-    <div class="win-btns"><div class="wb" onclick="minimizeWin('notepad')">─</div><div class="wb" onclick="toggleMax('win-notepad')">⬜</div><div class="wb cls" onclick="closeWin('notepad')">✕</div></div>
-  </div>
-  <div class="win-body">
-    <div class="np-wrap">
-      <div class="np-menubar">
-        <div class="np-menu-item" onclick="npToggleMenu(this)">Файл<div class="np-dropdown"><div class="np-dd-item" onclick="npNew()">Новый <kbd>Ctrl+N</kbd></div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="npSave()">Сохранить <kbd>Ctrl+S</kbd></div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="closeWin('notepad')">Закрыть</div></div></div>
-        <div class="np-menu-item" onclick="npToggleMenu(this)">Правка<div class="np-dropdown"><div class="np-dd-item" onclick="npCopy()">Копировать</div><div class="np-dd-item" onclick="npSelectAll()">Выбрать всё</div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="npFind()">Найти</div></div></div>
-        <div class="np-menu-item" onclick="npToggleMenu(this)">Вид<div class="np-dropdown"><div class="np-dd-item" onclick="npFontUp()">Больше шрифт</div><div class="np-dd-item" onclick="npFontDown()">Меньше шрифт</div><div class="np-dd-sep"></div><div class="np-dd-item" onclick="npWrap()">Перенос строк</div></div></div>
-      </div>
-      <textarea id="np-area" placeholder="Начните вводить текст..." oninput="npChanged()" onclick="npUpdateStatus()" onkeyup="npUpdateStatus()" spellcheck="false"></textarea>
-      <div class="np-statusbar"><span id="np-status-ln">Строк: 1 | Слов: 0</span><span id="np-status-pos">Стр 1, Стб 1</span><span>UTF-8</span></div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-notepad')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-notepad')">
+<span class="tb-icon">📝</span><span class="tb-title">Блокнот</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('notepad')">─</div><div class="wb" onclick="toggleMax('win-notepad')">⬜</div><div class="wb cls" onclick="closeWin('notepad')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="np-wrap">
+<textarea id="np-area" placeholder="Начните вводить текст..." spellcheck="false"></textarea>
+<div class="np-statusbar"><span id="np-status-ln">Строк: 1</span><span>UTF-8</span></div>
+</div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-notepad')"></div>
 </div>
 
 <!-- CALCULATOR -->
 <div class="window" id="win-calc" style="width:320px;height:500px;top:50px;left:100px;" onclick="bringFront('win-calc')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-calc')">
-    <span class="tb-icon">🧮</span><span class="tb-title">Калькулятор</span>
-    <div class="win-btns"><div class="wb" onclick="minimizeWin('calc')">─</div><div class="wb" onclick="toggleMax('win-calc')">⬜</div><div class="wb cls" onclick="closeWin('calc')">✕</div></div>
-  </div>
-  <div class="win-body">
-    <div class="calc-wrap">
-      <div class="calc-modes"><div class="calc-mode-btn active" data-mode="standard" onclick="calcSetMode('standard')">Обычный</div><div class="calc-mode-btn" data-mode="scientific" onclick="calcSetMode('scientific')">Научный</div></div>
-      <div class="calc-display"><div class="calc-expr" id="calc-expr"></div><div class="calc-result" id="calc-result">0</div></div>
-      <div class="calc-sci" id="calc-sci">
-        <div class="cc cc-sci-btn" onclick="calcSci('sin')">sin</div><div class="cc cc-sci-btn" onclick="calcSci('cos')">cos</div><div class="cc cc-sci-btn" onclick="calcSci('tan')">tan</div><div class="cc cc-sci-btn" onclick="calcSci('sqrt')">√x</div><div class="cc cc-sci-btn" onclick="calcSci('log')">log</div>
-        <div class="cc cc-sci-btn" onclick="calcSci('ln')">ln</div><div class="cc cc-sci-btn" onclick="calcSci('x2')">x²</div><div class="cc cc-sci-btn" onclick="calcSci('x3')">x³</div><div class="cc cc-sci-btn" onclick="calcSci('1/x')">1/x</div><div class="cc cc-sci-btn" onclick="calcSci('pi')">π</div>
-      </div>
-      <div class="calc-grid">
-        <div class="cc cc-fn" onclick="calcPress('C')">C</div><div class="cc cc-fn" onclick="calcPress('±')">±</div><div class="cc cc-fn" onclick="calcPress('%')">%</div><div class="cc cc-op" onclick="calcPress('÷')">÷</div>
-        <div class="cc cc-num" onclick="calcPress('7')">7</div><div class="cc cc-num" onclick="calcPress('8')">8</div><div class="cc cc-num" onclick="calcPress('9')">9</div><div class="cc cc-op" onclick="calcPress('×')">×</div>
-        <div class="cc cc-num" onclick="calcPress('4')">4</div><div class="cc cc-num" onclick="calcPress('5')">5</div><div class="cc cc-num" onclick="calcPress('6')">6</div><div class="cc cc-op" onclick="calcPress('-')">−</div>
-        <div class="cc cc-num" onclick="calcPress('1')">1</div><div class="cc cc-num" onclick="calcPress('2')">2</div><div class="cc cc-num" onclick="calcPress('3')">3</div><div class="cc cc-op" onclick="calcPress('+')">+</div>
-        <div class="cc cc-fn" onclick="calcPress('⌫')">⌫</div><div class="cc cc-num" onclick="calcPress('0')">0</div><div class="cc cc-num" onclick="calcPress('.')">.</div><div class="cc cc-eq" onclick="calcPress('=')">=</div>
-      </div>
-    </div>
-  </div>
+<div class="titlebar" onmousedown="dragWin(event,'win-calc')">
+<span class="tb-icon">🧮</span><span class="tb-title">Калькулятор</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('calc')">─</div><div class="wb" onclick="toggleMax('win-calc')">⬜</div><div class="wb cls" onclick="closeWin('calc')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="calc-wrap">
+<div class="calc-display"><div class="calc-expr" id="calc-expr"></div><div class="calc-result" id="calc-result">0</div></div>
+<div class="calc-grid">
+<div class="cc cc-fn" onclick="calcPress('C')">C</div><div class="cc cc-fn" onclick="calcPress('±')">±</div><div class="cc cc-fn" onclick="calcPress('%')">%</div><div class="cc cc-op" onclick="calcPress('÷')">÷</div>
+<div class="cc cc-num" onclick="calcPress('7')">7</div><div class="cc cc-num" onclick="calcPress('8')">8</div><div class="cc cc-num" onclick="calcPress('9')">9</div><div class="cc cc-op" onclick="calcPress('×')">×</div>
+<div class="cc cc-num" onclick="calcPress('4')">4</div><div class="cc cc-num" onclick="calcPress('5')">5</div><div class="cc cc-num" onclick="calcPress('6')">6</div><div class="cc cc-op" onclick="calcPress('-')">−</div>
+<div class="cc cc-num" onclick="calcPress('1')">1</div><div class="cc cc-num" onclick="calcPress('2')">2</div><div class="cc cc-num" onclick="calcPress('3')">3</div><div class="cc cc-op" onclick="calcPress('+')">+</div>
+<div class="cc cc-fn" onclick="calcPress('⌫')">⌫</div><div class="cc cc-num" onclick="calcPress('0')">0</div><div class="cc cc-num" onclick="calcPress('.')">.</div><div class="cc cc-eq" onclick="calcPress('=')">=</div>
+</div>
+</div>
+</div>
 </div>
 
 <!-- SETTINGS -->
 <div class="window" id="win-settings" style="width:720px;height:520px;top:50px;left:80px;" onclick="bringFront('win-settings')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-settings')">
-    <span class="tb-icon">⚙️</span><span class="tb-title">Параметры</span>
-    <div class="win-btns"><div class="wb" onclick="minimizeWin('settings')">─</div><div class="wb" onclick="toggleMax('win-settings')">⬜</div><div class="wb cls" onclick="closeWin('settings')">✕</div></div>
-  </div>
-  <div class="win-body">
-    <div class="set-wrap">
-      <div class="set-side">
-        <div class="set-side-item active" data-page="system" onclick="setPage('system')">💻 Система</div>
-        <div class="set-side-item" data-page="display" onclick="setPage('display')">🖥️ Экран</div>
-        <div class="set-side-item" data-page="theme" onclick="setPage('theme')">🎨 Тема</div>
-        <div class="set-side-item" data-page="network" onclick="setPage('network')">🌐 Сеть</div>
-        <div class="set-side-item" data-page="sound" onclick="setPage('sound')">🔊 Звук</div>
-        <div class="set-side-item" data-page="account" onclick="setPage('account')">👤 Аккаунт</div>
-        <div class="set-side-item" data-page="about" onclick="setPage('about')">ℹ️ О системе</div>
-      </div>
-      <div class="set-content">
-        <div class="set-page active" id="set-system"><div class="set-h1">Система</div><div class="set-card"><div class="set-card-l"><div class="n">Уведомления</div><div class="d">Показывать уведомления</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="set-card"><div class="set-card-l"><div class="n">Автозапуск ExiWin</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="set-card"><div class="set-card-l"><div class="n">Режим производительности</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div>
-        <div class="set-page" id="set-display"><div class="set-h1">Экран</div><div class="set-card"><div class="set-card-l"><div class="n">Яркость</div><div class="set-range-wrap"><input type="range" min="10" max="100" value="85" oninput="setBright(this.value)"></div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Разрешение</div></div><select class="set-select"><option>1920×1080</option><option>2560×1440</option></select></div><div class="set-card"><div class="set-card-l"><div class="n">Ночной режим</div></div><div class="toggle" onclick="toggleNightMode();this.classList.toggle('on')"></div></div></div>
-        <div class="set-page" id="set-theme">
-          <div class="set-h1">Тема и обои</div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Тёмная тема</div></div><div class="toggle on" id="set-dark-t" onclick="toggleDarkTheme();el('set-light-t').classList.remove('on');this.classList.add('on')"></div></div>
-          <div class="set-card"><div class="set-card-l"><div class="n">Светлая тема</div></div><div class="toggle" id="set-light-t" onclick="toggleLightTheme();el('set-dark-t').classList.remove('on');this.classList.add('on')"></div></div>
-          <div class="set-card" style="cursor:pointer" onclick="openWallpaperGallery('dark')"><div class="set-card-l"><div class="n">🌑 Выбрать тёмные обои</div><div class="d">16 вариантов фонов</div></div><span style="color:var(--text2)">▶</span></div>
-          <div class="set-card" style="cursor:pointer" onclick="openWallpaperGallery('light')"><div class="set-card-l"><div class="n">☀️ Выбрать светлые обои</div><div class="d">16 вариантов фонов</div></div><span style="color:var(--text2)">▶</span></div>
-        </div>
-        <div class="set-page" id="set-network"><div class="set-h1">Сеть</div><div class="set-card"><div class="set-card-l"><div class="n">Wi-Fi</div><div class="d">ExiWin-Network</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="set-card"><div class="set-card-l"><div class="n">Bluetooth</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
-        <div class="set-page" id="set-sound"><div class="set-h1">Звук</div><div class="set-card"><div class="set-card-l"><div class="n">Громкость</div><div class="set-range-wrap"><input type="range" min="0" max="100" value="60" oninput="setVol(this.value)"></div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Звук уведомлений</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
-        <div class="set-page" id="set-account"><div class="set-h1">Аккаунт</div><div class="set-card"><div class="set-card-l"><div class="n" id="set-uname">Пользователь</div><div class="d">Администратор ExiWin</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Сбросить аккаунт</div><div class="d">Удалит все данные</div></div><div style="color:#e74c3c;cursor:pointer;font-size:13px" onclick="setResetUser()">Сбросить</div></div></div>
-        <div class="set-page" id="set-about"><div class="set-h1">О системе</div><div class="set-card"><div class="set-card-l"><div class="n">ExiWin 12</div><div class="d">Версия 24H2 — Build 26100</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">Разработчик</div><div class="d">Exian Research Labs</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">ЦП</div><div class="d">ExiCPU x64 @ 3.6 ГГц</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">ОЗУ</div><div class="d">8 ГБ DDR5</div></div></div><div class="set-card"><div class="set-card-l"><div class="n">AI</div><div class="d">Exian.AI 3.0 — Умный ассистент</div></div></div></div>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-settings')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-settings')">
+<span class="tb-icon">⚙️</span><span class="tb-title">Параметры</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('settings')">─</div><div class="wb" onclick="toggleMax('win-settings')">⬜</div><div class="wb cls" onclick="closeWin('settings')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="set-wrap">
+<div class="set-side">
+<div class="set-side-item active" data-page="about" onclick="setPage('about')">ℹ️ О системе</div>
+<div class="set-side-item" data-page="theme" onclick="setPage('theme')">🎨 Тема</div>
+<div class="set-side-item" data-page="account" onclick="setPage('account')">👤 Аккаунт</div>
+</div>
+<div class="set-content">
+<div class="set-page active" id="set-about"><div class="set-h1">О системе</div>
+<div class="set-card"><div class="set-card-l"><div class="n">ExiWin 12</div><div class="d">Версия 24H2 — Build 26100</div></div></div>
+<div class="set-card"><div class="set-card-l"><div class="n">Разработчик</div><div class="d">Exian Research Labs</div></div></div>
+<div class="set-card"><div class="set-card-l"><div class="n">AI</div><div class="d">Exian.AI 3.0</div></div></div>
+</div>
+<div class="set-page" id="set-theme"><div class="set-h1">Тема и обои</div>
+<div class="set-card" style="cursor:pointer" onclick="openWallpaperGallery('dark')"><div class="set-card-l"><div class="n">🌑 Тёмные обои</div></div><span style="color:var(--text2)">▶</span></div>
+<div class="set-card" style="cursor:pointer" onclick="openWallpaperGallery('light')"><div class="set-card-l"><div class="n">☀️ Светлые обои</div></div><span style="color:var(--text2)">▶</span></div>
+</div>
+<div class="set-page" id="set-account"><div class="set-h1">Аккаунт</div>
+<div class="set-card"><div class="set-card-l"><div class="n" id="set-uname">Пользователь</div><div class="d">Администратор</div></div></div>
+<div class="set-card"><div class="set-card-l"><div class="n">Сбросить аккаунт</div></div><div style="color:#e74c3c;cursor:pointer;font-size:13px" onclick="if(confirm('Сбросить все данные?')){localStorage.clear();location.reload();}">Сбросить</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-settings')"></div>
 </div>
 
 <!-- BROWSER -->
 <div class="window" id="win-browser" style="width:820px;height:560px;top:40px;left:50px;" onclick="bringFront('win-browser')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-browser')">
-    <span class="tb-icon">🌐</span><span class="tb-title">ExiWin Edge</span>
-    <div class="win-btns"><div class="wb" onclick="minimizeWin('browser')">─</div><div class="wb" onclick="toggleMax('win-browser')">⬜</div><div class="wb cls" onclick="closeWin('browser')">✕</div></div>
-  </div>
-  <div class="win-body">
-    <div class="br-wrap">
-      <div class="br-bar">
-        <div class="br-nav" onclick="brBack()">◀</div><div class="br-nav" onclick="brForward()">▶</div><div class="br-nav" onclick="brRefresh()">🔃</div><div class="br-nav" onclick="brNewTab()">🏠</div>
-        <input class="br-url-bar" id="br-url" type="text" placeholder="Введите адрес..." onkeydown="brKeyNav(event)">
-        <div class="br-nav" onclick="brNavigate(el('br-url').value)">→</div>
-      </div>
-      <div id="br-newtab">
-        <div class="br-greeting" id="br-hello">Добрый день!</div>
-        <div class="br-searchbar"><span>🔍</span><input type="text" id="br-search-input" placeholder="Поиск..."><button onclick="brSearch(el('br-search-input').value)">Найти</button></div>
-        <div class="br-shortcuts">
-          <div class="br-sc" onclick="brShortcut('https://google.com')"><div class="ico">🔍</div><span>Google</span></div>
-          <div class="br-sc" onclick="brShortcut('https://github.com')"><div class="ico">🐙</div><span>GitHub</span></div>
-          <div class="br-sc" onclick="brShortcut('https://youtube.com')"><div class="ico">▶️</div><span>YouTube</span></div>
-          <div class="br-sc" onclick="brShortcut('https://wikipedia.org')"><div class="ico">📖</div><span>Wikipedia</span></div>
-          <div class="br-sc" onclick="brShortcut('https://stackoverflow.com')"><div class="ico">💬</div><span>Stack Overflow</span></div>
-        </div>
-      </div>
-      <iframe id="br-frame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-browser')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-browser')">
+<span class="tb-icon">🌐</span><span class="tb-title">ExiWin Edge</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('browser')">─</div><div class="wb" onclick="toggleMax('win-browser')">⬜</div><div class="wb cls" onclick="closeWin('browser')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="br-wrap">
+<div class="br-bar">
+<div class="br-nav" onclick="brNewTab()">🏠</div>
+<input class="br-url-bar" id="br-url" type="text" placeholder="Введите адрес..." onkeydown="if(event.key==='Enter')brNavigate(this.value)">
+<div class="br-nav" onclick="brNavigate(el('br-url').value)">→</div>
+</div>
+<div id="br-newtab">
+<div class="br-greeting" id="br-hello">Добрый день!</div>
+<div class="br-searchbar"><span>🔍</span><input type="text" placeholder="Поиск..." onkeydown="if(event.key==='Enter')brSearch(this.value)"><button onclick="brSearch(this.previousElementSibling.value)">Найти</button></div>
+</div>
+<iframe id="br-frame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+</div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-browser')"></div>
 </div>
 
 <!-- PAINT -->
 <div class="window" id="win-paint" style="width:760px;height:540px;top:40px;left:60px;" onclick="bringFront('win-paint')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-paint')">
-    <span class="tb-icon">🎨</span><span class="tb-title">Paint</span>
-    <div class="win-btns"><div class="wb" onclick="minimizeWin('paint')">─</div><div class="wb" onclick="toggleMax('win-paint')">⬜</div><div class="wb cls" onclick="closeWin('paint')">✕</div></div>
-  </div>
-  <div class="win-body">
-    <div class="paint-wrap">
-      <div class="paint-toolbar">
-        <div class="paint-tool active" onclick="selectPaintTool('pen',this)">✏️</div>
-        <div class="paint-tool" onclick="selectPaintTool('eraser',this)">🧹</div>
-        <div class="paint-tool" onclick="selectPaintTool('fill',this)">🪣</div>
-        <div class="paint-tool" onclick="paintClear()">🗑️</div>
-        <div class="paint-tool" onclick="paintSave()">💾</div>
-        <div style="width:1px;height:24px;background:var(--border)"></div>
-        <div class="paint-colors">
-          <div class="paint-color active" style="background:#0078d4" onclick="selectPaintColor('#0078d4',this)"></div>
-          <div class="paint-color" style="background:#e74c3c" onclick="selectPaintColor('#e74c3c',this)"></div>
-          <div class="paint-color" style="background:#2ecc71" onclick="selectPaintColor('#2ecc71',this)"></div>
-          <div class="paint-color" style="background:#f1c40f" onclick="selectPaintColor('#f1c40f',this)"></div>
-          <div class="paint-color" style="background:#9b59b6" onclick="selectPaintColor('#9b59b6',this)"></div>
-          <div class="paint-color" style="background:#e67e22" onclick="selectPaintColor('#e67e22',this)"></div>
-          <div class="paint-color" style="background:#1abc9c" onclick="selectPaintColor('#1abc9c',this)"></div>
-          <div class="paint-color" style="background:#ff69b4" onclick="selectPaintColor('#ff69b4',this)"></div>
-          <div class="paint-color" style="background:#000" onclick="selectPaintColor('#000000',this)"></div>
-          <div class="paint-color" style="background:#fff;border-color:var(--border)" onclick="selectPaintColor('#ffffff',this)"></div>
-        </div>
-        <div class="paint-size"><span>Размер:</span><input type="range" min="1" max="30" value="4" oninput="setPaintSize(this.value)"><span id="paint-size-val">4px</span></div>
-      </div>
-      <div class="paint-canvas-wrap" id="paint-canvas-wrap"><canvas id="paint-canvas"></canvas></div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-paint')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-paint')">
+<span class="tb-icon">🎨</span><span class="tb-title">Paint</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('paint')">─</div><div class="wb" onclick="toggleMax('win-paint')">⬜</div><div class="wb cls" onclick="closeWin('paint')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="paint-wrap">
+<div class="paint-toolbar">
+<div class="paint-tool active" onclick="paintTool='pen';document.querySelectorAll('.paint-tool').forEach(t=>t.classList.remove('active'));this.classList.add('active')">✏️</div>
+<div class="paint-tool" onclick="paintTool='eraser';document.querySelectorAll('.paint-tool').forEach(t=>t.classList.remove('active'));this.classList.add('active')">🧹</div>
+<div class="paint-tool" onclick="paintCtx.clearRect(0,0,paintCanvas.width,paintCanvas.height)">🗑️</div>
+<div style="width:1px;height:24px;background:var(--border)"></div>
+<div class="paint-colors">
+<div class="paint-color active" style="background:#0078d4" onclick="paintColor='#0078d4';document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));this.classList.add('active')"></div>
+<div class="paint-color" style="background:#e74c3c" onclick="paintColor='#e74c3c';document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));this.classList.add('active')"></div>
+<div class="paint-color" style="background:#2ecc71" onclick="paintColor='#2ecc71';document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));this.classList.add('active')"></div>
+<div class="paint-color" style="background:#000" onclick="paintColor='#000';document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));this.classList.add('active')"></div>
+<div class="paint-color" style="background:#fff;border:1px solid #ccc" onclick="paintColor='#fff';document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));this.classList.add('active')"></div>
+</div>
+<div class="paint-size"><span>Размер:</span><input type="range" min="1" max="30" value="4" oninput="paintSize=+this.value"><span id="paint-size-val">4px</span></div>
+</div>
+<div class="paint-canvas-wrap" id="paint-canvas-wrap"><canvas id="paint-canvas"></canvas></div>
+</div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-paint')"></div>
 </div>
 
 <!-- TASK MANAGER -->
 <div class="window" id="win-taskman" style="width:700px;height:500px;top:50px;left:80px;" onclick="bringFront('win-taskman')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-taskman')">
-    <span class="tb-icon">📊</span><span class="tb-title">Диспетчер задач</span>
-    <div class="win-btns"><div class="wb" onclick="minimizeWin('taskman')">─</div><div class="wb" onclick="toggleMax('win-taskman')">⬜</div><div class="wb cls" onclick="closeWin('taskman')">✕</div></div>
-  </div>
-  <div class="win-body">
-    <div class="tm-wrap">
-      <div class="tm-tabs">
-        <div class="tm-tab active" data-tab="processes" onclick="tmRender('processes')">Процессы</div>
-        <div class="tm-tab" data-tab="performance" onclick="tmRender('performance')">Производительность</div>
-        <div class="tm-tab" data-tab="startup" onclick="tmRender('startup')">Автозагрузка</div>
-      </div>
-      <div class="tm-body">
-        <table class="tm-table" id="tm-proc-table"><thead><tr><th>Имя</th><th>ЦП</th><th>ОЗУ</th><th>PID</th><th>Статус</th></tr></thead><tbody id="tm-proc-body"></tbody></table>
-        <div id="tm-perf-body" style="display:none"></div>
-        <div id="tm-startup-body-wrap" style="display:none"><table class="tm-table"><thead><tr><th>Приложение</th><th>Влияние</th><th>Статус</th></tr></thead><tbody id="tm-startup-body"></tbody></table></div>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-taskman')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-taskman')">
+<span class="tb-icon">📊</span><span class="tb-title">Диспетчер задач</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('taskman')">─</div><div class="wb" onclick="toggleMax('win-taskman')">⬜</div><div class="wb cls" onclick="closeWin('taskman')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="tm-wrap"><div class="tm-body" id="tm-body-content"></div></div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-taskman')"></div>
 </div>
 
 <!-- EXIAN.AI 3.0 -->
 <div class="window" id="win-exianai" style="width:900px;height:620px;top:30px;left:50px;" onclick="bringFront('win-exianai')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
-    <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0 — Умный ассистент</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('exianai')">─</div>
-      <div class="wb" onclick="toggleMax('win-exianai')">⬜</div>
-      <div class="wb cls" onclick="closeWin('exianai')">✕</div>
-    </div>
-  </div>
-  <div class="win-body" style="overflow:hidden">
-    <div class="echat-wrap">
-      <div class="echat-sidebar">
-        <div class="echat-sidebar-header">
-          <span>💬 Чаты</span>
-          <button class="echat-new-btn" onclick="newExianChat()">+ Новый</button>
-        </div>
-        <div id="exian-sessions-list"></div>
-        <div class="echat-sidebar-footer">
-          <div class="echat-clear-btn" onclick="clearAllChats()">🗑️ Очистить все чаты</div>
-        </div>
-      </div>
-      <div class="echat-main">
-        <div class="echat-header">
-          <div class="echat-header-ico">🤖</div>
-          <div class="echat-header-info">
-            <div class="echat-header-name">Exian.AI 3.0</div>
-            <div class="echat-header-status">Онлайн · ExiWin 12</div>
-          </div>
-        </div>
-        <div class="echat-quick">
-          <div class="echat-quick-btn" onclick="exianQuickPrompt('Что ты умеешь?')">🤔 Что ты умеешь?</div>
-          <div class="echat-quick-btn" onclick="exianQuickPrompt('Напиши код на Python')">💻 Код на Python</div>
-          <div class="echat-quick-btn" onclick="exianQuickPrompt('Объясни как работает нейросеть')">🧠 Как работает AI?</div>
-          <div class="echat-quick-btn" onclick="exianQuickPrompt('Придумай интересную идею для проекта')">💡 Идея для проекта</div>
-          <div class="echat-quick-btn" onclick="exianQuickPrompt('Расскажи анекдот')">😄 Расскажи анекдот</div>
-        </div>
-        <div id="exian-chat-messages"></div>
-        <div class="echat-input-area">
-          <div class="echat-input-row">
-            <textarea id="exian-chat-input" placeholder="Напиши что-нибудь... (Enter — отправить)" rows="1"></textarea>
-            <button id="exian-send-btn" onclick="exianSendMessage()" title="Отправить">➤</button>
-          </div>
-          <div class="echat-hint">Enter — отправить · Shift+Enter — новая строка · Exian.AI 3.0 powered by ExiWin 12</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-exianai')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
+<span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('exianai')">─</div><div class="wb" onclick="toggleMax('win-exianai')">⬜</div><div class="wb cls" onclick="closeWin('exianai')">✕</div></div>
+</div>
+<div class="win-body" style="overflow:hidden">
+<div class="echat-wrap">
+<div class="echat-main">
+<div class="echat-header">
+<div class="echat-header-ico">🤖</div>
+<div class="echat-header-info">
+<div class="echat-header-name">Exian.AI 3.0</div>
+<div class="echat-header-status">Онлайн · ExiWin 12</div>
+</div>
+</div>
+<div class="echat-quick">
+<div class="echat-quick-btn" onclick="exianQuick('Что ты умеешь?')">🤔 Что ты умеешь?</div>
+<div class="echat-quick-btn" onclick="exianQuick('Напиши код на Python')">💻 Код на Python</div>
+<div class="echat-quick-btn" onclick="exianQuick('Расскажи анекдот')">😄 Анекдот</div>
+<div class="echat-quick-btn" onclick="exianQuick('Идея для проекта')">💡 Идея</div>
+</div>
+<div id="exian-chat-messages"></div>
+<div class="echat-input-area">
+<div class="echat-input-row">
+<textarea id="exian-chat-input" placeholder="Напиши что-нибудь... (Enter — отправить)" rows="1"></textarea>
+<button id="exian-send-btn" onclick="exianSend()">➤</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-exianai')"></div>
 </div>
 
-<!-- EXIBLOX -->
-<div class="window" id="win-exiblox" style="width:1100px;height:700px;top:20px;left:40px;" onclick="bringFront('win-exiblox')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-exiblox')">
-    <span class="tb-icon">🐍</span>
-    <span class="tb-title">Exiblox v3</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('exiblox')">─</div>
-      <div class="wb" onclick="toggleMax('win-exiblox')">⬜</div>
-      <div class="wb cls" onclick="closeWin('exiblox')">✕</div>
-    </div>
-  </div>
-  <div class="win-body" id="exiblox-root" style="overflow:hidden;"></div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-exiblox')"></div>
+<!-- UPDATES APP -->
+<div class="window" id="win-updates" style="width:550px;height:500px;top:30px;right:20px;left:auto;" onclick="bringFront('win-updates')">
+<div class="titlebar" onmousedown="dragWin(event,'win-updates')">
+<span class="tb-icon">🔔</span><span class="tb-title">Обновления ExiWin</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('updates')">─</div><div class="wb" onclick="toggleMax('win-updates')">⬜</div><div class="wb cls" onclick="closeWin('updates')">✕</div></div>
+</div>
+<div class="win-body">
+<div class="updates-wrap" id="updates-content"></div>
+</div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-updates')"></div>
+</div>
+
+<!-- 3D PARKOUR -->
+<div class="window" id="win-parkour" style="width:900px;height:620px;top:20px;left:40px;" onclick="bringFront('win-parkour')">
+<div class="titlebar" onmousedown="dragWin(event,'win-parkour')">
+<span class="tb-icon">🏃</span><span class="tb-title">3D Паркур — Noob Runner</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('parkour')">─</div><div class="wb" onclick="toggleMax('win-parkour')">⬜</div><div class="wb cls" onclick="parkourClose()">✕</div></div>
+</div>
+<div class="win-body" id="parkour-root" style="overflow:hidden;padding:0;"></div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-parkour')"></div>
 </div>
 
 <!-- GTA 6 -->
 <div class="window" id="win-gta6" style="width:1020px;height:680px;top:18px;left:30px;" onclick="bringFront('win-gta6')">
-  <div class="titlebar" onmousedown="dragWin(event,'win-gta6')">
-    <span class="tb-icon">🎮</span>
-    <span class="tb-title">GTA 6 — ExiWin City</span>
-    <div class="win-btns">
-      <div class="wb" onclick="minimizeWin('gta6')">─</div>
-      <div class="wb" onclick="toggleMax('win-gta6')">⬜</div>
-      <div class="wb cls" onclick="gta6Close()">✕</div>
-    </div>
-  </div>
-  <div class="win-body" id="gta6-root" style="overflow:hidden;padding:0;"></div>
-  <div class="resize-handle" onmousedown="resizeWin(event,'win-gta6')"></div>
+<div class="titlebar" onmousedown="dragWin(event,'win-gta6')">
+<span class="tb-icon">🎮</span><span class="tb-title">GTA 6 — ExiWin City</span>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('gta6')">─</div><div class="wb" onclick="toggleMax('win-gta6')">⬜</div><div class="wb cls" onclick="gta6Close()">✕</div></div>
 </div>
-
-<div class="tb-btn" id="tb-exiblox" onclick="tbClick('exiblox')">🐍</div>
+<div class="win-body" id="gta6-root" style="overflow:hidden;padding:0;"></div>
+<div class="resize-handle" onmousedown="resizeWin(event,'win-gta6')"></div>
+</div>
 
 <div id="notif-stack"></div>
 
-<script src="app.js"></script>
-<script src="windows.js"></script>
-<script src="apps.js"></script>
-<script src="exianai.js"></script>
-<script src="exiblox.js"></script>
-
-<!-- DESKTOP ICON DRAG -->
-<script>
-(function(){
-  let dragEl=null, dragOffX=0, dragOffY=0, hasMoved=false;
-  const THRESHOLD=5;
-  let startX=0,startY=0;
-  window.iconDragStart=function(e,el){
-    if(e.button!==0)return;
-    dragEl=el; startX=e.clientX; startY=e.clientY;
-    const rect=el.getBoundingClientRect();
-    dragOffX=e.clientX-rect.left; dragOffY=e.clientY-rect.top;
-    hasMoved=false; e.stopPropagation();
-  };
-  document.addEventListener('mousemove',function(e){
-    if(!dragEl)return;
-    const dx=Math.abs(e.clientX-startX), dy=Math.abs(e.clientY-startY);
-    if(!hasMoved && dx<THRESHOLD && dy<THRESHOLD)return;
-    if(!hasMoved){hasMoved=true;dragEl.classList.add('dragging-icon');}
-    const desk=document.getElementById('desktop');
-    const deskRect=desk.getBoundingClientRect();
-    let nx=e.clientX-deskRect.left-dragOffX;
-    let ny=e.clientY-deskRect.top-dragOffY;
-    nx=Math.max(0,Math.min(nx,deskRect.width-dragEl.offsetWidth));
-    ny=Math.max(0,Math.min(ny,deskRect.height-dragEl.offsetHeight));
-    dragEl.style.left=nx+'px'; dragEl.style.top=ny+'px';
-    e.preventDefault();
-  });
-  document.addEventListener('mouseup',function(e){
-    if(!dragEl)return;
-    dragEl.classList.remove('dragging-icon'); dragEl=null;
-  });
-})();
-</script>
-
-<!-- WALLPAPER GALLERY -->
-<script>
-const WALLPAPERS = {
-  dark:[
-    {id:'dark-default',name:'Midnight Blue (по умолч.)',css:'linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%)',isDefault:true},
-    {id:'dark-nebula',name:'Туманность',css:'radial-gradient(ellipse at 30% 40%,#1a0040 0%,#060010 50%,#001020 100%)'},
-    {id:'dark-aurora',name:'Северное сияние',css:'linear-gradient(160deg,#001a10 0%,#003322 30%,#002244 60%,#001133 100%)'},
-    {id:'dark-volcano',name:'Вулкан',css:'radial-gradient(ellipse at 50% 90%,#3d0000 0%,#1a0000 40%,#0a0005 100%)'},
-    {id:'dark-ocean',name:'Глубокий океан',css:'linear-gradient(180deg,#000d1a 0%,#001428 50%,#001f3d 100%)'},
-    {id:'dark-galaxy',name:'Галактика',css:'radial-gradient(ellipse at 70% 30%,#0d001a 0%,#120033 40%,#000010 100%)'},
-    {id:'dark-matrix',name:'Матрица',css:'linear-gradient(160deg,#001400 0%,#002000 50%,#000a00 100%)'},
-    {id:'dark-copper',name:'Медь',css:'linear-gradient(135deg,#1a0a00 0%,#2d1200 40%,#0f0700 100%)'},
-    {id:'dark-steel',name:'Сталь',css:'linear-gradient(160deg,#0a0e14 0%,#131b26 50%,#0a0d13 100%)'},
-    {id:'dark-purple',name:'Тёмный пурпур',css:'linear-gradient(135deg,#0d0020 0%,#1a0035 50%,#08001a 100%)'},
-    {id:'dark-rose',name:'Тёмная роза',css:'linear-gradient(135deg,#1a0010 0%,#2d0022 50%,#0f0009 100%)'},
-    {id:'dark-arctic',name:'Арктическая ночь',css:'linear-gradient(180deg,#000814 0%,#001022 40%,#001530 70%,#000a1a 100%)'},
-    {id:'dark-teal',name:'Кипарис',css:'linear-gradient(135deg,#001a1a 0%,#002d2d 50%,#000f0f 100%)'},
-    {id:'dark-indigo',name:'Индиго',css:'linear-gradient(160deg,#050020 0%,#0a003d 50%,#030015 100%)'},
-    {id:'dark-ember',name:'Угли',css:'radial-gradient(ellipse at 50% 80%,#200500 0%,#100200 50%,#050000 100%)'},
-    {id:'dark-storm',name:'Шторм',css:'linear-gradient(160deg,#0a0a14 0%,#14141e 40%,#0a0a10 100%)'},
-  ],
-  light:[
-    {id:'light-default',name:'Sky Blue (по умолч.)',css:'linear-gradient(160deg,#dceeff 0%,#eef4fb 40%,#d8eaf5 100%)',isDefault:true},
-    {id:'light-peach',name:'Персик',css:'linear-gradient(160deg,#fff3e0 0%,#ffe8cc 50%,#fff0d8 100%)'},
-    {id:'light-mint',name:'Мята',css:'linear-gradient(160deg,#e0fff4 0%,#ccf5e8 50%,#d8fff0 100%)'},
-    {id:'light-lavender',name:'Лаванда',css:'linear-gradient(160deg,#f0e6ff 0%,#e8d5ff 50%,#eeddff 100%)'},
-    {id:'light-rose',name:'Роза',css:'linear-gradient(160deg,#ffe6ee 0%,#ffd5e3 50%,#ffdde8 100%)'},
-    {id:'light-lime',name:'Лайм',css:'linear-gradient(160deg,#edffd6 0%,#e0ffb8 50%,#e8ffcc 100%)'},
-    {id:'light-aqua',name:'Аква',css:'linear-gradient(160deg,#d6f8ff 0%,#b8f0ff 50%,#c8f4ff 100%)'},
-    {id:'light-blush',name:'Румянец',css:'linear-gradient(160deg,#ffe8e8 0%,#ffd0d0 50%,#ffdddd 100%)'},
-    {id:'light-sand',name:'Песок',css:'linear-gradient(160deg,#fff8e0 0%,#fff2c0 50%,#fff5d0 100%)'},
-    {id:'light-lilac',name:'Сирень',css:'linear-gradient(160deg,#f8e6ff 0%,#f0d0ff 50%,#f4dcff 100%)'},
-    {id:'light-cream',name:'Крем',css:'linear-gradient(160deg,#fffcf0 0%,#fff8e0 50%,#fffae8 100%)'},
-    {id:'light-gold',name:'Золото',css:'linear-gradient(160deg,#fff8d6 0%,#fff0b0 50%,#fff4c0 100%)'},
-    {id:'light-mist',name:'Туман',css:'linear-gradient(160deg,#eef2f8 0%,#e4eaf4 50%,#e8eef6 100%)'},
-    {id:'light-cyan',name:'Бирюза',css:'linear-gradient(160deg,#e0f8ff 0%,#c8f2ff 50%,#d4f6ff 100%)'},
-    {id:'light-coral',name:'Коралл',css:'linear-gradient(160deg,#fff0e8 0%,#ffe4d4 50%,#ffeadc 100%)'},
-    {id:'light-sage',name:'Шалфей',css:'linear-gradient(160deg,#e8f4ee 0%,#d8eedf 50%,#e0f0e6 100%)'},
-  ]
-};
-let currentWpTab='dark';
-let currentWpId={dark:'dark-default',light:'light-default'};
-let isLightTheme=false;
-window.openWallpaperGallery=function(mode){
-  currentWpTab=mode||'dark';
-  const g=document.getElementById('wallpaper-gallery');
-  const heading=document.getElementById('wp-gallery-heading');
-  heading.textContent=currentWpTab==='dark'?'🖼️ Выбор обоев — Тёмные':'🖼️ Выбор обоев — Светлые';
-  document.getElementById('wp-tab-dark').classList.toggle('active',currentWpTab==='dark');
-  document.getElementById('wp-tab-light').classList.toggle('active',currentWpTab==='light');
-  renderWpGrid(currentWpTab);
-  document.getElementById('tray-popup').style.display='none';
-  g.style.display='block';
-};
-window.closeWallpaperGallery=function(){document.getElementById('wallpaper-gallery').style.display='none';};
-window.wpSwitchTab=function(tab){
-  currentWpTab=tab;
-  document.getElementById('wp-tab-dark').classList.toggle('active',tab==='dark');
-  document.getElementById('wp-tab-light').classList.toggle('active',tab==='light');
-  document.getElementById('wp-gallery-heading').textContent=tab==='dark'?'🖼️ Выбор обоев — Тёмные':'🖼️ Выбор обоев — Светлые';
-  renderWpGrid(tab);
-};
-function renderWpGrid(tab){
-  const grid=document.getElementById('wp-grid');
-  grid.innerHTML='';
-  WALLPAPERS[tab].forEach(wp=>{
-    const div=document.createElement('div');
-    div.className='wp-item'+(currentWpId[tab]===wp.id?' wp-active':'');
-    div.style.background=wp.css; div.title=wp.name;
-    const lbl=document.createElement('div'); lbl.className='wp-item-label'; lbl.textContent=wp.name; div.appendChild(lbl);
-    if(wp.isDefault){const badge=document.createElement('div');badge.className='wp-default-badge';badge.textContent='По умолч.';div.appendChild(badge);}
-    div.onclick=()=>applyWallpaper(tab,wp); grid.appendChild(div);
-  });
-}
-function applyWallpaper(tab,wp){
-  currentWpId[tab]=wp.id;
-  const wasLight=document.body.classList.contains('light-theme');
-  if(tab==='light'&&!wasLight){document.body.classList.add('light-theme');isLightTheme=true;document.getElementById('tr-light-theme').classList.remove('off');document.getElementById('tr-dark-theme').classList.add('off');}
-  else if(tab==='dark'&&wasLight){document.body.classList.remove('light-theme');isLightTheme=false;document.getElementById('tr-dark-theme').classList.remove('off');document.getElementById('tr-light-theme').classList.add('off');}
-  document.getElementById('desktop').style.background=wp.css;
-  document.documentElement.style.setProperty('--desktop-bg',wp.css);
-  renderWpGrid(currentWpTab);
-  if(typeof showNotif==='function') showNotif('Обои изменены','Фон «'+wp.name+'» применён','🖼️');
-}
-document.addEventListener('click',function(e){
-  const g=document.getElementById('wallpaper-gallery');
-  if(g.style.display==='block'&&!g.contains(e.target)) g.style.display='none';
-});
-</script>
-
-<!-- PATCHES -->
-<script>
-const _tm = tmRender;
-tmRender = function(tab) {
-  document.querySelectorAll('.tm-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
-  const proc=el('tm-proc-table'), perf=el('tm-perf-body'), start=el('tm-startup-body-wrap');
-  if(proc) proc.style.display=tab==='processes'?'table':'none';
-  if(perf) perf.style.display=tab==='performance'?'block':'none';
-  if(start) start.style.display=tab==='startup'?'block':'none';
-  if(tab==='processes') tmRenderProcesses();
-  else if(tab==='performance') tmRenderPerf();
-  else if(tab==='startup') tmRenderStartup();
-};
-window.addEventListener('DOMContentLoaded',()=>{
-  const h=new Date().getHours(), g=el('br-hello');
-  if(g) g.textContent=h<6?'Доброй ночи!':h<12?'Доброе утро!':h<18?'Добрый день!':'Добрый вечер!';
-});
-window.addEventListener('DOMContentLoaded',()=>{ setExpView('large'); });
-</script>
-<script src="phone.js"></script>
-
-<!-- ══════════ GTA 6 ENGINE ══════════ -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- MAIN ENGINE SCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <script>
 'use strict';
-// ═══════════════════════════════════════════════════════════════
-//  GTA 6 — ExiWin Edition  •  Full City Sandbox
-// ═══════════════════════════════════════════════════════════════
-window.GTA6 = (function () {
+const el=id=>document.getElementById(id);
+let winZ=100;
 
-// ── Math helpers ───────────────────────────────────────────────
-const abs=Math.abs,sqrt=Math.sqrt,sin=Math.sin,cos=Math.cos,
-      atan2=Math.atan2,PI=Math.PI,floor=Math.floor,min=Math.min,max=Math.max;
-const clamp=(v,a,b)=>max(a,min(b,v));
-const lerp=(a,b,t)=>a+(b-a)*t;
-const dst=(ax,ay,bx,by)=>sqrt((ax-bx)**2+(ay-by)**2);
-const rnd=(a,b)=>Math.random()*(b-a)+a;
-const pick=arr=>arr[floor(Math.random()*arr.length)];
-const lerpA=(a,b,t)=>{
-  let d=b-a; while(d>PI)d-=PI*2; while(d<-PI)d+=PI*2; return a+d*t;
+// ── BOOT ──────────────────────────────────────────────
+setTimeout(()=>{
+ const b=el('boot');
+ b.style.opacity='0';
+ setTimeout(()=>{b.style.display='none';checkUser();},500);
+},2500);
+
+// ── USER SYSTEM ───────────────────────────────────────
+function checkUser(){
+ const u=localStorage.getItem('exiwin_user');
+ if(u){const d=JSON.parse(u);showLock(d);}
+ else{el('regscreen').style.display='flex';}
+}
+let selAvatar='🧑';
+window.pickAv=function(e){document.querySelectorAll('.av-opt').forEach(o=>o.classList.remove('sel'));e.classList.add('sel');selAvatar=e.dataset.av;};
+window.doRegister=function(){
+ const n=el('reg-name').value.trim(),p=el('reg-pass').value,p2=el('reg-pass2').value;
+ if(!n){el('reg-err').textContent='Введите имя';return;}
+ if(p.length<4){el('reg-err').textContent='Пароль мин 4 символа';return;}
+ if(p!==p2){el('reg-err').textContent='Пароли не совпадают';return;}
+ const user={name:n,pass:p,avatar:selAvatar};
+ localStorage.setItem('exiwin_user',JSON.stringify(user));
+ el('regscreen').style.display='none';showLock(user);
 };
-// hash for stable random
+window.showLogin=function(){el('reg-box').style.display='none';el('login-box').style.display='block';const u=localStorage.getItem('exiwin_user');if(u){const d=JSON.parse(u);el('login-avatar').textContent=d.avatar;el('login-name-disp').textContent=d.name;}};
+window.showRegister=function(){el('login-box').style.display='none';el('reg-box').style.display='block';};
+window.doLogin=function(){const u=JSON.parse(localStorage.getItem('exiwin_user')||'{}');if(el('login-pass').value===u.pass){el('regscreen').style.display='none';showLock(u);}else{el('login-err').textContent='Неверный пароль';}};
+
+function showLock(user){
+ el('lockscreen').style.display='flex';
+ el('lock-avatar').textContent=user.avatar;
+ el('lock-username-disp').textContent=user.name;
+ el('lockscreen').onclick=()=>{el('lockscreen').style.display='none';enterDesktop(user);};
+ updateClock();
+}
+function enterDesktop(user){
+ el('sm-avatar').textContent=user.avatar;
+ el('sm-username').textContent=user.name;
+ if(el('set-uname'))el('set-uname').textContent=user.name;
+ loadIconPositions();
+ loadSavedWallpaper();
+ startClock();
+}
+
+// ── CLOCK ─────────────────────────────────────────────
+function updateClock(){
+ const now=new Date();
+ const t=now.toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
+ const d=now.toLocaleDateString('ru',{day:'2-digit',month:'2-digit',year:'numeric'});
+ const dl=now.toLocaleDateString('ru',{weekday:'long',day:'numeric',month:'long'});
+ if(el('clock-time'))el('clock-time').textContent=t;
+ if(el('clock-date-tb'))el('clock-date-tb').textContent=d;
+ if(el('lock-clock'))el('lock-clock').textContent=t;
+ if(el('lock-date-lock'))el('lock-date-lock').textContent=dl;
+ if(el('tray-time-big'))el('tray-time-big').textContent=t;
+ if(el('tray-date-str'))el('tray-date-str').textContent=dl+' '+now.getFullYear();
+}
+function startClock(){updateClock();setInterval(updateClock,10000);}
+
+// ── WINDOW MANAGEMENT ─────────────────────────────────
+window.bringFront=function(id){const w=el(id);if(w){w.style.zIndex=++winZ;}};
+window.openApp=function(app){
+ if(app==='gta6'){openGta6();return;}
+ if(app==='parkour'){openParkour();return;}
+ const w=el('win-'+app);
+ if(w){w.style.display='flex';bringFront('win-'+app);const tb=el('tb-'+app);if(tb)tb.classList.add('running','active-win');}
+ if(app==='updates')renderUpdates();
+ if(app==='taskman')renderTaskMan();
+ hideAll();
+};
+window.closeWin=function(app){
+ if(app==='gta6'){gta6Close();return;}
+ if(app==='parkour'){parkourClose();return;}
+ const w=el('win-'+app);if(w)w.style.display='none';
+ const tb=el('tb-'+app);if(tb)tb.classList.remove('running','active-win');
+};
+window.minimizeWin=function(app){const w=el('win-'+app);if(w)w.style.display='none';};
+window.toggleMax=function(id){const w=el(id);if(w)w.classList.toggle('maximized');};
+window.tbClick=function(app){
+ const w=el('win-'+app);
+ if(!w)return;
+ if(!w.style.display||w.style.display==='none')openApp(app);
+ else bringFront('win-'+app);
+};
+
+// ── DRAG & RESIZE ─────────────────────────────────────
+window.dragWin=function(e,id){
+ if(e.target.closest('.win-btns'))return;
+ const w=el(id);if(!w||w.classList.contains('maximized'))return;
+ bringFront(id);
+ const sx=e.clientX-w.offsetLeft,sy=e.clientY-w.offsetTop;
+ const mv=e2=>{w.style.left=Math.max(0,e2.clientX-sx)+'px';w.style.top=Math.max(0,e2.clientY-sy)+'px';};
+ const up=()=>{document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);};
+ document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);
+};
+window.resizeWin=function(e,id){
+ const w=el(id);if(!w)return;
+ const sx=e.clientX,sy=e.clientY,sw=w.offsetWidth,sh=w.offsetHeight;
+ const mv=e2=>{w.style.width=Math.max(320,sw+(e2.clientX-sx))+'px';w.style.height=Math.max(200,sh+(e2.clientY-sy))+'px';};
+ const up=()=>{document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);};
+ document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);
+};
+
+// ── START MENU ────────────────────────────────────────
+window.toggleStart=function(e){e&&e.stopPropagation();const m=el('start-menu');if(m.style.display==='flex'){m.style.display='none';m.classList.remove('show');}else{hideAll();m.style.display='flex';setTimeout(()=>m.classList.add('show'),10);}};
+window.hideAll=function(){
+ const m=el('start-menu');m.style.display='none';m.classList.remove('show');
+ el('tray-popup').style.display='none';
+ el('ctx-menu').style.display='none';
+};
+window.toggleTray=function(e){e&&e.stopPropagation();const t=el('tray-popup');t.style.display=t.style.display==='block'?'none':'block';};
+document.addEventListener('click',e=>{
+ if(!e.target.closest('#start-menu')&&!e.target.closest('#start-btn'))hideAll();
+ if(!e.target.closest('#tray-popup')&&!e.target.closest('.tb-sys')&&!e.target.closest('#tb-clock'))el('tray-popup').style.display='none';
+});
+
+// ── CONTEXT MENU ──────────────────────────────────────
+window.showCtxMenu=function(e,type){e.preventDefault();const m=el('ctx-menu');m.style.left=e.clientX+'px';m.style.top=e.clientY+'px';m.style.display='block';};
+window.ctxRefresh=function(){location.reload();};
+window.desktopClick=function(e){document.querySelectorAll('.desk-icon').forEach(i=>i.classList.remove('selected'));};
+window.selectIcon=function(el){document.querySelectorAll('.desk-icon').forEach(i=>i.classList.remove('selected'));el.classList.add('selected');};
+
+// ── TRAY TILES ────────────────────────────────────────
+window.toggleTile=function(id,name){const t=el(id);t.classList.toggle('off');showNotif(name,t.classList.contains('off')?'Выключено':'Включено','⚡');};
+window.toggleNightMode=function(){document.body.style.filter=document.body.style.filter?'':'sepia(0.3) brightness(0.8)';el('tr-night').classList.toggle('off');};
+window.setBright=function(v){if(el('bright-val'))el('bright-val').textContent=v+'%';};
+window.setVol=function(v){if(el('vol-val'))el('vol-val').textContent=v+'%';};
+
+// ── NOTIFICATIONS ─────────────────────────────────────
+window.showNotif=function(title,desc,icon){
+ const s=el('notif-stack');
+ const d=document.createElement('div');d.className='notif';
+ d.innerHTML=`<div class="nico">${icon||'🔔'}</div><div class="notif-txt"><div class="nt">${title}</div><div class="nd">${desc}</div></div><div class="notif-close" onclick="this.parentElement.remove()">✕</div>`;
+ s.appendChild(d);setTimeout(()=>d.remove(),5000);
+};
+
+// ── LOCK/REBOOT/SHUTDOWN ──────────────────────────────
+window.lockScreen=function(){hideAll();el('lockscreen').style.display='flex';el('lockscreen').onclick=()=>{el('lockscreen').style.display='none';};};
+window.reboot=function(){location.reload();};
+window.shutdown=function(){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#333;font-size:20px;">ExiWin выключен</div>';};
+
+// ── SETTINGS PAGE ─────────────────────────────────────
+window.setPage=function(page){
+ document.querySelectorAll('.set-page').forEach(p=>p.classList.remove('active'));
+ document.querySelectorAll('.set-side-item').forEach(s=>s.classList.remove('active'));
+ const p=el('set-'+page);if(p)p.classList.add('active');
+ document.querySelectorAll('.set-side-item').forEach(s=>{if(s.dataset.page===page)s.classList.add('active');});
+};
+
+// ── EXPLORER ──────────────────────────────────────────
+const fileSystem={
+ 'Рабочий стол':[{n:'Мои заметки.txt',i:'📝'},{n:'Фото.png',i:'🖼️'},{n:'Проект',i:'📁',isFolder:true}],
+ 'Документы':[{n:'Отчёт.docx',i:'📄'},{n:'Резюме.pdf',i:'📋'}],
+ 'Загрузки':[{n:'setup.exe',i:'💿'},{n:'image.jpg',i:'🖼️'}],
+ 'Изображения':[{n:'Отпуск.jpg',i:'🌅'},{n:'Аватар.png',i:'🖼️'}],
+};
+let currentFolder='Рабочий стол';
+window.expNav=function(folder){
+ currentFolder=folder;
+ if(el('exp-path'))el('exp-path').value='ExiWin://'+folder;
+ document.querySelectorAll('.exp-side-item').forEach(s=>s.classList.toggle('active',s.dataset.folder===folder));
+ renderFiles();
+};
+function renderFiles(){
+ const c=el('exp-files-content');if(!c)return;c.innerHTML='';
+ const files=fileSystem[currentFolder]||[];
+ files.forEach(f=>{
+  const d=document.createElement('div');d.className='file-item';
+  d.innerHTML=`<div class="ico">${f.i}</div><div class="fname">${f.n}</div>`;
+  if(f.isFolder)d.ondblclick=()=>expNav(f.n);
+  c.appendChild(d);
+ });
+ if(el('exp-status'))el('exp-status').textContent='Объектов: '+files.length;
+}
+
+// ── CALCULATOR ────────────────────────────────────────
+let calcStr='0',calcOp='',calcPrev=0,calcNew=true;
+window.calcPress=function(k){
+ if(k==='C'){calcStr='0';calcOp='';calcPrev=0;calcNew=true;}
+ else if(k==='⌫'){calcStr=calcStr.length>1?calcStr.slice(0,-1):'0';}
+ else if(k==='±'){calcStr=String(-parseFloat(calcStr));}
+ else if(k==='%'){calcStr=String(parseFloat(calcStr)/100);}
+ else if('+-×÷'.includes(k)){calcPrev=parseFloat(calcStr);calcOp=k;calcNew=true;if(el('calc-expr'))el('calc-expr').textContent=calcStr+' '+k;}
+ else if(k==='='){
+  const b=parseFloat(calcStr);let r=b;
+  if(calcOp==='+')r=calcPrev+b;else if(calcOp==='-')r=calcPrev-b;else if(calcOp==='×')r=calcPrev*b;else if(calcOp==='÷')r=b?calcPrev/b:'Ошибка';
+  calcStr=String(r);calcOp='';calcNew=true;if(el('calc-expr'))el('calc-expr').textContent='';
+ }else{
+  if(calcNew){calcStr=k;calcNew=false;}else calcStr+=k;
+ }
+ if(el('calc-result'))el('calc-result').textContent=calcStr;
+};
+
+// ── BROWSER ───────────────────────────────────────────
+window.brNavigate=function(url){
+ if(!url)return;if(!url.startsWith('http'))url='https://'+url;
+ el('br-url').value=url;el('br-newtab').style.display='none';
+ const f=el('br-frame');f.style.display='block';f.src=url;
+};
+window.brSearch=function(q){if(q)brNavigate('https://www.google.com/search?igu=1&q='+encodeURIComponent(q));};
+window.brNewTab=function(){el('br-newtab').style.display='flex';el('br-frame').style.display='none';el('br-url').value='';};
+
+// ── PAINT ─────────────────────────────────────────────
+let paintCanvas,paintCtx,paintColor='#0078d4',paintSize=4,paintTool='pen',painting=false;
+function initPaint(){
+ paintCanvas=el('paint-canvas');if(!paintCanvas)return;
+ const wrap=el('paint-canvas-wrap');
+ paintCanvas.width=wrap.clientWidth||700;paintCanvas.height=wrap.clientHeight||400;
+ paintCtx=paintCanvas.getContext('2d');paintCtx.fillStyle='#fff';paintCtx.fillRect(0,0,paintCanvas.width,paintCanvas.height);
+ paintCanvas.onmousedown=e=>{painting=true;paintCtx.beginPath();paintCtx.moveTo(e.offsetX,e.offsetY);};
+ paintCanvas.onmousemove=e=>{if(!painting)return;paintCtx.lineWidth=paintSize;paintCtx.lineCap='round';paintCtx.strokeStyle=paintTool==='eraser'?'#fff':paintColor;paintCtx.lineTo(e.offsetX,e.offsetY);paintCtx.stroke();};
+ paintCanvas.onmouseup=()=>painting=false;paintCanvas.onmouseleave=()=>painting=false;
+}
+
+// ── TASK MANAGER ──────────────────────────────────────
+function renderTaskMan(){
+ const c=el('tm-body-content');if(!c)return;
+ const apps=['ExiWin Shell','Exian.AI','Edge','Paint','Проводник','Диспетчер задач','3D Паркур','GTA 6'];
+ let h='<table class="tm-table"><thead><tr><th>Процесс</th><th>ЦП</th><th>ОЗУ</th><th>PID</th></tr></thead><tbody>';
+ apps.forEach((a,i)=>{
+  const cpu=(Math.random()*15).toFixed(1),ram=(Math.random()*200+20).toFixed(0);
+  h+=`<tr><td>${a}</td><td>${cpu}%</td><td>${ram} МБ</td><td>${1000+i*137}</td></tr>`;
+ });
+ h+='</tbody></table>';c.innerHTML=h;
+}
+
+// ── EXIAN.AI 3.0 (FIXED) ─────────────────────────────
+const aiKnowledge={
+ 'привет':['Привет! 👋 Как дела?','Здравствуйте! Рад вас видеть!','Привет! Чем могу помочь?'],
+ 'как дела':['Отлично, спасибо! А у вас?','Прекрасно! Готов помочь!','Всё хорошо! 😊'],
+ 'что ты умеешь':['Я Exian.AI 3.0! Умею:\n• Отвечать на вопросы\n• Писать код на Python, JS, и др.\n• Рассказывать анекдоты\n• Объяснять сложные темы\n• Помогать с проектами\n• И многое другое! 🚀'],
+ 'код':['Вот пример на Python:\n```python\ndef fibonacci(n):\n    a, b = 0, 1\n    result = []\n    for _ in range(n):\n        result.append(a)\n        a, b = b, a + b\n    return result\n\nprint(fibonacci(10))\n# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n```'],
+ 'python':['Вот пример на Python:\n```python\nclass Calculator:\n    def add(self, a, b):\n        return a + b\n    def multiply(self, a, b):\n        return a * b\n\ncalc = Calculator()\nprint(calc.add(5, 3))  # 8\nprint(calc.multiply(4, 7))  # 28\n```'],
+ 'анекдот':['Программист спрашивает: "Почему мой код не работает?" — Ответ: "Потому что ты его написал!" 😂','Заходит программист в бар. Заказывает 1 пиво, 2 пива, 0 пив, -1 пиво, 99999 пив, asdfjkl. 🍺😄','— Алло, это служба поддержки?\n— Да.\n— У меня не работает интернет.\n— А как вы нам звоните?\n— По телефону!\n— А как вы узнали наш номер?\n— В интернете нашёл... 😅'],
+ 'нейросеть':['Нейросеть — это математическая модель, вдохновлённая мозгом 🧠\n\n1. **Нейроны** — узлы с весами\n2. **Слои** — входной, скрытые, выходной\n3. **Обучение** — подстройка весов через обратное распространение ошибки\n4. **Активация** — функции типа ReLU, sigmoid\n\nОни учатся на данных и находят паттерны!'],
+ 'идея':['💡 Идеи для проектов:\n1. AI-бот для Telegram\n2. Веб-игра на Canvas\n3. Трекер привычек\n4. Генератор мемов\n5. Визуализация данных\n6. Чат-приложение на WebSocket'],
+ 'exiwin':['ExiWin 12 — это операционная система нового поколения! 🖥️\n\nОсобенности:\n• Встроенный AI — Exian.AI 3.0\n• Браузер Edge\n• Paint, Калькулятор\n• GTA 6, 3D Паркур\n• Смена обоев и тем\n• И многое другое!'],
+};
+
+function aiResponse(msg){
+ const m=msg.toLowerCase();
+ for(const[key,vals] of Object.entries(aiKnowledge)){
+  if(m.includes(key)) return vals[Math.floor(Math.random()*vals.length)];
+ }
+ const defaults=[
+  `Интересный вопрос! Давайте разберёмся. "${msg}" — это тема, которую я могу обсудить. Задайте более конкретный вопрос! 🤔`,
+  `Я понял ваш запрос: "${msg}". Вот что я думаю:\n\nЭто действительно интересная тема! Могу помочь подробнее, если уточните. 💡`,
+  `Хм, "${msg}" — отличный вопрос! К сожалению, мне нужно больше контекста. Попробуйте спросить по-другому! 😊`,
+  `Спасибо за вопрос! Я Exian.AI 3.0, и хотя не знаю всего, я постараюсь помочь. Уточните, что именно вас интересует? 🤖`,
+ ];
+ return defaults[Math.floor(Math.random()*defaults.length)];
+}
+
+function addChatMsg(text,isUser){
+ const c=el('exian-chat-messages');if(!c)return;
+ const d=document.createElement('div');
+ d.className='echat-msg echat-animate '+(isUser?'echat-user':'echat-bot');
+ const time=new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
+ const escaped=text.replace(/```(\w*)\n?([\s\S]*?)```/g,'<pre><code>$2</code></pre>').replace(/\n/g,'<br>');
+ if(isUser){
+  d.innerHTML=`<div class="echat-bubble echat-bubble-user">${escaped}</div>`;
+ }else{
+  d.innerHTML=`<div class="echat-avatar-bot">🤖</div><div class="echat-bot-wrap"><div class="echat-bot-name">Exian.AI · ${time}</div><div class="echat-bubble echat-bubble-bot">${escaped}</div></div>`;
+ }
+ c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function showTyping(){
+ const c=el('exian-chat-messages');if(!c)return;
+ const d=document.createElement('div');d.id='typing-indicator';d.className='echat-msg echat-bot';
+ d.innerHTML='<div class="echat-avatar-bot">🤖</div><div class="echat-typing"><span class="edot"></span><span class="edot"></span><span class="edot"></span></div>';
+ c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function removeTyping(){const t=el('typing-indicator');if(t)t.remove();}
+
+window.exianSend=function(){
+ const inp=el('exian-chat-input');if(!inp)return;
+ const msg=inp.value.trim();if(!msg)return;
+ inp.value='';addChatMsg(msg,true);
+ showTyping();
+ setTimeout(()=>{removeTyping();addChatMsg(aiResponse(msg),false);},800+Math.random()*1200);
+};
+window.exianQuick=function(msg){
+ el('exian-chat-input').value=msg;exianSend();
+};
+// Enter to send
+document.addEventListener('keydown',e=>{
+ if(e.target===el('exian-chat-input')&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();exianSend();}
+});
+
+// ── TELEGRAM APP ──────────────────────────────────────
+window.openTelegram=function(){
+ window.open('https://t.me/exiblox','_blank');
+ showNotif('Exiblox Telegram','Открыто в новой вкладке','📱');
+};
+
+// ── UPDATES APP ───────────────────────────────────────
+function renderUpdates(){
+ const c=el('updates-content');if(!c)return;
+ c.innerHTML=`
+  <div class="updates-header"><span style="font-size:32px">🔔</span><h2>Обновления ExiWin 12</h2></div>
+  <div class="update-item">
+   <div class="update-ver">📦 Версия 2.5.0</div>
+   <div class="update-date">17 февраля 2026</div>
+   <div class="update-desc">
+    • 🔔 Новое приложение «Обновления» — центр уведомлений<br>
+    • 📱 Exiblox Telegram — быстрый доступ к t.me/exiblox<br>
+    • 🏃 3D Паркур — новая игра с нубиком из Roblox!<br>
+    • 💾 Сохранение позиций иконок рабочего стола<br>
+    • 💾 Сохранение выбранных обоев<br>
+    • 🤖 Исправлен AI — Exian.AI 3.0 теперь умнее<br>
+    • 🐛 Исправлены баги окон и меню
+   </div>
+   <span class="update-tag tag-new">Новое</span>
+   <span class="update-tag tag-fix">Исправления</span>
+  </div>
+  <div class="update-item">
+   <div class="update-ver">📦 Версия 2.4.0</div>
+   <div class="update-date">15 февраля 2026</div>
+   <div class="update-desc">
+    • 🎮 GTA 6 — полный открытый мир<br>
+    • 🖼️ Галерея обоев — 32 варианта<br>
+    • 🎨 Улучшен Paint
+   </div>
+   <span class="update-tag tag-improve">Улучшение</span>
+  </div>
+  <div class="update-item">
+   <div class="update-ver">📦 Версия 2.3.0</div>
+   <div class="update-date">10 февраля 2026</div>
+   <div class="update-desc">
+    • 🤖 Exian.AI 3.0 — новый умный ассистент<br>
+    • 📊 Диспетчер задач<br>
+    • 🌐 Браузер Edge с поиском
+   </div>
+   <span class="update-tag tag-new">Новое</span>
+  </div>
+  <div class="update-item">
+   <div class="update-ver">📦 Версия 2.0.0</div>
+   <div class="update-date">1 февраля 2026</div>
+   <div class="update-desc">
+    • 🚀 Первый релиз ExiWin 12!<br>
+    • Регистрация и авторизация<br>
+    • Рабочий стол, Проводник, Блокнот, Калькулятор
+   </div>
+   <span class="update-tag tag-new">Релиз</span>
+  </div>
+ `;
+}
+
+// ── ICON POSITIONS SAVE/LOAD ──────────────────────────
+function saveIconPositions(){
+ const icons=document.querySelectorAll('.desk-icon[data-icon-id]');
+ const pos={};
+ icons.forEach(ic=>{pos[ic.dataset.iconId]={top:ic.style.top,left:ic.style.left};});
+ localStorage.setItem('exiwin_icon_pos',JSON.stringify(pos));
+}
+function loadIconPositions(){
+ const saved=localStorage.getItem('exiwin_icon_pos');
+ if(!saved)return;
+ try{
+  const pos=JSON.parse(saved);
+  Object.entries(pos).forEach(([id,p])=>{
+   const ic=document.querySelector(`[data-icon-id="${id}"]`);
+   if(ic){ic.style.top=p.top;ic.style.left=p.left;}
+  });
+ }catch(e){}
+}
+
+// ── WALLPAPER SAVE/LOAD ───────────────────────────────
+function loadSavedWallpaper(){
+ const saved=localStorage.getItem('exiwin_wallpaper');
+ if(saved){
+  try{
+   const wp=JSON.parse(saved);
+   document.getElementById('desktop').style.background=wp.css;
+   if(wp.isLight){document.body.classList.add('light-theme');}
+  }catch(e){}
+ }
+}
+
+// ── DESKTOP ICON DRAG WITH SAVE ───────────────────────
+(function(){
+ let dragEl=null,dragOffX=0,dragOffY=0,hasMoved=false,startX=0,startY=0;
+ const THRESHOLD=5;
+ window.iconDragStart=function(e,el){
+  if(e.button!==0)return;dragEl=el;startX=e.clientX;startY=e.clientY;
+  const rect=el.getBoundingClientRect();dragOffX=e.clientX-rect.left;dragOffY=e.clientY-rect.top;hasMoved=false;e.stopPropagation();
+ };
+ document.addEventListener('mousemove',function(e){
+  if(!dragEl)return;
+  const dx=Math.abs(e.clientX-startX),dy=Math.abs(e.clientY-startY);
+  if(!hasMoved&&dx<THRESHOLD&&dy<THRESHOLD)return;
+  if(!hasMoved){hasMoved=true;dragEl.classList.add('dragging-icon');}
+  const desk=document.getElementById('desktop'),deskRect=desk.getBoundingClientRect();
+  let nx=e.clientX-deskRect.left-dragOffX,ny=e.clientY-deskRect.top-dragOffY;
+  nx=Math.max(0,Math.min(nx,deskRect.width-dragEl.offsetWidth));
+  ny=Math.max(0,Math.min(ny,deskRect.height-dragEl.offsetHeight));
+  dragEl.style.left=nx+'px';dragEl.style.top=ny+'px';e.preventDefault();
+ });
+ document.addEventListener('mouseup',function(){
+  if(!dragEl)return;dragEl.classList.remove('dragging-icon');
+  if(hasMoved)saveIconPositions();
+  dragEl=null;
+ });
+})();
+
+// ── WALLPAPER GALLERY ─────────────────────────────────
+const WALLPAPERS={
+ dark:[
+  {id:'dark-default',name:'Midnight Blue',css:'linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%)',isDefault:true},
+  {id:'dark-nebula',name:'Туманность',css:'radial-gradient(ellipse at 30% 40%,#1a0040 0%,#060010 50%,#001020 100%)'},
+  {id:'dark-aurora',name:'Северное сияние',css:'linear-gradient(160deg,#001a10 0%,#003322 30%,#002244 60%,#001133 100%)'},
+  {id:'dark-volcano',name:'Вулкан',css:'radial-gradient(ellipse at 50% 90%,#3d0000 0%,#1a0000 40%,#0a0005 100%)'},
+  {id:'dark-ocean',name:'Глубокий океан',css:'linear-gradient(180deg,#000d1a 0%,#001428 50%,#001f3d 100%)'},
+  {id:'dark-galaxy',name:'Галактика',css:'radial-gradient(ellipse at 70% 30%,#0d001a 0%,#120033 40%,#000010 100%)'},
+  {id:'dark-matrix',name:'Матрица',css:'linear-gradient(160deg,#001400 0%,#002000 50%,#000a00 100%)'},
+  {id:'dark-steel',name:'Сталь',css:'linear-gradient(160deg,#0a0e14 0%,#131b26 50%,#0a0d13 100%)'},
+  {id:'dark-purple',name:'Пурпур',css:'linear-gradient(135deg,#0d0020 0%,#1a0035 50%,#08001a 100%)'},
+  {id:'dark-storm',name:'Шторм',css:'linear-gradient(160deg,#0a0a14 0%,#14141e 40%,#0a0a10 100%)'},
+ ],
+ light:[
+  {id:'light-default',name:'Sky Blue',css:'linear-gradient(160deg,#dceeff 0%,#eef4fb 40%,#d8eaf5 100%)',isDefault:true},
+  {id:'light-peach',name:'Персик',css:'linear-gradient(160deg,#fff3e0 0%,#ffe8cc 50%,#fff0d8 100%)'},
+  {id:'light-mint',name:'Мята',css:'linear-gradient(160deg,#e0fff4 0%,#ccf5e8 50%,#d8fff0 100%)'},
+  {id:'light-lavender',name:'Лаванда',css:'linear-gradient(160deg,#f0e6ff 0%,#e8d5ff 50%,#eeddff 100%)'},
+  {id:'light-rose',name:'Роза',css:'linear-gradient(160deg,#ffe6ee 0%,#ffd5e3 50%,#ffdde8 100%)'},
+  {id:'light-lime',name:'Лайм',css:'linear-gradient(160deg,#edffd6 0%,#e0ffb8 50%,#e8ffcc 100%)'},
+  {id:'light-aqua',name:'Аква',css:'linear-gradient(160deg,#d6f8ff 0%,#b8f0ff 50%,#c8f4ff 100%)'},
+  {id:'light-sand',name:'Песок',css:'linear-gradient(160deg,#fff8e0 0%,#fff2c0 50%,#fff5d0 100%)'},
+ ]
+};
+let currentWpTab='dark',currentWpId={dark:'dark-default',light:'light-default'};
+window.openWallpaperGallery=function(mode){
+ currentWpTab=mode||'dark';
+ el('wp-gallery-heading').textContent=currentWpTab==='dark'?'🖼️ Тёмные обои':'🖼️ Светлые обои';
+ el('wp-tab-dark').classList.toggle('active',currentWpTab==='dark');
+ el('wp-tab-light').classList.toggle('active',currentWpTab==='light');
+ renderWpGrid(currentWpTab);el('tray-popup').style.display='none';el('wallpaper-gallery').style.display='block';
+};
+window.closeWallpaperGallery=function(){el('wallpaper-gallery').style.display='none';};
+window.wpSwitchTab=function(tab){currentWpTab=tab;el('wp-tab-dark').classList.toggle('active',tab==='dark');el('wp-tab-light').classList.toggle('active',tab==='light');renderWpGrid(tab);};
+function renderWpGrid(tab){
+ const grid=el('wp-grid');grid.innerHTML='';
+ WALLPAPERS[tab].forEach(wp=>{
+  const div=document.createElement('div');
+  div.className='wp-item'+(currentWpId[tab]===wp.id?' wp-active':'');
+  div.style.background=wp.css;div.title=wp.name;
+  div.innerHTML=`<div class="wp-item-label">${wp.name}</div>${wp.isDefault?'<div class="wp-default-badge">По умолч.</div>':''}`;
+  div.onclick=()=>{
+   currentWpId[tab]=wp.id;
+   if(tab==='light')document.body.classList.add('light-theme');
+   else document.body.classList.remove('light-theme');
+   document.getElementById('desktop').style.background=wp.css;
+   localStorage.setItem('exiwin_wallpaper',JSON.stringify({css:wp.css,isLight:tab==='light'}));
+   renderWpGrid(currentWpTab);showNotif('Обои изменены','Фон «'+wp.name+'»','🖼️');
+  };
+  grid.appendChild(div);
+ });
+}
+document.addEventListener('click',e=>{const g=el('wallpaper-gallery');if(g.style.display==='block'&&!g.contains(e.target))g.style.display='none';});
+
+// ── INIT PAINT ON OPEN ────────────────────────────────
+const origOpen=window.openApp;
+const _openApp=window.openApp;
+window.openApp=function(app){
+ _openApp(app);
+ if(app==='paint')setTimeout(initPaint,100);
+ if(app==='explorer')setTimeout(()=>expNav('Рабочий стол'),50);
+};
+
+// ── SEARCH ────────────────────────────────────────────
+window.smSearch=function(q){/* stub */};
+
+// ══════════════════════════════════════════════════════
+// 3D PARKOUR GAME ENGINE
+// ══════════════════════════════════════════════════════
+window.PARKOUR=(function(){
+ let canvas,ctx,running=false,W=800,H=550;
+ let player,platforms,cam,keys={},gameState='menu',difficulty='normal',score=0,deaths=0,level=1;
+ let gravity,jumpForce,moveSpeed,platformGap;
+ const difficulties={
+  easy:{gravity:0.4,jump:-10,speed:4,gap:120,platW:[100,160],name:'Легко'},
+  normal:{gravity:0.55,jump:-11,speed:5,gap:150,platW:[70,130],name:'Нормально'},
+  hard:{gravity:0.7,jump:-12,speed:6,gap:180,platW:[50,100],name:'Сложно'},
+  extreme:{gravity:0.85,jump:-13,speed:7,gap:210,platW:[35,80],name:'Экстрим'},
+ };
+
+ function init(root){
+  root.innerHTML='';root.style.cssText='position:relative;overflow:hidden;';
+  canvas=document.createElement('canvas');canvas.style.cssText='width:100%;height:100%;display:block;';
+  canvas.tabIndex=0;root.appendChild(canvas);ctx=canvas.getContext('2d');
+  function resize(){const r=root.getBoundingClientRect();canvas.width=W=Math.max(400,r.width);canvas.height=H=Math.max(300,r.height-10);}
+  resize();new ResizeObserver(resize).observe(root);
+  canvas.addEventListener('keydown',e=>{keys[e.code]=true;if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
+  canvas.addEventListener('keyup',e=>keys[e.code]=false);
+  canvas.addEventListener('click',handleClick);
+  canvas.focus();gameState='menu';running=true;requestAnimationFrame(loop);
+ }
+
+ function handleClick(e){
+  const rect=canvas.getBoundingClientRect();const mx=(e.clientX-rect.left)*(W/rect.width),my=(e.clientY-rect.top)*(H/rect.height);
+  if(gameState==='menu'){
+   const btns=[{x:W/2-200,y:H/2+20,w:90,h:40,d:'easy'},{x:W/2-80,y:H/2+20,w:90,h:40,d:'normal'},{x:W/2+40,y:H/2+20,w:90,h:40,d:'hard'},{x:W/2+160,y:H/2+20,w:90,h:40,d:'extreme'}];
+   for(const b of btns){if(mx>=b.x&&mx<=b.x+b.w&&my>=b.y&&my<=b.y+b.h){startGame(b.d);break;}}
+  }
+  if(gameState==='dead'){
+   if(mx>=W/2-60&&mx<=W/2+60&&my>=H/2+40&&my<=H/2+80)startGame(difficulty);
+   if(mx>=W/2-60&&mx<=W/2+60&&my>=H/2+90&&my<=H/2+130)gameState='menu';
+  }
+ }
+
+ function startGame(diff){
+  difficulty=diff;const d=difficulties[diff];
+  gravity=d.gravity;jumpForce=d.jump;moveSpeed=d.speed;platformGap=d.gap;
+  player={x:100,y:200,vy:0,w:20,h:30,onGround:false,color:'#f1c40f'};
+  platforms=[];score=0;deaths=0;level=1;cam={x:0};
+  generatePlatforms(0,30);gameState='playing';canvas.focus();
+ }
+
+ function generatePlatforms(startX,count){
+  const d=difficulties[difficulty];
+  let x=startX||0;
+  for(let i=0;i<count;i++){
+   const w=d.platW[0]+Math.random()*(d.platW[1]-d.platW[0]);
+   const y=H*0.5+Math.random()*H*0.3-50;
+   const type=Math.random()<0.15?'moving':Math.random()<0.1?'crumble':'normal';
+   platforms.push({x,y:Math.min(y,H-60),w,h:14,type,moveDir:1,moveRange:40,moveSpeed:1+Math.random(),crumbleTimer:0,color:type==='moving'?'#3498db':type==='crumble'?'#e67e22':'#2ecc71'});
+   x+=w+d.gap*(0.6+Math.random()*0.8);
+  }
+ }
+
+ function update(){
+  if(gameState!=='playing')return;
+  const p=player;
+  // Movement
+  if(keys['ArrowLeft']||keys['KeyA'])p.x-=moveSpeed;
+  if(keys['ArrowRight']||keys['KeyD'])p.x+=moveSpeed;
+  if((keys['ArrowUp']||keys['KeyW']||keys['Space'])&&p.onGround){p.vy=jumpForce;p.onGround=false;}
+  // Gravity
+  p.vy+=gravity;p.y+=p.vy;p.onGround=false;
+  // Platform collision
+  for(const pl of platforms){
+   if(pl.type==='moving'){pl.x+=pl.moveDir*pl.moveSpeed;pl.moveRange--;if(pl.moveRange<=0){pl.moveDir*=-1;pl.moveRange=80;}}
+   if(p.vy>=0&&p.x+p.w>pl.x&&p.x<pl.x+pl.w&&p.y+p.h>=pl.y&&p.y+p.h<=pl.y+20){
+    p.y=pl.y-p.h;p.vy=0;p.onGround=true;
+    if(pl.type==='crumble'){pl.crumbleTimer+=1;if(pl.crumbleTimer>30)pl.y=9999;}
+   }
+  }
+  // Fall death
+  if(p.y>H+50){deaths++;score=Math.max(0,score-50);
+   p.x=cam.x+100;p.y=100;p.vy=0;
+  }
+  // Score
+  score=Math.max(score,Math.floor((p.x-100)/10));
+  // Camera
+  cam.x=Math.max(0,p.x-200);
+  // Generate more platforms
+  const maxPlatX=Math.max(...platforms.map(p=>p.x+p.w));
+  if(p.x>maxPlatX-W*2){generatePlatforms(maxPlatX+platformGap,15);level++;}
+ }
+
+ function render(){
+  // Sky gradient
+  const skyGrad=ctx.createLinearGradient(0,0,0,H);
+  if(difficulty==='extreme'){skyGrad.addColorStop(0,'#1a0000');skyGrad.addColorStop(1,'#3d0000');}
+  else if(difficulty==='hard'){skyGrad.addColorStop(0,'#0a0a2e');skyGrad.addColorStop(1,'#1a1a4e');}
+  else{skyGrad.addColorStop(0,'#87CEEB');skyGrad.addColorStop(1,'#E0F7FA');}
+  ctx.fillStyle=skyGrad;ctx.fillRect(0,0,W,H);
+
+  // Background mountains
+  ctx.fillStyle='rgba(100,150,100,0.3)';
+  for(let i=0;i<10;i++){
+   const bx=-cam.x*0.1+i*200;
+   ctx.beginPath();ctx.moveTo(bx,H);ctx.lineTo(bx+100,H-120-Math.sin(i)*30);ctx.lineTo(bx+200,H);ctx.fill();
+  }
+
+  ctx.save();ctx.translate(-cam.x,0);
+
+  // Platforms with 3D effect
+  for(const pl of platforms){
+   if(pl.x+pl.w<cam.x-50||pl.x>cam.x+W+50)continue;
+   // Shadow
+   ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(pl.x+3,pl.y+3,pl.w,pl.h);
+   // Top face (3D)
+   ctx.fillStyle=pl.color;
+   ctx.fillRect(pl.x,pl.y,pl.w,pl.h);
+   // Side face
+   ctx.fillStyle=darkenColor(pl.color,0.3);
+   ctx.fillRect(pl.x,pl.y+pl.h,pl.w,6);
+   // Highlight
+   ctx.fillStyle='rgba(255,255,255,0.2)';
+   ctx.fillRect(pl.x,pl.y,pl.w,3);
+  }
+
+  // Player — Roblox Noob style
+  if(gameState==='playing'){
+   const p=player;
+   ctx.save();ctx.translate(p.x+p.w/2,p.y+p.h/2);
+   // Legs (blue)
+   ctx.fillStyle='#00a2ff';
+   ctx.fillRect(-8,8,6,12);ctx.fillRect(2,8,6,12);
+   // Body (yellow)
+   ctx.fillStyle='#f1c40f';
+   ctx.fillRect(-9,-6,18,16);
+   // Arms
+   ctx.fillStyle='#f1c40f';
+   const armSwing=Math.sin(Date.now()/150)*3;
+   ctx.fillRect(-13,-4,4,12+armSwing);ctx.fillRect(9,-4,4,12-armSwing);
+   // Head
+   ctx.fillStyle='#f1c40f';
+   ctx.fillRect(-7,-18,14,14);
+   // Face
+   ctx.fillStyle='#000';
+   ctx.fillRect(-5,-14,3,3);ctx.fillRect(2,-14,3,3); // eyes
+   ctx.fillStyle='#fff';
+   ctx.fillRect(-4,-13,1.5,1.5);ctx.fillRect(3,-13,1.5,1.5); // pupils
+   // Smile
+   ctx.fillStyle='#000';
+   ctx.fillRect(-3,-9,6,1.5);
+   // "noob" text above
+   ctx.fillStyle='rgba(255,255,255,0.8)';ctx.font='bold 8px Arial';ctx.textAlign='center';
+   ctx.fillText('NOOB',-0,-22);
+   ctx.restore();
+  }
+  ctx.restore();
+
+  // HUD
+  ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(8,8,200,70);ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.strokeRect(8,8,200,70);
+  ctx.fillStyle='#fff';ctx.font='bold 14px Segoe UI';ctx.textAlign='left';
+  ctx.fillText(`🏃 Очки: ${score}`,18,30);
+  ctx.fillText(`💀 Смерти: ${deaths}`,18,50);
+  ctx.fillText(`📊 Уровень: ${level} | ${difficulties[difficulty].name}`,18,70);
+
+  // Menu
+  if(gameState==='menu'){
+   ctx.fillStyle='rgba(0,0,20,0.85)';ctx.fillRect(0,0,W,H);
+   ctx.fillStyle='#fff';ctx.font='bold 36px Segoe UI';ctx.textAlign='center';
+   ctx.fillText('🏃 3D Паркур — Noob Runner',W/2,H/2-80);
+   ctx.font='16px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.6)';
+   ctx.fillText('Выберите сложность:',W/2,H/2);
+
+   const btns=[
+    {x:W/2-200,label:'😊 Легко',color:'#2ecc71',d:'easy'},
+    {x:W/2-80,label:'😐 Нормально',color:'#f1c40f',d:'normal'},
+    {x:W/2+40,label:'😤 Сложно',color:'#e74c3c',d:'hard'},
+    {x:W/2+160,label:'💀 Экстрим',color:'#8e44ad',d:'extreme'},
+   ];
+   btns.forEach(b=>{
+    ctx.fillStyle=b.color;ctx.beginPath();
+    if(ctx.roundRect)ctx.roundRect(b.x,H/2+20,90,40,8);else ctx.rect(b.x,H/2+20,90,40);
+    ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 11px Segoe UI';ctx.fillText(b.label,b.x+45,H/2+45);
+   });
+
+   ctx.font='13px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.4)';
+   ctx.fillText('WASD / Стрелки — движение, Пробел — прыжок',W/2,H/2+90);
+
+   // Draw noob preview
+   ctx.save();ctx.translate(W/2,H/2-140);
+   ctx.fillStyle='#f1c40f';ctx.fillRect(-14,-6,28,24);
+   ctx.fillStyle='#00a2ff';ctx.fillRect(-12,18,10,16);ctx.fillRect(2,18,10,16);
+   ctx.fillStyle='#f1c40f';ctx.fillRect(-10,-24,20,20);
+   ctx.fillStyle='#000';ctx.fillRect(-7,-18,4,4);ctx.fillRect(3,-18,4,4);
+   ctx.fillRect(-5,-12,10,2);
+   ctx.restore();
+  }
+
+  // Death screen
+  if(gameState==='dead'){
+   ctx.fillStyle='rgba(80,0,0,0.8)';ctx.fillRect(0,0,W,H);
+   ctx.fillStyle='#fff';ctx.font='bold 32px Segoe UI';ctx.textAlign='center';
+   ctx.fillText('💀 Вы упали!',W/2,H/2-20);
+   ctx.font='16px Segoe UI';ctx.fillText(`Очки: ${score}`,W/2,H/2+15);
+   ctx.fillStyle='#2ecc71';if(ctx.roundRect){ctx.beginPath();ctx.roundRect(W/2-60,H/2+40,120,35,8);ctx.fill();}else{ctx.fillRect(W/2-60,H/2+40,120,35);}
+   ctx.fillStyle='#fff';ctx.font='bold 13px Segoe UI';ctx.fillText('🔄 Заново',W/2,H/2+62);
+   ctx.fillStyle='#3498db';if(ctx.roundRect){ctx.beginPath();ctx.roundRect(W/2-60,H/2+90,120,35,8);ctx.fill();}else{ctx.fillRect(W/2-60,H/2+90,120,35);}
+   ctx.fillStyle='#fff';ctx.fillText('📋 Меню',W/2,H/2+112);
+  }
+ }
+
+ function darkenColor(hex,t){
+  try{hex=hex.replace('#','');const r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
+  return`rgb(${Math.floor(r*(1-t))},${Math.floor(g*(1-t))},${Math.floor(b*(1-t))})`;
+  }catch(e){return hex;}
+ }
+
+ function loop(){
+  if(!running||!canvas||!canvas.isConnected){running=false;return;}
+  update();render();requestAnimationFrame(loop);
+ }
+ function stop(){running=false;}
+ return{init,stop};
+})();
+
+// ── PARKOUR OPEN/CLOSE ────────────────────────────────
+window.openParkour=function(){
+ const w=el('win-parkour'),root=el('parkour-root');
+ if(w){w.style.display='flex';bringFront('win-parkour');const tb=el('tb-parkour');if(tb)tb.classList.add('running','active-win');}
+ if(root&&!window._parkourStarted){PARKOUR.init(root);window._parkourStarted=true;}
+};
+window.parkourClose=function(){
+ const w=el('win-parkour');if(w)w.style.display='none';
+ const tb=el('tb-parkour');if(tb)tb.classList.remove('running','active-win');
+ if(window._parkourStarted){PARKOUR.stop();window._parkourStarted=false;}
+};
+
+// ── GTA6 STUB (simplified for size) ───────────────────
+window.openGta6=function(){
+ const w=el('win-gta6'),root=el('gta6-root');
+ if(w){w.style.display='flex';bringFront('win-gta6');const tb=el('tb-gta6');if(tb)tb.classList.add('running','active-win');}
+ if(root&&!window._gta6started){
+  if(typeof GTA6!=='undefined'){GTA6.init(root);window._gta6started=true;}
+  else{root.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#fff;font-size:18px;">🎮 GTA 6 загружается...</div>';}
+ }
+};
+window.gta6Close=function(){
+ const w=el('win-gta6');if(w)w.style.display='none';
+ const tb=el('tb-gta6');if(tb)tb.classList.remove('running','active-win');
+ if(typeof GTA6!=='undefined'&&window._gta6started){GTA6.stop();window._gta6started=false;}
+};
+window.launchExiblox=function(){showNotif('Exiblox v3','Загрузка...','🐍');};
+
+// ── INITIAL GREETING ──────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+ const h=new Date().getHours(),g=el('br-hello');
+ if(g)g.textContent=h<6?'Доброй ночи!':h<12?'Доброе утро!':h<18?'Добрый день!':'Добрый вечер!';
+});
+</script>
+
+<!-- GTA 6 ENGINE (preserved) -->
+<script>
+'use strict';
+window.GTA6=(function(){
+const abs=Math.abs,sqrt=Math.sqrt,sin=Math.sin,cos=Math.cos,atan2=Math.atan2,PI=Math.PI,floor=Math.floor,min=Math.min,max=Math.max;
+const clamp=(v,a,b)=>max(a,min(b,v)),lerp=(a,b,t)=>a+(b-a)*t,dst=(ax,ay,bx,by)=>sqrt((ax-bx)**2+(ay-by)**2),rnd=(a,b)=>Math.random()*(b-a)+a,pick=arr=>arr[floor(Math.random()*arr.length)];
+const lerpA=(a,b,t)=>{let d=b-a;while(d>PI)d-=PI*2;while(d<-PI)d+=PI*2;return a+d*t;};
 const hash=(x,y)=>{let h=(x*374761393+y*668265263);h=((h^(h>>13))*1274126177);return abs(h%1000)/1000;};
-
-// ── World constants ────────────────────────────────────────────
-const TILE=48, MAP_W=110, MAP_H=110;
-const ROAD=0,SIDEWALK=1,BUILDING=2,PARK=3,WATER=4;
-
-// ── Palettes ───────────────────────────────────────────────────
-const CAR_COLORS=['#e74c3c','#e67e22','#f1c40f','#2ecc71','#1abc9c',
-  '#3498db','#9b59b6','#ff69b4','#ecf0f1','#2c3e50','#95a5a6',
-  '#c0392b','#27ae60','#2980b9','#8e44ad','#d35400','#16a085',
-  '#f39c12','#7f8c8d','#bdc3c7'];
-const SKIN=['#f5cba7','#e59866','#d4a574','#c07a4a','#a0522d','#f0e0c8','#e8c9a0'];
-const SHIRTS=['#e74c3c','#3498db','#2ecc71','#f1c40f','#9b59b6','#e67e22',
-  '#1abc9c','#ff69b4','#95a5a6','#c0392b','#27ae60','#2980b9','#16a085'];
-const PANTS=['#2c3e50','#1a252f','#34495e','#5d6d7e','#4a4a6a','#1a1a2e'];
-const BZONE={
-  downtown:['#5a6b7a','#6b7c8b','#4a5b6a','#7a8b9a','#8a9baa','#3a4b5a'],
-  midtown: ['#b8945a','#a07840','#c8a870','#907030','#d4b070','#806028','#9a8050'],
-  uptown:  ['#8b7a6a','#9a8a7a','#7a6a5a','#aa9a8a','#6a5a4a','#ba9a7a'],
-  industry:['#707070','#808080','#606060','#787878','#6a6a6a','#757575'],
-};
-
-// ── Entity IDs ─────────────────────────────────────────────────
+const TILE=48,MAP_W=80,MAP_H=80,ROAD=0,SIDEWALK=1,BUILDING=2,PARK=3,WATER=4;
+const CAR_COLORS=['#e74c3c','#e67e22','#f1c40f','#2ecc71','#3498db','#9b59b6','#ff69b4','#ecf0f1','#2c3e50'];
+const SKIN=['#f5cba7','#e59866','#d4a574','#c07a4a'],SHIRTS=['#e74c3c','#3498db','#2ecc71','#f1c40f','#9b59b6'],PANTS=['#2c3e50','#1a252f','#34495e'];
 let _eid=1;
 class Entity{constructor(x,y){this.x=x;this.y=y;this.vx=0;this.vy=0;this.angle=0;this.alive=true;this.id=_eid++;}}
+class Player extends Entity{constructor(x,y){super(x,y);this.w=14;this.h=14;this.speed=150;this.health=100;this.maxHealth=100;this.inCar=null;this.money=2500;this.skinColor=pick(SKIN);this.shirtColor=pick(SHIRTS);this.pantsColor=pick(PANTS);this.animFrame=0;this.animTimer=0;this._fCool=0;this._gCool=0;}}
+class Car extends Entity{constructor(x,y,color,type){super(x,y);this.color=color||pick(CAR_COLORS);this.type=type||'sedan';this.w=30;this.h=16;this.speed=0;this.maxSpeed=type==='sports'?280:210;this.accel=type==='sports'?220:160;this.handling=type==='sports'?3.8:2.6;this.driver=null;this.isParked=true;this.aiState='parked';this.aiTimer=rnd(1,5);this.health=100;this.isPolice=(type==='police');this.brakeLight=false;this.sirenOn=false;}}
+class NPC extends Entity{constructor(x,y){super(x,y);this.w=10;this.h=10;this.speed=rnd(45,85);this.skinColor=pick(SKIN);this.shirtColor=pick(SHIRTS);this.pantsColor=pick(PANTS);this.dir={x:0,y:1};this.aiTimer=rnd(2,6);this.turnTimer=rnd(1,5);this.health=100;this.animFrame=0;this.animTimer=0;this.fleeing=false;}}
 
-// ── Player ─────────────────────────────────────────────────────
-class Player extends Entity{
-  constructor(x,y){
-    super(x,y); this.w=14;this.h=14;
-    this.speed=150; this.health=100; this.maxHealth=100;
-    this.inCar=null; this.money=2500;
-    this.skinColor=pick(SKIN); this.shirtColor=pick(SHIRTS); this.pantsColor=pick(PANTS);
-    this.animFrame=0; this.animTimer=0;
-    this._fCool=0; this._gCool=0;
-  }
-}
-
-// ── Car ────────────────────────────────────────────────────────
-class Car extends Entity{
-  constructor(x,y,color,type){
-    super(x,y); this.color=color||pick(CAR_COLORS); this.type=type||'sedan';
-    this.w=type==='truck'?38:type==='suv'?34:30;
-    this.h=type==='truck'?20:type==='suv'?18:16;
-    this.speed=0;
-    this.maxSpeed=type==='sports'?280:type==='truck'?120:type==='suv'?200:210;
-    this.accel=type==='sports'?220:type==='truck'?80:160;
-    this.handling=type==='sports'?3.8:type==='truck'?1.4:type==='suv'?2.8:2.6;
-    this.driver=null; this.passenger=null;
-    this.isParked=true; this.aiState='parked';
-    this.aiTimer=rnd(1,5); this.aiAngle=this.angle;
-    this.health=100; this.isPolice=(type==='police');
-    this.brakeLight=false; this.sirenOn=false;
-    this.colorNum=floor(Math.random()*10000);
-  }
-}
-
-// ── NPC ────────────────────────────────────────────────────────
-class NPC extends Entity{
-  constructor(x,y){
-    super(x,y); this.w=10;this.h=10;
-    this.speed=rnd(45,85);
-    this.skinColor=pick(SKIN); this.shirtColor=pick(SHIRTS); this.pantsColor=pick(PANTS);
-    this.dir={x:0,y:1}; this.aiState='walk';
-    this.aiTimer=rnd(2,6); this.turnTimer=rnd(1,5);
-    this.health=100; this.isPolice=false;
-    this.animFrame=0; this.animTimer=0;
-    this.fleeing=false;
-  }
-}
-
-// ── Police officer ─────────────────────────────────────────────
-class Officer extends NPC{
-  constructor(x,y){
-    super(x,y); this.isPolice=true;
-    this.speed=170; this.shirtColor='#1a3a6b'; this.pantsColor='#0d1f3a';
-    this.skinColor=pick(SKIN); this.aiState='patrol'; this.chasing=false;
-  }
-}
-
-// ── World generation ───────────────────────────────────────────
 function makeWorld(){
-  const map=Array.from({length:MAP_H},()=>new Uint8Array(MAP_W).fill(BUILDING));
-  const bColors=[]; for(let y=0;y<MAP_H;y++){bColors[y]=[];}
+const map=Array.from({length:MAP_H},()=>new Uint8Array(MAP_W).fill(BUILDING));const bColors=[];for(let y=0;y<MAP_H;y++){bColors[y]=[];}
+const roadX=[],roadY=[];for(let x=8;x<MAP_W-4;x+=10){roadX.push(x,x+1);}for(let y=8;y<MAP_H-4;y+=10){roadY.push(y,y+1);}
+for(let y=0;y<MAP_H;y++)for(let x=0;x<MAP_W;x++)if(roadX.includes(x)||roadY.includes(y))map[y][x]=ROAD;
+for(let y=1;y<MAP_H-1;y++)for(let x=1;x<MAP_W-1;x++)if(map[y][x]===BUILDING){let adj=false;for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])if(map[y+dy]?.[x+dx]===ROAD){adj=true;break;}if(adj)map[y][x]=SIDEWALK;}
+for(let y=0;y<8;y++)for(let x=0;x<8;x++)map[y][x]=WATER;
+for(let y=0;y<MAP_H;y++)for(let x=0;x<MAP_W;x++)if(map[y][x]===BUILDING){bColors[y][x]=['#5a6b7a','#6b7c8b','#4a5b6a','#b8945a','#8b7a6a'][floor(hash(x*7,y*7)*5)];}
+return{map,bColors,roadX,roadY};}
 
-  // Road grid — major arteries every 13 tiles (2-lane = 2 tiles wide)
-  const roadX=[], roadY=[];
-  for(let x=10;x<MAP_W-4;x+=13){roadX.push(x,x+1);}
-  for(let y=10;y<MAP_H-4;y+=13){roadY.push(y,y+1);}
-  // Extra diagonal cross roads
-  for(let x=16;x<MAP_W-4;x+=13){roadX.push(x,x+1);}
+let S={canvas:null,ctx:null,W:800,H:600,running:false,world:null,cam:{x:0,y:0},player:null,cars:[],npcs:[],wantedLevel:0,wantedCooldown:0,score:0,keys:{},lastTime:0,frameCount:0,gameTime:0,spawnCooldown:0,notifs:[],hud:null,mmCanvas:null,_listeners:[],dayTime:10};
 
-  for(let y=0;y<MAP_H;y++)
-    for(let x=0;x<MAP_W;x++)
-      if(roadX.includes(x)||roadY.includes(y)) map[y][x]=ROAD;
+function init(rootEl){if(!rootEl)return;for(const[el,ev,fn]of S._listeners)el.removeEventListener(ev,fn);S._listeners=[];rootEl.innerHTML='';rootEl.style.cssText='position:relative;overflow:hidden;background:#000;';
+const canvas=document.createElement('canvas');canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;';canvas.tabIndex=0;rootEl.appendChild(canvas);
+const hud=document.createElement('div');hud.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:5;font-family:Segoe UI,sans-serif;';rootEl.appendChild(hud);
+S.canvas=canvas;S.ctx=canvas.getContext('2d');S.hud=hud;
+function resize(){const r=rootEl.getBoundingClientRect();canvas.width=max(400,r.width);canvas.height=max(300,r.height-36);S.W=canvas.width;S.H=canvas.height;}
+resize();new ResizeObserver(resize).observe(rootEl);
+const kd=e=>{S.keys[e.code]=true;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();};
+const ku=e=>{S.keys[e.code]=false;};
+const addL=(el,ev,fn)=>{el.addEventListener(ev,fn);S._listeners.push([el,ev,fn]);};
+addL(window,'keydown',kd);addL(window,'keyup',ku);canvas.addEventListener('click',()=>canvas.focus());
+S.world=makeWorld();const startX=(MAP_W/2)*TILE,startY=(MAP_H/2)*TILE;S.player=new Player(startX,startY);S.cars=[];S.npcs=[];
+// Spawn cars
+for(let i=0;i<40;i++){const rx=pick(S.world.roadX),ry=floor(rnd(2,MAP_H-2));if(S.world.map[ry]?.[rx]===ROAD){const c=new Car((rx+.5)*TILE,(ry+.5)*TILE,pick(CAR_COLORS),pick(['sedan','sports']));S.cars.push(c);}}
+// Spawn NPCs
+for(let i=0;i<50;i++){const x=floor(rnd(2,MAP_W-2)),y=floor(rnd(2,MAP_H-2));if(S.world.map[y]?.[x]===SIDEWALK)S.npcs.push(new NPC((x+.5)*TILE,(y+.5)*TILE));}
+S.cam={x:startX-S.W/2,y:startY-S.H/2};S.running=true;S.lastTime=performance.now();
+S.notifs=[{msg:'🎮 WASD — движение • F — авто • G — спавн',t:4}];
+canvas.focus();requestAnimationFrame(gameLoop);}
 
-  // Sidewalks (1 tile border around road blocks)
-  for(let y=1;y<MAP_H-1;y++)
-    for(let x=1;x<MAP_W-1;x++)
-      if(map[y][x]===BUILDING){
-        let adj=false;
-        for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])
-          if(map[y+dy]?.[x+dx]===ROAD){adj=true;break;}
-        if(adj) map[y][x]=SIDEWALK;
-      }
+function gameLoop(ts){if(!S.running||!S.canvas||!S.canvas.isConnected){S.running=false;return;}
+const dt=min((ts-S.lastTime)/1000,0.05);S.lastTime=ts;S.frameCount++;S.gameTime+=dt;update(dt);render();drawHUD();requestAnimationFrame(gameLoop);}
 
-  // Water zone (top-left corner)
-  for(let y=0;y<12;y++) for(let x=0;x<12;x++) map[y][x]=WATER;
-
-  // Parks
-  for(let y=0;y<MAP_H;y++)
-    for(let x=0;x<MAP_W;x++)
-      if(map[y][x]===BUILDING && hash(x*3,y*3)<0.04)
-        map[y][x]=PARK;
-
-  // Building colors
-  function zonePal(x,y){
-    const cx=MAP_W/2,cy=MAP_H/2,d=dst(x,y,cx,cy);
-    if(d<18) return BZONE.downtown;
-    if(d<35) return BZONE.midtown;
-    if(d<50) return BZONE.uptown;
-    return BZONE.industry;
-  }
-  for(let y=0;y<MAP_H;y++)
-    for(let x=0;x<MAP_W;x++)
-      if(map[y][x]===BUILDING){
-        const p=zonePal(x,y);
-        bColors[y][x]=p[floor(hash(x*7,y*7)*p.length)];
-      }
-
-  // Building heights (for visual depth)
-  const bHeight=[];
-  for(let y=0;y<MAP_H;y++){
-    bHeight[y]=[];
-    for(let x=0;x<MAP_W;x++)
-      bHeight[y][x]=map[y][x]===BUILDING?floor(hash(x*11,y*13)*5+1):0;
-  }
-
-  return {map,bColors,bHeight,roadX,roadY};
+function update(dt){const K=S.keys,p=S.player;
+if(S.spawnCooldown>0)S.spawnCooldown-=dt;
+p._fCool=max(0,p._fCool-dt);p._gCool=max(0,p._gCool-dt);
+if(p.inCar){// Driving
+ const c=p.inCar;let thr=0,str=0;
+ if(K['ArrowUp']||K['KeyW'])thr=1;if(K['ArrowDown']||K['KeyS'])thr=-.6;if(K['ArrowLeft']||K['KeyA'])str=-1;if(K['ArrowRight']||K['KeyD'])str=1;
+ c.speed+=thr*c.accel*dt;if(!thr){c.speed*=.95;if(abs(c.speed)<1)c.speed=0;}if(K['Space'])c.speed*=.9;
+ c.speed=clamp(c.speed,-c.maxSpeed*.4,c.maxSpeed);if(abs(c.speed)>8)c.angle+=str*c.handling*dt*(abs(c.speed)/c.maxSpeed);
+ const nx=c.x+cos(c.angle)*c.speed*dt,ny=c.y+sin(c.angle)*c.speed*dt;
+ if(!solidAt(nx,c.y))c.x=nx;else c.speed*=-.3;if(!solidAt(c.x,ny))c.y=ny;else c.speed*=-.3;
+ c.x=clamp(c.x,20,MAP_W*TILE-20);c.y=clamp(c.y,20,MAP_H*TILE-20);p.x=c.x;p.y=c.y;
+}else{// Walking
+ let dx=0,dy=0;if(K['ArrowUp']||K['KeyW'])dy=-1;if(K['ArrowDown']||K['KeyS'])dy=1;if(K['ArrowLeft']||K['KeyA'])dx=-1;if(K['ArrowRight']||K['KeyD'])dx=1;
+ const sp=p.speed*(K['ShiftLeft']?1.7:1);if(dx||dy){const len=sqrt(dx*dx+dy*dy);dx/=len;dy/=len;p.angle=atan2(dy,dx);}
+ const nx=p.x+dx*sp*dt,ny=p.y+dy*sp*dt;if(!solidAt(nx,p.y))p.x=clamp(nx,8,MAP_W*TILE-8);if(!solidAt(p.x,ny))p.y=clamp(ny,8,MAP_H*TILE-8);
 }
-
-// ── Game state ─────────────────────────────────────────────────
-let S={
-  canvas:null,ctx:null,W:800,H:600,
-  running:false,initialized:false,
-  world:null,
-  cam:{x:0,y:0},
-  player:null,
-  cars:[],npcs:[],officers:[],
-  wantedLevel:0,wantedCooldown:0,
-  score:0,keys:{},mouse:{x:0,y:0},
-  lastTime:0,frameCount:0,gameTime:0,
-  spawnCooldown:0,policeCooldown:0,
-  notifs:[],
-  hud:null,mmCanvas:null,
-  _listeners:[],
-  nightMode:false,
-  dayTime:8, // hour 0-24
-  totalKills:0,
-};
-
-// ── Initialise ─────────────────────────────────────────────────
-function init(rootEl){
-  if(!rootEl) return;
-  // Clean
-  if(S.canvas&&S.canvas.parentNode) S.canvas.parentNode.removeChild(S.canvas);
-  if(S.mmCanvas&&S.mmCanvas.parentNode) S.mmCanvas.parentNode.removeChild(S.mmCanvas);
-  for(const[el,ev,fn] of S._listeners) el.removeEventListener(ev,fn);
-  S._listeners=[];
-  rootEl.innerHTML='';
-  rootEl.style.cssText='position:relative;overflow:hidden;background:#000;';
-
-  // Main canvas
-  const canvas=document.createElement('canvas');
-  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;';
-  canvas.tabIndex=0;
-  rootEl.appendChild(canvas);
-
-  // HUD overlay
-  const hud=document.createElement('div');
-  hud.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:5;font-family:\'Segoe UI\',sans-serif;';
-  rootEl.appendChild(hud);
-
-  // Minimap canvas
-  const mm=document.createElement('canvas');
-  mm.style.cssText='position:absolute;bottom:56px;right:10px;width:140px;height:140px;border-radius:50%;border:2px solid rgba(255,255,255,.35);box-shadow:0 0 12px rgba(0,0,0,.8);z-index:6;pointer-events:none;';
-  mm.width=140;mm.height=140;
-  rootEl.appendChild(mm);
-
-  // On-screen buttons
-  const btns=document.createElement('div');
-  btns.style.cssText='position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10;pointer-events:all;';
-  btns.innerHTML=`
-    <button id="gta6-spawn-btn" style="background:rgba(0,80,200,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">🚗 Спавн машины [G]</button>
-    <button id="gta6-sports-btn" style="background:rgba(200,80,0,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">🏎️ Спорткар [T]</button>
-    <button id="gta6-clear-btn" style="background:rgba(50,50,50,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">⭐ Снять розыск</button>
-    <button id="gta6-health-btn" style="background:rgba(0,150,80,.88);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;">❤️ Аптечка [$100]</button>
-  `;
-  rootEl.appendChild(btns);
-  btns.querySelector('#gta6-spawn-btn').onclick=()=>spawnCarNearPlayer('sedan');
-  btns.querySelector('#gta6-sports-btn').onclick=()=>spawnCarNearPlayer('sports');
-  btns.querySelector('#gta6-clear-btn').onclick=clearWanted;
-  btns.querySelector('#gta6-health-btn').onclick=buyHealth;
-
-  S.canvas=canvas; S.ctx=canvas.getContext('2d');
-  S.hud=hud; S.mmCanvas=mm;
-
-  // Resize
-  function resize(){
-    const r=rootEl.getBoundingClientRect();
-    canvas.width=max(400,r.width||800);
-    canvas.height=max(300,r.height-36||560);
-    S.W=canvas.width; S.H=canvas.height;
-  }
-  resize();
-  const ro=new ResizeObserver(resize);
-  ro.observe(rootEl);
-  S._listeners.push([window,'resize',resize]);
-
-  // Keys
-  const kd=e=>{S.keys[e.code]=true; if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();};
-  const ku=e=>{ S.keys[e.code]=false; };
-  const addL=(el,ev,fn)=>{ el.addEventListener(ev,fn); S._listeners.push([el,ev,fn]); };
-  addL(window,'keydown',kd); addL(window,'keyup',ku);
-  canvas.addEventListener('click',()=>canvas.focus());
-
-  // Generate world
-  S.world=makeWorld();
-
-  // Player at city center
-  const startX=(MAP_W/2)*TILE+TILE/2, startY=(MAP_H/2)*TILE+TILE/2;
-  S.player=new Player(startX,startY);
-  S.cars=[]; S.npcs=[]; S.officers=[];
-  S.wantedLevel=0; S.wantedCooldown=0;
-  S.score=0; S.spawnCooldown=0; S.policeCooldown=0;
-  S.frameCount=0; S.gameTime=0; S.dayTime=10;
-  S.notifs=[];
-
-  spawnInitialCars();
-  spawnInitialNPCs();
-
-  S.cam={x:startX-S.W/2,y:startY-S.H/2};
-  S.running=true; S.initialized=true;
-  S.lastTime=performance.now();
-
-  notify('🎮 WASD — движение • F — войти/выйти из авто • G — спавн машины',4500);
-  setTimeout(()=>notify('🚗 Подойдите к любой машине и нажмите F!',3000),1800);
-  setTimeout(()=>notify('🌆 Добро пожаловать в GTA 6 — ExiWin Edition!',3000),200);
-
-  canvas.focus();
-  requestAnimationFrame(gameLoop);
-}
-
-// ── Spawn helpers ──────────────────────────────────────────────
-function findRoadPos(){
-  for(let i=0;i<500;i++){
-    const rx=pick(S.world.roadX),ry=floor(rnd(2,MAP_H-2));
-    if(S.world.map[ry]?.[rx]===ROAD)
-      return{x:(rx+0.5)*TILE,y:(ry+0.5)*TILE};
-  }
-  return{x:MAP_W/2*TILE,y:MAP_H/2*TILE};
-}
-function findSidewalkPos(){
-  for(let i=0;i<500;i++){
-    const x=floor(rnd(2,MAP_W-2)),y=floor(rnd(2,MAP_H-2));
-    if(S.world.map[y]?.[x]===SIDEWALK)
-      return{x:(x+0.5)*TILE,y:(y+0.5)*TILE};
-  }
-  return{x:(MAP_W/2+5)*TILE,y:MAP_H/2*TILE};
-}
-
-function spawnInitialCars(){
-  const types=['sedan','sedan','sedan','sedan','sports','suv','suv','truck'];
-  let n=0;
-  for(let attempt=0;attempt<3000&&n<80;attempt++){
-    const p=findRoadPos();
-    if(carOverlapAt(p.x,p.y,30,null)){continue;}
-    const c=new Car(p.x,p.y,pick(CAR_COLORS),pick(types));
-    // Snap to road angle
-    if(S.world.roadX.includes(floor(p.x/TILE))) c.angle=PI/2; else c.angle=0;
-    if(Math.random()<0.4){c.aiState='driving';c.isParked=false;}
-    S.cars.push(c); n++;
-  }
-  // Spawn some police cars
-  for(let i=0;i<4;i++){
-    const p=findRoadPos();
-    const c=new Car(p.x,p.y,pick(['#1e3a8a','#152c6b']),'police');
-    c.aiState='patrol'; c.isParked=false;
-    S.cars.push(c);
-  }
-}
-
-function spawnInitialNPCs(){
-  for(let i=0;i<100;i++){
-    const p=findSidewalkPos();
-    const ang=Math.random()*PI*2;
-    const npc=new NPC(p.x,p.y);
-    npc.dir={x:cos(ang),y:sin(ang)};
-    S.npcs.push(npc);
-  }
-  for(let i=0;i<6;i++){
-    const p=findSidewalkPos();
-    S.officers.push(new Officer(p.x,p.y));
-  }
-}
-
-function carOverlapAt(x,y,r,exclude){
-  for(const c of S.cars){
-    if(c===exclude) continue;
-    if(dst(c.x,c.y,x,y)<r) return true;
-  }
-  return false;
-}
-
-// ── Game loop ──────────────────────────────────────────────────
-function gameLoop(ts){
-  if(!S.running||!S.canvas||!S.canvas.isConnected){S.running=false;return;}
-  const dt=min((ts-S.lastTime)/1000,0.05);
-  S.lastTime=ts; S.frameCount++; S.gameTime+=dt;
-  S.dayTime=(S.dayTime+dt*0.015)%24; // 1 real min = ~1 game hour
-
-  update(dt);
-  render();
-  drawHUD();
-  drawMinimap();
-
-  requestAnimationFrame(gameLoop);
-}
-
-// ── Update ────────────────────────────────────────────────────
-function update(dt){
-  const K=S.keys, p=S.player;
-  if(S.spawnCooldown>0) S.spawnCooldown-=dt;
-  if(S.policeCooldown>0) S.policeCooldown-=dt;
-
-  // ── Player ──────────────────────────────────────────────────
-  if(p.inCar) updateDriving(dt);
-  else        updateWalk(dt);
-
-  // ── F key: enter/exit ────────────────────────────────────────
-  p._fCool=max(0,p._fCool-dt);
-  if(K['KeyF']&&p._fCool<=0){
-    p._fCool=0.35;
-    if(p.inCar){ exitCar(p); }
-    else {
-      const nc=nearestCar();
-      if(nc&&!nc.driver&&dst(p.x,p.y,nc.x,nc.y)<55){
-        enterCar(p,nc);
-      } else if(nc){
-        notify('🚗 Подойдите ближе к машине!',1200);
-      }
-    }
-  }
-
-  // ── G key: spawn sedan ───────────────────────────────────────
-  p._gCool=max(0,p._gCool-dt);
-  if(K['KeyG']&&p._gCool<=0){
-    p._gCool=0.4;
-    spawnCarNearPlayer('sedan');
-  }
-  // T key: sports
-  if(K['KeyT']&&p._gCool<=0){
-    p._gCool=0.4;
-    spawnCarNearPlayer('sports');
-  }
-
-  // ── Camera ──────────────────────────────────────────────────
-  const tx=p.inCar?p.inCar.x:p.x, ty=p.inCar?p.inCar.y:p.y;
-  S.cam.x=lerp(S.cam.x,tx-S.W/2,0.12);
-  S.cam.y=lerp(S.cam.y,ty-S.H/2,0.12);
-  S.cam.x=clamp(S.cam.x,0,MAP_W*TILE-S.W);
-  S.cam.y=clamp(S.cam.y,0,MAP_H*TILE-S.H);
-
-  // ── Cars ─────────────────────────────────────────────────────
-  for(const c of S.cars){
-    if(c.driver===p) continue;
-    updateCarAI(c,dt);
-  }
-
-  // ── NPCs ─────────────────────────────────────────────────────
-  for(const n of S.npcs) updateNPC(n,dt);
-  for(const o of S.officers) updateOfficer(o,dt);
-
-  // ── Wanted: spawn police ─────────────────────────────────────
-  if(S.wantedLevel>0){
-    S.wantedCooldown-=dt;
-    if(S.wantedCooldown<=0){
-      S.wantedLevel=max(0,S.wantedLevel-1);
-      S.wantedCooldown=S.wantedLevel>0?18:0;
-      if(S.wantedLevel===0){
-        notify('⭐ Полиция вас потеряла!',2000);
-        // Stand down police
-        for(const c of S.cars) if(c.isPolice&&c.aiState==='chase') c.aiState='patrol';
-        for(const o of S.officers) o.chasing=false;
-      }
-    }
-    if(S.policeCooldown<=0&&S.wantedLevel>0){
-      S.policeCooldown=8/S.wantedLevel;
-      spawnPoliceUnit();
-    }
-  }
-
-  // ── Cleanup dead ─────────────────────────────────────────────
-  if(S.frameCount%300===0){
-    const px=p.inCar?p.inCar.x:p.x, py=p.inCar?p.inCar.y:p.y;
-    // Remove faraway npcs
-    S.npcs=S.npcs.filter(n=>!n.alive?dst(n.x,n.y,px,py)<600:true);
-    // Replenish
-    if(S.npcs.filter(n=>n.alive).length<80){
-      for(let i=0;i<5;i++){
-        const sp=findSidewalkPos(); S.npcs.push(new NPC(sp.x,sp.y));
-      }
-    }
-    if(S.cars.filter(c=>!c.isPolice&&c.aiState!=='player').length<60){
-      for(let i=0;i<4;i++){
-        const p2=findRoadPos();
-        if(!carOverlapAt(p2.x,p2.y,35,null)){
-          const c=new Car(p2.x,p2.y,pick(CAR_COLORS),pick(['sedan','suv']));
-          c.aiState='driving'; c.isParked=false;
-          S.cars.push(c);
-        }
-      }
-    }
-  }
-
-  // ── Notifications ────────────────────────────────────────────
-  S.notifs=S.notifs.filter(n=>{n.t-=dt;return n.t>0;});
-}
-
-function updateWalk(dt){
-  const K=S.keys,p=S.player;
-  let dx=0,dy=0;
-  if(K['ArrowUp']   ||K['KeyW']) dy=-1;
-  if(K['ArrowDown'] ||K['KeyS']) dy=1;
-  if(K['ArrowLeft'] ||K['KeyA']) dx=-1;
-  if(K['ArrowRight']||K['KeyD']) dx=1;
-  const run=K['ShiftLeft']||K['ShiftRight'];
-  const sp=p.speed*(run?1.75:1);
-  if(dx||dy){
-    const len=sqrt(dx*dx+dy*dy);
-    dx/=len; dy/=len;
-    p.angle=atan2(dy,dx);
-    p.animTimer+=dt; if(p.animTimer>0.13){p.animFrame=(p.animFrame+1)%4;p.animTimer=0;}
-  }
-  const nx=p.x+dx*sp*dt, ny=p.y+dy*sp*dt;
-  if(!solidAt(nx,p.y)) p.x=clamp(nx,8,MAP_W*TILE-8);
-  if(!solidAt(p.x,ny)) p.y=clamp(ny,8,MAP_H*TILE-8);
-}
-
-function updateDriving(dt){
-  const K=S.keys,p=S.player,c=p.inCar;
-  let thr=0,str=0;
-  if(K['ArrowUp']   ||K['KeyW']) thr=1;
-  if(K['ArrowDown'] ||K['KeyS']) thr=-0.6;
-  if(K['ArrowLeft'] ||K['KeyA']) str=-1;
-  if(K['ArrowRight']||K['KeyD']) str=1;
-  const brake=K['Space'];
-
-  c.speed+=thr*c.accel*dt;
-  if(!thr){ c.speed*=Math.pow(0.82,dt*60/60); if(abs(c.speed)<1)c.speed=0; }
-  if(brake){ c.speed*=Math.pow(0.65,dt*60/60); c.brakeLight=true; } else c.brakeLight=thr<0;
-  c.speed=clamp(c.speed,-c.maxSpeed*0.45,c.maxSpeed);
-
-  if(abs(c.speed)>8){
-    c.angle+=str*c.handling*dt*(abs(c.speed)/c.maxSpeed);
-  }
-
-  const nx=c.x+cos(c.angle)*c.speed*dt;
-  const ny=c.y+sin(c.angle)*c.speed*dt;
-  if(!carSolid(nx,c.y,c)){c.x=nx;}else{c.speed*=-0.3;}
-  if(!carSolid(c.x,ny,c)){c.y=ny;}else{c.speed*=-0.3;}
-  c.x=clamp(c.x,20,MAP_W*TILE-20); c.y=clamp(c.y,20,MAP_H*TILE-20);
-
-  // Car-car collision
-  for(const o of S.cars){
-    if(o===c||!o.isParked) continue;
-    if(dst(c.x,c.y,o.x,o.y)<36){
-      const ang=atan2(c.y-o.y,c.x-o.x);
-      c.x+=cos(ang)*2; c.y+=sin(ang)*2;
-      o.x-=cos(ang)*1; o.y-=sin(ang)*1;
-      if(abs(c.speed)>60){ gainWanted(1); c.speed*=0.4; }
-      c.speed*=0.3;
-    }
-  }
-
-  // Hit NPCs
-  if(abs(c.speed)>55){
-    for(const n of S.npcs){
-      if(!n.alive) continue;
-      if(dst(c.x,c.y,n.x,n.y)<28){
-        n.alive=false; S.totalKills++; gainWanted(2);
-        p.money=max(0,p.money); S.score+=150;
-        notify('💀 Наезд! Розыск ↑↑',1800);
-      }
-    }
-    // Hit officer
-    for(const o of S.officers){
-      if(!o.alive) continue;
-      if(dst(c.x,c.y,o.x,o.y)<28){
-        gainWanted(3); o.alive=false;
-        notify('🚨 Наезд на полицейского! ВНИМАНИЕ!',2500);
-      }
-    }
-  }
-
-  p.x=c.x+sin(c.angle)*12; p.y=c.y-cos(c.angle)*12;
-
-  // Police catch
-  if(S.wantedLevel>0){
-    for(const pc of S.cars){
-      if(!pc.isPolice||pc.driver===p) continue;
-      if(dst(pc.x,pc.y,c.x,c.y)<40){
-        bustedPlayer();
-        return;
-      }
-    }
-    for(const o of S.officers){
-      if(dst(o.x,o.y,p.x,p.y)<25&&o.chasing){
-        bustedPlayer();
-        return;
-      }
-    }
-  }
-}
-
-function enterCar(p,c){
-  p.inCar=c; c.driver=p; c.isParked=false; c.aiState='player';
-  c.speed=0;
-  notify('🚗 Едем на '+carName(c)+'! Удачи!',1500);
-}
-function exitCar(p){
-  const c=p.inCar; if(!c) return;
-  c.driver=null; c.speed*=0.2; c.isParked=true; c.aiState='parked';
-  // Place player beside car
-  p.x=c.x+cos(c.angle+PI/2)*32; p.y=c.y+sin(c.angle+PI/2)*32;
-  p.inCar=null;
-  notify('🚶 Вышли из машины',1000);
-}
-
-function updateCarAI(car,dt){
-  if(car.aiState==='parked') return;
-  car.aiTimer-=dt;
-
-  if(car.aiState==='patrol'||car.aiState==='driving'){
-    car.speed=lerp(car.speed,70,dt*1.5);
-    if(car.aiTimer<=0){
-      car.aiTimer=rnd(2,6);
-      // Turn at random
-      car.angle+=pick([-PI/2,0,PI/2,PI]);
-    }
-    const nx=car.x+cos(car.angle)*car.speed*dt;
-    const ny=car.y+sin(car.angle)*car.speed*dt;
-    if(!carSolid(nx,car.y,car)){car.x=nx;}
-    else{car.angle+=PI/2;car.aiTimer=rnd(1,2);}
-    if(!carSolid(car.x,ny,car)){car.y=ny;}
-    else{car.angle+=PI/2;car.aiTimer=rnd(1,2);}
-    car.x=clamp(car.x,20,MAP_W*TILE-20);
-    car.y=clamp(car.y,20,MAP_H*TILE-20);
-  }
-
-  if(car.aiState==='chase'){
-    const p=S.player;
-    const tx=p.inCar?p.inCar.x:p.x, ty=p.inCar?p.inCar.y:p.y;
-    const ta=atan2(ty-car.y,tx-car.x);
-    car.angle=lerpA(car.angle,ta,dt*3.5);
-    car.speed=lerp(car.speed,car.maxSpeed*0.85,dt*2.5);
-    const nx=car.x+cos(car.angle)*car.speed*dt;
-    const ny=car.y+sin(car.angle)*car.speed*dt;
-    if(!carSolid(nx,car.y,car)) car.x=nx;
-    if(!carSolid(car.x,ny,car)) car.y=ny;
-    car.x=clamp(car.x,20,MAP_W*TILE-20);
-    car.y=clamp(car.y,20,MAP_H*TILE-20);
-    car.sirenOn=true;
-    if(dst(car.x,car.y,tx,ty)<42) bustedPlayer();
-  }
-}
-
-function updateNPC(n,dt){
-  if(!n.alive) return;
-  n.aiTimer-=dt; n.turnTimer-=dt;
-
-  const p=S.player;
-  const px=p.inCar?p.inCar.x:p.x,py=p.inCar?p.inCar.y:p.y;
-  const pd=dst(n.x,n.y,px,py);
-
-  // Flee from player if close and running
-  if(pd<80&&S.wantedLevel>2){
-    n.fleeing=true;
-  } else if(pd>200) n.fleeing=false;
-
-  if(n.fleeing){
-    const fa=atan2(n.y-py,n.x-px);
-    n.dir={x:cos(fa),y:sin(fa)};
-    n.aiTimer=0.5;
-  } else if(n.turnTimer<=0){
-    n.turnTimer=rnd(2,7);
-    const a=Math.random()*PI*2;
-    n.dir={x:cos(a),y:sin(a)};
-  }
-
-  const sp=n.fleeing?n.speed*1.6:n.speed;
-  const nx=n.x+n.dir.x*sp*dt;
-  const ny=n.y+n.dir.y*sp*dt;
-  const tx2=floor(nx/TILE),ty2=floor(ny/TILE);
-  const tile=S.world.map[ty2]?.[tx2];
-  if(tile===SIDEWALK||tile===ROAD||tile===PARK){
-    n.x=clamp(nx,4,MAP_W*TILE-4);
-    n.y=clamp(ny,4,MAP_H*TILE-4);
-  } else { n.turnTimer=0; }
-
-  n.animTimer+=dt; if(n.animTimer>0.18){n.animFrame=(n.animFrame+1)%4;n.animTimer=0;}
-}
-
-function updateOfficer(o,dt){
-  if(!o.alive) return;
-  const p=S.player;
-  const px=p.inCar?p.inCar.x:p.x,py=p.inCar?p.inCar.y:p.y;
-  const pd=dst(o.x,o.y,px,py);
-
-  if(S.wantedLevel>0){ o.chasing=true; o.aiState='chase'; }
-  else { o.chasing=false; o.aiState='patrol'; }
-
-  if(o.chasing){
-    const ta=atan2(py-o.y,px-o.x);
-    o.dir={x:cos(ta),y:sin(ta)};
-    // Walk fast toward player
-    const sp=o.speed;
-    const nx=o.x+o.dir.x*sp*dt;
-    const ny=o.y+o.dir.y*sp*dt;
-    if(!solidAt(nx,o.y)) o.x=clamp(nx,4,MAP_W*TILE-4);
-    if(!solidAt(o.x,ny)) o.y=clamp(ny,4,MAP_H*TILE-4);
-    if(pd<28) bustedPlayer();
-  } else {
-    // Patrol
-    o.aiTimer-=dt; o.turnTimer-=dt;
-    if(o.turnTimer<=0){
-      o.turnTimer=rnd(3,8);
-      const a=Math.random()*PI*2;
-      o.dir={x:cos(a),y:sin(a)};
-    }
-    const nx=o.x+o.dir.x*60*dt, ny=o.y+o.dir.y*60*dt;
-    const tx2=floor(nx/TILE),ty2=floor(ny/TILE);
-    const tile=S.world.map[ty2]?.[tx2];
-    if(tile===SIDEWALK||tile===ROAD){
-      o.x=clamp(nx,4,MAP_W*TILE-4);
-      o.y=clamp(ny,4,MAP_H*TILE-4);
-    } else o.turnTimer=0;
-  }
-  o.animTimer=(o.animTimer||0)+dt;
-  if(o.animTimer>0.14){o.animFrame=(o.animFrame||0+1)%4;o.animTimer=0;}
-}
-
-function gainWanted(n){
-  S.wantedLevel=clamp(S.wantedLevel+n,0,5);
-  S.wantedCooldown=20+S.wantedLevel*5;
-  for(const c of S.cars) if(c.isPolice) c.aiState='chase';
-  for(const o of S.officers) o.chasing=true;
-}
-function clearWanted(){
-  S.wantedLevel=0; S.wantedCooldown=0;
-  for(const c of S.cars) if(c.isPolice&&c.aiState==='chase') c.aiState='patrol';
-  for(const o of S.officers) o.chasing=false;
-  notify('⭐ Розыск снят!',1500);
-}
-function buyHealth(){
-  const p=S.player;
-  if(p.money<100){notify('💸 Недостаточно денег!',1500);return;}
-  p.money-=100; p.health=min(p.maxHealth,p.health+50);
-  notify('❤️ +50 здоровья',1200);
-}
-function bustedPlayer(){
-  const p=S.player;
-  if(p.inCar) exitCar(p);
-  p.money=max(0,p.money-500);
-  clearWanted();
-  p.x=(MAP_W/2)*TILE; p.y=(MAP_H/2)*TILE;
-  S.score=max(0,S.score-1000);
-  notify('🚔 ЗАДЕРЖАН! Штраф: $500. Перемещён в центр.',4000);
-}
-function spawnPoliceUnit(){
-  const p=S.player;
-  const px=p.inCar?p.inCar.x:p.x, py=p.inCar?p.inCar.y:p.y;
-  const ang=Math.random()*PI*2, r=rnd(400,700);
-  const x=clamp(px+cos(ang)*r,40,MAP_W*TILE-40);
-  const y=clamp(py+sin(ang)*r,40,MAP_H*TILE-40);
-  // Police car
-  const pc=new Car(x,y,pick(['#1e3a8a','#152c6b']),'police');
-  pc.aiState='chase'; pc.isParked=false; pc.sirenOn=true;
-  S.cars.push(pc);
-  // Officer on foot
-  const o=new Officer(x+rnd(-30,30),y+rnd(-30,30));
-  o.chasing=true; o.aiState='chase';
-  S.officers.push(o);
-  if(S.officers.length>S.wantedLevel*4+4)
-    S.officers=S.officers.filter((_,i)=>i>S.officers.length-S.wantedLevel*4-4);
-}
-
-function spawnCarNearPlayer(type){
-  if(S.spawnCooldown>0){notify(`⏳ Подождите ${S.spawnCooldown.toFixed(1)}с`,800);return;}
-  const p=S.player;
-  const ang=(p.inCar?p.inCar.angle:p.angle)+PI/2;
-  const r=55;
-  const x=clamp((p.inCar?p.inCar.x:p.x)+cos(ang)*r,20,MAP_W*TILE-20);
-  const y=clamp((p.inCar?p.inCar.y:p.y)+sin(ang)*r,20,MAP_H*TILE-20);
-  const c=new Car(x,y,pick(CAR_COLORS),type);
-  c.angle=p.inCar?p.inCar.angle:p.angle;
-  c.isParked=true; c.aiState='parked';
-  S.cars.push(c);
-  S.spawnCooldown=3;
-  notify('🚗 Заспавнен '+carName(c)+'!',1500);
-}
-
-// ── Collision ─────────────────────────────────────────────────
-function solidAt(wx,wy){
-  const tx=floor(wx/TILE),ty=floor(wy/TILE);
-  if(tx<0||ty<0||tx>=MAP_W||ty>=MAP_H) return true;
-  const t=S.world.map[ty][tx];
-  return t===BUILDING||t===WATER;
-}
-function carSolid(wx,wy,car){
-  const pts=[[-car.w/2,-car.h/2],[car.w/2,-car.h/2],[-car.w/2,car.h/2],[car.w/2,car.h/2]];
-  for(const[ox,oy] of pts){
-    const rx=wx+ox*cos(car.angle)-oy*sin(car.angle);
-    const ry=wy+ox*sin(car.angle)+oy*cos(car.angle);
-    if(solidAt(rx,ry)) return true;
-  }
-  return false;
-}
-
-function nearestCar(){
-  const p=S.player;
-  let best=null,bd=9999;
-  for(const c of S.cars){
-    if(c.driver) continue;
-    const d=dst(p.x,p.y,c.x,c.y);
-    if(d<bd){bd=d;best=c;}
-  }
-  return best;
-}
-
-// ── Rendering ─────────────────────────────────────────────────
-function render(){
-  const ctx=S.ctx,W=S.W,H=S.H;
-  const cx=S.cam.x,cy=S.cam.y;
-  // Night overlay
-  const isNight=S.dayTime<6||S.dayTime>20;
-  const nightAlpha=isNight?0.45:max(0,(abs(S.dayTime-13)-6)/4*0.3);
-
-  ctx.clearRect(0,0,W,H);
-  ctx.save();
-  ctx.translate(-cx,-cy);
-
-  const tx0=max(0,floor(cx/TILE)-1);
-  const ty0=max(0,floor(cy/TILE)-1);
-  const tx1=min(MAP_W,tx0+ceil(W/TILE)+2);
-  const ty1=min(MAP_H,ty0+ceil(H/TILE)+2);
-
-  // ── Tiles ──────────────────────────────────────────────────
-  for(let ty=ty0;ty<ty1;ty++){
-    for(let tx=tx0;tx<tx1;tx++){
-      const tile=S.world.map[ty][tx];
-      const px=tx*TILE, py=ty*TILE;
-      switch(tile){
-        case ROAD:
-          ctx.fillStyle='#454545';
-          ctx.fillRect(px,py,TILE,TILE);
-          break;
-        case SIDEWALK:
-          ctx.fillStyle='#8a8a8a';
-          ctx.fillRect(px,py,TILE,TILE);
-          // Curb line
-          ctx.fillStyle='rgba(200,200,200,.15)';
-          ctx.fillRect(px,py,TILE,1); ctx.fillRect(px,py,1,TILE);
-          break;
-        case BUILDING:{
-          const bc=S.world.bColors[ty][tx]||'#667';
-          ctx.fillStyle=bc;
-          ctx.fillRect(px,py,TILE,TILE);
-          // Roof shadow
-          ctx.fillStyle='rgba(0,0,0,0.2)';
-          ctx.fillRect(px+1,py+1,TILE-2,TILE-2);
-          // Windows — stable hash-based
-          const wCols=3,wRows=3;
-          for(let wr=0;wr<wRows;wr++){
-            for(let wc=0;wc<wCols;wc++){
-              const wx2=px+5+wc*(TILE-10)/(wCols);
-              const wy2=py+5+wr*(TILE-10)/(wRows);
-              const lit=hash(tx*31+wc*7,ty*37+wr*11)>0.4;
-              if(isNight){
-                ctx.fillStyle=lit?'rgba(255,240,160,0.85)':'rgba(0,0,0,0.5)';
-              } else {
-                ctx.fillStyle=lit?'rgba(160,200,255,0.55)':'rgba(0,0,0,0.25)';
-              }
-              ctx.fillRect(wx2,wy2,5,5);
-            }
-          }
-          // Rooftop detail
-          ctx.fillStyle='rgba(0,0,0,0.1)';
-          ctx.fillRect(px+2,py+2,4,TILE-4);
-          break;
-        }
-        case PARK:
-          ctx.fillStyle='#2a6e2a';
-          ctx.fillRect(px,py,TILE,TILE);
-          ctx.fillStyle='#236023';
-          ctx.fillRect(px+4,py+4,TILE-8,TILE-8);
-          // Trees dots
-          if(hash(tx*5,ty*5)>0.5){
-            ctx.fillStyle='#1a5a1a';
-            ctx.beginPath();
-            ctx.arc(px+TILE/2,py+TILE/2,8,0,PI*2);
-            ctx.fill();
-          }
-          break;
-        case WATER:
-          ctx.fillStyle='#1a4a6a';
-          ctx.fillRect(px,py,TILE,TILE);
-          ctx.fillStyle='rgba(30,100,160,0.4)';
-          ctx.fillRect(px+2,py+2,TILE-4,TILE-4);
-          // Ripple
-          if((S.frameCount+tx+ty)%8<4){
-            ctx.strokeStyle='rgba(80,150,220,0.25)';
-            ctx.lineWidth=1;
-            ctx.beginPath();
-            ctx.arc(px+TILE/2+sin(S.gameTime+tx)*6,py+TILE/2,6,0,PI*2);
-            ctx.stroke();
-          }
-          break;
-        default:
-          ctx.fillStyle='#333';
-          ctx.fillRect(px,py,TILE,TILE);
-      }
-    }
-  }
-
-  // ── Road markings ──────────────────────────────────────────
-  ctx.setLineDash([10,10]);
-  ctx.lineWidth=1.2;
-  ctx.strokeStyle='rgba(255,240,0,0.35)';
-  for(let ty=ty0;ty<ty1;ty++){
-    for(let tx=tx0;tx<tx1;tx++){
-      if(S.world.map[ty][tx]!==ROAD) continue;
-      const px=tx*TILE, py=ty*TILE;
-      const isVert=S.world.roadX.includes(tx);
-      ctx.beginPath();
-      if(isVert){ ctx.moveTo(px+TILE/2,py); ctx.lineTo(px+TILE/2,py+TILE); }
-      else       { ctx.moveTo(px,py+TILE/2); ctx.lineTo(px+TILE,py+TILE/2); }
-      ctx.stroke();
-    }
-  }
-  ctx.setLineDash([]);
-
-  // ── Skid marks ────────────────────────────────────────────
-  // (dynamic, not stored per tile — just visual flicker)
-  if(S.player.inCar&&abs(S.player.inCar.speed)>80&&S.keys['Space']){
-    const c=S.player.inCar;
-    ctx.strokeStyle='rgba(0,0,0,0.35)';
-    ctx.lineWidth=4;
-    ctx.beginPath();
-    ctx.moveTo(c.x-cos(c.angle)*20,c.y-sin(c.angle)*20);
-    ctx.lineTo(c.x-cos(c.angle)*40,c.y-sin(c.angle)*40);
-    ctx.stroke();
-  }
-
-  // ── Dead NPCs ─────────────────────────────────────────────
-  for(const n of S.npcs){
-    if(n.alive) continue;
-    ctx.save();
-    ctx.translate(n.x,n.y);
-    ctx.fillStyle='rgba(180,0,0,0.7)';
-    ctx.beginPath(); ctx.ellipse(0,0,10,6,0,0,PI*2); ctx.fill();
-    ctx.restore();
-  }
-
-  // ── Parked cars ──────────────────────────────────────────
-  for(const c of S.cars) if(c.isParked&&c.driver!==S.player) drawCar(ctx,c);
-  // ── Moving cars ──────────────────────────────────────────
-  for(const c of S.cars) if(!c.isParked&&c.driver!==S.player) drawCar(ctx,c);
-  // ── Player car ───────────────────────────────────────────
-  if(S.player.inCar) drawCar(ctx,S.player.inCar);
-
-  // ── NPCs ─────────────────────────────────────────────────
-  for(const n of S.npcs) if(n.alive) drawHuman(ctx,n);
-  for(const o of S.officers) if(o.alive) drawHuman(ctx,o);
-
-  // ── Player ───────────────────────────────────────────────
-  if(!S.player.inCar) drawPlayer(ctx,S.player);
-
-  // ── Enter-car prompt ─────────────────────────────────────
-  if(!S.player.inCar){
-    const nc=nearestCar();
-    if(nc&&dst(S.player.x,S.player.y,nc.x,nc.y)<55){
-      ctx.save();
-      ctx.translate(nc.x,nc.y);
-      ctx.fillStyle='rgba(0,0,0,0.7)';
-      ctx.beginPath(); ctx.roundRect(-28,-26,56,18,5); ctx.fill();
-      ctx.fillStyle='#fff'; ctx.font='bold 10px Segoe UI';
-      ctx.textAlign='center'; ctx.fillText('[F] Войти в машину',0,-14);
-      ctx.restore();
-    }
-  }
-
-  // ── Night overlay ─────────────────────────────────────────
-  if(nightAlpha>0.05){
-    ctx.fillStyle=`rgba(0,10,30,${nightAlpha})`;
-    ctx.fillRect(cx,cy,W,H);
-    // Headlights cones
-    if(S.player.inCar){
-      const c=S.player.inCar;
-      const grd=ctx.createRadialGradient(c.x,c.y,5,
-        c.x+cos(c.angle)*60,c.y+sin(c.angle)*60,90);
-      grd.addColorStop(0,'rgba(255,255,200,0.18)');
-      grd.addColorStop(1,'transparent');
-      ctx.fillStyle=grd;
-      ctx.beginPath();ctx.arc(c.x+cos(c.angle)*60,c.y+sin(c.angle)*60,90,0,PI*2);ctx.fill();
-    }
-  }
-
-  ctx.restore();
-}
-
-function drawCar(ctx,car){
-  ctx.save();
-  ctx.translate(car.x,car.y);
-  ctx.rotate(car.angle);
-  const w=car.w,h=car.h;
-  // Shadow
-  ctx.fillStyle='rgba(0,0,0,0.28)';
-  ctx.fillRect(-w/2+2,h/2,w,3);
-  // Body
-  ctx.fillStyle=car.color;
-  ctx.beginPath();
-  if(ctx.roundRect) ctx.roundRect(-w/2,-h/2,w,h,4);
-  else ctx.rect(-w/2,-h/2,w,h);
-  ctx.fill();
-  // Stripe (for variety)
-  const dark=darken(car.color,0.2);
-  ctx.fillStyle=dark;
-  ctx.fillRect(-w/2+3,-2,w-6,4);
-  // Cabin
-  ctx.fillStyle=darken(car.color,0.3);
-  const cw=w*0.5,ch=h*0.55;
-  if(ctx.roundRect) ctx.beginPath(),ctx.roundRect(-cw/2,-ch/2,cw,ch,3),ctx.fill();
-  else ctx.fillRect(-cw/2,-ch/2,cw,ch);
-  // Windshield
-  ctx.fillStyle='rgba(100,180,255,0.55)';
-  ctx.fillRect(w/2-9,-h/2+2,6,h-4);
-  ctx.fillStyle='rgba(100,180,255,0.35)';
-  ctx.fillRect(-w/2+3,-h/2+2,6,h-4);
-  // Headlights
-  ctx.fillStyle='rgba(255,255,180,0.9)';
-  ctx.fillRect(w/2-2,-h/2+2,2,3);
-  ctx.fillRect(w/2-2,h/2-5,2,3);
-  // Tail
-  ctx.fillStyle=car.brakeLight?'rgba(255,0,0,0.95)':'rgba(200,30,30,0.7)';
-  ctx.fillRect(-w/2,-h/2+2,2,3);
-  ctx.fillRect(-w/2,h/2-5,2,3);
-  // Wheels
-  ctx.fillStyle='#111';
-  for(const[wx2,wy2] of [[w/2-8,-h/2-2],[w/2-8,h/2-1],[-w/2+2,-h/2-2],[-w/2+2,h/2-1]]){
-    ctx.fillRect(wx2,wy2,6,3);
-  }
-  // Police extras
-  if(car.isPolice){
-    ctx.fillStyle='rgba(255,255,255,0.9)';
-    ctx.font='bold 5px Arial';ctx.textAlign='center';
-    ctx.fillText('POLICE',0,h/2+2);
-    // Siren lights
-    if(car.sirenOn||S.wantedLevel>0){
-      ctx.fillStyle=S.frameCount%14<7?'#f00':'#00f';
-      ctx.fillRect(-4,-h/2-4,4,3);
-      ctx.fillStyle=S.frameCount%14<7?'#00f':'#f00';
-      ctx.fillRect(1,-h/2-4,4,3);
-    }
-  }
-  // Type label
-  if(car.type==='truck'){
-    ctx.fillStyle='rgba(255,255,255,0.25)';
-    ctx.font='5px Arial'; ctx.textAlign='center';
-    ctx.fillText('TRUCK',0,1);
-  }
-  if(car.type==='sports'){
-    // Low spoiler
-    ctx.fillStyle=darken(car.color,0.1);
-    ctx.fillRect(-w/2-2,h/2-1,4,2);
-  }
-  ctx.restore();
-}
-
-function drawHuman(ctx,n){
-  ctx.save();
-  ctx.translate(n.x,n.y);
-  const ang=atan2(n.dir.y||0,n.dir.x||1)+PI/2;
-  ctx.rotate(ang);
-  const lo=n.animFrame<2?2:-2;
-  // Legs
-  ctx.fillStyle=n.pantsColor;
-  ctx.fillRect(-3,1,2,5+lo); ctx.fillRect(1,1,2,5-lo);
-  // Arms (swing)
-  ctx.fillStyle=n.skinColor;
-  ctx.fillRect(-6,-3,2,4+lo); ctx.fillRect(4,-3,2,4-lo);
-  // Body
-  ctx.fillStyle=n.shirtColor;
-  if(ctx.roundRect) ctx.beginPath(),ctx.roundRect(-4,-5,8,8,2),ctx.fill();
-  else ctx.fillRect(-4,-5,8,8);
-  // Head
-  ctx.fillStyle=n.skinColor;
-  ctx.beginPath(); ctx.arc(0,-9,4,0,PI*2); ctx.fill();
-  // Police hat
-  if(n.isPolice){
-    ctx.fillStyle='#1a3a6b';
-    ctx.fillRect(-5,-14,10,3);
-    ctx.fillStyle='#ffd700';
-    ctx.font='bold 5px Arial'; ctx.textAlign='center';
-    ctx.fillText('👮',0,-20);
-  }
-  ctx.restore();
-}
-
-function drawPlayer(ctx,p){
-  ctx.save();
-  ctx.translate(p.x,p.y);
-  ctx.rotate(p.angle+PI/2);
-  const lo=p.animFrame<2?3:-3;
-  // Shadow
-  ctx.fillStyle='rgba(0,0,0,0.22)';
-  ctx.beginPath(); ctx.ellipse(0,3,7,3,0,0,PI*2); ctx.fill();
-  // Legs
-  ctx.fillStyle=p.pantsColor;
-  ctx.fillRect(-4,2,3,7+lo); ctx.fillRect(1,2,3,7-lo);
-  // Arms
-  ctx.fillStyle=p.skinColor;
-  ctx.fillRect(-7,-4,3,5+lo); ctx.fillRect(4,-4,3,5-lo);
-  // Body
-  ctx.fillStyle=p.shirtColor;
-  if(ctx.roundRect) ctx.beginPath(),ctx.roundRect(-5,-7,10,11,2),ctx.fill();
-  else ctx.fillRect(-5,-7,10,11);
-  // Head
-  ctx.fillStyle=p.skinColor;
-  ctx.beginPath(); ctx.arc(0,-11,5,0,PI*2); ctx.fill();
-  // Eyes
-  ctx.fillStyle='#222';
-  ctx.fillRect(-2,-13,1.5,1.5); ctx.fillRect(1,-13,1.5,1.5);
-  // Arrow "YOU"
-  ctx.fillStyle='rgba(255,255,255,0.9)';
-  ctx.font='bold 8px Arial'; ctx.textAlign='center';
-  ctx.fillText('▼ ВЫ',0,-20);
-  ctx.restore();
-}
-
-// ── HUD ───────────────────────────────────────────────────────
-function drawHUD(){
-  const hud=S.hud; if(!hud) return;
-  const p=S.player;
-  const night=S.dayTime<6||S.dayTime>20;
-  const hour=floor(S.dayTime),min2=floor((S.dayTime%1)*60);
-  const timeStr=`${hour.toString().padStart(2,'0')}:${min2.toString().padStart(2,'0')}`;
-  const timeEmoji=night?'🌙':S.dayTime<12?'🌅':'☀️';
-
-  const stars=Array.from({length:5},(_,i)=>i<S.wantedLevel?'⭐':'☆').join('');
-
-  let html=`
-  <!-- Health + money -->
-  <div style="position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;pointer-events:none;">
-    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:6px 12px;display:flex;align-items:center;gap:8px;">
-      <span style="font-size:13px;">❤️</span>
-      <div style="width:90px;height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden;">
-        <div style="width:${p.health}%;height:100%;background:${p.health>60?'#2ecc71':p.health>30?'#f1c40f':'#e74c3c'};border-radius:4px;transition:width .4s;"></div>
-      </div>
-      <span style="color:#fff;font-size:11px;">${p.health}</span>
-    </div>
-    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:5px 12px;color:#f1c40f;font-size:13px;font-weight:700;">💰 $${p.money.toLocaleString()}</div>
-    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:5px 12px;color:#95a5a6;font-size:11px;">🏆 ${S.score.toLocaleString()} pts</div>
-    <div style="background:rgba(0,0,0,.78);border-radius:9px;padding:5px 12px;color:#aaa;font-size:11px;">${timeEmoji} ${timeStr}</div>
-  </div>
-
-  <!-- Wanted -->
-  <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.78);border-radius:9px;padding:8px 14px;text-align:right;pointer-events:none;">
-    <div style="color:#aaa;font-size:9px;letter-spacing:1px;margin-bottom:3px;">РОЗЫСК</div>
-    <div style="font-size:17px;letter-spacing:3px;color:${S.wantedLevel===0?'#444':S.wantedLevel<3?'#f1c40f':'#e74c3c'};">${stars}</div>
-    ${S.wantedLevel>0?`<div style="color:#e74c3c;font-size:9px;margin-top:3px;animation:blink 0.8s ease infinite;">⚠️ Полиция активна!</div>`:''}
-  </div>`;
-
-  // Speedometer (driving)
-  if(p.inCar){
-    const spd=abs(floor(p.inCar.speed));
-    const gear=spd<2?'P':p.inCar.speed<0?'R':'D';
-    html+=`<div style="position:absolute;bottom:50px;left:10px;background:rgba(0,0,0,.85);border-radius:14px;padding:10px 18px;text-align:center;pointer-events:none;">
-      <div style="color:#fff;font-size:30px;font-weight:200;line-height:1;">${spd}</div>
-      <div style="color:#888;font-size:8px;letter-spacing:1px;">КМ/Ч</div>
-      <div style="color:${gear==='R'?'#e74c3c':gear==='P'?'#f1c40f':'#2ecc71'};font-size:13px;font-weight:700;margin-top:2px;">${gear}</div>
-      <div style="color:#666;font-size:9px;margin-top:1px;">${carName(p.inCar)}</div>
-    </div>`;
-  }
-
-  // Notifications
-  if(S.notifs.length>0){
-    html+=`<div style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:5px;align-items:center;pointer-events:none;">`;
-    S.notifs.slice(-4).forEach(n=>{
-      const op=min(1,n.t*2);
-      html+=`<div style="background:rgba(0,0,0,.87);border-radius:10px;padding:8px 20px;color:#fff;font-size:12.5px;opacity:${op};white-space:nowrap;border:1px solid rgba(255,255,255,.1);">${n.msg}</div>`;
-    });
-    html+='</div>';
-  }
-
-  // Controls (collapsed)
-  const inCar=!!p.inCar;
-  html+=`<div style="position:absolute;top:42%;right:10px;background:rgba(0,0,0,.65);border-radius:9px;padding:8px 12px;font-size:9.5px;color:rgba(255,255,255,.6);line-height:1.9;pointer-events:none;text-align:right;">
-    <div>WASD — движение</div>
-    <div>F — ${inCar?'выйти из машины':'войти в машину'}</div>
-    <div>G — спавн авто</div>
-    <div>T — спорткар</div>
-    ${inCar?'<div>Space — тормоз</div>':'<div>Shift — бег</div>'}
-  </div>`;
-
-  // NPC / car counter
-  html+=`<div style="position:absolute;bottom:50px;right:155px;background:rgba(0,0,0,.6);border-radius:8px;padding:5px 10px;font-size:10px;color:#888;pointer-events:none;">
-    🚗 ${S.cars.length}  👥 ${S.npcs.filter(n=>n.alive).length}  👮 ${S.officers.filter(o=>o.alive).length}
-  </div>`;
-
-  hud.innerHTML=html;
-}
-
-// ── Minimap ───────────────────────────────────────────────────
-function drawMinimap(){
-  const mm=S.mmCanvas; if(!mm) return;
-  const ctx=mm.getContext('2d');
-  const SZ=140, SC=0.11;
-  ctx.clearRect(0,0,SZ,SZ);
-
-  // Clip circle
-  ctx.save();
-  ctx.beginPath(); ctx.arc(SZ/2,SZ/2,SZ/2,0,PI*2); ctx.clip();
-
-  // Background
-  ctx.fillStyle='#222';
-  ctx.fillRect(0,0,SZ,SZ);
-
-  const p=S.player;
-  const px=p.inCar?p.inCar.x:p.x, py=p.inCar?p.inCar.y:p.y;
-  const ox=SZ/2-px*SC, oy=SZ/2-py*SC;
-
-  // Draw tiles
-  for(let ty=0;ty<MAP_H;ty++){
-    for(let tx=0;tx<MAP_W;tx++){
-      const sx=tx*TILE*SC+ox, sy=ty*TILE*SC+oy;
-      const sw=TILE*SC+0.5;
-      if(sx<-sw||sy<-sw||sx>SZ||sy>SZ) continue;
-      const tile=S.world.map[ty][tx];
-      ctx.fillStyle=tile===ROAD?'#666':tile===SIDEWALK?'#999':tile===BUILDING?(S.world.bColors[ty][tx]||'#445'):tile===PARK?'#2a6a2a':'#1a3a5a';
-      ctx.fillRect(sx,sy,sw,sw);
-    }
-  }
-
-  // Cars
-  for(const c of S.cars){
-    const sx=c.x*SC+ox, sy=c.y*SC+oy;
-    ctx.fillStyle=c.isPolice?'#3af':'red';
-    ctx.fillRect(sx-1.5,sy-1.5,3,3);
-  }
-
-  // NPCs
-  ctx.fillStyle='rgba(255,220,0,0.7)';
-  for(const n of S.npcs) if(n.alive){
-    ctx.fillRect(n.x*SC+ox-0.8,n.y*SC+oy-0.8,1.6,1.6);
-  }
-
-  // Officers (blue)
-  ctx.fillStyle='#1af';
-  for(const o of S.officers) if(o.alive){
-    ctx.beginPath(); ctx.arc(o.x*SC+ox,o.y*SC+oy,2,0,PI*2); ctx.fill();
-  }
-
-  // Player dot
-  ctx.fillStyle='#e74c3c';
-  ctx.beginPath(); ctx.arc(SZ/2,SZ/2,4.5,0,PI*2); ctx.fill();
-  ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
-
-  ctx.restore();
-
-  // Compass
-  ctx.fillStyle='rgba(255,255,255,0.8)';
-  ctx.font='bold 9px Arial'; ctx.textAlign='center';
-  ctx.fillText('С',SZ/2,8);
-}
-
-// ── Helpers ───────────────────────────────────────────────────
-function carName(c){
-  return{sedan:'Sedan',sports:'Sports',suv:'SUV',truck:'Truck',police:'Police'}[c.type]||'Car';
-}
-function darken(hex,t){
-  try{
-    hex=hex.replace('#','');
-    const r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
-    return`rgb(${floor(r*(1-t))},${floor(g*(1-t))},${floor(b*(1-t))})`;
-  }catch(e){return hex;}
-}
-function ceil(x){return Math.ceil(x);}
-function notify(msg,ms=2000){S.notifs.push({msg,t:ms/1000});}
-
-// ── Public ────────────────────────────────────────────────────
-function stop(){
-  S.running=false;
-  for(const[el,ev,fn] of S._listeners) el.removeEventListener(ev,fn);
-  S._listeners=[];
-}
-
-return{init,stop,spawnCar:spawnCarNearPlayer,clearWanted,state:S,_started:false};
-})();
-
-</script>
-
-<!-- ══════════ GTA 6 OPEN/CLOSE PATCH ══════════ -->
-<script>
-(function(){
-  var _orig = window.openApp;
-  window.openApp = function(app) {
-    if (app === 'gta6') {
-      var w = document.getElementById('win-gta6');
-      var root = document.getElementById('gta6-root');
-      if (w) {
-        w.style.display = 'flex';
-        if (typeof bringFront === 'function') bringFront('win-gta6');
-        var tb = document.getElementById('tb-gta6');
-        if (tb) tb.classList.add('running','active-win');
-        if (root && !window._gta6started) {
-          GTA6.init(root);
-          window._gta6started = true;
-        }
-      }
-      return;
-    }
-    if (_orig) _orig.call(window, app);
-  };
-  var _origClose = window.closeWin;
-  window.closeWin = function(app) {
-    if (app === 'gta6') { gta6Close(); return; }
-    if (_origClose) _origClose.call(window, app);
-  };
-  window.gta6Close = function() {
-    var w = document.getElementById('win-gta6');
-    if (w) w.style.display = 'none';
-    var tb = document.getElementById('tb-gta6');
-    if (tb) tb.classList.remove('running','active-win');
-    if (window.GTA6 && window._gta6started) { GTA6.stop(); window._gta6started = false; }
-  };
-  var _origTb = window.tbClick;
-  window.tbClick = function(app) {
-    if (app === 'gta6') {
-      var w = document.getElementById('win-gta6');
-      if (!w) return;
-      if (!w.style.display || w.style.display === 'none') openApp('gta6');
-      else if (typeof bringFront === 'function') bringFront('win-gta6');
-      return;
-    }
-    if (_origTb) _origTb.call(window, app);
-  };
+// F key
+if(K['KeyF']&&p._fCool<=0){p._fCool=.35;if(p.inCar){p.inCar.driver=null;p.inCar.isParked=true;p.x+=30;p.inCar=null;}else{let best=null,bd=9999;for(const c of S.cars){if(c.driver)continue;const d=dst(p.x,p.y,c.x,c.y);if(d<55&&d<bd){bd=d;best=c;}}if(best){p.inCar=best;best.driver=p;best.isParked=false;best.speed=0;}}}
+// G key
+if(K['KeyG']&&p._gCool<=0){p._gCool=.4;const c=new Car(p.x+cos(p.angle+PI/2)*55,p.y+sin(p.angle+PI/2)*55,pick(CAR_COLORS),'sedan');c.angle=p.angle;S.cars.push(c);}
+// Camera
+const tx=p.inCar?p.inCar.x:p.x,ty=p.inCar?p.inCar.y:p.y;
+S.cam.x=lerp(S.cam.x,tx-S.W/2,.12);S.cam.y=lerp(S.cam.y,ty-S.H/2,.12);
+S.cam.x=clamp(S.cam.x,0,MAP_W*TILE-S.W);S.cam.y=clamp(S.cam.y,0,MAP_H*TILE-S.H);
+S.notifs=S.notifs.filter(n=>{n.t-=dt;return n.t>0;});}
+
+function solidAt(wx,wy){const tx=floor(wx/TILE),ty=floor(wy/TILE);if(tx<0||ty<0||tx>=MAP_W||ty>=MAP_H)return true;const t=S.world.map[ty][tx];return t===BUILDING||t===WATER;}
+
+function render(){const ctx=S.ctx,W=S.W,H=S.H,cx=S.cam.x,cy=S.cam.y;ctx.clearRect(0,0,W,H);ctx.save();ctx.translate(-cx,-cy);
+const tx0=max(0,floor(cx/TILE)-1),ty0=max(0,floor(cy/TILE)-1),tx1=min(MAP_W,tx0+Math.ceil(W/TILE)+2),ty1=min(MAP_H,ty0+Math.ceil(H/TILE)+2);
+for(let ty=ty0;ty<ty1;ty++){for(let tx=tx0;tx<tx1;tx++){const tile=S.world.map[ty][tx],px=tx*TILE,py=ty*TILE;
+if(tile===ROAD){ctx.fillStyle='#454545';ctx.fillRect(px,py,TILE,TILE);}
+else if(tile===SIDEWALK){ctx.fillStyle='#8a8a8a';ctx.fillRect(px,py,TILE,TILE);}
+else if(tile===BUILDING){ctx.fillStyle=S.world.bColors[ty][tx]||'#667';ctx.fillRect(px,py,TILE,TILE);ctx.fillStyle='rgba(0,0,0,.2)';ctx.fillRect(px+1,py+1,TILE-2,TILE-2);for(let wr=0;wr<3;wr++)for(let wc=0;wc<3;wc++){ctx.fillStyle=hash(tx*31+wc,ty*37+wr)>.4?'rgba(255,240,160,.7)':'rgba(0,0,0,.4)';ctx.fillRect(px+5+wc*13,py+5+wr*13,5,5);}}
+else if(tile===PARK){ctx.fillStyle='#2a6e2a';ctx.fillRect(px,py,TILE,TILE);}
+else if(tile===WATER){ctx.fillStyle='#1a4a6a';ctx.fillRect(px,py,TILE,TILE);}
+}}
+// Cars
+for(const c of S.cars){ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.angle);ctx.fillStyle=c.color;ctx.fillRect(-15,-8,30,16);ctx.fillStyle='rgba(100,180,255,.5)';ctx.fillRect(10,-6,4,12);ctx.restore();}
+// NPCs
+for(const n of S.npcs){if(!n.alive)continue;ctx.fillStyle=n.shirtColor;ctx.fillRect(n.x-5,n.y-7,10,14);ctx.fillStyle=n.skinColor;ctx.beginPath();ctx.arc(n.x,n.y-11,4,0,PI*2);ctx.fill();}
+// Player
+if(!S.player.inCar){const p=S.player;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle+PI/2);ctx.fillStyle=p.shirtColor;ctx.fillRect(-5,-7,10,14);ctx.fillStyle=p.skinColor;ctx.beginPath();ctx.arc(0,-11,5,0,PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 8px Arial';ctx.textAlign='center';ctx.fillText('▼ ВЫ',0,-20);ctx.restore();}
+// Car prompt
+if(!S.player.inCar){let best=null,bd=9999;for(const c of S.cars){if(c.driver)continue;const d=dst(S.player.x,S.player.y,c.x,c.y);if(d<55&&d<bd){bd=d;best=c;}}if(best){ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(best.x-30,best.y-28,60,16);ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.fillText('[F] Сесть',best.x,best.y-17);}}
+ctx.restore();}
+
+function drawHUD(){const hud=S.hud;if(!hud)return;const p=S.player;const spd=p.inCar?abs(floor(p.inCar.speed)):0;
+let h=`<div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,.78);border-radius:9px;padding:8px 14px;pointer-events:none;">
+<div style="color:#2ecc71;font-size:13px;">❤️ ${p.health} | 💰 $${p.money}</div></div>`;
+if(p.inCar)h+=`<div style="position:absolute;bottom:50px;left:10px;background:rgba(0,0,0,.85);border-radius:14px;padding:10px 18px;text-align:center;pointer-events:none;">
+<div style="color:#fff;font-size:28px;font-weight:200;">${spd}</div><div style="color:#888;font-size:8px;">КМ/Ч</div></div>`;
+if(S.notifs.length)h+=`<div style="position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none;">${S.notifs.map(n=>`<div style="background:rgba(0,0,0,.87);border-radius:10px;padding:8px 20px;color:#fff;font-size:12px;margin:4px;opacity:${min(1,n.t*2)}">${n.msg}</div>`).join('')}</div>`;
+hud.innerHTML=h;}
+
+function stop(){S.running=false;for(const[el,ev,fn]of S._listeners)el.removeEventListener(ev,fn);S._listeners=[];}
+return{init,stop};
 })();
 </script>
-
 </body>
 </html>
