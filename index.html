@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>ExiWin 12</title>
+<title>Exiblox Official — ExiWin 12</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;}
 :root{
@@ -23,31 +23,92 @@ body.light-theme{
 --card-bg:rgba(0,0,0,.03);--input-bg:rgba(0,0,0,.05);
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden;width:100vw;height:100vh;color:var(--text);}
-#boot{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .5s;}
-.boot-logo{font-size:76px;font-weight:800;margin-bottom:48px;background:linear-gradient(135deg,#0078d4,#60cdff,#0078d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logoPulse 2s ease-in-out infinite;}
-@keyframes logoPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
-.boot-bar{width:200px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
-.boot-fill{height:100%;background:linear-gradient(90deg,#0078d4,#60cdff);border-radius:2px;animation:bootFill 2.2s ease forwards;}
-@keyframes bootFill{0%{width:0}60%{width:70%}100%{width:100%}}
-.boot-txt{color:rgba(255,255,255,.3);font-size:12px;margin-top:16px;letter-spacing:2px;}
 
+/* ══════════════════════════════════════════
+   BOOT SCREEN
+══════════════════════════════════════════ */
+#boot{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .6s;}
+.boot-logo-wrap{display:flex;align-items:center;gap:3px;margin-bottom:16px;font-size:52px;font-weight:900;letter-spacing:1px;line-height:1;}
+.rl{display:inline-block;animation:rainbowSpin 2.8s linear infinite;font-style:normal;}
+/* each letter offset by delay for wave effect */
+.rl:nth-child(1){animation-delay:0s;}
+.rl:nth-child(2){animation-delay:.12s;}
+.rl:nth-child(3){animation-delay:.24s;}
+.rl:nth-child(4){animation-delay:.36s;}
+.rl:nth-child(5){animation-delay:.48s;}
+.rl:nth-child(6){animation-delay:.60s;}
+.rl:nth-child(7){animation-delay:.72s;}
+.rl:nth-child(8){animation-delay:.84s;}
+.rl:nth-child(9){animation-delay:.96s;}
+.rl:nth-child(10){animation-delay:1.08s;}
+.rl:nth-child(11){animation-delay:1.20s;}
+.rl:nth-child(12){animation-delay:1.32s;}
+.rl:nth-child(13){animation-delay:1.44s;}
+.rl:nth-child(14){animation-delay:1.56s;}
+.rl:nth-child(15){animation-delay:1.68s;}
+.rl:nth-child(16){animation-delay:1.80s;}
+.rl:nth-child(17){animation-delay:1.92s;}
+/* 10 keyframe stops = 10 shades per letter */
+@keyframes rainbowSpin{
+0%  {color:hsl(0,100%,65%);text-shadow:0 0 18px hsl(0,100%,50%);}
+11% {color:hsl(36,100%,65%);text-shadow:0 0 18px hsl(36,100%,50%);}
+22% {color:hsl(72,100%,60%);text-shadow:0 0 18px hsl(72,100%,45%);}
+33% {color:hsl(120,100%,60%);text-shadow:0 0 18px hsl(120,100%,45%);}
+44% {color:hsl(180,100%,60%);text-shadow:0 0 18px hsl(180,100%,45%);}
+55% {color:hsl(210,100%,65%);text-shadow:0 0 18px hsl(210,100%,50%);}
+66% {color:hsl(260,100%,70%);text-shadow:0 0 18px hsl(260,100%,55%);}
+77% {color:hsl(300,100%,65%);text-shadow:0 0 18px hsl(300,100%,50%);}
+88% {color:hsl(330,100%,65%);text-shadow:0 0 18px hsl(330,100%,50%);}
+100%{color:hsl(360,100%,65%);text-shadow:0 0 18px hsl(360,100%,50%);}
+}
+.boot-tagline{color:rgba(255,255,255,.3);font-size:13px;letter-spacing:3px;margin-bottom:36px;text-transform:uppercase;}
+/* RAINBOW loading bar */
+.boot-bar{width:240px;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;position:relative;}
+.boot-fill{height:100%;border-radius:3px;animation:bootFill 2.4s ease forwards,rainbowBar 1.5s linear infinite;}
+@keyframes bootFill{0%{width:0}55%{width:65%}100%{width:100%}}
+@keyframes rainbowBar{
+0%{background:linear-gradient(90deg,hsl(0,100%,60%),hsl(60,100%,60%),hsl(120,100%,60%));}
+33%{background:linear-gradient(90deg,hsl(120,100%,60%),hsl(200,100%,60%),hsl(280,100%,60%));}
+66%{background:linear-gradient(90deg,hsl(280,100%,60%),hsl(320,100%,60%),hsl(360,100%,60%));}
+100%{background:linear-gradient(90deg,hsl(0,100%,60%),hsl(60,100%,60%),hsl(120,100%,60%));}
+}
+.boot-txt{color:rgba(255,255,255,.25);font-size:11px;margin-top:14px;letter-spacing:2px;}
+
+/* ══════════════════════════════════════════
+   REGISTER / LOGIN
+══════════════════════════════════════════ */
 #regscreen{position:fixed;inset:0;z-index:9990;display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#040e1f 0%,#091428 100%);}
-.reg-box{background:rgba(255,255,255,.05);backdrop-filter:var(--blur);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:40px;width:420px;box-shadow:var(--shadow);text-align:center;}
-.reg-logo{font-size:44px;font-weight:800;background:linear-gradient(135deg,#0078d4,#60cdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;}
-.reg-box h2{font-size:24px;font-weight:300;margin-bottom:6px;color:#fff;}
-.reg-box p{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:26px;}
-.reg-avatar-pick{display:flex;gap:10px;justify-content:center;margin-bottom:22px;flex-wrap:wrap;}
-.av-opt{width:46px;height:46px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;border:3px solid transparent;transition:all .2s;background:rgba(255,255,255,.06);}
+.reg-box{background:rgba(255,255,255,.05);backdrop-filter:var(--blur);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:36px;width:440px;box-shadow:var(--shadow);text-align:center;}
+.reg-logo{font-size:28px;font-weight:900;margin-bottom:8px;display:flex;justify-content:center;align-items:center;gap:2px;}
+.reg-logo .rl{font-size:26px;animation-duration:3.5s;}
+.reg-box h2{font-size:22px;font-weight:300;margin-bottom:4px;color:#fff;}
+.reg-box p{color:rgba(255,255,255,.5);font-size:12px;margin-bottom:20px;}
+.reg-avatar-pick{display:flex;gap:8px;justify-content:center;margin-bottom:18px;flex-wrap:wrap;}
+.av-opt{width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;border:3px solid transparent;transition:all .2s;background:rgba(255,255,255,.06);}
 .av-opt.sel{border-color:#60cdff;transform:scale(1.15);}
-.reg-input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:14px;font-family:inherit;outline:none;margin-bottom:10px;transition:border .2s;}
+.reg-input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:14px;font-family:inherit;outline:none;margin-bottom:9px;transition:border .2s;}
 .reg-input:focus{border-color:var(--accent);}
 .reg-input::placeholder{color:rgba(255,255,255,.35);}
 .reg-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:14px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .2s;margin-top:4px;}
 .reg-btn:hover{background:#106ebe;}
-.reg-switch{color:rgba(255,255,255,.5);font-size:13px;margin-top:14px;cursor:pointer;}
+.reg-btn.secondary{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);margin-top:6px;}
+.reg-btn.secondary:hover{background:rgba(255,255,255,.14);}
+.reg-switch{color:rgba(255,255,255,.5);font-size:12px;margin-top:12px;cursor:pointer;}
 .reg-switch span{color:var(--accent2);}
-.reg-err{color:#ff6b6b;font-size:12px;margin-top:8px;min-height:18px;}
+.reg-err{color:#ff6b6b;font-size:12px;margin-top:6px;min-height:18px;}
+.sync-note{color:rgba(255,255,255,.3);font-size:11px;margin-top:8px;}
 
+/* SYNC CODE MODAL */
+#sync-modal{position:fixed;inset:0;z-index:99000;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;}
+.sync-box{background:rgba(12,16,28,.99);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:32px;width:480px;text-align:center;}
+.sync-box h3{font-size:20px;font-weight:600;margin-bottom:8px;color:#fff;}
+.sync-box p{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:18px;line-height:1.6;}
+.sync-code-display{background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;font-family:monospace;font-size:11px;color:#60cdff;word-break:break-all;text-align:left;margin-bottom:14px;max-height:100px;overflow-y:auto;}
+.sync-close{position:absolute;top:12px;right:16px;cursor:pointer;color:rgba(255,255,255,.5);font-size:20px;}
+
+/* ══════════════════════════════════════════
+   LOCK SCREEN
+══════════════════════════════════════════ */
 #lockscreen{position:fixed;inset:0;z-index:9980;display:none;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(160deg,#040c1a 0%,#081428 100%);}
 .lock-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,120,212,.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:glowPulse 4s ease-in-out infinite;}
 @keyframes glowPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
@@ -59,11 +120,13 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;overflow:hidden
 .lock-hint{font-size:13px;color:rgba(255,255,255,.3);margin-top:18px;animation:pulse 2s ease infinite;}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
 
+/* ══════════════════════════════════════════
+   DESKTOP
+══════════════════════════════════════════ */
 #desktop{width:100%;height:calc(100% - 48px);position:relative;overflow:hidden;background:var(--desktop-bg);}
 .desk-aurora{position:absolute;inset:0;pointer-events:none;background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,80,180,.06) 60deg,rgba(0,150,255,.08) 100deg,rgba(60,0,180,.05) 150deg,transparent 200deg);animation:auroraRot 20s linear infinite;}
 @keyframes auroraRot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .desk-glow{position:absolute;width:700px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,100,200,.08) 0%,transparent 70%);top:20%;left:30%;pointer-events:none;}
-body.light-theme .desk-aurora{background:conic-gradient(from 200deg at 30% 60%,transparent 0deg,rgba(0,120,212,.03) 60deg,rgba(0,150,255,.05) 100deg,rgba(100,80,255,.03) 150deg,transparent 200deg);}
 
 .desk-icon{position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 6px;width:82px;cursor:pointer;border-radius:10px;transition:background .15s;}
 .desk-icon:hover{background:rgba(255,255,255,.09);}
@@ -71,28 +134,32 @@ body.light-theme .desk-icon:hover{background:rgba(0,0,0,.07);}
 .desk-icon.selected{background:rgba(0,120,212,.3);}
 .desk-icon.dragging-icon{opacity:.7;z-index:9000;cursor:grabbing;transition:none;}
 .desk-icon .dico{font-size:36px;line-height:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));pointer-events:none;}
-body.light-theme .desk-icon .dico{filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));}
 .desk-icon span{font-size:11px;color:#fff;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);line-height:1.3;word-break:break-word;pointer-events:none;}
 body.light-theme .desk-icon span{color:var(--text);text-shadow:0 1px 3px rgba(255,255,255,.8);}
 
+/* ══════════════════════════════════════════
+   TASKBAR
+══════════════════════════════════════════ */
 #taskbar{position:fixed;bottom:0;left:0;right:0;height:48px;background:var(--taskbar-bg);backdrop-filter:var(--blur);border-top:1px solid var(--border);display:flex;align-items:center;z-index:1000;}
 #tb-left{display:flex;align-items:center;padding-left:8px;gap:2px;}
 #tb-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2px;}
 #tb-right{position:absolute;right:0;display:flex;align-items:center;padding-right:8px;gap:4px;}
-#start-btn{width:44px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;font-size:22px;font-weight:800;transition:background .15s;background:linear-gradient(135deg,#0078d4,#60cdff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-#start-btn:hover{background:rgba(255,255,255,.1);-webkit-text-fill-color:var(--text);}
+#start-btn{width:44px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;font-size:13px;font-weight:900;transition:background .15s;gap:1px;}
+#start-btn .rl{font-size:11px;animation-duration:3s;}
+#start-btn:hover{background:rgba(255,255,255,.1);}
 .tb-sep{width:1px;height:22px;background:var(--border);margin:0 4px;}
 .tb-btn{width:44px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;font-size:19px;transition:background .15s;position:relative;flex-shrink:0;}
 .tb-btn:hover{background:rgba(255,255,255,.09);}
 body.light-theme .tb-btn:hover{background:rgba(0,0,0,.07);}
 .tb-btn.running::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--accent2);}
 .tb-btn.active-win{background:rgba(255,255,255,.12);}
-body.light-theme .tb-btn.active-win{background:rgba(0,0,0,.10);}
 .tb-sys{display:flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background .15s;}
 .tb-sys:hover{background:rgba(255,255,255,.09);}
-body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 #tb-clock{color:var(--text);font-size:11.5px;text-align:right;cursor:pointer;line-height:1.5;padding:0 4px;}
 
+/* ══════════════════════════════════════════
+   START MENU
+══════════════════════════════════════════ */
 #start-menu{position:fixed;bottom:56px;left:50%;transform:translateX(-50%) translateY(8px);width:680px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);display:none;flex-direction:column;z-index:900;overflow:hidden;opacity:0;transition:opacity .18s,transform .18s;}
 #start-menu.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #sm-search{margin:16px 16px 0;display:flex;align-items:center;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:9px 14px;gap:10px;}
@@ -110,7 +177,6 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .rec-row .ico{font-size:20px;}
 .rec-info .n{font-size:13px;color:var(--text);}
 .rec-info .t{font-size:11px;color:var(--text2);}
-#sm-search-results{padding:0 10px;}
 #sm-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid var(--border);}
 #sm-user{display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 10px;border-radius:8px;transition:background .15s;}
 #sm-user:hover{background:var(--bg2);}
@@ -120,6 +186,9 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .pw-btn{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:background .15s;color:var(--text2);}
 .pw-btn:hover{background:rgba(196,43,28,.7);color:#fff;}
 
+/* ══════════════════════════════════════════
+   TRAY + WALLPAPER GALLERY
+══════════════════════════════════════════ */
 #tray-popup{position:fixed;bottom:56px;right:8px;width:380px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow);display:none;z-index:900;}
 .tray-time-big{font-size:50px;font-weight:200;text-align:center;letter-spacing:2px;color:var(--text);}
 .tray-date-str{font-size:12px;color:var(--text2);text-align:center;margin-bottom:14px;}
@@ -134,28 +203,31 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .sl-row input[type=range]{flex:1;accent-color:var(--accent);height:4px;}
 .sl-val{font-size:11px;color:var(--text2);width:32px;text-align:right;}
 
-#wallpaper-gallery{position:fixed;bottom:56px;right:8px;width:520px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);z-index:9500;display:none;animation:wpGalleryIn .2s ease;}
-@keyframes wpGalleryIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+#wallpaper-gallery{position:fixed;bottom:56px;right:8px;width:520px;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);z-index:9500;display:none;}
 .wp-gallery-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px;display:flex;align-items:center;justify-content:space-between;}
 .wp-gallery-sub{font-size:11px;color:var(--text2);margin-bottom:14px;}
-.wp-gallery-close{cursor:pointer;color:var(--text2);font-size:18px;padding:2px 6px;border-radius:6px;transition:background .12s;}
-.wp-gallery-close:hover{background:rgba(196,43,28,.7);color:#fff;}
+.wp-gallery-close{cursor:pointer;color:var(--text2);font-size:18px;padding:2px 6px;border-radius:6px;}
 .wp-tabs{display:flex;gap:6px;margin-bottom:12px;}
 .wp-tab{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid var(--border);color:var(--text2);transition:all .15s;}
 .wp-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .wp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-height:360px;overflow-y:auto;}
 .wp-item{aspect-ratio:16/9;border-radius:10px;cursor:pointer;position:relative;overflow:hidden;border:2px solid transparent;transition:all .18s;}
-.wp-item:hover{transform:scale(1.04);border-color:rgba(255,255,255,.3);}
-.wp-item.wp-active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
-.wp-item-label{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;font-size:9px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6));text-align:center;opacity:0;transition:opacity .15s;border-radius:0 0 8px 8px;}
+.wp-item:hover{transform:scale(1.04);}
+.wp-item.wp-active{border-color:var(--accent);}
+.wp-item-label{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;font-size:9px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6));text-align:center;opacity:0;transition:opacity .15s;}
 .wp-item:hover .wp-item-label{opacity:1;}
-.wp-default-badge{position:absolute;top:4px;right:4px;font-size:9px;background:rgba(0,120,212,.85);color:#fff;padding:2px 5px;border-radius:8px;}
 
+/* ══════════════════════════════════════════
+   CONTEXT MENU
+══════════════════════════════════════════ */
 #ctx-menu{position:fixed;z-index:9998;background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);padding:5px;min-width:210px;box-shadow:var(--shadow);display:none;}
-.ctx-item{padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;position:relative;}
+.ctx-item{padding:8px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .1s;}
 .ctx-item:hover{background:var(--bg2);}
 .ctx-sep{height:1px;background:var(--border);margin:3px 2px;}
 
+/* ══════════════════════════════════════════
+   WINDOWS
+══════════════════════════════════════════ */
 .window{position:absolute;background:var(--bg1);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:none;flex-direction:column;min-width:320px;min-height:200px;z-index:100;animation:winOpen .14s ease;}
 @keyframes winOpen{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 .window.maximized{border-radius:0!important;top:0!important;left:0!important;width:100%!important;height:calc(100vh - 48px)!important;}
@@ -169,6 +241,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .win-body{flex:1;overflow:auto;border-radius:0 0 var(--radius) var(--radius);}
 .resize-handle{position:absolute;width:14px;height:14px;bottom:0;right:0;cursor:se-resize;}
 
+/* Explorer */
 .exp-wrap{display:flex;flex-direction:column;height:100%;}
 .exp-topbar{display:flex;align-items:center;gap:6px;padding:5px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
 .exp-nav{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:background .12s;}
@@ -184,25 +257,27 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .file-item:hover{background:var(--bg2);}
 .file-item .ico{font-size:32px;}
 .file-item .fname{font-size:10.5px;color:var(--text2);text-align:center;word-break:break-all;}
-.exp-statusbar{padding:3px 14px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;}
+.exp-statusbar{padding:3px 14px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;}
 
+/* Notepad */
 .np-wrap{display:flex;flex-direction:column;height:100%;}
 #np-area{flex:1;background:var(--input-bg);color:var(--text);border:none;outline:none;padding:14px;font-size:14px;font-family:'Consolas',monospace;resize:none;line-height:1.7;user-select:text;}
 .np-statusbar{display:flex;gap:16px;padding:3px 10px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);flex-shrink:0;}
 
+/* Calculator */
 .calc-wrap{padding:12px;display:flex;flex-direction:column;gap:8px;height:100%;}
 .calc-display{background:var(--input-bg);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;align-items:flex-end;}
 .calc-expr{font-size:12px;color:var(--text2);min-height:18px;}
 .calc-result{font-size:36px;font-weight:300;min-height:48px;word-break:break-all;color:var(--text);}
 .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;flex:1;}
 .cc{border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:all .1s;color:var(--text);min-height:44px;}
-.cc:hover{filter:brightness(1.2);}
-.cc:active{transform:scale(.93);}
+.cc:hover{filter:brightness(1.2);}.cc:active{transform:scale(.93);}
 .cc-fn{background:var(--bg2);color:var(--text2);}
 .cc-op{background:rgba(0,120,212,.3);}
 .cc-eq{background:var(--accent);color:#fff;}
 .cc-num{background:var(--card-bg);}
 
+/* Settings */
 .set-wrap{display:flex;height:100%;}
 .set-side{width:200px;border-right:1px solid var(--border);padding:8px;overflow-y:auto;background:rgba(0,0,0,.1);flex-shrink:0;}
 .set-side-item{padding:9px 12px;border-radius:8px;font-size:12px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;}
@@ -216,6 +291,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .set-card-l .n{font-size:13px;color:var(--text);}
 .set-card-l .d{font-size:11px;color:var(--text2);margin-top:2px;}
 
+/* Browser */
 .br-wrap{display:flex;flex-direction:column;height:100%;}
 .br-bar{display:flex;align-items:center;gap:5px;padding:6px 8px;border-bottom:1px solid var(--border);flex-shrink:0;}
 .br-nav{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:14px;transition:background .12s;}
@@ -225,12 +301,13 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .br-greeting{font-size:24px;font-weight:300;color:var(--text);}
 .br-searchbar{display:flex;align-items:center;background:var(--input-bg);border:1px solid var(--border);border-radius:24px;padding:9px 18px;gap:10px;width:520px;max-width:100%;}
 .br-searchbar input{background:none;border:none;outline:none;color:var(--text);font-size:14px;flex:1;font-family:inherit;}
-.br-searchbar button{background:var(--accent);border:none;color:#fff;padding:6px 16px;border-radius:16px;cursor:pointer;font-size:12px;font-family:inherit;}
+.br-searchbar button{background:var(--accent);border:none;color:#fff;padding:6px 16px;border-radius:16px;cursor:pointer;font-size:12px;}
 .br-shortcuts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:520px;max-width:100%;}
 .br-sc{background:var(--card-bg);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:background .12s;}
 .br-sc:hover{background:var(--bg2);}
 #br-frame{flex:1;width:100%;border:none;display:none;background:#fff;}
 
+/* Paint */
 .paint-wrap{display:flex;flex-direction:column;height:100%;}
 .paint-toolbar{display:flex;align-items:center;gap:7px;padding:6px 10px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;}
 .paint-tool{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .12s;}
@@ -243,6 +320,7 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .paint-canvas-wrap{flex:1;overflow:hidden;background:#fff;position:relative;}
 #paint-canvas{cursor:crosshair;display:block;}
 
+/* Task Manager */
 .tm-wrap{display:flex;flex-direction:column;height:100%;}
 .tm-body{flex:1;padding:12px;overflow-y:auto;}
 .tm-table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -250,16 +328,17 @@ body.light-theme .tb-sys:hover{background:rgba(0,0,0,.07);}
 .tm-table td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--text);}
 .tm-table tr:hover td{background:var(--bg2);}
 
+/* Exian AI */
 .echat-wrap{display:flex;height:100%;overflow:hidden;background:rgba(8,10,20,.97);}
 body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 .echat-main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .echat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:rgba(0,0,0,.15);}
 .echat-header-ico{font-size:28px;}
-.echat-header-info .echat-header-name{font-size:15px;font-weight:600;color:var(--text);}
-.echat-header-info .echat-header-status{font-size:11px;color:#2ecc71;}
+.echat-header-name{font-size:15px;font-weight:600;color:var(--text);}
+.echat-header-status{font-size:11px;color:#2ecc71;}
 .echat-quick{display:flex;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;background:rgba(0,0,0,.08);}
 .echat-quick-btn{padding:5px 12px;border-radius:20px;font-size:11px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;}
-.echat-quick-btn:hover{background:rgba(0,120,212,.3);color:var(--text);border-color:var(--accent);}
+.echat-quick-btn:hover{background:rgba(0,120,212,.3);color:var(--text);}
 #exian-chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;}
 .echat-msg{display:flex;gap:10px;align-items:flex-start;}
 .echat-user{flex-direction:row-reverse;}
@@ -271,25 +350,24 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 .echat-bubble-bot{background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:4px 14px 14px 14px;}
 .echat-bubble pre{background:rgba(0,0,0,.3);border-radius:6px;padding:8px;font-size:11px;overflow-x:auto;margin:6px 0;}
 .echat-time{font-size:10px;color:var(--text2);padding:0 4px;}
-@keyframes echatIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .echat-animate{animation:echatIn .25s ease;}
+@keyframes echatIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .echat-typing{display:flex;align-items:center;gap:4px;padding:12px 14px;}
 .edot{width:7px;height:7px;border-radius:50%;background:var(--text2);display:inline-block;animation:dotBounce 1.2s ease infinite;}
-.edot:nth-child(2){animation-delay:.2s;}
-.edot:nth-child(3){animation-delay:.4s;}
+.edot:nth-child(2){animation-delay:.2s;}.edot:nth-child(3){animation-delay:.4s;}
 @keyframes dotBounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
 .echat-input-area{padding:12px 16px;border-top:1px solid var(--border);background:rgba(0,0,0,.15);flex-shrink:0;}
 .echat-input-row{display:flex;align-items:flex-end;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:8px 8px 8px 14px;transition:border .2s;}
 .echat-input-row:focus-within{border-color:var(--accent);}
-#exian-chat-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:inherit;resize:none;line-height:1.5;max-height:120px;min-height:20px;overflow-y:auto;user-select:text;}
+#exian-chat-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:inherit;resize:none;line-height:1.5;max-height:120px;min-height:20px;user-select:text;}
 #exian-chat-input::placeholder{color:var(--text2);}
 #exian-send-btn{width:34px;height:34px;border-radius:10px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;flex-shrink:0;}
-#exian-send-btn:hover{background:#106ebe;transform:scale(1.05);}
-.echat-hint{font-size:10px;color:var(--text2);text-align:center;margin-top:6px;}
+#exian-send-btn:hover{background:#106ebe;}
 
+/* Updates */
 .updates-wrap{display:flex;flex-direction:column;height:100%;padding:16px;}
 .updates-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-.updates-header h2{font-size:18px;font-weight:400;color:var(--text);}
+.updates-header h2{font-size:18px;font-weight:400;}
 .update-item{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:8px;}
 .update-item .update-ver{font-size:14px;font-weight:600;color:var(--accent2);}
 .update-item .update-date{font-size:11px;color:var(--text2);margin-bottom:6px;}
@@ -299,6 +377,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 .tag-fix{background:rgba(231,76,60,.2);color:#e74c3c;}
 .tag-improve{background:rgba(52,152,219,.2);color:#3498db;}
 
+/* Notifications */
 #notif-stack{position:fixed;bottom:60px;right:12px;z-index:9990;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
 .notif{background:var(--menu-bg);backdrop-filter:var(--blur);border:1px solid var(--border);border-radius:14px;padding:12px 14px;width:310px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:flex-start;animation:notifSlide .3s ease;}
 @keyframes notifSlide{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
@@ -306,6 +385,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 .notif-txt .nt{font-size:12.5px;font-weight:600;margin-bottom:2px;color:var(--text);}
 .notif-txt .nd{font-size:11.5px;color:var(--text2);}
 .notif-close{margin-left:auto;cursor:pointer;color:var(--text2);font-size:14px;padding:2px;}
+
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(128,128,128,.25);border-radius:3px;}
@@ -313,19 +393,32 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 </head>
 <body>
 
-<!-- BOOT -->
+<!-- ═══ BOOT ═══════════════════════════════════════════ -->
 <div id="boot">
-<div class="boot-logo">E✦</div>
+<div class="boot-logo-wrap" id="boot-logo"></div>
+<div class="boot-tagline">Официальная платформа</div>
 <div class="boot-bar"><div class="boot-fill"></div></div>
-<div class="boot-txt">ExiWin 12</div>
+<div class="boot-txt">Загрузка ExiWin 12...</div>
 </div>
 
-<!-- REGISTER / LOGIN -->
-<div id="regscreen" style="display:none;">
+<!-- ═══ SYNC CODE MODAL ════════════════════════════════ -->
+<div id="sync-modal">
+<div class="sync-box" style="position:relative;">
+<div class="sync-close" onclick="el('sync-modal').style.display='none'">✕</div>
+<h3 id="sync-modal-title">📱 Синхронизация аккаунта</h3>
+<p id="sync-modal-desc">Скопируй этот код и вставь на другом устройстве для входа в аккаунт.</p>
+<div class="sync-code-display" id="sync-code-text"></div>
+<button class="reg-btn" onclick="copySyncCode()">📋 Скопировать код</button>
+<button class="reg-btn secondary" onclick="el('sync-modal').style.display='none'">Закрыть</button>
+</div>
+</div>
+
+<!-- ═══ REGISTER ════════════════════════════════════════ -->
+<div id="regscreen">
 <div class="reg-box" id="reg-box">
-<div class="reg-logo">E✦</div>
+<div class="reg-logo" id="reg-logo-el"></div>
 <h2>Добро пожаловать</h2>
-<p>Создайте аккаунт ExiWin 12</p>
+<p>Создай аккаунт — войди с любого устройства!</p>
 <div class="reg-avatar-pick">
 <div class="av-opt sel" data-av="🧑" onclick="pickAv(this)">🧑</div>
 <div class="av-opt" data-av="👩" onclick="pickAv(this)">👩</div>
@@ -339,10 +432,12 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <input class="reg-input" type="text" id="reg-name" placeholder="Имя пользователя" maxlength="20">
 <input class="reg-input" type="password" id="reg-pass" placeholder="Пароль (мин 4 символа)">
 <input class="reg-input" type="password" id="reg-pass2" placeholder="Повторите пароль">
-<button class="reg-btn" onclick="doRegister()">Создать аккаунт</button>
+<button class="reg-btn" onclick="doRegister()">✨ Создать аккаунт</button>
 <div class="reg-err" id="reg-err"></div>
 <div class="reg-switch" onclick="showLogin()">Уже есть аккаунт? <span>Войти</span></div>
+<div class="reg-switch" onclick="showSyncImport()">Есть синк-код? <span>Войти через код 📱</span></div>
 </div>
+
 <div class="reg-box" id="login-box" style="display:none;">
 <div id="login-avatar" style="font-size:52px;margin-bottom:10px;">🧑</div>
 <h2 id="login-name-disp">Пользователь</h2>
@@ -350,15 +445,26 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <input class="reg-input" type="password" id="login-pass" placeholder="Пароль" onkeydown="if(event.key==='Enter')doLogin()">
 <button class="reg-btn" onclick="doLogin()">Войти</button>
 <div class="reg-err" id="login-err"></div>
+<button class="reg-btn secondary" onclick="showSyncImport()">📱 Войти с другого устройства</button>
 <div class="reg-switch" onclick="showRegister()">Новый аккаунт? <span>Регистрация</span></div>
+</div>
+
+<div class="reg-box" id="sync-import-box" style="display:none;">
+<div style="font-size:48px;margin-bottom:10px;">📱</div>
+<h2>Синхронизация</h2>
+<p>Вставь синк-код с другого устройства</p>
+<textarea class="reg-input" id="sync-import-input" placeholder="Вставь синк-код сюда..." rows="4" style="resize:none;user-select:text;font-family:monospace;font-size:11px;"></textarea>
+<button class="reg-btn" onclick="importSyncCode()">📥 Войти по коду</button>
+<div class="reg-err" id="sync-err"></div>
+<div class="reg-switch" onclick="showLogin()">← <span>Назад</span></div>
 </div>
 </div>
 
-<!-- LOCK -->
-<div id="lockscreen" style="display:none;">
+<!-- ═══ LOCK SCREEN ══════════════════════════════════ -->
+<div id="lockscreen">
 <div class="lock-glow"></div>
 <div id="lock-clock">12:00</div>
-<div id="lock-date-lock">Понедельник, 17 февраля</div>
+<div id="lock-date-lock">Понедельник</div>
 <div class="lock-user">
 <div id="lock-avatar">🧑</div>
 <div id="lock-username-disp">Пользователь</div>
@@ -366,8 +472,8 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 </div>
 </div>
 
-<!-- DESKTOP -->
-<div id="desktop" onclick="desktopClick(event)" oncontextmenu="showCtxMenu(event,'desktop')">
+<!-- ═══ DESKTOP ══════════════════════════════════════ -->
+<div id="desktop" onclick="desktopClick(event)" oncontextmenu="showCtxMenu(event)">
 <div class="desk-aurora"></div>
 <div class="desk-glow"></div>
 <div class="desk-icon" data-icon-id="icon-pc" style="top:16px;left:18px" ondblclick="openApp('explorer')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">💻</div><span>Этот компьютер</span></div>
@@ -378,18 +484,17 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="desk-icon" data-icon-id="icon-paint" style="top:16px;left:118px" ondblclick="openApp('paint')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎨</div><span>Paint</span></div>
 <div class="desk-icon" data-icon-id="icon-taskman" style="top:112px;left:118px" ondblclick="openApp('taskman')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📊</div><span>Диспетчер задач</span></div>
 <div class="desk-icon" data-icon-id="icon-exianai" style="top:208px;left:118px" ondblclick="openApp('exianai')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🤖</div><span>Exian.AI 3.0</span></div>
-<!-- ✅ EXIBLOX ICON — FIXED -->
 <div class="desk-icon" data-icon-id="icon-exiblox" style="top:304px;left:118px" ondblclick="openExibloxApp()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🐍</div><span>Exiblox v3</span></div>
 <div class="desk-icon" data-icon-id="icon-gta6" style="top:400px;left:118px" ondblclick="openApp('gta6')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🎮</div><span>GTA 6</span></div>
 <div class="desk-icon" data-icon-id="icon-updates" style="top:16px;left:218px" ondblclick="openApp('updates')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🔔</div><span>Обновления</span></div>
 <div class="desk-icon" data-icon-id="icon-telegram" style="top:112px;left:218px" ondblclick="openTelegram()" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">📱</div><span>Exiblox Telegram</span></div>
-<div class="desk-icon" data-icon-id="icon-parkour" style="top:208px;left:218px" ondblclick="openApp('parkour')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🏃</div><span>3D Паркур</span></div>
+<div class="desk-icon" data-icon-id="icon-parkour" style="top:208px;left:218px" ondblclick="openApp('parkour')" onclick="selectIcon(this)" onmousedown="iconDragStart(event,this)"><div class="dico">🏃</div><span>Обби Паркур</span></div>
 </div>
 
-<!-- TASKBAR -->
+<!-- ═══ TASKBAR ══════════════════════════════════════ -->
 <div id="taskbar">
 <div id="tb-left">
-<div id="start-btn" onclick="toggleStart(event)" title="Пуск">E✦</div>
+<div id="start-btn" onclick="toggleStart(event)" title="Пуск" id="tb-start-logo"></div>
 <div class="tb-sep"></div>
 </div>
 <div id="tb-center">
@@ -417,7 +522,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 </div>
 </div>
 
-<!-- START MENU -->
+<!-- ═══ START MENU ══════════════════════════════════ -->
 <div id="start-menu" onclick="event.stopPropagation()">
 <div id="sm-search"><span>🔍</span><input type="text" id="sm-search-input" placeholder="Поиск..." oninput="smSearch(this.value)"></div>
 <div id="sm-pinned-sec">
@@ -433,52 +538,52 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="pin-app" onclick="openApp('exianai');hideAll()"><div class="ico">🤖</div><div class="lbl">Exian.AI</div></div>
 <div class="pin-app" onclick="openApp('updates');hideAll()"><div class="ico">🔔</div><div class="lbl">Обновления</div></div>
 <div class="pin-app" onclick="openTelegram();hideAll()"><div class="ico">📱</div><div class="lbl">Telegram</div></div>
-<div class="pin-app" onclick="openApp('parkour');hideAll()"><div class="ico">🏃</div><div class="lbl">3D Паркур</div></div>
+<div class="pin-app" onclick="openApp('parkour');hideAll()"><div class="ico">🏃</div><div class="lbl">Обби Паркур</div></div>
 <div class="pin-app" onclick="openApp('gta6');hideAll()"><div class="ico">🎮</div><div class="lbl">GTA 6</div></div>
 </div>
 </div>
 <div class="sm-sec">Рекомендуемые</div>
-<div class="rec-list" id="sm-rec-list">
-<div class="rec-row" onclick="openApp('updates');hideAll()"><div class="ico">🔔</div><div class="rec-info"><div class="n">Обновление v2.5</div><div class="t">Новые приложения!</div></div></div>
-<div class="rec-row" onclick="openApp('parkour');hideAll()"><div class="ico">🏃</div><div class="rec-info"><div class="n">3D Паркур — Новинка!</div><div class="t">Только что</div></div></div>
+<div class="rec-list">
+<div class="rec-row" onclick="openApp('parkour');hideAll()"><div class="ico">🏃</div><div class="rec-info"><div class="n">Обби Паркур — Полностью переработан!</div><div class="t">3 сложности · Чекпоинты · Небо</div></div></div>
 <div class="rec-row" onclick="openExibloxApp();hideAll()"><div class="ico">🐍</div><div class="rec-info"><div class="n">Exiblox v3</div><div class="t">Игровая платформа</div></div></div>
+<div class="rec-row" onclick="showSyncFromDesktop();hideAll()"><div class="ico">📱</div><div class="rec-info"><div class="n">Синк-код аккаунта</div><div class="t">Войди с любого устройства</div></div></div>
 </div>
-<div id="sm-search-results"></div>
 <div id="sm-footer">
 <div id="sm-user" onclick="openApp('settings');hideAll()"><div id="sm-avatar">🧑</div><span id="sm-username">Пользователь</span></div>
 <div class="power-menu">
-<div class="pw-btn" onclick="lockScreen()">🔒</div>
-<div class="pw-btn" onclick="reboot()">🔄</div>
-<div class="pw-btn" onclick="shutdown()">⏻</div>
+<div class="pw-btn" title="Синк-код" onclick="showSyncFromDesktop();hideAll()">📱</div>
+<div class="pw-btn" title="Блокировка" onclick="lockScreen()">🔒</div>
+<div class="pw-btn" title="Перезагрузка" onclick="reboot()">🔄</div>
+<div class="pw-btn" title="Выключение" onclick="shutdown()">⏻</div>
 </div>
 </div>
 </div>
 
-<!-- TRAY POPUP -->
+<!-- ═══ TRAY POPUP ═══════════════════════════════════ -->
 <div id="tray-popup" onclick="event.stopPropagation()">
 <div class="tray-time-big" id="tray-time-big">12:00</div>
-<div class="tray-date-str" id="tray-date-str">Понедельник, 17 февраля 2026</div>
+<div class="tray-date-str" id="tray-date-str"></div>
 <div class="tray-tiles">
-<div class="tr-tile on" id="tr-wifi" onclick="toggleTile('tr-wifi','WiFi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
-<div class="tr-tile on" id="tr-bt" onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
+<div class="tr-tile" id="tr-wifi" onclick="toggleTile('tr-wifi','Wi-Fi')"><div class="ico">📶</div><div class="lbl">Wi-Fi</div></div>
+<div class="tr-tile" id="tr-bt" onclick="toggleTile('tr-bt','Bluetooth')"><div class="ico">🔵</div><div class="lbl">Bluetooth</div></div>
 <div class="tr-tile off" id="tr-airplane" onclick="toggleTile('tr-airplane','Авиарежим')"><div class="ico">✈️</div><div class="lbl">Авиарежим</div></div>
 <div class="tr-tile off" id="tr-night" onclick="toggleNightMode()"><div class="ico">🌙</div><div class="lbl">Ночной</div></div>
 <div class="tr-tile off" id="tr-light-theme" onclick="openWallpaperGallery('light')"><div class="ico">☀️</div><div class="lbl">Светлая</div></div>
-<div class="tr-tile on" id="tr-dark-theme" onclick="openWallpaperGallery('dark')"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
-<div class="tr-tile on" id="tr-sound" onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
+<div class="tr-tile" id="tr-dark-theme" onclick="openWallpaperGallery('dark')"><div class="ico">🌑</div><div class="lbl">Тёмная</div></div>
+<div class="tr-tile" id="tr-sound" onclick="toggleTile('tr-sound','Звук')"><div class="ico">🔊</div><div class="lbl">Звук</div></div>
 <div class="tr-tile off" id="tr-focus" onclick="toggleTile('tr-focus','Фокус')"><div class="ico">🎯</div><div class="lbl">Фокус</div></div>
 </div>
-<div class="sl-row"><span class="ico">🔆</span><input type="range" min="10" max="100" value="85" id="bright-sl" oninput="setBright(this.value)"><span class="sl-val" id="bright-val">85%</span></div>
-<div class="sl-row"><span class="ico">🔊</span><input type="range" min="0" max="100" value="60" id="vol-sl" oninput="setVol(this.value)"><span class="sl-val" id="vol-val">60%</span></div>
+<div class="sl-row"><span class="ico">🔆</span><input type="range" min="10" max="100" value="85" oninput="el('bright-val').textContent=this.value+'%'"><span class="sl-val" id="bright-val">85%</span></div>
+<div class="sl-row"><span class="ico">🔊</span><input type="range" min="0" max="100" value="60" oninput="el('vol-val').textContent=this.value+'%'"><span class="sl-val" id="vol-val">60%</span></div>
 </div>
 
-<!-- WALLPAPER GALLERY -->
+<!-- ═══ WALLPAPER GALLERY ════════════════════════════ -->
 <div id="wallpaper-gallery" onclick="event.stopPropagation()">
 <div class="wp-gallery-title">
-<span id="wp-gallery-heading">🖼️ Выбор обоев</span>
+<span id="wp-gallery-heading">🖼️ Обои</span>
 <div class="wp-gallery-close" onclick="closeWallpaperGallery()">✕</div>
 </div>
-<div class="wp-gallery-sub">Выберите фон рабочего стола.</div>
+<div class="wp-gallery-sub">Выберите фон рабочего стола</div>
 <div class="wp-tabs">
 <div class="wp-tab active" id="wp-tab-dark" onclick="wpSwitchTab('dark')">🌑 Тёмные</div>
 <div class="wp-tab" id="wp-tab-light" onclick="wpSwitchTab('light')">☀️ Светлые</div>
@@ -486,9 +591,8 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="wp-grid" id="wp-grid"></div>
 </div>
 
-<!-- CONTEXT MENU -->
+<!-- ═══ CONTEXT MENU ════════════════════════════════ -->
 <div id="ctx-menu">
-<div class="ctx-sep"></div>
 <div class="ctx-item" onclick="ctxRefresh()"><span>🔃</span>Обновить</div>
 <div class="ctx-sep"></div>
 <div class="ctx-item" onclick="openWallpaperGallery('light');hideAll()"><span>☀️</span>Светлые обои</div>
@@ -497,18 +601,18 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="ctx-item" onclick="openApp('settings');hideAll()"><span>⚙️</span>Параметры</div>
 </div>
 
-<!-- ═══════════════ ALL WINDOWS ═══════════════ -->
-
+<!-- ═══════════════════════════════════════════════════
+     WINDOWS
+════════════════════════════════════════════════════ -->
 <!-- EXPLORER -->
 <div class="window" id="win-explorer" style="width:780px;height:520px;" onclick="bringFront('win-explorer')">
 <div class="titlebar" onmousedown="dragWin(event,'win-explorer')">
 <span class="tb-icon">📁</span><span class="tb-title">Проводник</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('explorer')">─</div><div class="wb" onclick="toggleMax('win-explorer')">⬜</div><div class="wb cls" onclick="closeWin('explorer')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="exp-wrap">
+<div class="win-body"><div class="exp-wrap">
 <div class="exp-topbar">
-<div class="exp-nav">◀</div><div class="exp-nav">▶</div><div class="exp-nav" onclick="expNav('ExiWin')">↑</div>
+<div class="exp-nav">◀</div><div class="exp-nav">▶</div><div class="exp-nav" onclick="expNav('Рабочий стол')">↑</div>
 <input class="exp-path" id="exp-path" value="ExiWin://Рабочий стол">
 </div>
 <div class="exp-body">
@@ -521,8 +625,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="exp-files" id="exp-files-content"></div>
 </div>
 <div class="exp-statusbar"><span id="exp-status">Объектов: 0</span></div>
-</div>
-</div>
+</div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-explorer')"></div>
 </div>
 
@@ -532,12 +635,10 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <span class="tb-icon">📝</span><span class="tb-title">Блокнот</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('notepad')">─</div><div class="wb" onclick="toggleMax('win-notepad')">⬜</div><div class="wb cls" onclick="closeWin('notepad')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="np-wrap">
+<div class="win-body"><div class="np-wrap">
 <textarea id="np-area" placeholder="Начните вводить текст..." spellcheck="false"></textarea>
 <div class="np-statusbar"><span id="np-status-ln">Строк: 1</span><span>UTF-8</span></div>
-</div>
-</div>
+</div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-notepad')"></div>
 </div>
 
@@ -547,8 +648,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <span class="tb-icon">🧮</span><span class="tb-title">Калькулятор</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('calc')">─</div><div class="wb" onclick="toggleMax('win-calc')">⬜</div><div class="wb cls" onclick="closeWin('calc')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="calc-wrap">
+<div class="win-body"><div class="calc-wrap">
 <div class="calc-display"><div class="calc-expr" id="calc-expr"></div><div class="calc-result" id="calc-result">0</div></div>
 <div class="calc-grid">
 <div class="cc cc-fn" onclick="calcPress('C')">C</div><div class="cc cc-fn" onclick="calcPress('±')">±</div><div class="cc cc-fn" onclick="calcPress('%')">%</div><div class="cc cc-op" onclick="calcPress('÷')">÷</div>
@@ -557,8 +657,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="cc cc-num" onclick="calcPress('1')">1</div><div class="cc cc-num" onclick="calcPress('2')">2</div><div class="cc cc-num" onclick="calcPress('3')">3</div><div class="cc cc-op" onclick="calcPress('+')">+</div>
 <div class="cc cc-fn" onclick="calcPress('⌫')">⌫</div><div class="cc cc-num" onclick="calcPress('0')">0</div><div class="cc cc-num" onclick="calcPress('.')">.</div><div class="cc cc-eq" onclick="calcPress('=')">=</div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 
 <!-- SETTINGS -->
@@ -567,17 +666,17 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <span class="tb-icon">⚙️</span><span class="tb-title">Параметры</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('settings')">─</div><div class="wb" onclick="toggleMax('win-settings')">⬜</div><div class="wb cls" onclick="closeWin('settings')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="set-wrap">
+<div class="win-body"><div class="set-wrap">
 <div class="set-side">
 <div class="set-side-item active" data-page="about" onclick="setPage('about')">ℹ️ О системе</div>
 <div class="set-side-item" data-page="theme" onclick="setPage('theme')">🎨 Тема</div>
 <div class="set-side-item" data-page="account" onclick="setPage('account')">👤 Аккаунт</div>
+<div class="set-side-item" data-page="sync" onclick="setPage('sync')">📱 Синхронизация</div>
 </div>
 <div class="set-content">
 <div class="set-page active" id="set-about"><div class="set-h1">О системе</div>
-<div class="set-card"><div class="set-card-l"><div class="n">ExiWin 12</div><div class="d">Версия 24H2 — Build 26100</div></div></div>
-<div class="set-card"><div class="set-card-l"><div class="n">Разработчик</div><div class="d">Exian Research Labs</div></div></div>
+<div class="set-card"><div class="set-card-l"><div class="n">ExiWin 12</div><div class="d">Версия 26H1 — Build 26200</div></div></div>
+<div class="set-card"><div class="set-card-l"><div class="n">Платформа</div><div class="d">Exiblox Official</div></div></div>
 <div class="set-card"><div class="set-card-l"><div class="n">AI</div><div class="d">Exian.AI 3.0</div></div></div>
 </div>
 <div class="set-page" id="set-theme"><div class="set-h1">Тема и обои</div>
@@ -586,11 +685,22 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 </div>
 <div class="set-page" id="set-account"><div class="set-h1">Аккаунт</div>
 <div class="set-card"><div class="set-card-l"><div class="n" id="set-uname">Пользователь</div><div class="d">Администратор</div></div></div>
+<div class="set-card"><div class="set-card-l"><div class="n">Синк-код аккаунта</div><div class="d">Войди с любого устройства</div></div><div style="color:var(--accent2);cursor:pointer;font-size:12px" onclick="showSyncFromDesktop()">Показать 📱</div></div>
 <div class="set-card"><div class="set-card-l"><div class="n">Сбросить аккаунт</div></div><div style="color:#e74c3c;cursor:pointer;font-size:13px" onclick="if(confirm('Сбросить все данные?')){localStorage.clear();location.reload();}">Сбросить</div></div>
 </div>
+<div class="set-page" id="set-sync"><div class="set-h1">📱 Синхронизация</div>
+<div class="set-card"><div class="set-card-l"><div class="n">Синк-код</div><div class="d">Скопируй и вставь на другом устройстве</div></div><div style="color:var(--accent2);cursor:pointer;font-size:12px" onclick="showSyncFromDesktop()">Открыть 📋</div></div>
+<div style="background:rgba(0,120,212,.1);border:1px solid rgba(0,120,212,.2);border-radius:10px;padding:14px;margin-top:12px;font-size:12px;color:var(--text2);line-height:1.8;">
+ℹ️ Как использовать:<br>
+1. Нажми «Открыть» — появится твой синк-код<br>
+2. Скопируй код (кнопка «Скопировать»)<br>
+3. На другом устройстве открой этот сайт<br>
+4. При входе выбери «Войти через код 📱»<br>
+5. Вставь код — аккаунт восстановлен!
 </div>
 </div>
 </div>
+</div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-settings')"></div>
 </div>
 
@@ -600,8 +710,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <span class="tb-icon">🌐</span><span class="tb-title">ExiWin Edge</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('browser')">─</div><div class="wb" onclick="toggleMax('win-browser')">⬜</div><div class="wb cls" onclick="closeWin('browser')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="br-wrap">
+<div class="win-body"><div class="br-wrap">
 <div class="br-bar">
 <div class="br-nav" onclick="brNewTab()">🏠</div>
 <input class="br-url-bar" id="br-url" type="text" placeholder="Введите адрес..." onkeydown="if(event.key==='Enter')brNavigate(this.value)">
@@ -612,8 +721,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="br-searchbar"><span>🔍</span><input type="text" placeholder="Поиск..." onkeydown="if(event.key==='Enter')brSearch(this.value)"><button onclick="brSearch(this.previousElementSibling.value)">Найти</button></div>
 </div>
 <iframe id="br-frame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-</div>
-</div>
+</div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-browser')"></div>
 </div>
 
@@ -623,8 +731,7 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <span class="tb-icon">🎨</span><span class="tb-title">Paint</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('paint')">─</div><div class="wb" onclick="toggleMax('win-paint')">⬜</div><div class="wb cls" onclick="closeWin('paint')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="paint-wrap">
+<div class="win-body"><div class="paint-wrap">
 <div class="paint-toolbar">
 <div class="paint-tool active" onclick="paintTool='pen';document.querySelectorAll('.paint-tool').forEach(t=>t.classList.remove('active'));this.classList.add('active')">✏️</div>
 <div class="paint-tool" onclick="paintTool='eraser';document.querySelectorAll('.paint-tool').forEach(t=>t.classList.remove('active'));this.classList.add('active')">🧹</div>
@@ -637,11 +744,10 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="paint-color" style="background:#000" onclick="paintColor='#000';document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));this.classList.add('active')"></div>
 <div class="paint-color" style="background:#fff;border:1px solid #ccc" onclick="paintColor='#fff';document.querySelectorAll('.paint-color').forEach(c=>c.classList.remove('active'));this.classList.add('active')"></div>
 </div>
-<div class="paint-size"><span>Размер:</span><input type="range" min="1" max="30" value="4" oninput="paintSize=+this.value"><span id="paint-size-val">4px</span></div>
+<div class="paint-size"><span>Размер:</span><input type="range" min="1" max="30" value="4" oninput="paintSize=+this.value"></div>
 </div>
 <div class="paint-canvas-wrap" id="paint-canvas-wrap"><canvas id="paint-canvas"></canvas></div>
-</div>
-</div>
+</div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-paint')"></div>
 </div>
 
@@ -651,63 +757,56 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <span class="tb-icon">📊</span><span class="tb-title">Диспетчер задач</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('taskman')">─</div><div class="wb" onclick="toggleMax('win-taskman')">⬜</div><div class="wb cls" onclick="closeWin('taskman')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="tm-wrap"><div class="tm-body" id="tm-body-content"></div></div>
-</div>
+<div class="win-body"><div class="tm-wrap"><div class="tm-body" id="tm-body-content"></div></div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-taskman')"></div>
 </div>
 
-<!-- EXIAN.AI 3.0 -->
+<!-- EXIAN.AI -->
 <div class="window" id="win-exianai" style="width:900px;height:620px;" onclick="bringFront('win-exianai')">
 <div class="titlebar" onmousedown="dragWin(event,'win-exianai')">
 <span class="tb-icon">🤖</span><span class="tb-title">Exian.AI 3.0</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('exianai')">─</div><div class="wb" onclick="toggleMax('win-exianai')">⬜</div><div class="wb cls" onclick="closeWin('exianai')">✕</div></div>
 </div>
 <div class="win-body" style="overflow:hidden">
-<div class="echat-wrap">
-<div class="echat-main">
+<div class="echat-wrap"><div class="echat-main">
 <div class="echat-header">
 <div class="echat-header-ico">🤖</div>
-<div class="echat-header-info">
-<div class="echat-header-name">Exian.AI 3.0</div>
-<div class="echat-header-status">Онлайн · ExiWin 12</div>
-</div>
+<div class="echat-header-info"><div class="echat-header-name">Exian.AI 3.0</div><div class="echat-header-status">Онлайн · ExiWin 12</div></div>
 </div>
 <div class="echat-quick">
-<div class="echat-quick-btn" onclick="exianQuick('Что ты умеешь?')">🤔 Что ты умеешь?</div>
-<div class="echat-quick-btn" onclick="exianQuick('Напиши код на Python')">💻 Код на Python</div>
+<div class="echat-quick-btn" onclick="exianQuick('Что ты умеешь?')">🤔 Что умеешь?</div>
+<div class="echat-quick-btn" onclick="exianQuick('Напиши код на Python')">💻 Код Python</div>
 <div class="echat-quick-btn" onclick="exianQuick('Расскажи анекдот')">😄 Анекдот</div>
 <div class="echat-quick-btn" onclick="exianQuick('Идея для проекта')">💡 Идея</div>
 </div>
 <div id="exian-chat-messages"></div>
 <div class="echat-input-area">
 <div class="echat-input-row">
-<textarea id="exian-chat-input" placeholder="Напиши что-нибудь... (Enter — отправить)" rows="1"></textarea>
+<textarea id="exian-chat-input" placeholder="Напишите что-нибудь..." rows="1"></textarea>
 <button id="exian-send-btn" onclick="exianSend()">➤</button>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-exianai')"></div>
 </div>
 
-<!-- UPDATES APP -->
+<!-- UPDATES -->
 <div class="window" id="win-updates" style="width:550px;height:500px;" onclick="bringFront('win-updates')">
 <div class="titlebar" onmousedown="dragWin(event,'win-updates')">
 <span class="tb-icon">🔔</span><span class="tb-title">Обновления ExiWin</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('updates')">─</div><div class="wb" onclick="toggleMax('win-updates')">⬜</div><div class="wb cls" onclick="closeWin('updates')">✕</div></div>
 </div>
-<div class="win-body">
-<div class="updates-wrap" id="updates-content"></div>
-</div>
+<div class="win-body"><div class="updates-wrap" id="updates-content"></div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-updates')"></div>
 </div>
 
-<!-- 3D PARKOUR -->
-<div class="window" id="win-parkour" style="width:900px;height:620px;" onclick="bringFront('win-parkour')">
+<!-- ╔══════════════════════════════════════════════════════╗
+     ║  🏃 ОББИ ПАРКУР — ПОЛНОЦЕННАЯ ИГРА                 ║
+     ╚══════════════════════════════════════════════════════╝ -->
+<div class="window" id="win-parkour" style="width:960px;height:640px;" onclick="bringFront('win-parkour')">
 <div class="titlebar" onmousedown="dragWin(event,'win-parkour')">
-<span class="tb-icon">🏃</span><span class="tb-title">3D Паркур — Noob Runner</span>
+<span class="tb-icon">🏃</span><span class="tb-title">Обби Паркур — Noob Runner</span>
 <div class="win-btns"><div class="wb" onclick="minimizeWin('parkour')">─</div><div class="wb" onclick="toggleMax('win-parkour')">⬜</div><div class="wb cls" onclick="parkourClose()">✕</div></div>
 </div>
 <div class="win-body" id="parkour-root" style="overflow:hidden;padding:0;"></div>
@@ -724,40 +823,107 @@ body.light-theme .echat-wrap{background:rgba(246,248,255,.98);}
 <div class="resize-handle" onmousedown="resizeWin(event,'win-gta6')"></div>
 </div>
 
-<!-- ✅ EXIBLOX v3 WINDOW -->
+<!-- EXIBLOX -->
 <div class="window" id="win-exiblox" style="width:900px;height:620px;" onclick="bringFront('win-exiblox')">
 <div class="titlebar" onmousedown="dragWin(event,'win-exiblox')">
 <span class="tb-icon">🐍</span><span class="tb-title">Exiblox v3</span>
-<div class="win-btns">
-<div class="wb" onclick="minimizeWin('exiblox')">─</div>
-<div class="wb" onclick="toggleMax('win-exiblox')">⬜</div>
-<div class="wb cls" onclick="closeWin('exiblox')">✕</div>
+<div class="win-btns"><div class="wb" onclick="minimizeWin('exiblox')">─</div><div class="wb" onclick="toggleMax('win-exiblox')">⬜</div><div class="wb cls" onclick="closeWin('exiblox')">✕</div></div>
 </div>
-</div>
-<div class="win-body" style="overflow:hidden;padding:0;">
-<div id="exiblox-root" style="height:100%;width:100%;"></div>
-</div>
+<div class="win-body" style="overflow:hidden;padding:0;"><div id="exiblox-root" style="height:100%;width:100%;"></div></div>
 <div class="resize-handle" onmousedown="resizeWin(event,'win-exiblox')"></div>
 </div>
 
 <div id="notif-stack"></div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- MAIN ENGINE -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════
+     MAIN ENGINE SCRIPT
+══════════════════════════════════════════════════════ -->
 <script>
 'use strict';
 const el=id=>document.getElementById(id);
 let winZ=100;
 
-// ── BOOT ──────────────────────────────────────────────
-setTimeout(()=>{
- const b=el('boot');
- b.style.opacity='0';
- setTimeout(()=>{b.style.display='none';checkUser();},500);
-},2500);
+// ── RAINBOW LOGO BUILDER ────────────────────────────────
+function buildRainbowText(text,container){
+ container.innerHTML='';
+ [...text].forEach((ch,i)=>{
+  const s=document.createElement('i');
+  s.className='rl';
+  s.textContent=ch;
+  s.style.animationDelay=(i*0.1)+'s';
+  container.appendChild(s);
+ });
+}
 
-// ── USER SYSTEM ───────────────────────────────────────
+// Build all rainbow logos on page
+buildRainbowText('Exiblox Official✦', el('boot-logo'));
+buildRainbowText('Exiblox✦', el('reg-logo-el'));
+// Taskbar start button
+(function(){
+ const btn=el('tb-start-logo')||el('start-btn');
+ if(btn){
+  buildRainbowText('E✦',btn);
+  btn.id='start-btn';btn.setAttribute('onclick','toggleStart(event)');
+ }
+})();
+
+// ── BOOT ────────────────────────────────────────────────
+setTimeout(()=>{
+ const b=el('boot');b.style.opacity='0';
+ setTimeout(()=>{b.style.display='none';checkUser();},600);
+},2700);
+
+// ══════════════════════════════════════════════════════
+// CROSS-DEVICE ACCOUNT SYNC
+// ══════════════════════════════════════════════════════
+function encodeSyncCode(userObj){
+ // encode user data as base64 with version prefix
+ const payload={v:1,data:userObj,ts:Date.now()};
+ try{return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));}catch(e){return null;}
+}
+function decodeSyncCode(code){
+ try{
+  const clean=code.replace(/\s/g,'');
+  const str=decodeURIComponent(escape(atob(clean)));
+  const payload=JSON.parse(str);
+  if(payload.v===1&&payload.data)return payload.data;
+  return null;
+ }catch(e){return null;}
+}
+window.copySyncCode=function(){
+ const txt=el('sync-code-text').textContent;
+ navigator.clipboard.writeText(txt).then(()=>{
+  showNotif('Скопировано!','Синк-код в буфере обмена 📋','✅');
+ }).catch(()=>{
+  showNotif('Скопируй вручную','Выдели и скопируй код','📋');
+ });
+};
+window.showSyncFromDesktop=function(){
+ const saved=localStorage.getItem('exiwin_user');
+ if(!saved){showNotif('Ошибка','Нет аккаунта','❌');return;}
+ const user=JSON.parse(saved);
+ const code=encodeSyncCode(user);
+ el('sync-modal-title').textContent='📱 Синк-код аккаунта: '+user.name;
+ el('sync-modal-desc').textContent='Скопируй код и вставь на другом устройстве при входе через «Войти через код 📱»';
+ el('sync-code-text').textContent=code;
+ el('sync-modal').style.display='flex';
+};
+window.showSyncImport=function(){
+ el('reg-box').style.display='none';el('login-box').style.display='none';
+ el('sync-import-box').style.display='block';
+};
+window.importSyncCode=function(){
+ const raw=el('sync-import-input').value.trim();
+ if(!raw){el('sync-err').textContent='Вставь синк-код';return;}
+ const user=decodeSyncCode(raw);
+ if(!user||!user.name){el('sync-err').textContent='Неверный или повреждённый код';return;}
+ localStorage.setItem('exiwin_user',JSON.stringify(user));
+ el('regscreen').style.display='none';
+ showLock(user);
+ showNotif('Добро пожаловать!',user.name+' — аккаунт синхронизирован! ✅','📱');
+};
+
+// ── USER SYSTEM ─────────────────────────────────────────
 function checkUser(){
  const u=localStorage.getItem('exiwin_user');
  if(u){const d=JSON.parse(u);showLock(d);}
@@ -772,11 +938,23 @@ window.doRegister=function(){
  if(p!==p2){el('reg-err').textContent='Пароли не совпадают';return;}
  const user={name:n,pass:p,avatar:selAvatar};
  localStorage.setItem('exiwin_user',JSON.stringify(user));
- el('regscreen').style.display='none';showLock(user);
+ el('regscreen').style.display='none';
+ showLock(user);
+ // Auto-show sync code after register
+ setTimeout(()=>{
+  showNotif('Аккаунт создан!','Получи синк-код для входа с других устройств','📱');
+ },1500);
 };
-window.showLogin=function(){el('reg-box').style.display='none';el('login-box').style.display='block';const u=localStorage.getItem('exiwin_user');if(u){const d=JSON.parse(u);el('login-avatar').textContent=d.avatar;el('login-name-disp').textContent=d.name;}};
-window.showRegister=function(){el('login-box').style.display='none';el('reg-box').style.display='block';};
-window.doLogin=function(){const u=JSON.parse(localStorage.getItem('exiwin_user')||'{}');if(el('login-pass').value===u.pass){el('regscreen').style.display='none';showLock(u);}else{el('login-err').textContent='Неверный пароль';}};
+window.showLogin=function(){
+ el('reg-box').style.display='none';el('sync-import-box').style.display='none';el('login-box').style.display='block';
+ const u=localStorage.getItem('exiwin_user');if(u){const d=JSON.parse(u);el('login-avatar').textContent=d.avatar;el('login-name-disp').textContent=d.name;}
+};
+window.showRegister=function(){el('login-box').style.display='none';el('sync-import-box').style.display='none';el('reg-box').style.display='block';};
+window.doLogin=function(){
+ const u=JSON.parse(localStorage.getItem('exiwin_user')||'{}');
+ if(el('login-pass').value===u.pass){el('regscreen').style.display='none';showLock(u);}
+ else{el('login-err').textContent='Неверный пароль';}
+};
 
 function showLock(user){
  el('lockscreen').style.display='flex';
@@ -789,12 +967,10 @@ function enterDesktop(user){
  el('sm-avatar').textContent=user.avatar;
  el('sm-username').textContent=user.name;
  if(el('set-uname'))el('set-uname').textContent=user.name;
- loadIconPositions();
- loadSavedWallpaper();
- startClock();
+ loadIconPositions();loadSavedWallpaper();startClock();
 }
 
-// ── CLOCK ─────────────────────────────────────────────
+// ── CLOCK ───────────────────────────────────────────────
 function updateClock(){
  const now=new Date();
  const t=now.toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
@@ -809,61 +985,41 @@ function updateClock(){
 }
 function startClock(){updateClock();setInterval(updateClock,10000);}
 
-// ── CENTERING HELPER ──────────────────────────────────
-// ✅ Центрирует окно по экрану (с учётом тасбара снизу)
-function centerWindow(winEl){
- if(!winEl||winEl.classList.contains('maximized'))return;
- const vw=window.innerWidth;
- const vh=window.innerHeight-48; // минус taskbar
- const ww=winEl.offsetWidth||parseInt(winEl.style.width)||800;
- const wh=winEl.offsetHeight||parseInt(winEl.style.height)||500;
- const left=Math.max(0,Math.round((vw-ww)/2));
- const top=Math.max(0,Math.round((vh-wh)/2));
- winEl.style.left=left+'px';
- winEl.style.top=top+'px';
+// ── CENTERING ───────────────────────────────────────────
+function centerWindow(w){
+ if(!w||w.classList.contains('maximized'))return;
+ const vw=window.innerWidth,vh=window.innerHeight-48;
+ const ww=w.offsetWidth||parseInt(w.style.width)||800;
+ const wh=w.offsetHeight||parseInt(w.style.height)||500;
+ w.style.left=Math.max(0,Math.round((vw-ww)/2))+'px';
+ w.style.top=Math.max(0,Math.round((vh-wh)/2))+'px';
 }
 
-// ── WINDOW MANAGEMENT ─────────────────────────────────
-window.bringFront=function(id){const w=el(id);if(w){w.style.zIndex=++winZ;}};
-
-// ✅ openApp — открывает окно по центру экрана
+// ── WINDOW MANAGEMENT ───────────────────────────────────
+window.bringFront=function(id){const w=el(id);if(w)w.style.zIndex=++winZ;};
 window.openApp=function(app){
  if(app==='gta6'){openGta6();return;}
  if(app==='parkour'){openParkour();return;}
  const w=el('win-'+app);
  if(w){
   w.style.display='flex';
-  // Сначала делаем видимым, потом центрируем (offsetWidth работает только после display:flex)
-  requestAnimationFrame(()=>{
-   centerWindow(w);
-   bringFront('win-'+app);
-  });
+  requestAnimationFrame(()=>{centerWindow(w);bringFront('win-'+app);});
   const tb=el('tb-'+app);if(tb)tb.classList.add('running','active-win');
  }
  if(app==='updates')renderUpdates();
  if(app==='taskman')renderTaskMan();
  hideAll();
 };
-
-window.closeWin=function(app){
- const w=el('win-'+app);if(w)w.style.display='none';
- const tb=el('tb-'+app);if(tb)tb.classList.remove('running','active-win');
-};
+window.closeWin=function(app){const w=el('win-'+app);if(w)w.style.display='none';const tb=el('tb-'+app);if(tb)tb.classList.remove('running','active-win');};
 window.minimizeWin=function(app){const w=el('win-'+app);if(w)w.style.display='none';};
 window.toggleMax=function(id){const w=el(id);if(w)w.classList.toggle('maximized');};
-window.tbClick=function(app){
- const w=el('win-'+app);
- if(!w)return;
- if(!w.style.display||w.style.display==='none')openApp(app);
- else bringFront('win-'+app);
-};
+window.tbClick=function(app){const w=el('win-'+app);if(!w)return;if(!w.style.display||w.style.display==='none')openApp(app);else bringFront('win-'+app);};
 
-// ── DRAG & RESIZE ─────────────────────────────────────
+// ── DRAG & RESIZE ───────────────────────────────────────
 window.dragWin=function(e,id){
  if(e.target.closest('.win-btns'))return;
  const w=el(id);if(!w||w.classList.contains('maximized'))return;
- bringFront(id);
- const sx=e.clientX-w.offsetLeft,sy=e.clientY-w.offsetTop;
+ bringFront(id);const sx=e.clientX-w.offsetLeft,sy=e.clientY-w.offsetTop;
  const mv=e2=>{w.style.left=Math.max(0,e2.clientX-sx)+'px';w.style.top=Math.max(0,e2.clientY-sy)+'px';};
  const up=()=>{document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);};
  document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);
@@ -876,32 +1032,24 @@ window.resizeWin=function(e,id){
  document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);
 };
 
-// ── START MENU ────────────────────────────────────────
+// ── MENUS ───────────────────────────────────────────────
 window.toggleStart=function(e){e&&e.stopPropagation();const m=el('start-menu');if(m.style.display==='flex'){m.style.display='none';m.classList.remove('show');}else{hideAll();m.style.display='flex';setTimeout(()=>m.classList.add('show'),10);}};
-window.hideAll=function(){
- const m=el('start-menu');m.style.display='none';m.classList.remove('show');
- el('tray-popup').style.display='none';
- el('ctx-menu').style.display='none';
-};
+window.hideAll=function(){const m=el('start-menu');m.style.display='none';m.classList.remove('show');el('tray-popup').style.display='none';el('ctx-menu').style.display='none';};
 window.toggleTray=function(e){e&&e.stopPropagation();const t=el('tray-popup');t.style.display=t.style.display==='block'?'none':'block';};
 document.addEventListener('click',e=>{
  if(!e.target.closest('#start-menu')&&!e.target.closest('#start-btn'))hideAll();
  if(!e.target.closest('#tray-popup')&&!e.target.closest('.tb-sys')&&!e.target.closest('#tb-clock'))el('tray-popup').style.display='none';
+ if(!e.target.closest('#wallpaper-gallery'))el('wallpaper-gallery').style.display='none';
+ if(!e.target.closest('#sync-modal')&&!e.target.closest('#sync-modal-trigger'))el('sync-modal').style.display='none';
 });
-
-// ── CONTEXT MENU ──────────────────────────────────────
-window.showCtxMenu=function(e,type){e.preventDefault();const m=el('ctx-menu');m.style.left=e.clientX+'px';m.style.top=e.clientY+'px';m.style.display='block';};
+window.showCtxMenu=function(e){e.preventDefault();const m=el('ctx-menu');m.style.left=e.clientX+'px';m.style.top=e.clientY+'px';m.style.display='block';};
 window.ctxRefresh=function(){location.reload();};
 window.desktopClick=function(e){document.querySelectorAll('.desk-icon').forEach(i=>i.classList.remove('selected'));};
 window.selectIcon=function(el){document.querySelectorAll('.desk-icon').forEach(i=>i.classList.remove('selected'));el.classList.add('selected');};
-
-// ── TRAY TILES ────────────────────────────────────────
 window.toggleTile=function(id,name){const t=el(id);t.classList.toggle('off');showNotif(name,t.classList.contains('off')?'Выключено':'Включено','⚡');};
 window.toggleNightMode=function(){document.body.style.filter=document.body.style.filter?'':'sepia(0.3) brightness(0.8)';el('tr-night').classList.toggle('off');};
-window.setBright=function(v){if(el('bright-val'))el('bright-val').textContent=v+'%';};
-window.setVol=function(v){if(el('vol-val'))el('vol-val').textContent=v+'%';};
 
-// ── NOTIFICATIONS ─────────────────────────────────────
+// ── NOTIFICATIONS ────────────────────────────────────────
 window.showNotif=function(title,desc,icon){
  const s=el('notif-stack');
  const d=document.createElement('div');d.className='notif';
@@ -909,12 +1057,12 @@ window.showNotif=function(title,desc,icon){
  s.appendChild(d);setTimeout(()=>d.remove(),5000);
 };
 
-// ── LOCK/REBOOT/SHUTDOWN ──────────────────────────────
-window.lockScreen=function(){hideAll();el('lockscreen').style.display='flex';el('lockscreen').onclick=()=>{el('lockscreen').style.display='none';};};
+// ── LOCK/POWER ───────────────────────────────────────────
+window.lockScreen=function(){hideAll();el('lockscreen').style.display='flex';el('lockscreen').onclick=()=>el('lockscreen').style.display='none';};
 window.reboot=function(){location.reload();};
-window.shutdown=function(){document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#333;font-size:20px;">ExiWin выключен</div>';};
+window.shutdown=function(){document.body.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#000;color:#333;gap:16px;"><div style="font-size:48px">⏻</div><div style="font-size:18px">ExiWin выключен</div></div>';};
 
-// ── SETTINGS PAGE ─────────────────────────────────────
+// ── SETTINGS ─────────────────────────────────────────────
 window.setPage=function(page){
  document.querySelectorAll('.set-page').forEach(p=>p.classList.remove('active'));
  document.querySelectorAll('.set-side-item').forEach(s=>s.classList.remove('active'));
@@ -922,33 +1070,23 @@ window.setPage=function(page){
  document.querySelectorAll('.set-side-item').forEach(s=>{if(s.dataset.page===page)s.classList.add('active');});
 };
 
-// ── EXPLORER ──────────────────────────────────────────
+// ── EXPLORER ─────────────────────────────────────────────
 const fileSystem={
- 'Рабочий стол':[{n:'Мои заметки.txt',i:'📝'},{n:'Фото.png',i:'🖼️'},{n:'Проект',i:'📁',isFolder:true}],
+ 'Рабочий стол':[{n:'Заметки.txt',i:'📝'},{n:'Фото.png',i:'🖼️'},{n:'Проект',i:'📁',f:true}],
  'Документы':[{n:'Отчёт.docx',i:'📄'},{n:'Резюме.pdf',i:'📋'}],
  'Загрузки':[{n:'setup.exe',i:'💿'},{n:'image.jpg',i:'🖼️'}],
  'Изображения':[{n:'Отпуск.jpg',i:'🌅'},{n:'Аватар.png',i:'🖼️'}],
 };
-let currentFolder='Рабочий стол';
 window.expNav=function(folder){
- currentFolder=folder;
  if(el('exp-path'))el('exp-path').value='ExiWin://'+folder;
  document.querySelectorAll('.exp-side-item').forEach(s=>s.classList.toggle('active',s.dataset.folder===folder));
- renderFiles();
-};
-function renderFiles(){
  const c=el('exp-files-content');if(!c)return;c.innerHTML='';
- const files=fileSystem[currentFolder]||[];
- files.forEach(f=>{
-  const d=document.createElement('div');d.className='file-item';
-  d.innerHTML=`<div class="ico">${f.i}</div><div class="fname">${f.n}</div>`;
-  if(f.isFolder)d.ondblclick=()=>expNav(f.n);
-  c.appendChild(d);
- });
+ const files=fileSystem[folder]||[];
+ files.forEach(f=>{const d=document.createElement('div');d.className='file-item';d.innerHTML=`<div class="ico">${f.i}</div><div class="fname">${f.n}</div>`;if(f.f)d.ondblclick=()=>expNav(f.n);c.appendChild(d);});
  if(el('exp-status'))el('exp-status').textContent='Объектов: '+files.length;
-}
+};
 
-// ── CALCULATOR ────────────────────────────────────────
+// ── CALCULATOR ────────────────────────────────────────────
 let calcStr='0',calcOp='',calcPrev=0,calcNew=true;
 window.calcPress=function(k){
  if(k==='C'){calcStr='0';calcOp='';calcPrev=0;calcNew=true;}
@@ -960,22 +1098,16 @@ window.calcPress=function(k){
   const b=parseFloat(calcStr);let r=b;
   if(calcOp==='+')r=calcPrev+b;else if(calcOp==='-')r=calcPrev-b;else if(calcOp==='×')r=calcPrev*b;else if(calcOp==='÷')r=b?calcPrev/b:'Ошибка';
   calcStr=String(r);calcOp='';calcNew=true;if(el('calc-expr'))el('calc-expr').textContent='';
- }else{
-  if(calcNew){calcStr=k;calcNew=false;}else calcStr+=k;
- }
+ }else{if(calcNew){calcStr=k;calcNew=false;}else calcStr+=k;}
  if(el('calc-result'))el('calc-result').textContent=calcStr;
 };
 
-// ── BROWSER ───────────────────────────────────────────
-window.brNavigate=function(url){
- if(!url)return;if(!url.startsWith('http'))url='https://'+url;
- el('br-url').value=url;el('br-newtab').style.display='none';
- const f=el('br-frame');f.style.display='block';f.src=url;
-};
+// ── BROWSER ───────────────────────────────────────────────
+window.brNavigate=function(url){if(!url)return;if(!url.startsWith('http'))url='https://'+url;el('br-url').value=url;el('br-newtab').style.display='none';const f=el('br-frame');f.style.display='block';f.src=url;};
 window.brSearch=function(q){if(q)brNavigate('https://www.google.com/search?igu=1&q='+encodeURIComponent(q));};
 window.brNewTab=function(){el('br-newtab').style.display='flex';el('br-frame').style.display='none';el('br-url').value='';};
 
-// ── PAINT ─────────────────────────────────────────────
+// ── PAINT ─────────────────────────────────────────────────
 let paintCanvas,paintCtx,paintColor='#0078d4',paintSize=4,paintTool='pen',painting=false;
 function initPaint(){
  paintCanvas=el('paint-canvas');if(!paintCanvas)return;
@@ -987,481 +1119,965 @@ function initPaint(){
  paintCanvas.onmouseup=()=>painting=false;paintCanvas.onmouseleave=()=>painting=false;
 }
 
-// ── TASK MANAGER ──────────────────────────────────────
+// ── TASK MANAGER ─────────────────────────────────────────
 function renderTaskMan(){
  const c=el('tm-body-content');if(!c)return;
- const apps=['ExiWin Shell','Exian.AI','Edge','Paint','Проводник','Диспетчер задач','3D Паркур','GTA 6','Exiblox v3'];
+ const apps=['ExiWin Shell','Exian.AI','Edge','Paint','Проводник','Обби Паркур','GTA 6','Exiblox v3'];
  let h='<table class="tm-table"><thead><tr><th>Процесс</th><th>ЦП</th><th>ОЗУ</th><th>PID</th></tr></thead><tbody>';
- apps.forEach((a,i)=>{
-  const cpu=(Math.random()*15).toFixed(1),ram=(Math.random()*200+20).toFixed(0);
-  h+=`<tr><td>${a}</td><td>${cpu}%</td><td>${ram} МБ</td><td>${1000+i*137}</td></tr>`;
- });
+ apps.forEach((a,i)=>{const cpu=(Math.random()*15).toFixed(1),ram=(Math.random()*200+20).toFixed(0);h+=`<tr><td>${a}</td><td>${cpu}%</td><td>${ram} МБ</td><td>${1000+i*137}</td></tr>`;});
  h+='</tbody></table>';c.innerHTML=h;
 }
 
-// ── EXIAN.AI 3.0 ─────────────────────────────────────
+// ── EXIAN.AI ──────────────────────────────────────────────
 const aiKnowledge={
- 'привет':['Привет! 👋 Как дела?','Здравствуйте! Рад вас видеть!','Привет! Чем могу помочь?'],
- 'как дела':['Отлично, спасибо! А у вас?','Прекрасно! Готов помочь!','Всё хорошо! 😊'],
- 'что ты умеешь':['Я Exian.AI 3.0! Умею:\n• Отвечать на вопросы\n• Писать код на Python, JS, и др.\n• Рассказывать анекдоты\n• Объяснять сложные темы\n• Помогать с проектами\n• И многое другое! 🚀'],
- 'код':['Вот пример на Python:\n```python\ndef fibonacci(n):\n    a, b = 0, 1\n    result = []\n    for _ in range(n):\n        result.append(a)\n        a, b = b, a + b\n    return result\n\nprint(fibonacci(10))\n```'],
- 'python':['Вот пример на Python:\n```python\nclass Calculator:\n    def add(self, a, b):\n        return a + b\n    def multiply(self, a, b):\n        return a * b\n\ncalc = Calculator()\nprint(calc.add(5, 3))  # 8\n```'],
- 'анекдот':['Программист спрашивает: "Почему мой код не работает?" — Ответ: "Потому что ты его написал!" 😂','Заходит программист в бар. Заказывает 1 пиво, 2 пива, 0 пив... 🍺😄'],
- 'идея':['💡 Идеи для проектов:\n1. AI-бот для Telegram\n2. Веб-игра на Canvas\n3. Трекер привычек\n4. Генератор мемов\n5. Чат-приложение на WebSocket'],
- 'exiwin':['ExiWin 12 — операционная система нового поколения! 🖥️\nОсобенности:\n• Встроенный AI — Exian.AI 3.0\n• Браузер Edge\n• Paint, Калькулятор\n• GTA 6, 3D Паркур, Exiblox v3\n• Смена обоев и тем'],
+ 'привет':['Привет! 👋 Как дела?','Здравствуйте! Рад вас видеть!'],
+ 'как дела':['Отлично! А у вас?','Прекрасно! Готов помочь!'],
+ 'что ты умеешь':['Я Exian.AI 3.0! Умею:\n• Отвечать на вопросы\n• Писать код\n• Рассказывать анекдоты\n• Помогать с проектами 🚀'],
+ 'код':['Вот Python:\n```python\ndef fibonacci(n):\n    a,b=0,1\n    res=[]\n    for _ in range(n):\n        res.append(a);a,b=b,a+b\n    return res\nprint(fibonacci(10))\n```'],
+ 'python':['```python\nclass Calc:\n    def add(self,a,b):return a+b\n    def mul(self,a,b):return a*b\nc=Calc()\nprint(c.add(5,3))  # 8\n```'],
+ 'анекдот':['Программист спрашивает: «Почему мой код не работает?» — «Потому что ты его написал!» 😂','— Сколько программистов нужно, чтобы вкрутить лампочку?\n— Ни одного, это проблема железа! 💡'],
+ 'идея':['💡 Идеи для проектов:\n1. AI-бот для Telegram\n2. Игра на Canvas\n3. Трекер привычек\n4. Чат-приложение\n5. Генератор мемов'],
+ 'exiblox':['Exiblox Official — игровая платформа нового поколения! 🐍\n• Exiblox v3 в ExiWin\n• Обби Паркур с чекпоинтами\n• GTA 6 в браузере\n• Exian.AI 3.0'],
 };
-
 function aiResponse(msg){
  const m=msg.toLowerCase();
- for(const[key,vals] of Object.entries(aiKnowledge)){
-  if(m.includes(key)) return vals[Math.floor(Math.random()*vals.length)];
- }
- const defaults=[
-  `Интересный вопрос! "${msg}" — это тема, которую я могу обсудить подробнее. 🤔`,
-  `Я понял ваш запрос: "${msg}". Попробуйте задать более конкретный вопрос! 💡`,
-  `Хм, "${msg}" — интересно! Могу помочь, если уточните. 😊`,
- ];
- return defaults[Math.floor(Math.random()*defaults.length)];
+ for(const[k,v] of Object.entries(aiKnowledge)){if(m.includes(k))return v[Math.floor(Math.random()*v.length)];}
+ const d=[`Интересный вопрос! Попробуй спросить точнее 🤔`,`Понял: «${msg}» — уточни, и я помогу! 💡`];
+ return d[Math.floor(Math.random()*d.length)];
 }
-
 function addChatMsg(text,isUser){
  const c=el('exian-chat-messages');if(!c)return;
- const d=document.createElement('div');
- d.className='echat-msg echat-animate '+(isUser?'echat-user':'echat-bot');
+ const d=document.createElement('div');d.className='echat-msg echat-animate '+(isUser?'echat-user':'');
  const time=new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
- const escaped=text.replace(/```(\w*)\n?([\s\S]*?)```/g,'<pre><code>$2</code></pre>').replace(/\n/g,'<br>');
- if(isUser){
-  d.innerHTML=`<div class="echat-bubble echat-bubble-user">${escaped}</div>`;
- }else{
-  d.innerHTML=`<div class="echat-avatar-bot">🤖</div><div class="echat-bot-wrap"><div class="echat-bot-name">Exian.AI · ${time}</div><div class="echat-bubble echat-bubble-bot">${escaped}</div></div>`;
- }
+ const esc=text.replace(/```(\w*)\n?([\s\S]*?)```/g,'<pre><code>$2</code></pre>').replace(/\n/g,'<br>');
+ if(isUser){d.innerHTML=`<div class="echat-bubble echat-bubble-user">${esc}</div>`;}
+ else{d.innerHTML=`<div class="echat-avatar-bot">🤖</div><div class="echat-bot-wrap"><div class="echat-bot-name">Exian.AI · ${time}</div><div class="echat-bubble echat-bubble-bot">${esc}</div></div>`;}
  c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
-function showTyping(){
- const c=el('exian-chat-messages');if(!c)return;
- const d=document.createElement('div');d.id='typing-indicator';d.className='echat-msg echat-bot';
- d.innerHTML='<div class="echat-avatar-bot">🤖</div><div class="echat-typing"><span class="edot"></span><span class="edot"></span><span class="edot"></span></div>';
- c.appendChild(d);c.scrollTop=c.scrollHeight;
-}
-function removeTyping(){const t=el('typing-indicator');if(t)t.remove();}
-
 window.exianSend=function(){
  const inp=el('exian-chat-input');if(!inp)return;
- const msg=inp.value.trim();if(!msg)return;
- inp.value='';addChatMsg(msg,true);
- showTyping();
- setTimeout(()=>{removeTyping();addChatMsg(aiResponse(msg),false);},800+Math.random()*1200);
+ const msg=inp.value.trim();if(!msg)return;inp.value='';addChatMsg(msg,true);
+ const tid=document.createElement('div');tid.id='typing-indicator';tid.className='echat-msg';
+ tid.innerHTML='<div class="echat-avatar-bot">🤖</div><div class="echat-typing"><span class="edot"></span><span class="edot"></span><span class="edot"></span></div>';
+ el('exian-chat-messages').appendChild(tid);el('exian-chat-messages').scrollTop=99999;
+ setTimeout(()=>{const t=el('typing-indicator');if(t)t.remove();addChatMsg(aiResponse(msg),false);},800+Math.random()*1200);
 };
-window.exianQuick=function(msg){
- el('exian-chat-input').value=msg;exianSend();
-};
-document.addEventListener('keydown',e=>{
- if(e.target===el('exian-chat-input')&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();exianSend();}
-});
+window.exianQuick=function(msg){el('exian-chat-input').value=msg;exianSend();};
+document.addEventListener('keydown',e=>{if(e.target===el('exian-chat-input')&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();exianSend();}});
 
-// ── TELEGRAM ──────────────────────────────────────────
-window.openTelegram=function(){
- window.open('https://t.me/exiblox','_blank');
- showNotif('Exiblox Telegram','Открыто в новой вкладке','📱');
-};
+// ── TELEGRAM ──────────────────────────────────────────────
+window.openTelegram=function(){window.open('https://t.me/exiblox','_blank');showNotif('Exiblox Telegram','Открыто в новой вкладке','📱');};
 
-// ── UPDATES APP ───────────────────────────────────────
+// ── UPDATES ───────────────────────────────────────────────
 function renderUpdates(){
  const c=el('updates-content');if(!c)return;
- c.innerHTML=`
-  <div class="updates-header"><span style="font-size:32px">🔔</span><h2>Обновления ExiWin 12</h2></div>
+ c.innerHTML=`<div class="updates-header"><span style="font-size:32px">🔔</span><h2>Обновления ExiWin 12</h2></div>
   <div class="update-item">
-   <div class="update-ver">📦 Версия 2.6.0</div>
-   <div class="update-date">Февраль 2026</div>
-   <div class="update-desc">
-    • ✅ Все окна теперь открываются по центру экрана<br>
-    • 🐍 Exiblox v3 — подключение exiblox.js исправлено<br>
-    • 🪟 Убраны хардкод-позиции окон<br>
-    • 🐛 Прочие исправления
-   </div>
-   <span class="update-tag tag-fix">Исправления</span>
+   <div class="update-ver">📦 Версия 3.0.0</div><div class="update-date">Февраль 2026</div>
+   <div class="update-desc">• 🌈 Радужный логотип «Exiblox Official✦»<br>• 📱 Кросс-девайс синхронизация аккаунта<br>• 🏃 Полный рерол Обби Паркура — небо, чекпоинты, 3 сложности<br>• 🐍 Exiblox.js загрузка исправлена</div>
+   <span class="update-tag tag-new">Новое</span><span class="update-tag tag-fix">Исправления</span>
   </div>
   <div class="update-item">
-   <div class="update-ver">📦 Версия 2.5.0</div>
-   <div class="update-date">17 февраля 2026</div>
-   <div class="update-desc">
-    • 🔔 Новое приложение «Обновления»<br>
-    • 📱 Exiblox Telegram — быстрый доступ<br>
-    • 🏃 3D Паркур — новая игра<br>
-    • 💾 Сохранение позиций иконок и обоев
-   </div>
-   <span class="update-tag tag-new">Новое</span>
-  </div>
-  <div class="update-item">
-   <div class="update-ver">📦 Версия 2.4.0</div>
-   <div class="update-date">15 февраля 2026</div>
-   <div class="update-desc">• 🎮 GTA 6 — открытый мир<br>• 🖼️ Галерея обоев — 18 вариантов</div>
+   <div class="update-ver">📦 Версия 2.5.0</div><div class="update-date">17 февраля 2026</div>
+   <div class="update-desc">• Центрирование окон<br>• Сохранение обоев и позиций иконок<br>• Exiblox интеграция</div>
    <span class="update-tag tag-improve">Улучшение</span>
   </div>`;
 }
 
-// ── ICON POSITIONS SAVE/LOAD ──────────────────────────
+// ── ICON DRAG & SAVE ──────────────────────────────────────
 function saveIconPositions(){
- const icons=document.querySelectorAll('.desk-icon[data-icon-id]');
- const pos={};
- icons.forEach(ic=>{pos[ic.dataset.iconId]={top:ic.style.top,left:ic.style.left};});
+ const pos={};document.querySelectorAll('.desk-icon[data-icon-id]').forEach(ic=>{pos[ic.dataset.iconId]={top:ic.style.top,left:ic.style.left};});
  localStorage.setItem('exiwin_icon_pos',JSON.stringify(pos));
 }
 function loadIconPositions(){
- const saved=localStorage.getItem('exiwin_icon_pos');
- if(!saved)return;
- try{
-  const pos=JSON.parse(saved);
-  Object.entries(pos).forEach(([id,p])=>{
-   const ic=document.querySelector(`[data-icon-id="${id}"]`);
-   if(ic){ic.style.top=p.top;ic.style.left=p.left;}
-  });
- }catch(e){}
+ try{const pos=JSON.parse(localStorage.getItem('exiwin_icon_pos')||'{}');Object.entries(pos).forEach(([id,p])=>{const ic=document.querySelector(`[data-icon-id="${id}"]`);if(ic){ic.style.top=p.top;ic.style.left=p.left;}});}catch(e){}
 }
-
-// ── WALLPAPER SAVE/LOAD ───────────────────────────────
-function loadSavedWallpaper(){
- const saved=localStorage.getItem('exiwin_wallpaper');
- if(saved){
-  try{
-   const wp=JSON.parse(saved);
-   document.getElementById('desktop').style.background=wp.css;
-   if(wp.isLight){document.body.classList.add('light-theme');}
-  }catch(e){}
- }
-}
-
-// ── DESKTOP ICON DRAG ─────────────────────────────────
 (function(){
- let dragEl=null,dragOffX=0,dragOffY=0,hasMoved=false,startX=0,startY=0;
- const THRESHOLD=5;
- window.iconDragStart=function(e,el){
-  if(e.button!==0)return;dragEl=el;startX=e.clientX;startY=e.clientY;
-  const rect=el.getBoundingClientRect();dragOffX=e.clientX-rect.left;dragOffY=e.clientY-rect.top;hasMoved=false;e.stopPropagation();
- };
+ let drag=null,offX=0,offY=0,moved=false,sx=0,sy=0;
+ window.iconDragStart=function(e,el){if(e.button!==0)return;drag=el;sx=e.clientX;sy=e.clientY;const r=el.getBoundingClientRect();offX=e.clientX-r.left;offY=e.clientY-r.top;moved=false;e.stopPropagation();};
  document.addEventListener('mousemove',function(e){
-  if(!dragEl)return;
-  const dx=Math.abs(e.clientX-startX),dy=Math.abs(e.clientY-startY);
-  if(!hasMoved&&dx<THRESHOLD&&dy<THRESHOLD)return;
-  if(!hasMoved){hasMoved=true;dragEl.classList.add('dragging-icon');}
-  const desk=document.getElementById('desktop'),deskRect=desk.getBoundingClientRect();
-  let nx=e.clientX-deskRect.left-dragOffX,ny=e.clientY-deskRect.top-dragOffY;
-  nx=Math.max(0,Math.min(nx,deskRect.width-dragEl.offsetWidth));
-  ny=Math.max(0,Math.min(ny,deskRect.height-dragEl.offsetHeight));
-  dragEl.style.left=nx+'px';dragEl.style.top=ny+'px';e.preventDefault();
+  if(!drag)return;if(!moved&&Math.abs(e.clientX-sx)<5&&Math.abs(e.clientY-sy)<5)return;
+  if(!moved){moved=true;drag.classList.add('dragging-icon');}
+  const desk=el('desktop'),r=desk.getBoundingClientRect();
+  let nx=e.clientX-r.left-offX,ny=e.clientY-r.top-offY;
+  nx=Math.max(0,Math.min(nx,r.width-drag.offsetWidth));ny=Math.max(0,Math.min(ny,r.height-drag.offsetHeight));
+  drag.style.left=nx+'px';drag.style.top=ny+'px';e.preventDefault();
  });
- document.addEventListener('mouseup',function(){
-  if(!dragEl)return;dragEl.classList.remove('dragging-icon');
-  if(hasMoved)saveIconPositions();
-  dragEl=null;
- });
+ document.addEventListener('mouseup',function(){if(!drag)return;drag.classList.remove('dragging-icon');if(moved)saveIconPositions();drag=null;});
 })();
 
-// ── WALLPAPER GALLERY ─────────────────────────────────
+// ── WALLPAPER ──────────────────────────────────────────────
 const WALLPAPERS={
  dark:[
-  {id:'dark-default',name:'Midnight Blue',css:'linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%)',isDefault:true},
-  {id:'dark-nebula',name:'Туманность',css:'radial-gradient(ellipse at 30% 40%,#1a0040 0%,#060010 50%,#001020 100%)'},
-  {id:'dark-aurora',name:'Северное сияние',css:'linear-gradient(160deg,#001a10 0%,#003322 30%,#002244 60%,#001133 100%)'},
-  {id:'dark-volcano',name:'Вулкан',css:'radial-gradient(ellipse at 50% 90%,#3d0000 0%,#1a0000 40%,#0a0005 100%)'},
-  {id:'dark-ocean',name:'Глубокий океан',css:'linear-gradient(180deg,#000d1a 0%,#001428 50%,#001f3d 100%)'},
-  {id:'dark-galaxy',name:'Галактика',css:'radial-gradient(ellipse at 70% 30%,#0d001a 0%,#120033 40%,#000010 100%)'},
-  {id:'dark-matrix',name:'Матрица',css:'linear-gradient(160deg,#001400 0%,#002000 50%,#000a00 100%)'},
-  {id:'dark-steel',name:'Сталь',css:'linear-gradient(160deg,#0a0e14 0%,#131b26 50%,#0a0d13 100%)'},
-  {id:'dark-purple',name:'Пурпур',css:'linear-gradient(135deg,#0d0020 0%,#1a0035 50%,#08001a 100%)'},
-  {id:'dark-storm',name:'Шторм',css:'linear-gradient(160deg,#0a0a14 0%,#14141e 40%,#0a0a10 100%)'},
+  {id:'d0',name:'Midnight Blue',css:'linear-gradient(160deg,#040c1a 0%,#061020 40%,#040c18 100%)',def:true},
+  {id:'d1',name:'Туманность',css:'radial-gradient(ellipse at 30% 40%,#1a0040,#060010 50%,#001020)'},
+  {id:'d2',name:'Аврора',css:'linear-gradient(160deg,#001a10,#003322 30%,#002244 60%,#001133)'},
+  {id:'d3',name:'Вулкан',css:'radial-gradient(ellipse at 50% 90%,#3d0000,#1a0000 40%,#0a0005)'},
+  {id:'d4',name:'Океан',css:'linear-gradient(180deg,#000d1a,#001428 50%,#001f3d)'},
+  {id:'d5',name:'Галактика',css:'radial-gradient(ellipse at 70% 30%,#0d001a,#120033 40%,#000010)'},
+  {id:'d6',name:'Матрица',css:'linear-gradient(160deg,#001400,#002000 50%,#000a00)'},
+  {id:'d7',name:'Пурпур',css:'linear-gradient(135deg,#0d0020,#1a0035 50%,#08001a)'},
  ],
  light:[
-  {id:'light-default',name:'Sky Blue',css:'linear-gradient(160deg,#dceeff 0%,#eef4fb 40%,#d8eaf5 100%)',isDefault:true},
-  {id:'light-peach',name:'Персик',css:'linear-gradient(160deg,#fff3e0 0%,#ffe8cc 50%,#fff0d8 100%)'},
-  {id:'light-mint',name:'Мята',css:'linear-gradient(160deg,#e0fff4 0%,#ccf5e8 50%,#d8fff0 100%)'},
-  {id:'light-lavender',name:'Лаванда',css:'linear-gradient(160deg,#f0e6ff 0%,#e8d5ff 50%,#eeddff 100%)'},
-  {id:'light-rose',name:'Роза',css:'linear-gradient(160deg,#ffe6ee 0%,#ffd5e3 50%,#ffdde8 100%)'},
-  {id:'light-lime',name:'Лайм',css:'linear-gradient(160deg,#edffd6 0%,#e0ffb8 50%,#e8ffcc 100%)'},
-  {id:'light-aqua',name:'Аква',css:'linear-gradient(160deg,#d6f8ff 0%,#b8f0ff 50%,#c8f4ff 100%)'},
-  {id:'light-sand',name:'Песок',css:'linear-gradient(160deg,#fff8e0 0%,#fff2c0 50%,#fff5d0 100%)'},
+  {id:'l0',name:'Sky Blue',css:'linear-gradient(160deg,#dceeff,#eef4fb 40%,#d8eaf5)',def:true},
+  {id:'l1',name:'Персик',css:'linear-gradient(160deg,#fff3e0,#ffe8cc 50%,#fff0d8)'},
+  {id:'l2',name:'Мята',css:'linear-gradient(160deg,#e0fff4,#ccf5e8 50%,#d8fff0)'},
+  {id:'l3',name:'Лаванда',css:'linear-gradient(160deg,#f0e6ff,#e8d5ff 50%,#eeddff)'},
+  {id:'l4',name:'Аква',css:'linear-gradient(160deg,#d6f8ff,#b8f0ff 50%,#c8f4ff)'},
  ]
 };
-let currentWpTab='dark',currentWpId={dark:'dark-default',light:'light-default'};
+let curWpTab='dark',curWpId={dark:'d0',light:'l0'};
 window.openWallpaperGallery=function(mode){
- currentWpTab=mode||'dark';
- el('wp-gallery-heading').textContent=currentWpTab==='dark'?'🖼️ Тёмные обои':'🖼️ Светлые обои';
- el('wp-tab-dark').classList.toggle('active',currentWpTab==='dark');
- el('wp-tab-light').classList.toggle('active',currentWpTab==='light');
- renderWpGrid(currentWpTab);el('tray-popup').style.display='none';el('wallpaper-gallery').style.display='block';
+ curWpTab=mode||'dark';el('wp-tab-dark').classList.toggle('active',curWpTab==='dark');el('wp-tab-light').classList.toggle('active',curWpTab==='light');
+ renderWpGrid(curWpTab);el('tray-popup').style.display='none';el('wallpaper-gallery').style.display='block';
 };
 window.closeWallpaperGallery=function(){el('wallpaper-gallery').style.display='none';};
-window.wpSwitchTab=function(tab){currentWpTab=tab;el('wp-tab-dark').classList.toggle('active',tab==='dark');el('wp-tab-light').classList.toggle('active',tab==='light');renderWpGrid(tab);};
+window.wpSwitchTab=function(t){curWpTab=t;el('wp-tab-dark').classList.toggle('active',t==='dark');el('wp-tab-light').classList.toggle('active',t==='light');renderWpGrid(t);};
 function renderWpGrid(tab){
  const grid=el('wp-grid');grid.innerHTML='';
  WALLPAPERS[tab].forEach(wp=>{
-  const div=document.createElement('div');
-  div.className='wp-item'+(currentWpId[tab]===wp.id?' wp-active':'');
+  const div=document.createElement('div');div.className='wp-item'+(curWpId[tab]===wp.id?' wp-active':'');
   div.style.background=wp.css;div.title=wp.name;
-  div.innerHTML=`<div class="wp-item-label">${wp.name}</div>${wp.isDefault?'<div class="wp-default-badge">По умолч.</div>':''}`;
+  div.innerHTML=`<div class="wp-item-label">${wp.name}</div>`;
   div.onclick=()=>{
-   currentWpId[tab]=wp.id;
-   if(tab==='light')document.body.classList.add('light-theme');
-   else document.body.classList.remove('light-theme');
-   document.getElementById('desktop').style.background=wp.css;
+   curWpId[tab]=wp.id;
+   if(tab==='light')document.body.classList.add('light-theme');else document.body.classList.remove('light-theme');
+   el('desktop').style.background=wp.css;
    localStorage.setItem('exiwin_wallpaper',JSON.stringify({css:wp.css,isLight:tab==='light'}));
-   renderWpGrid(currentWpTab);showNotif('Обои изменены','Фон «'+wp.name+'»','🖼️');
+   renderWpGrid(tab);showNotif('Обои','Фон «'+wp.name+'»','🖼️');
   };
   grid.appendChild(div);
  });
 }
-document.addEventListener('click',e=>{const g=el('wallpaper-gallery');if(g.style.display==='block'&&!g.contains(e.target))g.style.display='none';});
+function loadSavedWallpaper(){
+ try{const wp=JSON.parse(localStorage.getItem('exiwin_wallpaper')||'null');if(wp){el('desktop').style.background=wp.css;if(wp.isLight)document.body.classList.add('light-theme');}}catch(e){}
+}
 
-// ── INIT PAINT ON OPEN ────────────────────────────────
-const _openApp=window.openApp;
-window.openApp=function(app){
- _openApp(app);
- if(app==='paint')setTimeout(initPaint,150);
- if(app==='explorer')setTimeout(()=>expNav('Рабочий стол'),50);
-};
-
-window.smSearch=function(q){};
-
-// ══════════════════════════════════════════════════════
-// ✅ EXIBLOX v3 — ОТКРЫТИЕ + ЗАГРУЗКА exiblox.js
-// ══════════════════════════════════════════════════════
-window.openExibloxApp = function(){
- const win = el('win-exiblox');
- if(win){
-  win.style.display = 'flex';
-  // Центрируем после рендера
-  requestAnimationFrame(()=>{
-   centerWindow(win);
-   bringFront('win-exiblox');
-  });
-  const tb = el('tb-exiblox');
-  if(tb) tb.classList.add('running','active-win');
- }
-
- // Загружаем exiblox.js если ещё не загружен
- if(typeof initExiblox === 'undefined'){
-  // Показываем прелоадер внутри окна
-  const root = el('exiblox-root');
-  if(root){
-   root.innerHTML = `
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
-                height:100%;background:#0a0c14;gap:16px;">
-     <div style="font-size:42px;font-weight:900;
-                 background:linear-gradient(135deg,#00b2ff,#7c3aed);
-                 -webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ Exiblox v3</div>
-     <div style="color:rgba(255,255,255,.4);font-size:13px;">⏳ Загрузка exiblox.js...</div>
-     <div style="width:200px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;">
-      <div style="height:100%;width:60%;background:linear-gradient(90deg,#00b2ff,#7c3aed);
-                  border-radius:2px;animation:exbProg 1s ease infinite alternate;"></div>
-     </div>
-    </div>
-    <style>@keyframes exbProg{from{transform:translateX(-30%)}to{transform:translateX(130%);}}</style>`;
-  }
-  const script = document.createElement('script');
-  script.src = 'exiblox.js';
-  script.onload = function(){
-   console.log('✅ Exiblox v3 загружен!');
-   if(typeof initExiblox === 'function'){
-    initExiblox();
-   }else{
-    const r=el('exiblox-root');
-    if(r)r.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ff6b6b;font-size:14px;">❌ initExiblox не найден в exiblox.js</div>';
-   }
-  };
-  script.onerror = function(){
-   console.error('❌ exiblox.js не найден!');
-   showNotif('Exiblox','Файл exiblox.js не найден рядом с index.html','❌');
-   const r=el('exiblox-root');
-   if(r)r.innerHTML=`
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
-                height:100%;background:#0a0c14;gap:12px;padding:20px;text-align:center;">
-     <div style="font-size:48px;">❌</div>
-     <div style="color:#ff6b6b;font-size:16px;font-weight:600;">exiblox.js не найден</div>
-     <div style="color:rgba(255,255,255,.4);font-size:12px;max-width:360px;line-height:1.6;">
-      Убедись что файл <strong style="color:#00b2ff;">exiblox.js</strong> лежит в той же папке, что и <strong style="color:#00b2ff;">index.html</strong>
-     </div>
-     <button onclick="openExibloxApp()" 
-             style="background:#0078d4;border:none;color:#fff;padding:10px 24px;
-                    border-radius:8px;cursor:pointer;font-size:13px;margin-top:8px;">
-      🔄 Попробовать снова
-     </button>
-    </div>`;
-  };
+// ── EXIBLOX ───────────────────────────────────────────────
+window.openExibloxApp=function(){
+ const win=el('win-exiblox');
+ if(win){win.style.display='flex';requestAnimationFrame(()=>{centerWindow(win);bringFront('win-exiblox');});const tb=el('tb-exiblox');if(tb)tb.classList.add('running','active-win');}
+ if(typeof initExiblox==='undefined'){
+  const root=el('exiblox-root');
+  if(root)root.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0a0c14;gap:16px;"><div style="font-size:42px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ Exiblox v3</div><div style="color:rgba(255,255,255,.4);font-size:13px;">⏳ Загрузка...</div></div>`;
+  const script=document.createElement('script');script.src='exiblox.js';
+  script.onload=()=>{if(typeof initExiblox==='function')initExiblox();};
+  script.onerror=()=>{showNotif('Exiblox','exiblox.js не найден рядом с index.html','❌');const r=el('exiblox-root');if(r)r.innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0a0c14;gap:12px;padding:20px;text-align:center;"><div style="font-size:48px">❌</div><div style="color:#ff6b6b;font-size:16px">exiblox.js не найден</div><div style="color:rgba(255,255,255,.4);font-size:12px;max-width:360px;line-height:1.6;">Положи <b style="color:#00b2ff">exiblox.js</b> рядом с <b style="color:#00b2ff">index.html</b></div><button onclick="openExibloxApp()" style="background:#0078d4;border:none;color:#fff;padding:10px 24px;border-radius:8px;cursor:pointer;margin-top:8px;">🔄 Повтор</button></div>`;};
   document.body.appendChild(script);
- } else {
-  // Уже загружен — просто вызываем init
-  if(typeof initExiblox === 'function') initExiblox();
- }
+ }else if(typeof initExiblox==='function')initExiblox();
  hideAll();
 };
 
-// ══════════════════════════════════════════════════════
-// 3D PARKOUR GAME ENGINE
-// ══════════════════════════════════════════════════════
-window.PARKOUR=(function(){
- let canvas,ctx,running=false,W=800,H=550;
- let player,platforms,cam,keys={},gameState='menu',difficulty='normal',score=0,deaths=0,level=1;
- let gravity,jumpForce,moveSpeed,platformGap;
- const difficulties={
-  easy:{gravity:0.4,jump:-10,speed:4,gap:120,platW:[100,160],name:'Легко'},
-  normal:{gravity:0.55,jump:-11,speed:5,gap:150,platW:[70,130],name:'Нормально'},
-  hard:{gravity:0.7,jump:-12,speed:6,gap:180,platW:[50,100],name:'Сложно'},
-  extreme:{gravity:0.85,jump:-13,speed:7,gap:210,platW:[35,80],name:'Экстрим'},
+window.smSearch=function(){};
+window.openTelegram=function(){window.open('https://t.me/exiblox','_blank');showNotif('Telegram','Открыто в новой вкладке','📱');};
+
+window.addEventListener('DOMContentLoaded',()=>{const h=new Date().getHours(),g=el('br-hello');if(g)g.textContent=h<6?'Доброй ночи!':h<12?'Доброе утро!':h<18?'Добрый день!':'Добрый вечер!';});
+</script>
+
+<!-- ══════════════════════════════════════════════════════
+     🏃 ОББИ ПАРКУР — ПОЛНАЯ ИГРА
+══════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+window.PARKOUR = (function(){
+/* ════════════════════════════════════════════
+   КОНФИГ УРОВНЕЙ
+   Платформа: {x, y, w, h, type}
+   Типы: 'solid','move_h','move_v','bounce','ice','lava','crumble'
+   Чекпоинты: {x, y, id}
+   Финиш: {x, y}
+════════════════════════════════════════════ */
+const DIFF = {
+ easy:   {name:'😊 Легко',  gravity:0.45, jumpForce:-11, speed:4.5, color:'#2ecc71'},
+ normal: {name:'😐 Нормально', gravity:0.55, jumpForce:-12, speed:5.5, color:'#f1c40f'},
+ hard:   {name:'💀 Сложно', gravity:0.68, jumpForce:-13, speed:6.5, color:'#e74c3c'},
+};
+
+// ── Генератор уровней ────────────────────────────────────
+function makeLevel(diff){
+ const plats = [];
+ const checks = [];
+
+ if(diff === 'easy'){
+  // Широкие платформы, маленькие прыжки
+  plats.push(...[
+   {x:0,   y:520, w:300, h:20, type:'solid', col:'#4a7c4e'},
+   {x:320, y:480, w:160, h:20, type:'solid', col:'#5a8c5e'},
+   {x:510, y:440, w:140, h:20, type:'solid', col:'#4a7c4e'},
+   {x:680, y:400, w:130, h:20, type:'solid', col:'#3d6b40'},
+   {x:840, y:370, w:120, h:20, type:'solid', col:'#5a8c5e'},
+   {x:990, y:340, w:140, h:20, type:'solid', col:'#4a7c4e'},
+   {x:1160,y:300, w:130, h:20, type:'move_h', col:'#3498db', mx:60, ms:0.8},
+   {x:1330,y:270, w:120, h:20, type:'solid', col:'#5a8c5e'},
+   {x:1490,y:240, w:140, h:20, type:'solid', col:'#4a7c4e'},
+   {x:1670,y:210, w:120, h:20, type:'bounce', col:'#ff69b4'},
+   {x:1820,y:160, w:150, h:20, type:'solid', col:'#3d6b40'},
+   {x:2010,y:130, w:160, h:20, type:'solid', col:'#5a8c5e'},
+   {x:2210,y:100, w:180, h:20, type:'solid', col:'#4a7c4e'},
+   {x:2440,y:80,  w:200, h:20, type:'solid', col:'#3d9142'},
+  ]);
+  checks.push({x:990, y:315, id:1},{x:1820,y:135, id:2});
+  return {plats, checks, finish:{x:2540,y:50}, worldW:2800, worldH:600, bg:'easy'};
+ }
+
+ if(diff === 'normal'){
+  plats.push(...[
+   {x:0,   y:520, w:200, h:20, type:'solid',  col:'#3d6b40'},
+   {x:240, y:480, w:110, h:20, type:'solid',  col:'#5a8c5e'},
+   {x:390, y:430, w:100, h:20, type:'move_h', col:'#3498db', mx:70, ms:1.2},
+   {x:540, y:390, w:90,  h:20, type:'solid',  col:'#4a7c4e'},
+   {x:680, y:350, w:85,  h:20, type:'ice',    col:'#a8d8ea'},
+   {x:820, y:310, w:80,  h:20, type:'solid',  col:'#5a8c5e'},
+   {x:950, y:270, w:90,  h:20, type:'crumble',col:'#e67e22'},
+   {x:1100,y:240, w:80,  h:20, type:'solid',  col:'#4a7c4e'},
+   {x:1240,y:210, w:100, h:20, type:'move_h', col:'#3498db', mx:80, ms:1.5},
+   {x:1410,y:180, w:75,  h:20, type:'solid',  col:'#3d6b40'},
+   {x:1540,y:150, w:80,  h:20, type:'bounce', col:'#ff69b4'},
+   {x:1680,y:120, w:90,  h:20, type:'solid',  col:'#5a8c5e'},
+   {x:1830,y:100, w:100, h:20, type:'move_v', col:'#9b59b6', my:40, ms2:1.0},
+   {x:1990,y:80,  w:80,  h:20, type:'solid',  col:'#4a7c4e'},
+   {x:2130,y:60,  w:100, h:20, type:'ice',    col:'#a8d8ea'},
+   {x:2290,y:40,  w:120, h:20, type:'solid',  col:'#3d9142'},
+  ]);
+  // Лава-ловушки (вид снизу)
+  plats.push(
+   {x:540, y:550, w:200, h:20, type:'lava', col:'#ff4500'},
+   {x:1100,y:550, w:200, h:20, type:'lava', col:'#ff4500'},
+  );
+  checks.push({x:820, y:285, id:1},{x:1540,y:125, id:2},{x:1990,y:55, id:3});
+  return {plats, checks, finish:{x:2330,y:10}, worldW:2600, worldH:600, bg:'normal'};
+ }
+
+ // hard
+ plats.push(...[
+  {x:0,   y:520, w:160, h:20, type:'solid',  col:'#2c3e50'},
+  {x:200, y:470, w:70,  h:20, type:'solid',  col:'#34495e'},
+  {x:320, y:430, w:60,  h:20, type:'ice',    col:'#a8d8ea'},
+  {x:440, y:380, w:55,  h:20, type:'crumble',col:'#e67e22'},
+  {x:560, y:340, w:65,  h:20, type:'move_h', col:'#3498db', mx:90, ms:2.0},
+  {x:720, y:300, w:55,  h:20, type:'solid',  col:'#2c3e50'},
+  {x:840, y:260, w:60,  h:20, type:'bounce', col:'#ff69b4'},
+  {x:960, y:230, w:50,  h:20, type:'move_v', col:'#9b59b6', my:60, ms2:1.8},
+  {x:1090,y:200, w:55,  h:20, type:'solid',  col:'#34495e'},
+  {x:1210,y:170, w:50,  h:20, type:'ice',    col:'#a8d8ea'},
+  {x:1320,y:140, w:60,  h:20, type:'crumble',col:'#e67e22'},
+  {x:1460,y:120, w:55,  h:20, type:'move_h', col:'#3498db', mx:70, ms:2.2},
+  {x:1610,y:100, w:55,  h:20, type:'solid',  col:'#2c3e50'},
+  {x:1730,y:80,  w:50,  h:20, type:'bounce', col:'#ff69b4'},
+  {x:1850,y:60,  w:60,  h:20, type:'move_v', col:'#9b59b6', my:50, ms2:2.0},
+  {x:2000,y:40,  w:70,  h:20, type:'solid',  col:'#34495e'},
+  {x:2150,y:20,  w:100, h:20, type:'solid',  col:'#1a252f'},
+ ]);
+ plats.push(
+  {x:200, y:550, w:500, h:20, type:'lava', col:'#ff4500'},
+  {x:800, y:550, w:400, h:20, type:'lava', col:'#ff4500'},
+  {x:1300,y:550, w:500, h:20, type:'lava', col:'#ff4500'},
+ );
+ checks.push({x:720, y:275, id:1},{x:1090,y:175, id:2},{x:1610,y:75, id:3});
+ return {plats, checks, finish:{x:2180,y:-10}, worldW:2400, worldH:600, bg:'hard'};
+}
+
+/* ── MAIN GAME STATE ────────────────────────────────── */
+let canvas, ctx, W, H;
+let running = false;
+let state = 'menu'; // menu | playing | dead | win
+let diff = 'easy';
+let level = null;
+let player = null;
+let camX = 0;
+let keys = {};
+let lastTime = 0;
+let deathCount = 0;
+let checkpointX = 0, checkpointY = 0;
+let collectedChecks = new Set();
+let animT = 0;
+
+function Plat(cfg){
+ return Object.assign({
+  origX:cfg.x, origY:cfg.y,
+  moveDir:1, moveTimer:0,
+  crumbleState:0, crumbleTimer:0,
+  lavaPulse:0
+ }, cfg);
+}
+
+function initPlayer(x, y){
+ return {
+  x, y, vy:0, vx:0, w:18, h:24,
+  onGround:false,
+  iceSlide:0,
+  dead:false,
+  walkFrame:0, walkTimer:0,
  };
+}
 
- function init(root){
-  root.innerHTML='';root.style.cssText='position:relative;overflow:hidden;';
-  canvas=document.createElement('canvas');canvas.style.cssText='width:100%;height:100%;display:block;';
-  canvas.tabIndex=0;root.appendChild(canvas);ctx=canvas.getContext('2d');
-  function resize(){const r=root.getBoundingClientRect();canvas.width=W=Math.max(400,r.width);canvas.height=H=Math.max(300,r.height-10);}
-  resize();new ResizeObserver(resize).observe(root);
-  canvas.addEventListener('keydown',e=>{keys[e.code]=true;if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
-  canvas.addEventListener('keyup',e=>keys[e.code]=false);
-  canvas.addEventListener('click',handleClick);
-  canvas.focus();gameState='menu';running=true;requestAnimationFrame(loop);
+function startGame(d){
+ diff = d;
+ level = makeLevel(d);
+ level.plats = level.plats.map(p=>Plat(p));
+ deathCount = 0;
+ collectedChecks = new Set();
+ const startPlat = level.plats[0];
+ checkpointX = startPlat.x + 30;
+ checkpointY = startPlat.y - 40;
+ player = initPlayer(checkpointX, checkpointY);
+ camX = 0;
+ state = 'playing';
+ canvas.focus();
+}
+
+/* ── RENDER HELPERS ──────────────────────────────────── */
+function drawSky(bg){
+ // Rich sky gradient depending on difficulty
+ let topCol, midCol, botCol;
+ if(bg === 'easy'){
+  topCol='#1a6fd8'; midCol='#4a9fe8'; botCol='#87ceeb';
+ } else if(bg === 'normal'){
+  topCol='#0a2a5c'; midCol='#1a4a8c'; botCol='#2860b0';
+ } else {
+  topCol='#0a0010'; midCol='#1a0030'; botCol='#2a0050';
  }
+ const grad = ctx.createLinearGradient(0,0,0,H);
+ grad.addColorStop(0, topCol);
+ grad.addColorStop(0.5, midCol);
+ grad.addColorStop(1, botCol);
+ ctx.fillStyle = grad;
+ ctx.fillRect(0, 0, W, H);
 
- function handleClick(e){
-  const rect=canvas.getBoundingClientRect();const mx=(e.clientX-rect.left)*(W/rect.width),my=(e.clientY-rect.top)*(H/rect.height);
-  if(gameState==='menu'){
-   const btns=[{x:W/2-200,y:H/2+20,w:90,h:40,d:'easy'},{x:W/2-80,y:H/2+20,w:90,h:40,d:'normal'},{x:W/2+40,y:H/2+20,w:90,h:40,d:'hard'},{x:W/2+160,y:H/2+20,w:90,h:40,d:'extreme'}];
-   for(const b of btns){if(mx>=b.x&&mx<=b.x+b.w&&my>=b.y&&my<=b.y+b.h){startGame(b.d);break;}}
+ // Clouds (only easy/normal)
+ if(bg !== 'hard'){
+  ctx.fillStyle = 'rgba(255,255,255,0.18)';
+  const cx2 = (-camX * 0.15) % (W + 200);
+  const clouds = [
+   {x:100, y:60, r:28},{x:240,y:40,r:22},{x:380,y:70,r:30},
+   {x:550,y:50,r:25},{x:700,y:35,r:32},{x:850,y:65,r:20},
+  ];
+  clouds.forEach(c=>{
+   const ox = (c.x + cx2 + W + 200) % (W + 200) - 200;
+   ctx.beginPath();
+   ctx.arc(ox, c.y, c.r, 0, Math.PI*2);
+   ctx.arc(ox+c.r, c.y-8, c.r*0.7, 0, Math.PI*2);
+   ctx.arc(ox-c.r*0.6, c.y-5, c.r*0.6, 0, Math.PI*2);
+   ctx.fill();
+  });
+ } else {
+  // Stars for hard
+  ctx.fillStyle='rgba(255,255,255,0.6)';
+  for(let i=0;i<40;i++){
+   const sx=(i*137+camX*0.05)%(W+100)-50;
+   const sy=(i*79)%H*0.7;
+   ctx.beginPath();ctx.arc(sx,sy,1,0,Math.PI*2);ctx.fill();
   }
-  if(gameState==='dead'){
-   if(mx>=W/2-60&&mx<=W/2+60&&my>=H/2+40&&my<=H/2+80)startGame(difficulty);
-   if(mx>=W/2-60&&mx<=W/2+60&&my>=H/2+90&&my<=H/2+130)gameState='menu';
+ }
+}
+
+function drawPlatform(p){
+ const x = p.x - camX;
+ if(x + p.w < -20 || x > W + 20) return; // cull
+
+ if(p.type === 'lava'){
+  // Lava glow + shimmer
+  const pulse = 0.7 + Math.sin(animT * 3 + p.x * 0.01) * 0.3;
+  ctx.shadowColor = 'rgba(255,80,0,0.8)';
+  ctx.shadowBlur = 12 * pulse;
+  const lavGrad = ctx.createLinearGradient(x, p.y, x, p.y+p.h);
+  lavGrad.addColorStop(0,'#ff6b00');
+  lavGrad.addColorStop(0.5,'#ff2200');
+  lavGrad.addColorStop(1,'#cc1100');
+  ctx.fillStyle = lavGrad;
+  ctx.fillRect(x, p.y, p.w, p.h);
+  ctx.shadowBlur = 0;
+  // Lava bubbles
+  ctx.fillStyle = 'rgba(255,150,0,0.7)';
+  for(let b=0;b<3;b++){
+   const bx=x+p.w*0.2+b*p.w*0.3;
+   const by=p.y+3+Math.sin(animT*4+b*1.5)*3;
+   ctx.beginPath();ctx.arc(bx,by,4,0,Math.PI*2);ctx.fill();
+  }
+  return;
+ }
+
+ if(p.type === 'ice'){
+  const iceGrad = ctx.createLinearGradient(x,p.y,x,p.y+p.h);
+  iceGrad.addColorStop(0,'#d4f0ff');
+  iceGrad.addColorStop(1,'#80c8f0');
+  ctx.fillStyle = iceGrad;
+  ctx.fillRect(x, p.y, p.w, p.h);
+  // Shine
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.fillRect(x+4, p.y+3, p.w*0.4, 3);
+  return;
+ }
+
+ if(p.type === 'bounce'){
+  const bGrad = ctx.createLinearGradient(x,p.y,x,p.y+p.h);
+  bGrad.addColorStop(0,'#ffaad4');
+  bGrad.addColorStop(1,'#ff69b4');
+  ctx.fillStyle = bGrad;
+  ctx.fillRect(x, p.y, p.w, p.h);
+  // Spring lines
+  ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=2;
+  for(let i=0;i<3;i++){
+   ctx.beginPath();ctx.moveTo(x+8+i*(p.w/4),p.y+4);ctx.lineTo(x+8+i*(p.w/4),p.y+p.h-4);ctx.stroke();
+  }
+  return;
+ }
+
+ if(p.type === 'crumble'){
+  const alpha = p.crumbleState === 0 ? 1 : 1 - p.crumbleTimer/60;
+  ctx.globalAlpha = Math.max(0, alpha);
+  ctx.fillStyle = p.col;
+  ctx.fillRect(x, p.y, p.w, p.h);
+  // Crack lines if shaking
+  if(p.crumbleState > 0){
+   ctx.strokeStyle='rgba(0,0,0,0.4)';ctx.lineWidth=1;
+   ctx.beginPath();ctx.moveTo(x+10,p.y);ctx.lineTo(x+15,p.y+p.h);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(x+p.w-10,p.y);ctx.lineTo(x+p.w-15,p.y+p.h);ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  return;
+ }
+
+ // Default solid / moving
+ ctx.fillStyle = p.col || '#4a7c4e';
+ ctx.fillRect(x, p.y, p.w, p.h);
+ // Grass top for easy
+ if(level.bg === 'easy'){
+  ctx.fillStyle='#5cb85c';
+  ctx.fillRect(x, p.y, p.w, 5);
+ }
+ // Shadow under
+ ctx.fillStyle='rgba(0,0,0,0.2)';
+ ctx.fillRect(x, p.y+p.h, p.w, 6);
+}
+
+function drawNubik(p){
+ const px = p.x - camX;
+ const py = p.y;
+ if(p.dead) return;
+ ctx.save();
+ ctx.translate(px + p.w/2, py + p.h/2);
+
+ // Walk animation
+ const legSwing = p.onGround ? Math.sin(animT * 10) * 8 : 0;
+ const armSwing = p.onGround ? Math.sin(animT * 10 + Math.PI) * 8 : 0;
+
+ // Shadow
+ ctx.fillStyle='rgba(0,0,0,0.2)';
+ ctx.beginPath();ctx.ellipse(0,p.h/2+2,10,4,0,0,Math.PI*2);ctx.fill();
+
+ // Legs
+ ctx.fillStyle='#1565c0';
+ ctx.fillRect(-6, 4 + legSwing, 5, 12);
+ ctx.fillRect(1, 4 - legSwing, 5, 12);
+
+ // Shoes
+ ctx.fillStyle='#0d47a1';
+ ctx.fillRect(-7, 14 + legSwing, 7, 4);
+ ctx.fillRect(0, 14 - legSwing, 7, 4);
+
+ // Body
+ const bodyGrad=ctx.createLinearGradient(-7,-10,7,8);
+ bodyGrad.addColorStop(0,'#fff');
+ bodyGrad.addColorStop(1,'#ddd');
+ ctx.fillStyle=bodyGrad;
+ ctx.fillRect(-7,-10,14,14);
+
+ // "NOOB" text on shirt
+ ctx.fillStyle='#e74c3c';
+ ctx.font='bold 5px Arial';ctx.textAlign='center';
+ ctx.fillText('NOOB',0,-3);
+
+ // Arms
+ ctx.fillStyle='#ffd4b8';
+ ctx.fillRect(-12,-8+armSwing, 5, 10);
+ ctx.fillRect(7, -8-armSwing, 5, 10);
+
+ // Neck
+ ctx.fillStyle='#ffd4b8';
+ ctx.fillRect(-3,-14,6,6);
+
+ // Head
+ ctx.fillStyle='#ffd4b8';
+ ctx.fillRect(-8,-26,16,14);
+
+ // Eyes
+ ctx.fillStyle='#000';
+ ctx.fillRect(-5,-22,3,3);
+ ctx.fillRect(2,-22,3,3);
+ // Eye shine
+ ctx.fillStyle='#fff';
+ ctx.fillRect(-4,-22,1,1);
+ ctx.fillRect(3,-22,1,1);
+
+ // Mouth
+ ctx.fillStyle='#000';
+ ctx.fillRect(-3,-16,6,2);
+
+ // Cap
+ ctx.fillStyle='#e74c3c';
+ ctx.fillRect(-9,-28,18,5);
+ ctx.fillRect(-5,-33,12,7);
+ // Cap brim
+ ctx.fillStyle='#c0392b';
+ ctx.fillRect(-11,-28,20,3);
+
+ // Air particles (jumping)
+ if(!p.onGround && p.vy < -4){
+  ctx.fillStyle='rgba(255,255,255,0.4)';
+  for(let i=0;i<3;i++){
+   ctx.beginPath();ctx.arc((i-1)*6, p.h/2+8+i*2, 2, 0, Math.PI*2);ctx.fill();
   }
  }
 
- function startGame(diff){
-  difficulty=diff;const d=difficulties[diff];
-  gravity=d.gravity;jumpForce=d.jump;moveSpeed=d.speed;platformGap=d.gap;
-  player={x:100,y:200,vy:0,w:20,h:30,onGround:false,color:'#f1c40f'};
-  platforms=[];score=0;deaths=0;level=1;cam={x:0};
-  generatePlatforms(0,30);gameState='playing';canvas.focus();
- }
+ ctx.restore();
+}
 
- function generatePlatforms(startX,count){
-  const d=difficulties[difficulty];
-  let x=startX||0;
-  for(let i=0;i<count;i++){
-   const w=d.platW[0]+Math.random()*(d.platW[1]-d.platW[0]);
-   const y=H*0.5+Math.random()*H*0.3-50;
-   const type=Math.random()<0.15?'moving':Math.random()<0.1?'crumble':'normal';
-   platforms.push({x,y:Math.min(y,H-60),w,h:14,type,moveDir:1,moveRange:40,moveSpeed:1+Math.random(),crumbleTimer:0,color:type==='moving'?'#3498db':type==='crumble'?'#e67e22':'#2ecc71'});
-   x+=w+d.gap*(0.6+Math.random()*0.8);
+function drawCheckpoint(cp){
+ const cx2 = cp.x - camX;
+ const cy = cp.y;
+ const collected = collectedChecks.has(cp.id);
+ const pulse = 0.7 + Math.sin(animT*3)*0.3;
+ const ringCol = collected ? '#ffd700' : 'rgba(100,200,255,0.8)';
+ ctx.save();
+ ctx.translate(cx2, cy);
+
+ // Ring
+ ctx.strokeStyle=ringCol;
+ ctx.lineWidth=4;
+ ctx.shadowColor=ringCol;
+ ctx.shadowBlur=collected ? 20 : 10*pulse;
+ ctx.beginPath();ctx.arc(0,0,16,0,Math.PI*2);ctx.stroke();
+ ctx.shadowBlur=0;
+
+ // Star inside
+ ctx.fillStyle=collected?'#ffd700':'rgba(100,200,255,0.6)';
+ ctx.font='bold 14px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.fillText(collected?'⭐':'◎',0,0);
+
+ ctx.restore();
+}
+
+function drawFinish(f){
+ const fx = f.x - camX;
+ const fy = f.y;
+ const pulse = 0.8 + Math.sin(animT*4)*0.2;
+
+ // Pole
+ ctx.fillStyle='#c0c0c0';
+ ctx.fillRect(fx-2, fy-60, 4, 60);
+
+ // Rainbow flag
+ const flagColors=['#e74c3c','#e67e22','#f1c40f','#2ecc71','#3498db','#9b59b6'];
+ flagColors.forEach((c,i)=>{
+  ctx.fillStyle=c;
+  ctx.fillRect(fx+2, fy-60+i*8, 30, 8);
+ });
+
+ // Glow star on top
+ ctx.fillStyle='#ffd700';
+ ctx.shadowColor='#ffd700';
+ ctx.shadowBlur=20*pulse;
+ ctx.font='bold 28px Arial';ctx.textAlign='center';
+ ctx.fillText('⭐', fx, fy-70);
+ ctx.shadowBlur=0;
+
+ // "ФИНИШ!" text
+ ctx.fillStyle='rgba(255,255,255,0.9)';
+ ctx.font='bold 14px Arial';ctx.textAlign='center';
+ ctx.fillText('🏁 ФИНИШ!', fx+15, fy-80);
+}
+
+/* ── UPDATE PHYSICS ─────────────────────────────────── */
+function update(dt){
+ if(state !== 'playing' || !player || !level) return;
+ const d = DIFF[diff];
+ const p = player;
+ animT += dt;
+
+ // Update platforms
+ level.plats.forEach(pl=>{
+  if(pl.type === 'move_h'){
+   pl.moveTimer += dt * pl.ms;
+   pl.x = pl.origX + Math.sin(pl.moveTimer) * pl.mx;
   }
+  if(pl.type === 'move_v'){
+   pl.moveTimer += dt * pl.ms2;
+   pl.y = pl.origY + Math.sin(pl.moveTimer) * pl.my;
+  }
+  if(pl.type === 'crumble' && pl.crumbleState === 1){
+   pl.crumbleTimer += dt * 60;
+   if(pl.crumbleTimer > 60){pl.crumbleState=2;}
+  }
+ });
+
+ // Input
+ let moveX = 0;
+ if(keys['KeyA'] || keys['ArrowLeft']) moveX = -1;
+ if(keys['KeyD'] || keys['ArrowRight']) moveX = 1;
+
+ const jump = keys['KeyW'] || keys['ArrowUp'] || keys['Space'];
+
+ // Ice slide
+ if(p.onGround && p.iceSlide){
+  p.vx = p.iceSlide;
+  if(Math.abs(p.iceSlide) > 0.1) p.iceSlide *= 0.97;
+  else p.iceSlide = 0;
+ } else if(!p.iceSlide){
+  p.vx = moveX * d.speed;
  }
 
- function update(){
-  if(gameState!=='playing')return;
-  const p=player;
-  if(keys['ArrowLeft']||keys['KeyA'])p.x-=moveSpeed;
-  if(keys['ArrowRight']||keys['KeyD'])p.x+=moveSpeed;
-  if((keys['ArrowUp']||keys['KeyW']||keys['Space'])&&p.onGround){p.vy=jumpForce;p.onGround=false;}
-  p.vy+=gravity;p.y+=p.vy;p.onGround=false;
-  for(const pl of platforms){
-   if(pl.type==='moving'){pl.x+=pl.moveDir*pl.moveSpeed;pl.moveRange--;if(pl.moveRange<=0){pl.moveDir*=-1;pl.moveRange=80;}}
-   if(p.vy>=0&&p.x+p.w>pl.x&&p.x<pl.x+pl.w&&p.y+p.h>=pl.y&&p.y+p.h<=pl.y+20){
-    p.y=pl.y-p.h;p.vy=0;p.onGround=true;
-    if(pl.type==='crumble'){pl.crumbleTimer+=1;if(pl.crumbleTimer>30)pl.y=9999;}
+ if(jump && p.onGround){
+  p.vy = d.jumpForce;
+  p.onGround = false;
+ }
+
+ // Gravity
+ p.vy += d.gravity;
+ if(p.vy > 20) p.vy = 20;
+
+ // Move X
+ p.x += p.vx;
+ p.x = Math.max(0, Math.min(p.x, level.worldW - p.w));
+
+ // Move Y
+ p.y += p.vy;
+
+ p.onGround = false;
+
+ // Platform collision
+ level.plats.forEach(pl=>{
+  if(pl.crumbleState === 2) return; // crumbled away
+  if(pl.type === 'lava'){
+   // Touching lava = die
+   if(p.x + p.w > pl.x + 4 && p.x < pl.x + pl.w - 4 && p.y + p.h > pl.y && p.y + p.h < pl.y + 30){
+    respawn();
+   }
+   return;
+  }
+
+  // Standard AABB top collision
+  if(p.vy >= 0 &&
+     p.x + p.w > pl.x + 2 && p.x < pl.x + pl.w - 2 &&
+     p.y + p.h >= pl.y && p.y + p.h <= pl.y + pl.h + p.vy + 2){
+   p.y = pl.y - p.h;
+   p.onGround = true;
+
+   if(pl.type === 'bounce'){
+    p.vy = d.jumpForce * 1.4;
+    p.onGround = false;
+   } else if(pl.type === 'ice'){
+    p.iceSlide = p.vx !== 0 ? p.vx * 1.4 : p.iceSlide;
+    p.vy = 0;
+   } else {
+    p.vy = 0;
+    p.iceSlide = 0;
+   }
+
+   if(pl.type === 'crumble' && pl.crumbleState === 0){
+    pl.crumbleState = 1;
    }
   }
-  if(p.y>H+50){deaths++;score=Math.max(0,score-50);p.x=cam.x+100;p.y=100;p.vy=0;}
-  score=Math.max(score,Math.floor((p.x-100)/10));
-  cam.x=Math.max(0,p.x-200);
-  const maxPlatX=Math.max(...platforms.map(p=>p.x+p.w));
-  if(p.x>maxPlatX-W*2){generatePlatforms(maxPlatX+platformGap,15);level++;}
+ });
+
+ // Fall off bottom = die
+ if(p.y > level.worldH + 100) respawn();
+
+ // Walk animation
+ if(p.onGround && Math.abs(p.vx) > 0.5){
+  p.walkTimer += dt * 8;
  }
 
- function render(){
-  const skyGrad=ctx.createLinearGradient(0,0,0,H);
-  if(difficulty==='extreme'){skyGrad.addColorStop(0,'#1a0000');skyGrad.addColorStop(1,'#3d0000');}
-  else if(difficulty==='hard'){skyGrad.addColorStop(0,'#0a0a2e');skyGrad.addColorStop(1,'#1a1a4e');}
-  else{skyGrad.addColorStop(0,'#87CEEB');skyGrad.addColorStop(1,'#E0F7FA');}
-  ctx.fillStyle=skyGrad;ctx.fillRect(0,0,W,H);
-  ctx.fillStyle='rgba(100,150,100,0.3)';
-  for(let i=0;i<10;i++){const bx=-cam.x*0.1+i*200;ctx.beginPath();ctx.moveTo(bx,H);ctx.lineTo(bx+100,H-120-Math.sin(i)*30);ctx.lineTo(bx+200,H);ctx.fill();}
-  ctx.save();ctx.translate(-cam.x,0);
-  for(const pl of platforms){
-   if(pl.x+pl.w<cam.x-50||pl.x>cam.x+W+50)continue;
-   ctx.fillStyle='rgba(0,0,0,0.2)';ctx.fillRect(pl.x+3,pl.y+3,pl.w,pl.h);
-   ctx.fillStyle=pl.color;ctx.fillRect(pl.x,pl.y,pl.w,pl.h);
-   ctx.fillStyle='rgba(0,0,0,.25)';ctx.fillRect(pl.x,pl.y+pl.h,pl.w,6);
-   ctx.fillStyle='rgba(255,255,255,.2)';ctx.fillRect(pl.x,pl.y,pl.w,3);
-  }
-  if(gameState==='playing'){
-   const p=player;
-   ctx.save();ctx.translate(p.x+p.w/2,p.y+p.h/2);
-   ctx.fillStyle='#00a2ff';ctx.fillRect(-8,8,6,12);ctx.fillRect(2,8,6,12);
-   ctx.fillStyle='#f1c40f';ctx.fillRect(-9,-6,18,16);
-   ctx.fillStyle='#f1c40f';
-   const armSwing=Math.sin(Date.now()/150)*3;
-   ctx.fillRect(-13,-4,4,12+armSwing);ctx.fillRect(9,-4,4,12-armSwing);
-   ctx.fillStyle='#f1c40f';ctx.fillRect(-7,-18,14,14);
-   ctx.fillStyle='#000';ctx.fillRect(-5,-14,3,3);ctx.fillRect(2,-14,3,3);
-   ctx.fillStyle='#fff';ctx.fillRect(-4,-13,1.5,1.5);ctx.fillRect(3,-13,1.5,1.5);
-   ctx.fillStyle='#000';ctx.fillRect(-3,-9,6,1.5);
-   ctx.fillStyle='rgba(255,255,255,0.8)';ctx.font='bold 8px Arial';ctx.textAlign='center';
-   ctx.fillText('NOOB',0,-22);ctx.restore();
-  }
-  ctx.restore();
-  ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(8,8,200,70);
-  ctx.fillStyle='#fff';ctx.font='bold 14px Segoe UI';ctx.textAlign='left';
-  ctx.fillText(`🏃 Очки: ${score}`,18,30);
-  ctx.fillText(`💀 Смерти: ${deaths}`,18,50);
-  ctx.fillText(`📊 Уровень: ${level} | ${difficulties[difficulty].name}`,18,70);
-  if(gameState==='menu'){
-   ctx.fillStyle='rgba(0,0,20,0.85)';ctx.fillRect(0,0,W,H);
-   ctx.fillStyle='#fff';ctx.font='bold 36px Segoe UI';ctx.textAlign='center';
-   ctx.fillText('🏃 3D Паркур — Noob Runner',W/2,H/2-80);
-   ctx.font='16px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.6)';
-   ctx.fillText('Выберите сложность:',W/2,H/2);
-   const btns=[
-    {x:W/2-200,label:'😊 Легко',color:'#2ecc71'},{x:W/2-80,label:'😐 Нормально',color:'#f1c40f'},
-    {x:W/2+40,label:'😤 Сложно',color:'#e74c3c'},{x:W/2+160,label:'💀 Экстрим',color:'#8e44ad'},
-   ];
-   btns.forEach(b=>{
-    ctx.fillStyle=b.color;ctx.beginPath();
-    if(ctx.roundRect)ctx.roundRect(b.x,H/2+20,90,40,8);else ctx.rect(b.x,H/2+20,90,40);
-    ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 11px Segoe UI';ctx.fillText(b.label,b.x+45,H/2+45);
-   });
-   ctx.font='13px Segoe UI';ctx.fillStyle='rgba(255,255,255,.4)';
-   ctx.fillText('WASD / Стрелки — движение, Пробел — прыжок',W/2,H/2+90);
-   ctx.save();ctx.translate(W/2,H/2-140);
-   ctx.fillStyle='#f1c40f';ctx.fillRect(-14,-6,28,24);
-   ctx.fillStyle='#00a2ff';ctx.fillRect(-12,18,10,16);ctx.fillRect(2,18,10,16);
-   ctx.fillStyle='#f1c40f';ctx.fillRect(-10,-24,20,20);
-   ctx.fillStyle='#000';ctx.fillRect(-7,-18,4,4);ctx.fillRect(3,-18,4,4);ctx.fillRect(-5,-12,10,2);
-   ctx.restore();
-  }
-  if(gameState==='dead'){
-   ctx.fillStyle='rgba(80,0,0,0.8)';ctx.fillRect(0,0,W,H);
-   ctx.fillStyle='#fff';ctx.font='bold 32px Segoe UI';ctx.textAlign='center';
-   ctx.fillText('💀 Вы упали!',W/2,H/2-20);
-   ctx.font='16px Segoe UI';ctx.fillText(`Очки: ${score}`,W/2,H/2+15);
-   ctx.fillStyle='#2ecc71';if(ctx.roundRect){ctx.beginPath();ctx.roundRect(W/2-60,H/2+40,120,35,8);ctx.fill();}else{ctx.fillRect(W/2-60,H/2+40,120,35);}
-   ctx.fillStyle='#fff';ctx.font='bold 13px Segoe UI';ctx.fillText('🔄 Заново',W/2,H/2+62);
-   ctx.fillStyle='#3498db';if(ctx.roundRect){ctx.beginPath();ctx.roundRect(W/2-60,H/2+90,120,35,8);ctx.fill();}else{ctx.fillRect(W/2-60,H/2+90,120,35);}
-   ctx.fillStyle='#fff';ctx.fillText('📋 Меню',W/2,H/2+112);
-  }
- }
+ // Camera follow
+ const targetCam = p.x - W * 0.35;
+ camX += (targetCam - camX) * 0.12;
+ camX = Math.max(0, Math.min(camX, level.worldW - W));
 
- function darkenColor(hex,t){
-  try{hex=hex.replace('#','');const r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
-  return`rgb(${Math.floor(r*(1-t))},${Math.floor(g*(1-t))},${Math.floor(b*(1-t))})`;
-  }catch(e){return hex;}
- }
+ // Checkpoints
+ level.checks.forEach(cp=>{
+  if(!collectedChecks.has(cp.id)){
+   const dx = (p.x + p.w/2) - cp.x;
+   const dy = (p.y + p.h/2) - cp.y;
+   if(Math.sqrt(dx*dx+dy*dy) < 28){
+    collectedChecks.add(cp.id);
+    checkpointX = p.x;
+    checkpointY = p.y;
+    showNotif('Чекпоинт!','Прогресс сохранён ✅ (' + cp.id + '/' + level.checks.length + ')','⭐');
+   }
+  }
+ });
 
- function loop(){
-  if(!running||!canvas||!canvas.isConnected){running=false;return;}
-  update();render();requestAnimationFrame(loop);
+ // Finish
+ const fin = level.finish;
+ const fdx = (p.x + p.w/2) - fin.x;
+ const fdy = (p.y + p.h/2) - fin.y;
+ if(Math.sqrt(fdx*fdx+fdy*fdy) < 35){
+  state = 'win';
  }
- function stop(){running=false;}
- return{init,stop};
+}
+
+function respawn(){
+ deathCount++;
+ player = initPlayer(checkpointX, checkpointY);
+ // Reset crumble plats
+ if(level) level.plats.forEach(pl=>{if(pl.type==='crumble'){pl.crumbleState=0;pl.crumbleTimer=0;pl.y=pl.origY;}});
+}
+
+/* ── RENDER ─────────────────────────────────────────── */
+function render(){
+ ctx.clearRect(0,0,W,H);
+ if(state === 'menu'){
+  drawMenuScreen();
+ } else if(state === 'playing' || state === 'dead'){
+  if(level) drawGameplay();
+ } else if(state === 'win'){
+  if(level) drawGameplay();
+  drawWinScreen();
+ }
+}
+
+function drawMenuScreen(){
+ const grad=ctx.createLinearGradient(0,0,0,H);
+ grad.addColorStop(0,'#0a1628');grad.addColorStop(1,'#1a2840');
+ ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+
+ // Animated stars
+ ctx.fillStyle='rgba(255,255,255,0.5)';
+ for(let i=0;i<50;i++){
+  const sx=(i*137.5+animT*20)%(W+50);
+  const sy=(i*73)%H;
+  const ss=0.5+Math.sin(animT*2+i)*0.5;
+  ctx.globalAlpha=0.3+ss*0.5;
+  ctx.beginPath();ctx.arc(sx,sy,1,0,Math.PI*2);ctx.fill();
+ }
+ ctx.globalAlpha=1;
+
+ // Title
+ ctx.textAlign='center';
+ ctx.font='bold 38px Segoe UI';
+ const tGrad=ctx.createLinearGradient(W/2-200,0,W/2+200,0);
+ tGrad.addColorStop(0,'#ff6b6b');tGrad.addColorStop(0.3,'#ffd700');
+ tGrad.addColorStop(0.6,'#00ff88');tGrad.addColorStop(1,'#60cdff');
+ ctx.fillStyle=tGrad;
+ ctx.fillText('🏃 ОББИ ПАРКУР', W/2, H/2-100);
+ ctx.font='16px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.55)';
+ ctx.fillText('Nubik Runner — Достигни финиша! Собери чекпоинты!', W/2, H/2-60);
+
+ // Difficulty buttons
+ const btns=[
+  {d:'easy', label:'😊 Легко', desc:'Широкие платформы, нет опасностей', col:'#2ecc71', col2:'#27ae60'},
+  {d:'normal',label:'😐 Нормально',desc:'Лёд, падающие блоки, лава', col:'#f1c40f', col2:'#d4ac0d'},
+  {d:'hard', label:'💀 Сложно', desc:'Узкие блоки, быстрые движения, темнота', col:'#e74c3c', col2:'#c0392b'},
+ ];
+ btns.forEach((b,i)=>{
+  const bx=W/2-320+i*220, by=H/2-20, bw=200, bh=70;
+  const bg=ctx.createLinearGradient(bx,by,bx,by+bh);
+  bg.addColorStop(0,b.col);bg.addColorStop(1,b.col2);
+  ctx.fillStyle=bg;
+  ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(bx,by,bw,bh,12);
+  else ctx.rect(bx,by,bw,bh);
+  ctx.fill();
+  ctx.fillStyle='rgba(0,0,0,0.15)';
+  ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(bx,by,bw,3,12);
+  else ctx.rect(bx,by,bw,3);
+  ctx.fill();
+  ctx.fillStyle='#fff';
+  ctx.font='bold 15px Segoe UI';ctx.textAlign='center';
+  ctx.fillText(b.label, bx+bw/2, by+28);
+  ctx.font='10px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.75)';
+  ctx.fillText(b.desc, bx+bw/2, by+46);
+  ctx.font='9px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.5)';
+  ctx.fillText(`(${DIFF[b.d].name})`, bx+bw/2, by+62);
+ });
+
+ // Controls
+ ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='13px Segoe UI';ctx.textAlign='center';
+ ctx.fillText('Управление: W / ↑ — прыжок   A/D / ←/→ — движение   Пробел — прыжок', W/2, H/2+78);
+
+ // Little nubik preview
+ const previewX=W/2, previewY=H/2-140;
+ ctx.save();ctx.translate(previewX,previewY);
+ const bob=Math.sin(animT*3)*4;ctx.translate(0,bob);
+ drawNubikPreview();
+ ctx.restore();
+}
+
+function drawNubikPreview(){
+ // Simplified nubik for menu
+ ctx.fillStyle='#1565c0';ctx.fillRect(-6,4,5,12);ctx.fillRect(1,4,5,12);
+ ctx.fillStyle='#fff';ctx.fillRect(-7,-10,14,14);
+ ctx.fillStyle='#e74c3c';ctx.font='bold 5px Arial';ctx.textAlign='center';ctx.fillText('NOOB',0,-3);
+ ctx.fillStyle='#ffd4b8';ctx.fillRect(-3,-14,6,6);ctx.fillRect(-8,-26,16,14);
+ ctx.fillStyle='#000';ctx.fillRect(-5,-22,3,3);ctx.fillRect(2,-22,3,3);
+ ctx.fillStyle='#e74c3c';ctx.fillRect(-9,-28,18,5);ctx.fillRect(-5,-33,12,7);
+ ctx.fillStyle='rgba(255,215,0,0.8)';ctx.font='20px Arial';ctx.fillText('⭐',18,-15);
+}
+
+function drawGameplay(){
+ // Sky
+ drawSky(level.bg);
+
+ // Background hills
+ drawHills();
+
+ ctx.save();
+
+ // Platforms
+ level.plats.forEach(p=>drawPlatform(p));
+
+ // Checkpoints
+ level.checks.forEach(cp=>drawCheckpoint(cp));
+
+ // Finish
+ drawFinish(level.finish);
+
+ // Player
+ if(player && !player.dead) drawNubik(player);
+
+ ctx.restore();
+
+ // HUD
+ drawHUD2();
+}
+
+function drawHills(){
+ const bg=level.bg;
+ ctx.fillStyle= bg==='easy'?'rgba(34,120,50,0.25)':bg==='normal'?'rgba(20,60,120,0.25)':'rgba(40,10,80,0.15)';
+ const off=-camX*0.3;
+ for(let i=0;i<8;i++){
+  const hx=(i*320+off)%(W+400)-200;
+  const hy=H-80-Math.sin(i*1.8)*60;
+  ctx.beginPath();ctx.moveTo(hx,H);ctx.quadraticCurveTo(hx+160,hy,hx+320,H);ctx.fill();
+ }
+}
+
+function drawHUD2(){
+ // Top bar
+ ctx.fillStyle='rgba(0,0,0,0.6)';
+ ctx.fillRect(8,8,280,38);
+
+ const dConf=DIFF[diff];
+ ctx.fillStyle=dConf.color;ctx.font='bold 14px Segoe UI';ctx.textAlign='left';
+ ctx.fillText(dConf.name, 18, 28);
+ ctx.fillStyle='#fff';
+ ctx.fillText(' · Смерти: '+deathCount+'  ⭐ '+collectedChecks.size+'/'+level.checks.length, 18+80, 28);
+
+ // Checkpoint progress bar
+ const prog=collectedChecks.size/Math.max(1,level.checks.length);
+ ctx.fillStyle='rgba(255,255,255,0.1)';ctx.fillRect(8,50,280,6);
+ const pgGrad=ctx.createLinearGradient(8,0,288,0);
+ pgGrad.addColorStop(0,'#ffd700');pgGrad.addColorStop(1,'#ff8c00');
+ ctx.fillStyle=pgGrad;ctx.fillRect(8,50,280*prog,6);
+}
+
+function drawWinScreen(){
+ ctx.fillStyle='rgba(0,0,0,0.78)';ctx.fillRect(0,0,W,H);
+ ctx.textAlign='center';
+ const t=animT;
+ ctx.font='bold 48px Segoe UI';
+ const wg=ctx.createLinearGradient(W/2-200,0,W/2+200,0);
+ wg.addColorStop(0,'#ffd700');wg.addColorStop(0.5,'#ff8c00');wg.addColorStop(1,'#ffd700');
+ ctx.fillStyle=wg;
+ ctx.fillText('🏆 ПОБЕДА!', W/2, H/2-60);
+ ctx.font='18px Segoe UI';ctx.fillStyle='rgba(255,255,255,0.7)';
+ ctx.fillText('Уровень пройден! Смертей: '+deathCount, W/2, H/2-20);
+ ctx.fillText('Чекпоинтов: '+collectedChecks.size+'/'+level.checks.length, W/2, H/2+10);
+ // Stars
+ const stars=Math.max(1,3-Math.floor(deathCount/3));
+ ctx.font='36px Arial';ctx.fillText('⭐'.repeat(stars)+'☆'.repeat(3-stars), W/2, H/2+55);
+
+ // Buttons
+ [
+  {label:'🔄 Снова',    x:W/2-180, d:diff},
+  {label:'🏠 Меню',     x:W/2,     d:null},
+  {label:'🔼 Сложнее',  x:W/2+180, d:diff==='easy'?'normal':diff==='normal'?'hard':null},
+ ].forEach(b=>{
+  if(b.d===null&&b.label.includes('Сложнее')&&diff==='hard')return;
+  const active=b.d!==null||b.label.includes('Меню');
+  ctx.fillStyle=active?'rgba(0,120,212,0.85)':'rgba(100,100,100,0.5)';
+  ctx.beginPath();if(ctx.roundRect)ctx.roundRect(b.x-70,H/2+80,140,44,10);else ctx.rect(b.x-70,H/2+80,140,44);ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='bold 14px Segoe UI';
+  ctx.fillText(b.label, b.x, H/2+107);
+ });
+}
+
+/* ── CLICK HANDLER ─────────────────────────────────── */
+function handleClick(e){
+ const rect=canvas.getBoundingClientRect();
+ const mx=(e.clientX-rect.left)*(W/rect.width);
+ const my=(e.clientY-rect.top)*(H/rect.height);
+ if(state==='menu'){
+  const btns=['easy','normal','hard'];
+  btns.forEach((d,i)=>{
+   const bx=W/2-320+i*220, by=H/2-20, bw=200, bh=70;
+   if(mx>=bx&&mx<=bx+bw&&my>=by&&my<=by+bh) startGame(d);
+  });
+ } else if(state==='win'){
+  const by=H/2+80, bh=44;
+  if(my>=by&&my<=by+bh){
+   if(mx>=W/2-250&&mx<=W/2-110) startGame(diff);
+   if(mx>=W/2-70&&mx<=W/2+70) state='menu';
+   if(mx>=W/2+110&&mx<=W/2+250){
+    const next=diff==='easy'?'normal':diff==='normal'?'hard':null;
+    if(next) startGame(next);
+   }
+  }
+ }
+}
+
+/* ── MAIN LOOP ─────────────────────────────────────── */
+function gameLoop(ts){
+ if(!running||!canvas||!canvas.isConnected){running=false;return;}
+ const dt=Math.min((ts-lastTime)/1000,0.05);
+ lastTime=ts;
+ update(dt);
+ render();
+ requestAnimationFrame(gameLoop);
+}
+
+function init(rootEl){
+ if(!rootEl)return;
+ rootEl.innerHTML='';
+ rootEl.style.cssText='position:relative;overflow:hidden;background:#000;';
+ canvas=document.createElement('canvas');
+ canvas.style.cssText='width:100%;height:100%;display:block;';
+ canvas.tabIndex=0;
+ rootEl.appendChild(canvas);
+ ctx=canvas.getContext('2d');
+
+ function resize(){
+  const r=rootEl.getBoundingClientRect();
+  canvas.width=W=Math.max(400,r.width);
+  canvas.height=H=Math.max(300,r.height-4);
+ }
+ resize();
+ new ResizeObserver(resize).observe(rootEl);
+
+ const kd=e=>{keys[e.code]=true;if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();};
+ const ku=e=>{keys[e.code]=false;};
+ canvas.addEventListener('keydown',kd);
+ canvas.addEventListener('keyup',ku);
+ window.addEventListener('keydown',kd);
+ window.addEventListener('keyup',ku);
+ canvas.addEventListener('click',handleClick);
+ canvas.focus();
+
+ state='menu';animT=0;running=true;lastTime=performance.now();
+ requestAnimationFrame(gameLoop);
+}
+
+function stop(){
+ running=false;
+ keys={};
+}
+
+return {init, stop};
 })();
 
-// ── PARKOUR OPEN/CLOSE ────────────────────────────────
+// ── PARKOUR OPEN/CLOSE ─────────────────────────────────
 window.openParkour=function(){
  const w=el('win-parkour'),root=el('parkour-root');
  if(w){
@@ -1469,22 +2085,20 @@ window.openParkour=function(){
   requestAnimationFrame(()=>{centerWindow(w);bringFront('win-parkour');});
   const tb=el('tb-parkour');if(tb)tb.classList.add('running','active-win');
  }
- if(root&&!window._parkourStarted){PARKOUR.init(root);window._parkourStarted=true;}
+ if(root&&!window._parkourStarted){
+  PARKOUR.init(root);window._parkourStarted=true;
+ }
 };
 window.parkourClose=function(){
  const w=el('win-parkour');if(w)w.style.display='none';
  const tb=el('tb-parkour');if(tb)tb.classList.remove('running','active-win');
  if(window._parkourStarted){PARKOUR.stop();window._parkourStarted=false;}
 };
-
-// ── INITIAL GREETING ──────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{
- const h=new Date().getHours(),g=el('br-hello');
- if(g)g.textContent=h<6?'Доброй ночи!':h<12?'Доброе утро!':h<18?'Добрый день!':'Добрый вечер!';
-});
 </script>
 
-<!-- GTA 6 ENGINE -->
+<!-- ══════════════════════════════════════════════════════
+     GTA 6 ENGINE (не тронут!)
+══════════════════════════════════════════════════════ -->
 <script>
 'use strict';
 window.GTA6=(function(){
@@ -1577,30 +2191,43 @@ let h=`<div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,.7
 <div style="color:#2ecc71;font-size:13px;">❤️ ${p.health} | 💰 $${p.money}</div></div>`;
 if(p.inCar)h+=`<div style="position:absolute;bottom:50px;left:10px;background:rgba(0,0,0,.85);border-radius:14px;padding:10px 18px;text-align:center;pointer-events:none;">
 <div style="color:#fff;font-size:28px;font-weight:200;">${spd}</div><div style="color:#888;font-size:8px;">КМ/Ч</div></div>`;
-if(S.notifs.length)h+=`<div style="position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none;">${S.notifs.map(n=>`<div style="background:rgba(0,0,0,.87);border-radius:10px;padding:8px 20px;color:#fff;font-size:12px;margin:4px;opacity:${min(1,n.t*2)}">${n.msg}</div>`).join('')}</div>`;
+if(S.notifs.length)h+=`<div style="position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none;">${S.notifs.map(n=>`<div style="background:rgba(0,0,0,.87);border-radius:10px;padding:8px 20px;color:#fff;font-size:12px;margin:4px;opacity:${Math.min(1,n.t*2)}">${n.msg}</div>`).join('')}</div>`;
 hud.innerHTML=h;}
 
 function stop(){S.running=false;for(const[el,ev,fn]of S._listeners)el.removeEventListener(ev,fn);S._listeners=[];}
 return{init,stop};
 })();
 
-// ── GTA6 OPEN/CLOSE ───────────────────────────────────
 window.openGta6=function(){
  const w=el('win-gta6'),root=el('gta6-root');
- if(w){
-  w.style.display='flex';
-  requestAnimationFrame(()=>{centerWindow(w);bringFront('win-gta6');});
-  const tb=el('tb-gta6');if(tb)tb.classList.add('running','active-win');
- }
- if(root&&!window._gta6started){
-  GTA6.init(root);window._gta6started=true;
- }
+ if(w){w.style.display='flex';requestAnimationFrame(()=>{centerWindow(w);bringFront('win-gta6');});const tb=el('tb-gta6');if(tb)tb.classList.add('running','active-win');}
+ if(root&&!window._gta6started){GTA6.init(root);window._gta6started=true;}
 };
 window.gta6Close=function(){
  const w=el('win-gta6');if(w)w.style.display='none';
  const tb=el('tb-gta6');if(tb)tb.classList.remove('running','active-win');
  if(typeof GTA6!=='undefined'&&window._gta6started){GTA6.stop();window._gta6started=false;}
 };
+</script>
+<!-- openApp patch for paint+explorer -->
+<script>
+(function(){
+ const _orig=window.openApp;
+ window.openApp=function(app){
+  _orig(app);
+  if(app==='paint')setTimeout(()=>{
+   let paintCanvas=document.getElementById('paint-canvas');
+   if(!paintCanvas)return;
+   const wrap=document.getElementById('paint-canvas-wrap');
+   paintCanvas.width=wrap.clientWidth||700;paintCanvas.height=wrap.clientHeight||400;
+   let pc=paintCanvas.getContext('2d');pc.fillStyle='#fff';pc.fillRect(0,0,paintCanvas.width,paintCanvas.height);
+   paintCanvas.onmousedown=e=>{painting=true;pc.beginPath();pc.moveTo(e.offsetX,e.offsetY);};
+   paintCanvas.onmousemove=e=>{if(!painting)return;pc.lineWidth=paintSize;pc.lineCap='round';pc.strokeStyle=paintTool==='eraser'?'#fff':paintColor;pc.lineTo(e.offsetX,e.offsetY);pc.stroke();};
+   paintCanvas.onmouseup=()=>painting=false;paintCanvas.onmouseleave=()=>painting=false;
+  },150);
+  if(app==='explorer')setTimeout(()=>expNav('Рабочий стол'),50);
+ };
+})();
 </script>
 </body>
 </html>
