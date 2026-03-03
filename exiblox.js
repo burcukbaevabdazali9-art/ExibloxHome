@@ -2,7 +2,7 @@
 
 // ════════════════════════════════════════════
 // EXIBLOX v3 — Браузерная версия
-// Облачное хранилище игр через window.storage
+// Хранилище игр через localStorage
 // ════════════════════════════════════════════
 
 const EXB = {
@@ -27,7 +27,6 @@ const EXB = {
   _publishing: false,
   _studioEditing: false,
   _aiTyping: false,
-  _cloudReady: false,
 };
 
 // ── Скины стикменов ──
@@ -74,91 +73,48 @@ const EXB_BLOCK_COLORS = {
   deco:'#2ecc71',
 };
 
-// ── Временное хранилище иконки при публикации ──
 let _exbPublishIconData = null;
 
 // ════════════════════════════════════════════
-// CLOUD STORAGE — общее облако для ВСЕХ
+// STORAGE — localStorage только
 // ════════════════════════════════════════════
 
-function exbHasCloud() {
-  if (typeof window !== 'undefined' && typeof window.storage !== 'undefined') {
-    return true;
+function exbLoadGames() {
+  try {
+    return JSON.parse(localStorage.getItem('exiblox_games') || '[]');
+  } catch(e) {
+    return [];
   }
-  return false;
 }
 
-async function exbCloudLoadGames() {
-  // Claude.ai shared storage — видят ВСЕ пользователи!
-  if (typeof window !== 'undefined' && typeof window.storage !== 'undefined') {
-    try {
-      const result = await window.storage.get('exiblox_games_v3', true); // shared=true!
-      if (result && result.value) {
-        const games = JSON.parse(result.value);
-        console.log(`☁️ Загружено ${games.length} игр из общего облака`);
-        return games;
-      }
-      return [];
-    } catch (e) {
-      console.error('window.storage load error:', e);
-    }
+function exbSaveGamesLocal() {
+  try {
+    localStorage.setItem('exiblox_games', JSON.stringify(EXB.games));
+  } catch(e) {
+    console.error('Save error:', e);
   }
-  // Fallback: localStorage
-  return JSON.parse(localStorage.getItem('exiblox_games') || '[]');
-}
-
-async function exbCloudSaveGames() {
-  let saved = false;
-
-  // Claude.ai shared storage — сохраняем для ВСЕХ!
-  if (typeof window !== 'undefined' && typeof window.storage !== 'undefined') {
-    try {
-      await window.storage.set('exiblox_games_v3', JSON.stringify(EXB.games), true); // shared=true!
-      console.log(`✅ ${EXB.games.length} игр сохранено в общем облаке`);
-      saved = true;
-    } catch (e) {
-      console.error('window.storage save error:', e);
-    }
-  }
-
-  // Всегда сохраняем в localStorage как backup
-  localStorage.setItem('exiblox_games', JSON.stringify(EXB.games));
 }
 
 // ── INIT ─────────────────────────────────────
-async function initExiblox() {
+function initExiblox() {
   EXB.users = JSON.parse(localStorage.getItem('exiblox_users') || '{}');
   EXB.user  = JSON.parse(localStorage.getItem('exiblox_curuser') || 'null');
   EXB.skin  = localStorage.getItem('exiblox_skin') || 'red';
+  EXB.games = exbLoadGames();
 
-  const root = el('exiblox-root');
-  if (root) {
-    root.innerHTML = `
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#0a0c14;gap:16px;">
-        <div style="font-size:42px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">✦ Exiblox v3</div>
-        <div style="color:rgba(255,255,255,.4);font-size:12px;">☁️ Загрузка игр из общего облака...</div>
-        <div style="width:180px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;">
-          <div style="height:100%;background:linear-gradient(90deg,#00b2ff,#7c3aed);border-radius:2px;animation:exbLoad .8s ease infinite alternate;width:60%;"></div>
-        </div>
-        <div style="color:rgba(255,255,255,.25);font-size:11px;">Игры видны всем пользователям 🌍</div>
-      </div>
-      <style>@keyframes exbLoad{from{transform:translateX(-20%)}to{transform:translateX(120%)}}</style>`;
-  }
-
-  // Загружаем игры из ОБЩЕГО облака (shared=true)
-  EXB.games = await exbCloudLoadGames();
-  EXB._cloudReady = true;
+  const root = document.getElementById('exiblox-root');
+  if (!root) return;
 
   exbRender();
 }
 
 function exbSaveUsers()   { localStorage.setItem('exiblox_users', JSON.stringify(EXB.users)); }
 function exbSaveCurUser() { localStorage.setItem('exiblox_curuser', JSON.stringify(EXB.user)); }
-async function exbSaveGames() { await exbCloudSaveGames(); }
+function exbSaveGames()   { exbSaveGamesLocal(); }
 
 // ── ROOT RENDER ──────────────────────────────
 function exbRender() {
-  const root = el('exiblox-root');
+  const root = document.getElementById('exiblox-root');
   if (!root) return;
   if (!EXB.user) {
     exbRenderAuth(root);
@@ -175,7 +131,7 @@ function exbRenderAuth(root) {
   <div style="display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(160deg,#0a0c14,#0f1824);">
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:40px 50px;width:420px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);">
       <div style="font-size:52px;font-weight:900;background:linear-gradient(135deg,#00b2ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;">✦ Exiblox</div>
-      <div style="color:rgba(255,255,255,.4);font-size:13px;margin-bottom:28px;">v3 — Game Platform · ${EXB.games.length} игр в ОБЩЕМ облаке 🌍</div>
+      <div style="color:rgba(255,255,255,.4);font-size:13px;margin-bottom:28px;">v3 — Game Platform · ${EXB.games.length} игр</div>
       <div id="exb-auth-tabs" style="display:flex;background:rgba(255,255,255,.06);border-radius:10px;padding:4px;margin-bottom:24px;">
         <div class="exb-auth-tab active" onclick="exbAuthTab('login')" style="flex:1;padding:8px;border-radius:8px;cursor:pointer;font-size:13px;transition:.2s;">Войти</div>
         <div class="exb-auth-tab" onclick="exbAuthTab('register')" style="flex:1;padding:8px;border-radius:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.5);transition:.2s;">Регистрация</div>
@@ -209,7 +165,7 @@ function exbAuthTab(tab) {
     t.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register'));
     t.style.color = t.classList.contains('active') ? '#fff' : 'rgba(255,255,255,.5)';
   });
-  const form = el('exb-auth-form');
+  const form = document.getElementById('exb-auth-form');
   if (!form) return;
   if (tab === 'login') {
     form.innerHTML = `
@@ -227,9 +183,9 @@ function exbAuthTab(tab) {
 }
 
 function exbAuthErr(msg) {
-  const e = el('exb-auth-err');
+  const e = document.getElementById('exb-auth-err');
   if (e) e.textContent = msg;
-  setTimeout(() => { if(el('exb-auth-err')) el('exb-auth-err').textContent=''; }, 3000);
+  setTimeout(() => { const ee=document.getElementById('exb-auth-err'); if(ee) ee.textContent=''; }, 3000);
 }
 
 function exbHashPw(pw) {
@@ -239,8 +195,8 @@ function exbHashPw(pw) {
 }
 
 function exbLogin() {
-  const name = (el('exb-ln')?.value || '').trim();
-  const pw   = el('exb-lp')?.value || '';
+  const name = (document.getElementById('exb-ln')?.value || '').trim();
+  const pw   = document.getElementById('exb-lp')?.value || '';
   if (!name || !pw) { exbAuthErr('Заполните все поля!'); return; }
   if (!EXB.users[name]) { exbAuthErr('Пользователь не найден!'); return; }
   if (EXB.users[name].pw !== exbHashPw(pw)) { exbAuthErr('Неверный пароль!'); return; }
@@ -250,10 +206,10 @@ function exbLogin() {
 }
 
 function exbRegister() {
-  const name = (el('exb-rn')?.value || '').trim();
-  const email= (el('exb-re')?.value || '').trim();
-  const pw   = el('exb-rp')?.value || '';
-  const pw2  = el('exb-rp2')?.value || '';
+  const name = (document.getElementById('exb-rn')?.value || '').trim();
+  const email= (document.getElementById('exb-re')?.value || '').trim();
+  const pw   = document.getElementById('exb-rp')?.value || '';
+  const pw2  = document.getElementById('exb-rp2')?.value || '';
   if (!name || !email || !pw || !pw2) { exbAuthErr('Заполните все поля!'); return; }
   if (name.length < 3) { exbAuthErr('Никнейм >= 3 символа!'); return; }
   if (pw.length < 6)   { exbAuthErr('Пароль >= 6 символов!'); return; }
@@ -355,7 +311,6 @@ function exbRenderMain(root) {
   <div style="display:flex;flex-direction:column;height:100%;overflow:hidden;">
     <div class="exb-topbar">
       <div class="exb-logo">✦ Exiblox v3</div>
-      <span style="background:rgba(0,178,255,.2);border:1px solid rgba(0,178,255,.3);border-radius:20px;padding:2px 8px;font-size:10px;color:#00b2ff;">☁️ Облако</span>
       <div class="exb-search">
         <span style="font-size:12px;opacity:.4">🔍</span>
         <input id="exb-search" placeholder="Поиск игр..." onkeydown="if(event.key==='Enter')exbDoSearch(this.value)">
@@ -363,7 +318,6 @@ function exbRenderMain(root) {
       <div class="exb-user-info">
         <span class="exb-robux">🪙 ${me.ecoins||0} E$</span>
         <span style="font-size:12px;color:rgba(255,255,255,.6);">${me.isGuest?'👤 Гость':'👤 '+EXB.user}</span>
-        <button class="exb-btn2 exb-btn2-gray" onclick="exbRefreshGames()" style="padding:5px 12px;font-size:11px;" title="Обновить игры из облака">🔄</button>
         <button class="exb-btn2 exb-btn2-gray" onclick="exbLogout()" style="padding:5px 12px;font-size:11px;">Выйти</button>
       </div>
     </div>
@@ -390,13 +344,6 @@ function exbRenderMain(root) {
   exbTabContent(EXB.tab);
 }
 
-async function exbRefreshGames() {
-  showNotif('Exiblox', '☁️ Синхронизация с облаком...', '🔄');
-  EXB.games = await exbCloudLoadGames();
-  showNotif('Exiblox', `✅ Загружено ${EXB.games.length} игр из облака!`, '☁️');
-  exbTabContent(EXB.tab);
-}
-
 function exbTab(tab) {
   EXB.tab = tab;
   document.querySelectorAll('.exb-nav-btn').forEach(b => {
@@ -407,41 +354,24 @@ function exbTab(tab) {
 }
 
 function exbTabContent(tab) {
-  const c = el('exb-content');
+  const c = document.getElementById('exb-content');
   if (!c) return;
   const fns = {home:exbHome, store:exbStore, studio:exbStudio, friends:exbFriends, publish:exbPublish, ai:exbAI, avatar:exbAvatar, profile:exbProfile};
   const fn = fns[tab];
-  if (fn) {
-    const result = fn(c);
-    if (result instanceof Promise) result.catch(err => console.error('Tab error:', err));
-  }
+  if (fn) fn(c);
 }
 
 // ════════════════════════════════════════════
-// HOME — БЕЗ ПРЕДУПРЕЖДЕНИЙ
+// HOME
 // ════════════════════════════════════════════
-async function exbHome(c) {
-  c.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;"><div style="color:rgba(255,255,255,.3);font-size:13px;">☁️ Загрузка игр...</div></div>`;
-  EXB.games = await exbCloudLoadGames();
-
+function exbHome(c) {
+  EXB.games = exbLoadGames();
   const me = EXB.users[EXB.user] || {};
   const frs = me.friends || [];
   const allGames = EXB.games;
-  const authors = [...new Set(allGames.map(g => g.author))].length;
 
   c.innerHTML = `
   <div class="exb-section">
-    <div style="background:rgba(0,178,255,.08);border:1px solid rgba(0,178,255,.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
-      <span style="font-size:24px;">☁️</span>
-      <div style="flex:1;">
-        <div style="font-size:13px;font-weight:700;color:#00b2ff;">✅ Облачная платформа активна — игры видят ВСЕ!</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.5);">
-          ${allGames.length} игр от ${authors} разработчиков · Доступно с любого устройства 🌍
-        </div>
-      </div>
-      <button class="exb-btn2 exb-btn2-blue" onclick="exbRefreshGames()" style="font-size:10px;padding:5px 10px;">🔄 Обновить</button>
-    </div>
-
     <div class="exb-sec-title">👥 Соединения (${frs.length})
       <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('friends')" style="margin-left:auto;font-size:11px;">+ Добавить</button>
     </div>
@@ -450,28 +380,24 @@ async function exbHome(c) {
         <div style="display:flex;flex-direction:column;align-items:center;gap:6px;width:80px;">
           <div style="width:54px;height:54px;border-radius:50%;background:rgba(0,178,255,.2);display:flex;align-items:center;justify-content:center;font-size:24px;">👤</div>
           <span style="font-size:10px;color:rgba(255,255,255,.7);text-align:center;">${f.slice(0,10)}</span>
-          <span style="font-size:9px;color:#2ecc71;">● Online</span>
         </div>`).join('') : '<span style="color:rgba(255,255,255,.3);font-size:13px;padding:16px 0;">Нет друзей. Добавьте по никнейму!</span>'}
     </div>
 
     ${allGames.length ? `
-    <div class="exb-sec-title">🌍 Играть сейчас
-      <span style="font-size:11px;color:rgba(255,255,255,.3);font-weight:400;">☁️ Облако · Все пользователи</span>
-    </div>
+    <div class="exb-sec-title">🎮 Играть сейчас</div>
     <div class="exb-cards-row" style="margin-bottom:28px;">${exbGameCards(allGames.slice(0,4))}</div>
     ${allGames.length>4?`
     <div class="exb-sec-title">⭐ Ещё игры</div>
-    <div class="exb-cards-row" style="margin-bottom:28px;">${exbGameCards(allGames.slice(4))}</div>`:''}
+    <div class="exb-cards-row">${exbGameCards(allGames.slice(4))}</div>`:''}
     ` : `
     <div style="text-align:center;padding:50px 0;color:rgba(255,255,255,.25);font-size:14px;">
-      🌍 Пока нет игр в облаке<br><br>
+      🎮 Пока нет игр<br><br>
       <div style="font-size:12px;margin-bottom:16px;">Стань первым создателем!</div>
       <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('studio')">🛠 Создать игру в Studio →</button>
     </div>`}
   </div>`;
 }
 
-// ── Карточки игр ──
 function exbGameCards(games) {
   return games.map(g=>`
     <div class="exb-game-card" onclick="exbPlayGame('${g.id}')">
@@ -488,32 +414,20 @@ function exbGameCards(games) {
 }
 
 // ════════════════════════════════════════════
-// STORE — БЕЗ ПРЕДУПРЕЖДЕНИЙ
+// STORE
 // ════════════════════════════════════════════
-async function exbStore(c) {
-  c.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;"><div style="color:rgba(255,255,255,.3);font-size:13px;">☁️ Синхронизация с облаком...</div></div>`;
-  EXB.games = await exbCloudLoadGames();
-
-  const authors = [...new Set(EXB.games.map(g => g.author))].length;
-
+function exbStore(c) {
+  EXB.games = exbLoadGames();
   c.innerHTML = `
   <div class="exb-section">
-    <div style="display:flex;align-items:center;margin-bottom:18px;">
-      <div class="exb-sec-title" style="margin-bottom:0;">🛒 Магазин Exiblox</div>
-      <span style="margin-left:10px;font-size:11px;color:rgba(255,255,255,.4);">${EXB.games.length} игр · ${authors} разработчиков · ☁️ облако</span>
-      <button class="exb-btn2 exb-btn2-gray" onclick="exbRefreshGames()" style="margin-left:auto;font-size:11px;padding:5px 12px;">🔄 Обновить</button>
+    <div class="exb-sec-title">🛒 Магазин Exiblox
+      <span style="margin-left:8px;font-size:11px;color:rgba(255,255,255,.4);font-weight:400;">${EXB.games.length} игр</span>
     </div>
-
-    <div style="background:rgba(0,178,255,.06);border:1px solid rgba(0,178,255,.15);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:rgba(255,255,255,.6);">
-      <strong style="color:#00b2ff;">🌍 Глобальный магазин</strong> — все игры доступны с любого устройства.<br>
-      Создай свою игру и она появится здесь для всех пользователей!
-    </div>
-
     ${EXB.games.length ? `<div class="exb-cards-row">${exbGameCards(EXB.games)}</div>` : `
     <div style="text-align:center;padding:60px 20px;color:rgba(255,255,255,.25);">
-      <div style="font-size:48px;margin-bottom:16px;">🌍</div>
+      <div style="font-size:48px;margin-bottom:16px;">🎮</div>
       <div style="font-size:15px;margin-bottom:8px;">Магазин пуст</div>
-      <div style="font-size:12px;margin-bottom:20px;">Стань первым создателем игр в облаке!</div>
+      <div style="font-size:12px;margin-bottom:20px;">Создай первую игру!</div>
       <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('studio')">🛠 Создать игру →</button>
     </div>`}
   </div>`;
@@ -551,7 +465,7 @@ function exbStudio(c) {
         <div style="height:1px;background:rgba(255,255,255,.07);margin:6px 0;"></div>
         <div style="font-size:9px;color:rgba(255,255,255,.4);padding:2px 5px 4px;letter-spacing:.5px;text-transform:uppercase;">Цвет</div>
         <div id="exb-color-prev" style="width:32px;height:22px;border-radius:6px;background:${EXB.studioColor};border:2px solid rgba(255,255,255,.2);cursor:pointer;margin:0 auto 6px;" onclick="exbPickColor()"></div>
-        <input type="color" id="exb-color-pick" value="${EXB.studioColor}" oninput="EXB.studioColor=this.value;el('exb-color-prev').style.background=this.value" style="position:absolute;opacity:0;pointer-events:none;">
+        <input type="color" id="exb-color-pick" value="${EXB.studioColor}" oninput="EXB.studioColor=this.value;document.getElementById('exb-color-prev').style.background=this.value" style="position:absolute;opacity:0;pointer-events:none;">
         <div style="height:1px;background:rgba(255,255,255,.07);margin:4px 0;"></div>
         <div style="font-size:9px;color:rgba(255,255,255,.4);padding:2px 5px 4px;text-transform:uppercase;">Камера</div>
         <div onclick="EXB.studioScrollX=0;EXB.studioScrollY=0;exbStudioRedraw()" style="font-size:9px;color:rgba(255,255,255,.5);text-align:center;cursor:pointer;padding:4px;border-radius:5px;background:rgba(255,255,255,.05);">🏠 Сброс</div>
@@ -611,8 +525,8 @@ function exbStudioDeleteProject(idx) {
 }
 
 function exbStudioInitCanvas() {
-  const wrap = el('exb-studio-wrap');
-  const canvas = el('exb-studio-canvas');
+  const wrap = document.getElementById('exb-studio-wrap');
+  const canvas = document.getElementById('exb-studio-canvas');
   if (!wrap || !canvas) return;
   canvas.width  = wrap.clientWidth  || 900;
   canvas.height = wrap.clientHeight || 480;
@@ -630,16 +544,13 @@ function exbStudioInitCanvas() {
     e.preventDefault();
     EXB.studioScrollX = Math.max(0, EXB.studioScrollX + e.deltaX);
     EXB.studioScrollY = Math.max(0, EXB.studioScrollY + e.deltaY);
-    const si = el('exb-scroll-info');
+    const si = document.getElementById('exb-scroll-info');
     if(si) si.textContent = `${Math.round(EXB.studioScrollX)}, ${Math.round(EXB.studioScrollY)}`;
     exbStudioRedraw();
   }, {passive:false});
 }
 
-function exbStudioMouseUp() {
-  EXB.studioDragging = null;
-  EXB.studioPanning  = false;
-}
+function exbStudioMouseUp() { EXB.studioDragging = null; EXB.studioPanning = false; }
 
 function exbStudioMouseDown(e) {
   e.preventDefault();
@@ -690,7 +601,7 @@ function exbStudioMouseMove(e) {
   if (EXB.studioPanning && EXB.studioPanStart) {
     EXB.studioScrollX = Math.max(0, EXB.studioPanStart.x - e.clientX);
     EXB.studioScrollY = Math.max(0, EXB.studioPanStart.y - e.clientY);
-    const si = el('exb-scroll-info');
+    const si = document.getElementById('exb-scroll-info');
     if(si) si.textContent = `${Math.round(EXB.studioScrollX)}, ${Math.round(EXB.studioScrollY)}`;
     exbStudioRedraw(); return;
   }
@@ -711,17 +622,14 @@ function exbStudioRightClick(e) {
 }
 
 function exbStudioPos(e) {
-  const r = el('exb-studio-canvas').getBoundingClientRect();
-  return {
-    x: e.clientX - r.left  + EXB.studioScrollX,
-    y: e.clientY - r.top   + EXB.studioScrollY,
-  };
+  const r = document.getElementById('exb-studio-canvas').getBoundingClientRect();
+  return { x: e.clientX - r.left + EXB.studioScrollX, y: e.clientY - r.top + EXB.studioScrollY };
 }
 
 function exbStudioRedraw() {
   const cv = EXB.studioPaintCtx;
   if (!cv) return;
-  const canvas = el('exb-studio-canvas');
+  const canvas = document.getElementById('exb-studio-canvas');
   const W = canvas.width, H = canvas.height;
   const TILE = EXB.TILE;
   const sx = EXB.studioScrollX, sy = EXB.studioScrollY;
@@ -731,19 +639,10 @@ function exbStudioRedraw() {
     cv.fillStyle = `rgb(${s},${s+8},58)`;
     cv.fillRect(0, i, W, 1);
   }
-
-  cv.strokeStyle = 'rgba(255,255,255,.04)';
-  cv.lineWidth = 1;
+  cv.strokeStyle = 'rgba(255,255,255,.04)'; cv.lineWidth = 1;
   const gox = sx % TILE, goy = sy % TILE;
   for (let x = -gox; x < W; x += TILE) { cv.beginPath(); cv.moveTo(x,0); cv.lineTo(x,H); cv.stroke(); }
   for (let y = -goy; y < H; y += TILE) { cv.beginPath(); cv.moveTo(0,y); cv.lineTo(W,y); cv.stroke(); }
-
-  cv.fillStyle = 'rgba(255,255,255,.15)';
-  cv.font = '9px monospace';
-  for (let x=0; x<3200; x+=200) {
-    const rx = x - sx;
-    if (rx >= 0 && rx <= W) { cv.fillText(x, rx+2, 10); }
-  }
 
   EXB.studioObjects.forEach(o => {
     const ox = o.x - sx, oy = o.y - sy;
@@ -752,64 +651,47 @@ function exbStudioRedraw() {
     const col = o.color || EXB_BLOCK_COLORS[o.type] || '#888';
 
     switch(o.type) {
-      case 'block':
-      case 'ice':
-        cv.fillStyle = col; cv.fillRect(ox, oy, o.w, o.h);
-        cv.fillStyle = 'rgba(255,255,255,.18)'; cv.fillRect(ox, oy, o.w, 8);
-        break;
+      case 'block': case 'ice':
+        cv.fillStyle=col; cv.fillRect(ox,oy,o.w,o.h);
+        cv.fillStyle='rgba(255,255,255,.18)'; cv.fillRect(ox,oy,o.w,8); break;
       case 'platform':
-        cv.fillStyle = col; cv.fillRect(ox, oy, o.w, o.h);
-        cv.fillStyle = 'rgba(255,255,255,.3)'; cv.fillRect(ox, oy, o.w, 4);
-        break;
+        cv.fillStyle=col; cv.fillRect(ox,oy,o.w,o.h);
+        cv.fillStyle='rgba(255,255,255,.3)'; cv.fillRect(ox,oy,o.w,4); break;
       case 'lava':
-        cv.fillStyle = col; cv.fillRect(ox, oy, o.w, o.h);
-        cv.fillStyle = '#ff6e00';
-        for(let lx=0;lx<o.w;lx+=8){ const lh=4+3*Math.sin((lx+Date.now()/80)/6); cv.fillRect(ox+lx,oy,6,lh); }
-        break;
+        cv.fillStyle=col; cv.fillRect(ox,oy,o.w,o.h);
+        cv.fillStyle='#ff6e00';
+        for(let lx=0;lx<o.w;lx+=8){ const lh=4+3*Math.sin((lx+Date.now()/80)/6); cv.fillRect(ox+lx,oy,6,lh); } break;
       case 'spike':
-        cv.fillStyle = col; cv.beginPath(); cv.moveTo(ox,oy+o.h); cv.lineTo(ox+o.w/2,oy); cv.lineTo(ox+o.w,oy+o.h); cv.closePath(); cv.fill();
-        break;
+        cv.fillStyle=col; cv.beginPath(); cv.moveTo(ox,oy+o.h); cv.lineTo(ox+o.w/2,oy); cv.lineTo(ox+o.w,oy+o.h); cv.closePath(); cv.fill(); break;
       case 'spring':
-        cv.fillStyle = '#555'; cv.fillRect(ox,oy+o.h-10,o.w,10);
-        cv.strokeStyle = col; cv.lineWidth = 3;
-        for(let si=0;si<4;si++){ const sy2=oy+o.h-10-si*((o.h-10)/4); cv.beginPath(); cv.ellipse(ox+o.w/2,sy2,o.w/2-3,4,0,0,Math.PI*2); cv.stroke(); }
-        break;
+        cv.fillStyle='#555'; cv.fillRect(ox,oy+o.h-10,o.w,10);
+        cv.strokeStyle=col; cv.lineWidth=3;
+        for(let si=0;si<4;si++){ const sy2=oy+o.h-10-si*((o.h-10)/4); cv.beginPath(); cv.ellipse(ox+o.w/2,sy2,o.w/2-3,4,0,0,Math.PI*2); cv.stroke(); } break;
       case 'spawn':
-        cv.fillStyle = col; cv.beginPath(); cv.arc(ox+o.w/2,oy+o.h/2,o.w/2,0,Math.PI*2); cv.fill();
-        cv.fillStyle='#fff'; cv.font='bold 16px serif'; cv.textAlign='center'; cv.fillText('S',ox+o.w/2,oy+o.h/2+6); cv.textAlign='left';
-        break;
+        cv.fillStyle=col; cv.beginPath(); cv.arc(ox+o.w/2,oy+o.h/2,o.w/2,0,Math.PI*2); cv.fill();
+        cv.fillStyle='#fff'; cv.font='bold 16px serif'; cv.textAlign='center'; cv.fillText('S',ox+o.w/2,oy+o.h/2+6); cv.textAlign='left'; break;
       case 'coin':
         cv.fillStyle=col; cv.beginPath(); cv.arc(ox+o.w/2,oy+o.h/2,o.w/2,0,Math.PI*2); cv.fill();
-        cv.fillStyle='#c8860a'; cv.font='bold 13px serif'; cv.textAlign='center'; cv.fillText('E$',ox+o.w/2,oy+o.h/2+5); cv.textAlign='left';
-        break;
+        cv.fillStyle='#c8860a'; cv.font='bold 13px serif'; cv.textAlign='center'; cv.fillText('E$',ox+o.w/2,oy+o.h/2+5); cv.textAlign='left'; break;
       case 'enemy':
         cv.fillStyle=col; cv.fillRect(ox,oy,o.w,o.h);
-        cv.fillStyle='#fff'; cv.font='16px serif'; cv.textAlign='center'; cv.fillText('💀',ox+o.w/2,oy+o.h/2+6); cv.textAlign='left';
-        break;
+        cv.fillStyle='#fff'; cv.font='16px serif'; cv.textAlign='center'; cv.fillText('💀',ox+o.w/2,oy+o.h/2+6); cv.textAlign='left'; break;
       case 'deco':
         cv.fillStyle='rgba(0,100,30,.5)'; cv.fillRect(ox+o.w/4,oy+o.h*0.4,o.w/2,o.h*0.6);
-        cv.fillStyle=col; cv.beginPath(); cv.ellipse(ox+o.w/2,oy+o.h*0.4,o.w/2,o.h*0.5,0,0,Math.PI*2); cv.fill();
-        break;
+        cv.fillStyle=col; cv.beginPath(); cv.ellipse(ox+o.w/2,oy+o.h*0.4,o.w/2,o.h*0.5,0,0,Math.PI*2); cv.fill(); break;
       default:
         cv.fillStyle=col; cv.fillRect(ox,oy,o.w,o.h);
     }
-
     if (sel) {
       cv.strokeStyle='#fff'; cv.lineWidth=2; cv.setLineDash([4,4]);
       cv.strokeRect(ox-1,oy-1,o.w+2,o.h+2); cv.setLineDash([]);
     }
   });
-
-  if (sx > 10) {
-    const g = cv.createLinearGradient(0,0,20,0);
-    g.addColorStop(0,'rgba(0,0,0,.4)'); g.addColorStop(1,'transparent');
-    cv.fillStyle=g; cv.fillRect(0,0,20,H);
-  }
 }
 
-function exbUpdateObjCount() { const c=el('exb-obj-count'); if(c)c.textContent=EXB.studioObjects.length; }
+function exbUpdateObjCount() { const c=document.getElementById('exb-obj-count'); if(c)c.textContent=EXB.studioObjects.length; }
 function exbSetTool(tool,btn) { EXB.studioTool=tool; document.querySelectorAll('.exb-tool-btn').forEach(b=>b.classList.remove('exb-tool-active')); if(btn)btn.classList.add('exb-tool-active'); }
-function exbPickColor() { const cp=el('exb-color-pick'); if(cp)cp.click(); }
+function exbPickColor() { const cp=document.getElementById('exb-color-pick'); if(cp)cp.click(); }
 
 function exbStudioSave() {
   const name=EXB.studioProjectName.trim()||'Без названия';
@@ -819,16 +701,16 @@ function exbStudioSave() {
   const data={name,objects:EXB.studioObjects.map(o=>({...o})),updated:new Date().toLocaleString('ru')};
   if(idx>=0)proj[idx]=data;else proj.unshift(data);
   exbSaveUsers();
-  showNotif('ExiStudio',`Проект "${name}" сохранён`,'💾');
+  if(typeof showNotif==='function') showNotif('ExiStudio',`Проект "${name}" сохранён`,'💾');
 }
 
 function exbStudioBaseplate() {
   EXB.studioObjects=EXB_BASEPLATE.map(o=>({...o}));
   EXB.studioProjectName='Baseplate';
   EXB.studioScrollX=0; EXB.studioScrollY=0; EXB._studioEditing=true;
-  const ni=el('exb-proj-name'); if(ni)ni.value='Baseplate';
+  const ni=document.getElementById('exb-proj-name'); if(ni)ni.value='Baseplate';
   exbStudioRedraw(); exbUpdateObjCount();
-  showNotif('ExiStudio','Baseplate загружен!','🏗');
+  if(typeof showNotif==='function') showNotif('ExiStudio','Baseplate загружен!','🏗');
 }
 
 function exbStudioClear() { if(!confirm('Очистить все объекты?'))return; EXB.studioObjects=[]; exbStudioRedraw(); exbUpdateObjCount(); }
@@ -843,30 +725,29 @@ function exbStudioTest() {
 // ════════════════════════════════════════════
 function exbPublishDialog() {
   const me=EXB.users[EXB.user]||{};
-  if(me.isGuest){showNotif('Exiblox','Гости не могут публиковать!','📤');return;}
+  if(me.isGuest){if(typeof showNotif==='function')showNotif('Exiblox','Гости не могут публиковать!','📤');return;}
   _exbPublishIconData=null;
 
   const overlay=document.createElement('div');
   overlay.className='exb-pub-overlay';
   overlay.innerHTML=`
     <div class="exb-pub-modal" onclick="event.stopPropagation()">
-      <div style="font-size:20px;font-weight:700;margin-bottom:22px;display:flex;align-items:center;gap:10px;">📤 Опубликовать игру</div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:22px;">📤 Опубликовать игру</div>
       <label class="exb-pub-label">Название игры</label>
       <input id="exb-pub-name" class="exb-inp2" value="${escHtmlExb(EXB.studioProjectName)||'Untitled Game'}" style="width:100%;box-sizing:border-box;margin-bottom:14px;">
       <label class="exb-pub-label">Описание</label>
       <textarea id="exb-pub-desc" class="exb-inp2" rows="3" style="width:100%;resize:none;box-sizing:border-box;margin-bottom:18px;" placeholder="Расскажи о своей игре..."></textarea>
       <label class="exb-pub-label">Иконка игры</label>
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
-        <div class="exb-icon-drop" id="exb-icon-drop" onclick="el('exb-icon-file').click()"
+        <div class="exb-icon-drop" id="exb-icon-drop" onclick="document.getElementById('exb-icon-file').click()"
              ondragover="event.preventDefault();this.style.borderColor='#00b2ff'"
              ondragleave="this.style.borderColor='rgba(255,255,255,.2)'"
              ondrop="exbIconDropHandler(event)">
           <span id="exb-icon-placeholder" style="font-size:28px;opacity:.35">🎮</span>
         </div>
         <div>
-          <button class="exb-btn2 exb-btn2-blue" onclick="el('exb-icon-file').click()" style="font-size:11px;display:block;margin-bottom:6px;">📁 Загрузить картинку</button>
+          <button class="exb-btn2 exb-btn2-blue" onclick="document.getElementById('exb-icon-file').click()" style="font-size:11px;display:block;margin-bottom:6px;">📁 Загрузить картинку</button>
           <button class="exb-btn2 exb-btn2-gray" onclick="exbIconClear()" style="font-size:11px;display:block;margin-bottom:8px;">✕ Убрать иконку</button>
-          <div style="font-size:10px;color:rgba(255,255,255,.3);line-height:1.5;">PNG, JPG, GIF, WebP<br>Рекомендуется 256×256 px</div>
         </div>
       </div>
       <input type="file" id="exb-icon-file" accept="image/*" style="display:none;" onchange="exbIconFileChange(this)">
@@ -874,7 +755,6 @@ function exbPublishDialog() {
         <button class="exb-btn2 exb-btn2-blue" id="exb-pub-submit" style="flex:1;font-size:13px;padding:11px;" onclick="exbDoPublish()">🚀 Опубликовать</button>
         <button class="exb-btn2 exb-btn2-gray" onclick="this.closest('.exb-pub-overlay').remove()">Отмена</button>
       </div>
-      <div style="font-size:10px;color:rgba(255,255,255,.25);text-align:center;margin-top:10px;">🌍 Игра будет видна ВСЕМ пользователям в облаке!</div>
     </div>`;
   document.body.appendChild(overlay);
   overlay.addEventListener('click',()=>overlay.remove());
@@ -882,7 +762,7 @@ function exbPublishDialog() {
 
 function exbIconFileChange(input) {
   const file=input.files[0]; if(!file)return;
-  if(file.size>1024*1024){showNotif('Exiblox','Картинка слишком большая (макс. 1 МБ)!','⚠️');return;}
+  if(file.size>1024*1024){if(typeof showNotif==='function')showNotif('Exiblox','Картинка слишком большая (макс. 1 МБ)!','⚠️');return;}
   const reader=new FileReader();
   reader.onload=(e)=>{_exbPublishIconData=e.target.result;exbIconUpdatePreview(_exbPublishIconData);};
   reader.readAsDataURL(file);
@@ -891,15 +771,14 @@ function exbIconFileChange(input) {
 function exbIconDropHandler(e) {
   e.preventDefault();
   const file=e.dataTransfer?.files?.[0]; if(!file||!file.type.startsWith('image/'))return;
-  if(file.size>1024*1024){showNotif('Exiblox','Слишком большой файл (макс 1МБ)','⚠️');return;}
+  if(file.size>1024*1024){if(typeof showNotif==='function')showNotif('Exiblox','Слишком большой файл (макс 1МБ)','⚠️');return;}
   const reader=new FileReader();
   reader.onload=(ev)=>{_exbPublishIconData=ev.target.result;exbIconUpdatePreview(_exbPublishIconData);};
   reader.readAsDataURL(file);
-  const drop=el('exb-icon-drop'); if(drop)drop.style.borderColor='rgba(255,255,255,.2)';
 }
 
 function exbIconUpdatePreview(src) {
-  const drop=el('exb-icon-drop'),ph=el('exb-icon-placeholder'); if(!drop)return;
+  const drop=document.getElementById('exb-icon-drop'),ph=document.getElementById('exb-icon-placeholder'); if(!drop)return;
   if(ph)ph.style.display='none';
   const old=drop.querySelector('img'); if(old)old.remove();
   const img=document.createElement('img');
@@ -909,28 +788,28 @@ function exbIconUpdatePreview(src) {
 
 function exbIconClear() {
   _exbPublishIconData=null;
-  const drop=el('exb-icon-drop'),ph=el('exb-icon-placeholder'); if(!drop)return;
+  const drop=document.getElementById('exb-icon-drop'),ph=document.getElementById('exb-icon-placeholder'); if(!drop)return;
   const img=drop.querySelector('img'); if(img)img.remove();
   if(ph)ph.style.display='';
 }
 
-async function exbDoPublish() {
+function exbDoPublish() {
   if(EXB._publishing)return;
   EXB._publishing=true;
-  const btn=el('exb-pub-submit');
-  if(btn){btn.disabled=true;btn.textContent='⏳ Публикуем в облаке...';}
+  const btn=document.getElementById('exb-pub-submit');
+  if(btn){btn.disabled=true;btn.textContent='⏳ Публикуем...';}
 
-  const name=(el('exb-pub-name')?.value||'').trim()||'Untitled Game';
-  const desc=(el('exb-pub-desc')?.value||'').trim()||'Без описания';
+  const name=(document.getElementById('exb-pub-name')?.value||'').trim()||'Untitled Game';
+  const desc=(document.getElementById('exb-pub-desc')?.value||'').trim()||'Без описания';
 
   const duplicate=EXB.games.find(g=>g.author===EXB.user&&g.name===name);
   if(duplicate){
     duplicate.objects=EXB.studioObjects.map(o=>({...o}));
     duplicate.iconImage=_exbPublishIconData||duplicate.iconImage||null;
     duplicate.updated=new Date().toLocaleDateString('ru');
-    await exbSaveGames();
+    exbSaveGames();
     document.querySelector('.exb-pub-overlay')?.remove();
-    showNotif('Exiblox',`Игра "${name}" обновлена! ✏️`,'📤');
+    if(typeof showNotif==='function')showNotif('Exiblox',`Игра "${name}" обновлена!`,'📤');
     EXB._publishing=false;
     return;
   }
@@ -947,7 +826,7 @@ async function exbDoPublish() {
   };
 
   EXB.games.unshift(game);
-  await exbSaveGames(); // сохраняем с shared=true — видят ВСЕ!
+  exbSaveGames();
 
   const me=EXB.users[EXB.user];
   if(me){
@@ -958,7 +837,7 @@ async function exbDoPublish() {
   }
 
   document.querySelector('.exb-pub-overlay')?.remove();
-  showNotif('Exiblox',`🌍 "${name}" опубликована — видна ВСЕМ пользователям! +5 E$ 🎉`,'☁️');
+  if(typeof showNotif==='function')showNotif('Exiblox',`"${name}" опубликована! +5 E$ 🎉`,'🎮');
   EXB._publishing=false;
 }
 
@@ -973,26 +852,26 @@ function exbFriends(c) {
       <div class="exb-sec-title" style="margin-bottom:0;">👥 Друзья</div>
       ${me.isGuest?'':` <button class="exb-btn2 exb-btn2-blue" style="margin-left:auto;font-size:11px;" onclick="exbAddFriendDlg()">+ Добавить</button>`}
     </div>
-    ${!me.isGuest&&me.code?`<div class="exb-profile-card"><span style="font-size:13px;">🎫 Ваш код: <strong style="color:#00b2ff;">${me.code}</strong></span><span style="font-size:11px;color:rgba(255,255,255,.4);">Поделитесь с друзьями</span></div>`:''}
+    ${!me.isGuest&&me.code?`<div class="exb-profile-card"><span style="font-size:13px;">🎫 Ваш код: <strong style="color:#00b2ff;">${me.code}</strong></span></div>`:''}
     ${reqs.length?`<div class="exb-sec-title" style="font-size:14px;margin-top:18px;">📩 Запросы (${reqs.length})</div>
     ${reqs.map(r=>`<div class="exb-profile-card"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:22px;">👤</span><span style="font-size:13px;font-weight:600;">${r}</span></div><button class="exb-btn2 exb-btn2-blue" style="font-size:11px;" onclick="exbAcceptFriend('${r}')">Принять ✓</button></div>`).join('')}`:''}
     <div class="exb-sec-title" style="font-size:14px;margin-top:18px;">Мои друзья (${frs.length})</div>
-    ${frs.length?frs.map(f=>`<div class="exb-profile-card"><div style="display:flex;align-items:center;gap:12px;"><div style="width:40px;height:40px;border-radius:50%;background:rgba(0,178,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;">👤</div><div><div style="font-size:13px;font-weight:600;">${f}</div><div style="font-size:11px;color:#2ecc71;">● Online</div></div></div></div>`).join(''):'<div style="color:rgba(255,255,255,.3);font-size:13px;padding:20px 0;">Нет друзей</div>'}
+    ${frs.length?frs.map(f=>`<div class="exb-profile-card"><div style="display:flex;align-items:center;gap:12px;"><div style="width:40px;height:40px;border-radius:50%;background:rgba(0,178,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;">👤</div><div><div style="font-size:13px;font-weight:600;">${f}</div></div></div></div>`).join(''):'<div style="color:rgba(255,255,255,.3);font-size:13px;padding:20px 0;">Нет друзей</div>'}
   </div>`;
 }
 
 function exbAddFriendDlg() {
   const me=EXB.users[EXB.user]||{};
-  if(me.isGuest){showNotif('Exiblox','Гости не могут добавлять друзей!','👥');return;}
+  if(me.isGuest){if(typeof showNotif==='function')showNotif('Exiblox','Гости не могут добавлять друзей!','👥');return;}
   const nick=prompt('Введите никнейм или код друга:'); if(!nick)return;
   const target=Object.keys(EXB.users).find(u=>u===nick||EXB.users[u].code===nick.toUpperCase());
-  if(!target){showNotif('Exiblox','Пользователь не найден!','❌');return;}
-  if(target===EXB.user){showNotif('Exiblox','Нельзя добавить себя!','❌');return;}
-  if(me.friends&&me.friends.includes(target)){showNotif('Exiblox','Уже в друзьях!','✅');return;}
+  if(!target){if(typeof showNotif==='function')showNotif('Exiblox','Пользователь не найден!','❌');return;}
+  if(target===EXB.user){if(typeof showNotif==='function')showNotif('Exiblox','Нельзя добавить себя!','❌');return;}
+  if(me.friends&&me.friends.includes(target)){if(typeof showNotif==='function')showNotif('Exiblox','Уже в друзьях!','✅');return;}
   const them=EXB.users[target]; them.requests=them.requests||[];
-  if(them.requests.includes(EXB.user)){showNotif('Exiblox','Запрос уже отправлен!','📩');return;}
+  if(them.requests.includes(EXB.user)){if(typeof showNotif==='function')showNotif('Exiblox','Запрос уже отправлен!','📩');return;}
   them.requests.push(EXB.user); exbSaveUsers();
-  showNotif('Exiblox',`Запрос отправлен: ${target}`,'📩');
+  if(typeof showNotif==='function')showNotif('Exiblox',`Запрос отправлен: ${target}`,'📩');
 }
 
 function exbAcceptFriend(from) {
@@ -1002,7 +881,7 @@ function exbAcceptFriend(from) {
   const them=EXB.users[from];
   if(them){them.friends=them.friends||[];if(!them.friends.includes(EXB.user))them.friends.push(EXB.user);}
   exbSaveUsers(); exbTab('friends');
-  showNotif('Exiblox',from+' добавлен в друзья!','✅');
+  if(typeof showNotif==='function')showNotif('Exiblox',from+' добавлен в друзья!','✅');
 }
 
 // ════════════════════════════════════════════
@@ -1019,9 +898,6 @@ function exbPublish(c) {
       <button class="exb-btn2 exb-btn2-blue" style="margin-left:auto;font-size:11px;" onclick="exbTab('studio')">🛠 Открыть Studio</button>
     </div>
     ${myGames.length?`<div class="exb-cards-row">${exbGameCards(myGames)}</div>`:'<div style="color:rgba(255,255,255,.3);font-size:13px;padding:30px 0;">У вас ещё нет опубликованных игр</div>'}
-    <div style="margin-top:24px;padding:14px 18px;background:rgba(0,178,255,.07);border:1px solid rgba(0,178,255,.2);border-radius:12px;font-size:12px;color:rgba(255,255,255,.5);">
-      ☁️ Игры хранятся в общем облаке — видны ВСЕМ пользователям на любом устройстве!
-    </div>
   </div>`;
 }
 
@@ -1033,15 +909,12 @@ function exbAvatar(c) {
   c.innerHTML=`
   <div class="exb-section">
     <div class="exb-sec-title">🎭 Выбери скин персонажа</div>
-    <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px;">Стикмен применится в игре автоматически</div>
     <div style="display:flex;gap:18px;flex-wrap:wrap;">
       ${EXB_SKINS.map(sk=>`
         <div onclick="exbSelectSkin('${sk.id}')" style="
             width:160px;background:${sk.id===skinId?'rgba(0,178,255,.2)':'rgba(255,255,255,.05)'};
             border:2px solid ${sk.id===skinId?'#00b2ff':'rgba(255,255,255,.08)'};
-            border-radius:16px;padding:18px 12px 14px;cursor:pointer;text-align:center;transition:.2s;"
-          onmouseover="this.style.borderColor='rgba(0,178,255,.6)'"
-          onmouseout="this.style.borderColor='${sk.id===skinId?'#00b2ff':'rgba(255,255,255,.08)'}'">
+            border-radius:16px;padding:18px 12px 14px;cursor:pointer;text-align:center;transition:.2s;">
           <canvas id="av-preview-${sk.id}" width="80" height="100" style="display:block;margin:0 auto 10px;"></canvas>
           <div style="font-size:13px;font-weight:700;">${sk.name}</div>
           ${sk.id===skinId?'<div style="font-size:11px;color:#00b2ff;margin-top:4px;">✓ Активен</div>':''}
@@ -1057,7 +930,8 @@ function exbAvatar(c) {
 
 function exbSelectSkin(id) {
   EXB.skin=id; localStorage.setItem('exiblox_skin',id);
-  exbAvatar(el('exb-content')); showNotif('Exiblox','Скин изменён!','🎭');
+  exbAvatar(document.getElementById('exb-content'));
+  if(typeof showNotif==='function')showNotif('Exiblox','Скин изменён!','🎭');
 }
 
 function exbDrawStickman(cv,cx,cy,sk,scale,jumping,facing,walkStep) {
@@ -1107,12 +981,10 @@ function exbProfile(c) {
       <div style="font-size:12px;color:rgba(255,255,255,.4);">👥 Друзей: ${(me.friends||[]).length}</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);">🛠 Проектов: ${(me.projects||[]).length}</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);">📤 Опубликовано: ${(me.pubGames||[]).length}</div>
-      <div style="font-size:12px;color:#2ecc71;">☁️ Облако активно — игры видны всем!</div>
     </div>
     <div style="display:flex;gap:10px;margin-top:16px;">
       <button class="exb-btn2 exb-btn2-blue" onclick="exbTab('avatar')" style="font-size:11px;">🎭 Сменить скин</button>
       <button class="exb-btn2 exb-btn2-red" onclick="exbLogout()">🚪 Выйти</button>
-      ${me.isGuest?`<button class="exb-btn2 exb-btn2-blue" onclick="exbLogout()">Создать аккаунт</button>`:''}
     </div>
   </div>`;
   const pc=document.getElementById('profile-skin-prev')?.getContext('2d');
@@ -1126,25 +998,25 @@ function exbAI(c) {
   c.innerHTML=`
   <div class="exb-ai-wrap" style="height:calc(100vh - 160px);">
     <div style="padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.07);font-size:16px;font-weight:700;background:#0c0e14;flex-shrink:0;">
-      🤖 Exiblox AI — Умный помощник
+      🤖 Exiblox AI
       <span style="font-size:11px;color:#2ecc71;margin-left:10px;">● Online</span>
     </div>
     <div class="exb-ai-msgs" id="exb-ai-msgs"></div>
     <div style="padding:8px 16px;border-top:1px solid rgba(255,255,255,.06);background:#0c0e14;flex-shrink:0;display:flex;gap:8px;flex-wrap:wrap;">
-      ${['Как создать игру?','Что такое Baseplate?','Как опубликовать?','Как добавить друга?','Советы по Studio','Что ты умеешь?'].map(q=>`
-        <div onclick="exbAIQuick('${q}')" style="padding:5px 12px;border-radius:16px;background:rgba(255,255,255,.07);font-size:11px;color:rgba(255,255,255,.6);cursor:pointer;border:1px solid rgba(255,255,255,.08);transition:.15s;" onmouseover="this.style.background='rgba(0,178,255,.25)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.6)'">${q}</div>`).join('')}
+      ${['Как создать игру?','Что такое Baseplate?','Как опубликовать?','Что ты умеешь?'].map(q=>`
+        <div onclick="exbAIQuick('${q}')" style="padding:5px 12px;border-radius:16px;background:rgba(255,255,255,.07);font-size:11px;color:rgba(255,255,255,.6);cursor:pointer;border:1px solid rgba(255,255,255,.08);">${q}</div>`).join('')}
     </div>
     <div class="exb-ai-input-row" style="flex-shrink:0;">
-      <input class="exb-ai-input" id="exb-ai-inp" placeholder="Задай вопрос Exiblox AI..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();exbAISend();}">
-      <button class="exb-btn2 exb-btn2-blue" onclick="exbAISend()" style="padding:10px 18px;">➤ Отправить</button>
+      <input class="exb-ai-input" id="exb-ai-inp" placeholder="Задай вопрос..." onkeydown="if(event.key==='Enter'){event.preventDefault();exbAISend();}">
+      <button class="exb-btn2 exb-btn2-blue" onclick="exbAISend()" style="padding:10px 18px;">➤</button>
     </div>
   </div>`;
-  exbAIMsg('bot','Привет! Я **Exiblox AI** 🤖\n\n🌍 **ГЛОБАЛЬНАЯ ПЛАТФОРМА** — все игры общие!\n• Опубликовал → весь мир видит немедленно\n• Shared облако через window.storage\n• Все пользователи в одном пространстве\n\nСпроси что-нибудь! 👇');
+  exbAIMsg('bot','Привет! Я **Exiblox AI** 🤖\n\nМогу помочь с:\n• Созданием игр в Studio\n• Публикацией\n• Системой друзей\n\nСпроси что-нибудь! 👇');
   EXB.aiHistory=[];
 }
 
 function exbAIMsg(who,text) {
-  const msgs=el('exb-ai-msgs'); if(!msgs)return;
+  const msgs=document.getElementById('exb-ai-msgs'); if(!msgs)return;
   const div=document.createElement('div');
   div.style.cssText='display:flex;gap:10px;align-items:flex-start;'+(who==='user'?'flex-direction:row-reverse;':'');
   if(who==='bot'){
@@ -1158,17 +1030,13 @@ function exbAIMsg(who,text) {
 }
 
 const EXB_AI_KB=[
-  {k:['привет','здравствуй','хай','hi','hello','прив','салют','ку'],a:'Привет! 👋 Я **Exiblox AI** — твой умный помощник.\n\n🌍 Платформа работает ГЛОБАЛЬНО — все игры в общем облаке!\nСпрашивай!'},
-  {k:['студия','studio','как создать игру','создание игры'],a:'🛠 **Как создать игру в ExiStudio:**\n\n1. Вкладка **Studio** 🛠\n2. **🏗 Baseplate** — стартовый шаблон\n3. Выбери инструмент и кликай по canvas\n4. **▶ Тест** — проверить\n5. **📤 Publish** → игра видна ВСЕМ! 🌍'},
-  {k:['облако','cloud','другие устройства','все видят','общие игры'],a:'☁️ **Общее облако:**\n\nИспользуем **window.storage** с параметром **shared=true**\n\n• Все игры сохраняются в ОБЩЕМ хранилище\n• Любой пользователь видит твою игру\n• Работает на всех устройствах в claude.ai 🌍'},
-  {k:['опубликовать','публикация','publish','выложить'],a:'📤 **Публикация:**\n\n1. Studio → **📤 Publish**\n2. Название + описание + иконка\n3. **🚀 Опубликовать**\n\nИгра сохраняется с **shared=true** — видна ВСЕМ! 🌍'},
-  {k:['иконка','картинка'],a:'🖼 **Иконка:** PNG/JPG/GIF до 1МБ.\nПеретащи в квадрат или кнопка "Загрузить картинку" при публикации.'},
-  {k:['baseplate','базплейт','шаблон'],a:'🏗 **Baseplate** — стартовый шаблон с полом и спавном.\nКнопка **🏗 Baseplate** в Studio.'},
-  {k:['добавить друга','друг','друзья','код'],a:'👥 **Друзья:**\n1. Вкладка **Friends** 👥\n2. **+ Добавить**\n3. Никнейм или код\n\nТвой код виден в разделе Friends.'},
-  {k:['кто ты','что ты','что умеешь'],a:'🤖 Я — **Exiblox AI**!\n\nЗнаю: 🎮 игры · 🛠 Studio · 📤 Публикация · ☁️ Облако · 👥 Друзья · 🎭 Скины\n\nСпрашивай!'},
-  {k:['спасибо','благодарю','thanks'],a:'Пожалуйста! 😊 Удачи в создании игр! 🎮🚀'},
-  {k:['анекдот','шутка'],a:'😄 Программист заходит в магазин. Жена: "Купи хлеб, и если будут яйца — возьми десяток." Вернулся с 10 буханками. "Яйца были!" 🥚😂'},
-  {k:['версия','обновление'],a:'📦 **Exiblox v3.0**\n✅ Общее облако (shared storage)\n✅ Кастомные иконки\n✅ AI помощник\n✅ Studio с canvas\n✅ Система друзей\n✅ Без предупреждений!'},
+  {k:['привет','здравствуй','хай','hi','hello','прив'],a:'Привет! 👋 Я **Exiblox AI**!\nСпрашивай про создание игр!'},
+  {k:['студия','studio','как создать игру'],a:'🛠 **Создание игры:**\n\n1. Вкладка **Studio**\n2. **🏗 Baseplate** — стартовый уровень\n3. Выбери инструмент, кликай по canvas\n4. **▶ Тест** — проверить\n5. **📤 Publish** — опубликовать!'},
+  {k:['опубликовать','публикация','publish'],a:'📤 **Публикация:**\n\nStudio → **📤 Publish**\nВведи название и нажми **🚀 Опубликовать**'},
+  {k:['baseplate','базплейт','шаблон'],a:'🏗 **Baseplate** — готовый стартовый уровень.\nКнопка **🏗 Baseplate** в Studio.'},
+  {k:['друг','друзья','код'],a:'👥 **Друзья:**\n1. Вкладка **Friends**\n2. **+ Добавить**\n3. Никнейм или код'},
+  {k:['кто ты','что ты','что умеешь'],a:'🤖 Я — **Exiblox AI**!\n\nЗнаю всё про:\n🎮 Studio · 📤 Публикация · 👥 Друзья · 🎭 Скины'},
+  {k:['спасибо','благодарю'],a:'Пожалуйста! 😊 Удачи в создании игр! 🎮'},
 ];
 
 function exbAIGetResponse(input) {
@@ -1180,15 +1048,14 @@ function exbAIGetResponse(input) {
     if(score>bestScore){bestScore=score;bestMatch=entry;}
   }
   if(bestMatch&&bestScore>0)return bestMatch.a;
-  if(/\?|как|что|где|зачем|почему/.test(q))return '🤔 Уточни вопрос! Попробуй: "Как создать игру?" или "Как опубликовать в облако?"';
   return 'Хм, не знаю ответа 😅\nНапиши **"что умеешь"** — покажу все темы!';
 }
 
 function exbAISend() {
-  const inp=el('exb-ai-inp'); if(!inp||EXB._aiTyping)return;
+  const inp=document.getElementById('exb-ai-inp'); if(!inp||EXB._aiTyping)return;
   const text=inp.value.trim(); if(!text)return;
   inp.value=''; exbAIMsg('user',text); EXB._aiTyping=true;
-  const msgs=el('exb-ai-msgs');
+  const msgs=document.getElementById('exb-ai-msgs');
   const typing=document.createElement('div'); typing.id='exb-typing';
   typing.style.cssText='display:flex;gap:10px;align-items:flex-start;';
   typing.innerHTML=`<div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#00b2ff,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🤖</div>
@@ -1199,7 +1066,7 @@ function exbAISend() {
   setTimeout(()=>{typing.remove();EXB._aiTyping=false;exbAIMsg('bot',exbAIGetResponse(text));},500+Math.random()*700);
 }
 
-function exbAIQuick(q){const inp=el('exb-ai-inp');if(inp){inp.value=q;exbAISend();}}
+function exbAIQuick(q){const inp=document.getElementById('exb-ai-inp');if(inp){inp.value=q;exbAISend();}}
 
 // ════════════════════════════════════════════
 // GAME PLAYER
@@ -1225,10 +1092,10 @@ function exbOpenGame(game) {
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#1a2040;">
     <canvas id="exb-game-canvas" width="${W}" height="${H}" style="border-radius:8px;box-shadow:0 0 40px rgba(0,0,0,.8);"></canvas>
     <div style="display:flex;gap:16px;margin-top:12px;align-items:center;">
-      <button id="exb-g-left" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">◀</button>
+      <button id="exb-g-left" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;user-select:none;">◀</button>
       <span id="exb-g-score" style="color:#FFD700;font-size:16px;font-weight:700;min-width:140px;text-align:center;">🪙 0</span>
-      <button id="exb-g-jump" style="background:#c0392b;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">▲</button>
-      <button id="exb-g-right" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;user-select:none;">▶</button>
+      <button id="exb-g-jump" style="background:#c0392b;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;user-select:none;">▲</button>
+      <button id="exb-g-right" style="background:#252850;border:none;color:#fff;padding:10px 22px;border-radius:8px;cursor:pointer;font-size:20px;user-select:none;">▶</button>
     </div>
   </div>`;
   document.body.appendChild(overlay);
@@ -1236,7 +1103,7 @@ function exbOpenGame(game) {
 }
 
 function exbRunGame(game,W,H) {
-  const canvas=el('exb-game-canvas'); if(!canvas)return;
+  const canvas=document.getElementById('exb-game-canvas'); if(!canvas)return;
   const cv=canvas.getContext('2d');
   const GRAVITY=0.55,JUMP_FORCE=-13,SPEED=5;
   const skinId=EXB.skin||'red';
@@ -1268,13 +1135,13 @@ function exbRunGame(game,W,H) {
   const collected=new Set(); let scored=0;
 
   const setKey=(k,v)=>keys[k]=v;
-  el('exb-g-left')?.addEventListener('mousedown',()=>setKey('left',true));
-  el('exb-g-left')?.addEventListener('mouseup',()=>setKey('left',false));
-  el('exb-g-left')?.addEventListener('mouseleave',()=>setKey('left',false));
-  el('exb-g-right')?.addEventListener('mousedown',()=>setKey('right',true));
-  el('exb-g-right')?.addEventListener('mouseup',()=>setKey('right',false));
-  el('exb-g-right')?.addEventListener('mouseleave',()=>setKey('right',false));
-  el('exb-g-jump')?.addEventListener('click',doJump);
+  document.getElementById('exb-g-left')?.addEventListener('mousedown',()=>setKey('left',true));
+  document.getElementById('exb-g-left')?.addEventListener('mouseup',()=>setKey('left',false));
+  document.getElementById('exb-g-left')?.addEventListener('mouseleave',()=>setKey('left',false));
+  document.getElementById('exb-g-right')?.addEventListener('mousedown',()=>setKey('right',true));
+  document.getElementById('exb-g-right')?.addEventListener('mouseup',()=>setKey('right',false));
+  document.getElementById('exb-g-right')?.addEventListener('mouseleave',()=>setKey('right',false));
+  document.getElementById('exb-g-jump')?.addEventListener('click',doJump);
 
   document.addEventListener('keydown',onKey);
   document.addEventListener('keyup',onKeyUp);
@@ -1282,7 +1149,7 @@ function exbRunGame(game,W,H) {
   function onKey(e){if(e.key==='ArrowLeft')setKey('left',true);if(e.key==='ArrowRight')setKey('right',true);if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();doJump();}}
   function onKeyUp(e){if(e.key==='ArrowLeft')setKey('left',false);if(e.key==='ArrowRight')setKey('right',false);}
   function doJump(){if(onGround){vy=JUMP_FORCE;onGround=false;}}
-  function respawn(){px=startX;py=startY;vx=0;vy=0;showNotif('Exiblox','Начни сначала 😵','💥');}
+  function respawn(){px=startX;py=startY;vx=0;vy=0;if(typeof showNotif==='function')showNotif('Exiblox','Начни сначала 😵','💥');}
 
   function update(){
     if(keys.left){vx=-SPEED;facing=-1;}else if(keys.right){vx=SPEED;facing=1;}else vx*=.72;
@@ -1292,7 +1159,7 @@ function exbRunGame(game,W,H) {
     for(const p of platforms){if(px+22>p.x&&px<p.x+p.w&&py+60>p.y&&py+60<p.y+p.h+Math.abs(vy)+2&&vy>=0){py=p.y-60;vy=0;onGround=true;if(p.type==='ice')vx*=.98;}}
     for(const sp of springs){if(px+22>sp.x&&px<sp.x+sp.w&&py+60>sp.y&&py+60<=sp.y+sp.h&&vy>=0){vy=JUMP_FORCE*1.8;onGround=false;}}
     for(const sk of [...spikes,...lava]){if(px+20>sk.x&&px<sk.x+sk.w&&py+55>sk.y&&py<sk.y+sk.h)respawn();}
-    coins.forEach((co,i)=>{if(!collected.has(i)&&Math.abs(px+12-co.x)<22&&Math.abs(py+30-co.y)<22){collected.add(i);scored++;const sc=el('exb-g-score');if(sc)sc.textContent=`🪙 ${scored} / ${coins.length}`;}});
+    coins.forEach((co,i)=>{if(!collected.has(i)&&Math.abs(px+12-co.x)<22&&Math.abs(py+30-co.y)<22){collected.add(i);scored++;const sc=document.getElementById('exb-g-score');if(sc)sc.textContent=`🪙 ${scored} / ${coins.length}`;}});
     if(onGround&&Math.abs(vx)>.3)step++;else if(!onGround)step+=.5;
     const tcx=px+12-W*.5,tcy=py-60-H*.40;
     camX+=(tcx-camX)*.12; camY+=(tcy-camY)*.10;
@@ -1317,7 +1184,7 @@ function exbRunGame(game,W,H) {
   }
 
   function loop(){
-    if(!el('exb-game-canvas')){document.removeEventListener('keydown',onKey);document.removeEventListener('keyup',onKeyUp);return;}
+    if(!document.getElementById('exb-game-canvas')){document.removeEventListener('keydown',onKey);document.removeEventListener('keyup',onKeyUp);return;}
     update();draw();requestAnimationFrame(loop);
   }
   loop();
@@ -1329,7 +1196,7 @@ function exbRunGame(game,W,H) {
 function exbDoSearch(query) {
   if(!query.trim())return;
   const results=EXB.games.filter(g=>g.name.toLowerCase().includes(query.toLowerCase()));
-  const c=el('exb-content'); if(!c)return;
+  const c=document.getElementById('exb-content'); if(!c)return;
   EXB.tab='store';
   document.querySelectorAll('.exb-nav-btn').forEach(b=>{const m=b.getAttribute('onclick').match(/'(\w+)'/);if(m)b.classList.toggle('exb-active',m[1]==='store');});
   c.innerHTML=`
@@ -1344,4 +1211,6 @@ function exbDoSearch(query) {
 // UTILS
 // ════════════════════════════════════════════
 function escHtmlExb(t){return String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function el(id){return document.getElementById(id);}
+
+// Экспорт для index.html
+window.initExiblox = initExiblox;
